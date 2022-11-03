@@ -2,6 +2,5 @@
 
 cd ./src
 make
-cp main ../TMDSQL
+./main
 cd ..
-./TMDSQL

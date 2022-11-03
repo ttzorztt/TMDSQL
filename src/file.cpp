@@ -1,49 +1,50 @@
 #include "file.h"
 _file::_file(string& Path){
   filePath = Path;
-  lockPath = "../data/lock/." + filePath;
+  lockPath = "../data/lock/." + Path;
 }
 _file::~_file(){
   writeFileBuff.close();
 }
-bool _file::isExists(){
-  return ifstream(this->filePath).good();
+bool _file::isExist(){
+  ifstream tmp(this->filePath);
+  bool ret = tmp.good();
+  tmp.close();
+  return ret;
 }
-bool _file::isExists(string filePath){
-  return ifstream(filePath).good();
+bool _file::isExist(string _filePath){
+  ifstream tmp(_filePath);
+  bool ret = tmp.good();
+  tmp.close();
+  return ret;
 }
 bool _file::writeFile(const string& str){
-  if(!isExists()){
+  if(!writeBuffOpen(true)){
     return false;
   }
-  // 判断ofstream是否打开
-  if(!writeFileBuff.is_open()){ 
-    writeFileBuff.open(filePath);
-  }
-  if(addLock()){
-    writeFileBuff << str << endl;
-  }
+  while(addLock());
+  writeFileBuff << str << endl;
+  removeLock();
   return true;
 }
 bool  _file::writeFile(const vector<string>& array){
-  if(!isExists()){ 
+ if(!writeBuffOpen(true)){
     return false;
   }
-  if(!writeFileBuff.is_open()){
-    writeFileBuff.open(filePath);
-  } 
-  if(addLock()){
-    for(auto& x:array){
-      writeFileBuff << x << " ";
-    }
-    writeFileBuff << endl;
+  addLock();
+  for(auto& x:array){
+    writeFileBuff << x << " ";
   }
+  writeFileBuff << endl;
+  // removeLock();
   return true;
 }
 vector<string> _file::readline(){
+  if(!readBuffOpen(true)){
+    return {};
+  }
   vector<string> ret;
   string _str;
-  readFileBuff.open(filePath,ios::in);
   getline(readFileBuff,_str);
   int left = 0;
   int right = 1;
@@ -62,27 +63,19 @@ vector<string> _file::readline(){
 }
 
 bool _file::addLock(){
-  if(!isExists()){
-    return false;
-  }
-  ifstream filereadbuff(lockPath);
-  if(filereadbuff.good()){
-    filereadbuff.close();
-    return false;
-  } else{
-    ofstream filewritebuff(lockPath);
-    if(filewritebuff.good()){
-      filewritebuff.close();
+  if(!_file::isExist(lockPath)){
+    ofstream filewritebuff;
+    filewritebuff.open(lockPath,ios::app);
+    if(filewritebuff.is_open()){
+         filewritebuff.close();
       return true;
     }
-    filewritebuff.close();
-    filereadbuff.close();
   }
   return false;
 }
 
 bool _file::removeLock(){
-  if(!isExists()){
+  if(!isExist()){
     return false;
   }
   ifstream filereadbuff(lockPath);
@@ -101,10 +94,11 @@ bool _file::removeLock(){
 }
 
 bool _file::createFile(string path){
-  if(_file::isExists(path)){
+  if(_file::isExist(path)){
     return false;
   }
-  ofstream filewritebuff(path);
+  ofstream filewritebuff;
+  filewritebuff.open(path,ios::out);
   if(filewritebuff.good()){
       filewritebuff.close();
       return true;
@@ -114,10 +108,9 @@ bool _file::createFile(string path){
 }
 
 bool _file::createFile(){
-  if(isExists()){
+  if(!writeBuffOpen(false)){
     return false;
   }
-  writeFileBuff.open(filePath);
   if(writeFileBuff.good()){
       writeFileBuff.close();
       return true;
@@ -126,14 +119,22 @@ bool _file::createFile(){
   return false;
 }
 
-void _file::writeBuffOpen(){
-  if(isExists() && !writeFileBuff.is_open()){
-    writeFileBuff.open(filePath);
+bool _file::writeBuffOpen(bool need){
+  if(need && !isExist()){
+    return false;
+  }
+  if(!writeFileBuff.is_open()){
+    writeFileBuff.open(filePath,ios::app);
   } 
+  return true;
 }
 
-void _file::readBuffOpen(){
-    if(isExists() && !readFileBuff.is_open()){
+bool _file::readBuffOpen(bool need){
+  if(need && !isExist()){
+    return false;
+  }
+  if(!readFileBuff.is_open()){
     readFileBuff.open(filePath);
   } 
+  return true;
 }

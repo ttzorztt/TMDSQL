@@ -5,8 +5,11 @@
 using namespace std;
 int main(int argc, char const *argv[])
 {
-  string Path = "./tmd.txt";
+  system("mkdir ttt"); // 使用进程执行
+  
+  string Path = "tmd.txt";
   _file file(Path);
-  cout << file.isExists() << endl;
+  file.addLock();
+  file.removeLock();
   return 0;
 }
