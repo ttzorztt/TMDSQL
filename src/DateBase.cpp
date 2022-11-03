@@ -1,3 +1,4 @@
 #include "DateBase.h"
+DateBase::DateBase(string path): _file(path){
 
-DateBase::DateBase(string path){}
+}
