@@ -1,34 +1,49 @@
 #include "file.h"
 _file::_file(string& Path){
-  // 如果文件不存在，则退出
-  if(! _file::isExists(Path)) return;
   filePath = Path;
-  writeFileBuff.open(filePath,ios::app);
-  readFileBuff.open(filePath);
   lockPath = "../data/lock/." + filePath;
 }
 _file::~_file(){
   writeFileBuff.close();
 }
+bool _file::isExists(){
+  return ifstream(this->filePath).good();
+}
 bool _file::isExists(string filePath){
   return ifstream(filePath).good();
 }
-void _file::writeFile(const string& str){
+bool _file::writeFile(const string& str){
+  if(!isExists()){
+    return false;
+  }
+  // 判断ofstream是否打开
+  if(!writeFileBuff.is_open()){ 
+    writeFileBuff.open(filePath);
+  }
   if(addLock()){
     writeFileBuff << str << endl;
   }
+  return true;
 }
-void  _file::writeFile(const vector<string>& array){
-  if(addLock()){
-  for(auto& x:array){
-    writeFileBuff << x << " ";
+bool  _file::writeFile(const vector<string>& array){
+  if(!isExists()){ 
+    return false;
   }
-  writeFileBuff << endl;
-}
+  if(!writeFileBuff.is_open()){
+    writeFileBuff.open(filePath);
+  } 
+  if(addLock()){
+    for(auto& x:array){
+      writeFileBuff << x << " ";
+    }
+    writeFileBuff << endl;
+  }
+  return true;
 }
 vector<string> _file::readline(){
   vector<string> ret;
   string _str;
+  readFileBuff.open(filePath,ios::in);
   getline(readFileBuff,_str);
   int left = 0;
   int right = 1;
@@ -47,6 +62,9 @@ vector<string> _file::readline(){
 }
 
 bool _file::addLock(){
+  if(!isExists()){
+    return false;
+  }
   ifstream filereadbuff(lockPath);
   if(filereadbuff.good()){
     filereadbuff.close();
@@ -64,6 +82,9 @@ bool _file::addLock(){
 }
 
 bool _file::removeLock(){
+  if(!isExists()){
+    return false;
+  }
   ifstream filereadbuff(lockPath);
   if(!filereadbuff.good()){
     filereadbuff.close();
@@ -77,4 +98,42 @@ bool _file::removeLock(){
       return false;
     }
   }
+}
+
+bool _file::createFile(string path){
+  if(_file::isExists(path)){
+    return false;
+  }
+  ofstream filewritebuff(path);
+  if(filewritebuff.good()){
+      filewritebuff.close();
+      return true;
+    }
+    filewritebuff.close();
+  return false;
+}
+
+bool _file::createFile(){
+  if(isExists()){
+    return false;
+  }
+  writeFileBuff.open(filePath);
+  if(writeFileBuff.good()){
+      writeFileBuff.close();
+      return true;
+    }
+    writeFileBuff.close();
+  return false;
+}
+
+void _file::writeBuffOpen(){
+  if(isExists() && !writeFileBuff.is_open()){
+    writeFileBuff.open(filePath);
+  } 
+}
+
+void _file::readBuffOpen(){
+    if(isExists() && !readFileBuff.is_open()){
+    readFileBuff.open(filePath);
+  } 
 }

@@ -23,22 +23,31 @@ public:
  * @return 若文件存在则返回True，否则返回False;
  */ 
 bool static isExists(string filePath);
+bool isExists();
 /**
  * @brief 以App的方式写入字符串
  * @param str 写入的字符串
+ * @return True写入正确,False 写入失败
  */
-void writeFile(const string& str);
+bool writeFile(const string& str);
 /**
  * @brief 以App的方式写入字符串
  * @param array vector<string>的类型数据写入数据库
+ * @return True写入正确,False 写入失败
 */
-void  writeFile(const vector<string>& array);
+bool  writeFile(const vector<string>& array);
 /**
  * @brief 以行的形势读出数据
  * @return 将一行数据以空格的形式分开，并存储在vector中，然后返回。
 */
 vector<string> readline();
-
+/**
+ * @brief 创建文件
+ * @param path 需要创建的文件名字
+ * @return True表示文件创造成功，False表示文件创造失败
+*/
+bool static createFile(string path);
+bool createFile();
 private:
   // filePath是_file超类的文件路径
   string filePath;
@@ -58,4 +67,8 @@ private:
    * @return 删锁成功则返回True，否则返回False。
    */
   bool removeLock();
+
+  void writeBuffOpen();
+
+  void readBuffOpen();
 };

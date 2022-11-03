@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include <iostream>
 
 /**
 
@@ -57,18 +57,18 @@ Tip: 将代码放在前部，将用户输入自定义字符放在后端，以@�
 */
 
 shell::shell(){
-    _GBKstatus.push("创");
-    _GBKstatus.push("建");
-    _GBKstatus.push("数");
-    _GBKstatus.push("据");
-    _GBKstatus.push("库");
-    _GBKstatus.push("选");
-    _GBKstatus.push("择");
-    _GBKstatus.push("表");
-    _GBKstatus.push("添");
-    _GBKstatus.push("加");
-    _GBKstatus.push("显");
-    _GBKstatus.push("示");
+    _GBKstatus.insert("创");
+    _GBKstatus.insert("建");
+    _GBKstatus.insert("数");
+    _GBKstatus.insert("据");
+    _GBKstatus.insert("库");
+    _GBKstatus.insert("选");
+    _GBKstatus.insert("择");
+    _GBKstatus.insert("表");
+    _GBKstatus.insert("添");
+    _GBKstatus.insert("加");
+    _GBKstatus.insert("显");
+    _GBKstatus.insert("示");
 
     _binaryStatus["创"] = 1;
     _binaryStatus["建"] = 2;
@@ -94,7 +94,7 @@ int shell::readStatus(){
         int tmp = 0;
         while(tmp < size){
             tmp += 2;
-            if(_GBKstatus.count(strbuff.strsub(tmp,2))){
+            if(_GBKstatus.count(strbuff.substr(tmp,2))){
                 
             }else{
 
