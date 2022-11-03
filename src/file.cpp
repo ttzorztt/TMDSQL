@@ -38,10 +38,12 @@ vector<string> _file::readline(){
       ++right;
       continue;
     }else{
-
+      ret.push_back(_str.substr(left,right-left));
+      left = right;
+      ++right;
     }
   }
-  return {};
+  return ret;
 }
 
 bool _file::addLock(){
