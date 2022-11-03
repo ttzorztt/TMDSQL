@@ -62,6 +62,7 @@ bool _file::addLock(){
   }
   return false;
 }
+
 bool _file::removeLock(){
   ifstream filereadbuff(lockPath);
   if(!filereadbuff.good()){

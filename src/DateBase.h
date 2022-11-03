@@ -1,4 +1,6 @@
 #include "file.h"
+#include <set>
+#include <map>
 using namespace std;
 
 class DateBase: public _file{
@@ -17,23 +19,3 @@ class DateBase: public _file{
 
 
 
-
-/***
-创建 数据库 XXX;
-选择 数据库 XXX;
-删除 数据库 XXX;
-选择 表 XXX;
-创建 表 XXX;
-删除 表 XXX;
-
-
-
-*/
-
-class shell{
-publc:
-  shell();
-  void readStatus();
-private:
-  enum status = {"创建","数据库","删除","选择","表"};
-}

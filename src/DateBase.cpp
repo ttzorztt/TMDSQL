@@ -1,4 +1,9 @@
 #include "DateBase.h"
-DateBase::DateBase(string path): _file(path){
+#include <iostream>
+using namespace std;
 
+
+
+
+DateBase::DateBase(string path): _file(path){
 }
