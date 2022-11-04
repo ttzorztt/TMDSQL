@@ -37,12 +37,23 @@ void DateBase::showDateBase(){
     maxtablename = max(maxtablename,(int)str.size() + 2);
   }
   for(int a = 0; a < maxtablename; ++a){
-    cout << "*";
+    std::cout << "*";
   }
-  cout << endl;
+  std::cout << endl;
   for(string& str:ans){
     int strnamesize = str.size();
     int left = (maxtablename - strnamesize) / 2;
-    for(int )
+    for(int a = 0; a < left;++a){
+      std::cout << "*";
+    }
+    std::cout << str;
+    for(int a = maxtablename - strnamesize - left; a > 0; --a){
+      std::cout << "*";
+    }
+    std::cout << endl;
   }
+   for(int a = 0; a < maxtablename; ++a){
+    std::cout << "*";
+  }
+  std::cout << endl;
 }

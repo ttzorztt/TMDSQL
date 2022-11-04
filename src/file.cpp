@@ -170,7 +170,12 @@ vector<string> _file::openDirReturnFileName(){
   DIR* dirname = opendir(name.c_str());
   struct dirent* dirInfo;
   vector<string> ret;
+  int count = 2;
   while((dirInfo = readdir(dirname))!= 0){
+    if(count != 0){
+      --count;
+      continue;
+    } 
     ret.push_back(dirInfo->d_name);
   }
   closedir(dirname);

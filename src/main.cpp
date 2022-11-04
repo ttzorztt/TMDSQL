@@ -23,10 +23,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
   string path = "./";
-  _file file(path);
-  vector<string> x = file.openDirReturnFileName("./");
-  for(auto& i : x){
-    cout << i << endl;
-  }
+  DateBase a(path);
+  a.showDateBase();
   return 0;
 }
