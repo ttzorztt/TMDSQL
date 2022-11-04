@@ -7,9 +7,9 @@ _file::~_file(){
   writeFileBuff.close();
 }
 bool _file::isExist(){
-  ifstream tmp(this->filePath);
-  bool ret = tmp.good();
-  tmp.close();
+  ifstream tmp1(this->filePath);
+  bool ret = tmp1.good();
+  tmp1.close();
   return ret;
 }
 bool _file::isExist(string _filePath){
@@ -36,7 +36,7 @@ bool  _file::writeFile(const vector<string>& array){
     writeFileBuff << x << " ";
   }
   writeFileBuff << endl;
-  // removeLock();
+  removeLock();
   return true;
 }
 vector<string> _file::readline(){
@@ -78,6 +78,7 @@ bool _file::removeLock(){
   if(!isExist()){
     return false;
   }
+  
   ifstream filereadbuff(lockPath);
   if(!filereadbuff.good()){
     filereadbuff.close();

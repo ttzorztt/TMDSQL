@@ -67,7 +67,7 @@ bool createFile();
   // readFileBuff是读文件buff指针
   ifstream readFileBuff;
   // lockPath是加锁文件
-  string lockPath;
+string lockPath;
 
   /**
    * @brief 加锁
