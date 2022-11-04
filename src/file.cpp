@@ -66,7 +66,7 @@ vector<string> _file::readline(){
       left = right;
       ++right;
     }
-  }
+  }         
   return ret;
 }
 
