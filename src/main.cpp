@@ -18,18 +18,18 @@
 #define _STRING_
 #include <string>
 #endif
-
+// #include <unistd.h>
 using namespace std;
 int main(int argc, char const *argv[])
 {
-  string Path = "tmd.txt";
-  _file file(Path);
-  DateBase data("tmd");
-  // data.create();
-  vector<string> tm;
-  for(int a = 0; a < 10; ++a){
-    tm.push_back(to_string(a));
+  DIR* dirname = opendir("./");
+  struct dirent* dirInfo;
+  vector<string> name;
+  while((dirInfo = readdir(dirname))!= 0){
+   cout << "ttt" << endl;
+    cout << dirInfo->d_name <<endl;
+    name.push_back(dirInfo->d_name);
   }
-  data.insertTable("tt3t",tm);
+  closedir(dirname);
   return 0;
 }

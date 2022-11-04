@@ -155,3 +155,15 @@ bool _file::createDir(string dirName){
     return true;
   }
 }
+
+
+vector<string> _file::openDirReturnFileName(string dirPath){
+  DIR* dirname = opendir(dirPath.c_str());
+  struct dirent* dirInfo;
+  vector<string> name;
+  while((dirInfo = readdir(dirname))!= 0){
+    name.push_back(dirInfo->d_name);
+  }
+  closedir(dirname);
+  return name;
+}

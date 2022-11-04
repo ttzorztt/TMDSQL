@@ -10,6 +10,15 @@
 #define _FSTREAM_
 #include <fstream>
 #endif
+#ifndef _DIRENT_H_
+#define _DIRENT_H_
+#include <dirent.h>
+#endif
+#ifndef _SYS_TYPES_H_
+#define _SYS_TYPES_H_
+#include <sys/types.h>
+#endif
+
 using namespace std;
 /**
  * @author TMD
@@ -123,4 +132,10 @@ string lockPath;
    * 
   */
   bool static createDir(string dirName);
+  /**
+   * @brief 返回目录中所有文件名字，即数据库中表名
+   * @param dirPath
+   * 
+  */
+  vector<string> openDirReturnFileName(string dirPath);
 };
