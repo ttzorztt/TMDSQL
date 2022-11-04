@@ -21,7 +21,6 @@ class DateBase: public _file{
    * @brief 构造创建数据库对象
    * @param name 数据库路径
   */
-
   DateBase(string name);
   /**
    * @brief 创建数据库(底层就是创建文件夹)
