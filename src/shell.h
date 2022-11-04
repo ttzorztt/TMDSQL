@@ -1,7 +1,20 @@
+#ifndef _SET_
+#define _SET_
 #include <set>
+#endif
+#ifndef _MAP_
+#define _MAP_
 #include <map>
+#endif
+#ifndef _VECTOR_
+#define _VECTOR_
 #include <vector>
+#endif
+#ifndef _STRING_
+#define _STRING_
 #include <string>
+#endif
+
 using namespace std;
 /***
 创建 数据库 XXX;

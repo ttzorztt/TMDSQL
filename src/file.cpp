@@ -1,19 +1,19 @@
 #include "file.h"
 _file::_file(string& Path){
-  filePath = Path;
+  name = Path;
   lockPath = "../data/lock/." + Path;
 }
 _file::~_file(){
   writeFileBuff.close();
 }
 bool _file::isExist(){
-  ifstream tmp1(this->filePath);
+  ifstream tmp1(this->name);
   bool ret = tmp1.good();
   tmp1.close();
   return ret;
 }
-bool _file::isExist(string _filePath){
-  ifstream tmp(_filePath);
+bool _file::isExist(string _name){
+  ifstream tmp(_name);
   bool ret = tmp.good();
   tmp.close();
   return ret;
@@ -39,6 +39,14 @@ bool  _file::writeFile(const vector<string>& array){
   removeLock();
   return true;
 }
+bool _file::writeFile(string Path,const string& str){
+  _file tmd(Path);
+  return tmd.writeFile(str);
+}
+bool  _file::writeFile(string Path,const vector<string>& array){
+ _file tmd(Path);
+ return tmd.writeFile(array);
+} 
 vector<string> _file::readline(){
   if(!readBuffOpen(true)){
     return {};
@@ -125,7 +133,7 @@ bool _file::writeBuffOpen(bool need){
     return false;
   }
   if(!writeFileBuff.is_open()){
-    writeFileBuff.open(filePath,ios::app);
+    writeFileBuff.open(name,ios::app);
   } 
   return true;
 }
@@ -135,7 +143,15 @@ bool _file::readBuffOpen(bool need){
     return false;
   }
   if(!readFileBuff.is_open()){
-    readFileBuff.open(filePath);
+    readFileBuff.open(name);
   } 
   return true;
+}
+bool _file::createDir(string dirName){
+  string path = "mkdir " + dirName;
+  if(system(path.c_str()) == -1){
+    return false;
+  }else{
+    return true;
+  }
 }
