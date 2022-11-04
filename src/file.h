@@ -22,7 +22,7 @@
 using namespace std;
 /**
  * @author TMD
- * @brief 文件处理类
+ * @brief 封装一些对于文件或者目录操作的函数的类。包括创建删除文件或目录。文件的读写。以及读写锁的实现
  */
 class _file{
 public:
@@ -90,8 +90,6 @@ bool static createFile(string name);
 bool createFile();
 
 // private:
-
-
   // filePath是_file超类的文件路径
   string name;
   // writeFileBuff是写文件buff指针
@@ -134,8 +132,13 @@ string lockPath;
   bool static createDir(string dirName);
   /**
    * @brief 返回目录中所有文件名字，即数据库中表名
-   * @param dirPath
-   * 
+   * @param dirPath dir的路径
+   * @return 以vector的形式返回
   */
-  vector<string> openDirReturnFileName(string dirPath);
+  vector<string> static openDirReturnFileName(string dirPath);
+    /**
+   * @brief 返回目录(当前_file的name)中所有文件名字，即数据库中表名
+   * @return 以vector的形式返回
+  */
+  vector<string> openDirReturnFileName();
 };

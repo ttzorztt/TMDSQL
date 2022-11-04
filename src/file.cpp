@@ -167,3 +167,13 @@ vector<string> _file::openDirReturnFileName(string dirPath){
   closedir(dirname);
   return name;
 }
+vector<string> _file::openDirReturnFileName(){
+  DIR* dirname = opendir(name.c_str());
+  struct dirent* dirInfo;
+  vector<string> ret;
+  while((dirInfo = readdir(dirname))!= 0){
+    ret.push_back(dirInfo->d_name);
+  }
+  closedir(dirname);
+  return ret;
+}

@@ -11,7 +11,9 @@
 #include <map>
 #endif
 using namespace std;
-
+/**
+ * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
+*/
 class DateBase: public _file{
   public:
   /**

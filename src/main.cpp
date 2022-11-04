@@ -22,14 +22,11 @@
 using namespace std;
 int main(int argc, char const *argv[])
 {
-  DIR* dirname = opendir("./");
-  struct dirent* dirInfo;
-  vector<string> name;
-  while((dirInfo = readdir(dirname))!= 0){
-   cout << "ttt" << endl;
-    cout << dirInfo->d_name <<endl;
-    name.push_back(dirInfo->d_name);
+  string path = "./";
+  _file file(path);
+  vector<string> x = file.openDirReturnFileName("./");
+  for(auto& i : x){
+    cout << i << endl;
   }
-  closedir(dirname);
   return 0;
 }

@@ -20,6 +20,7 @@ bool DateBase::insertTable(string tableName,const vector<string>& tableItem){
   string Path = "../data/database/"+ name + "/" + tableName;
   _file::createFile(Path);
   _file::writeFile(Path,tableItem);
+  return true;
 }
 
 void DateBase::showDateBase(){
