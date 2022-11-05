@@ -1,8 +1,8 @@
 /*
- * @Description: TMDSQL语句的设计与实现
- * @Autor: TMD
- * @Date: 2022-11-01 20:51:20
- * @LastEditTime: 2022-11-05 17:52:02
+ * @Description  : TMDSQL语句的设计与实现
+ * @Autor        : TMD
+ * @Date         : 2022-11-01 20:51:20
+ * @LastEditTime : 2022-11-05 21:43:04
  */
 #include "shell.h"
 #include <iostream>
@@ -47,7 +47,8 @@
 
 /***
 
-Tip: 将代码放在前部，将用户输入自定义字符放在后端，以@开头，并以';'结尾。 方便状态机检测
+Tip: 将代码放在前部，将用户输入自定义字符放在后端，以@开头，并以';'结尾。
+方便状态机检测
 
 
 创建 数据库 @XXX;  ----->         status : 1
@@ -56,55 +57,54 @@ Tip: 将代码放在前部，将用户输入自定义字符放在后端，以@�
 选择 表  @XXX;      ----->         status : 4
 创建 表  @XXX;      ----->         status : 5
 删除 表  @XXX;      ----->         status : 6
-添加 数据 表 @xxx; ----->  
+添加 数据 表 @xxx; ----->
 添加 表 数据库 @xxx;
-显示 数据库; 
+显示 数据库;
 显示 表;
 */
 
-shell::shell(){
-    _GBKstatus.insert("创");
-    _GBKstatus.insert("建");
-    _GBKstatus.insert("数");
-    _GBKstatus.insert("据");
-    _GBKstatus.insert("库");
-    _GBKstatus.insert("选");
-    _GBKstatus.insert("择");
-    _GBKstatus.insert("表");
-    _GBKstatus.insert("添");
-    _GBKstatus.insert("加");
-    _GBKstatus.insert("显");
-    _GBKstatus.insert("示");
+shell::shell() {
+  _GBKstatus.insert("创");
+  _GBKstatus.insert("建");
+  _GBKstatus.insert("数");
+  _GBKstatus.insert("据");
+  _GBKstatus.insert("库");
+  _GBKstatus.insert("选");
+  _GBKstatus.insert("择");
+  _GBKstatus.insert("表");
+  _GBKstatus.insert("添");
+  _GBKstatus.insert("加");
+  _GBKstatus.insert("显");
+  _GBKstatus.insert("示");
 
-    _binaryStatus["创"] = 1;
-    _binaryStatus["建"] = 2;
-    _binaryStatus["数"] = 3;
-    _binaryStatus["据"] = 4;
-    _binaryStatus["库"] = 5;
-    _binaryStatus["选"] = 6;
-    _binaryStatus["择"] = 7;
-    _binaryStatus["表"] = 8;
-    _binaryStatus["添"] = 9;
-    _binaryStatus["加"] = 10;
-    _binaryStatus["显"] = 11;
-    _binaryStatus["示"] = 12;
+  _binaryStatus["创"] = 1;
+  _binaryStatus["建"] = 2;
+  _binaryStatus["数"] = 3;
+  _binaryStatus["据"] = 4;
+  _binaryStatus["库"] = 5;
+  _binaryStatus["选"] = 6;
+  _binaryStatus["择"] = 7;
+  _binaryStatus["表"] = 8;
+  _binaryStatus["添"] = 9;
+  _binaryStatus["加"] = 10;
+  _binaryStatus["显"] = 11;
+  _binaryStatus["示"] = 12;
 }
 
-int shell::readStatus(){
-    string strbuff;
-    cin >> strbuff;
-    vector<string> ret;
-    int size = strbuff.size();
-    if(size % 2 == 0) return;
-    else{
-        int tmp = 0;
-        while(tmp < size){
-            tmp += 2;
-            if(_GBKstatus.count(strbuff.substr(tmp,2))){
-                
-            }else{
-
-            }
-        }
+int shell::readStatus() {
+  string strbuff;
+  cin >> strbuff;
+  vector<string> ret;
+  int size = strbuff.size();
+  if (size % 2 == 0)
+    return;
+  else {
+    int tmp = 0;
+    while (tmp < size) {
+      tmp += 2;
+      if (_GBKstatus.count(strbuff.substr(tmp, 2))) {
+      } else {
+      }
     }
+  }
 }

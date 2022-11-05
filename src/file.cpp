@@ -1,11 +1,11 @@
 /*
- * @Description: 文件操作类_file的实现
- * @Autor: TMD
- * @Date: 2022-11-01 17:07:21
- * @LastEditTime: 2022-11-05 19:41:29
+ * @Description  : 文件操作类_file的实现
+ * @Autor        : TMD
+ * @Date         : 2022-11-01 17:07:21
+ * @LastEditTime : 2022-11-05 21:40:16
  */
 #include "file.h"
-_file::_file(string& Path) {
+_file::_file(string Path) {
   name = Path;
   lockPath = "../data/lock/." + Path;
 }
@@ -175,6 +175,7 @@ vector<string> _file::openDirReturnFileName() {
     }
     ret.push_back(dirInfo->d_name);
   }
+
   closedir(dirname);
   return ret;
 }
@@ -191,6 +192,11 @@ bool _file::deleteDir() {
   return rmdir(this->name.c_str());
 }
 
+/**
+ * @brief
+ * @param {string} Path
+ * @return {*}
+ */
 bool _file::deleteDir(string Path) {
   return rmdir(Path.c_str());
 }

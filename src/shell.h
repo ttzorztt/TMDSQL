@@ -1,8 +1,8 @@
 /*
- * @Description: TMDSQL语言的设计与实现
- * @Autor: TMD
- * @Date: 2022-11-01 09:02:00
- * @LastEditTime: 2022-11-05 17:51:09
+ * @Description  : TMDSQL语言的设计与实现
+ * @Autor        : TMD
+ * @Date         : 2022-11-01 09:02:00
+ * @LastEditTime : 2022-11-05 21:42:39
  */
 #ifndef _SET_
 #define _SET_
@@ -11,7 +11,7 @@
 #ifndef _MAP_
 #define _MAP_
 #include <map>
-#endif      
+#endif
 #ifndef _VECTOR_
 #define _VECTOR_
 #include <vector>
@@ -30,13 +30,14 @@ using namespace std;
 创建 表 XXX;
 删除 表 XXX;
 */
-class shell{
-public:
+class shell {
+ public:
   shell();
   int readStatus();
-private:
+
+ private:
   set<string> _GBKstatus;
-  map <string,int> _binaryStatus;
+  map<string, int> _binaryStatus;
   string strBuff;
   vector<vector<string>> arraybuff;
 };
