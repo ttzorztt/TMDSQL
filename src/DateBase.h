@@ -50,6 +50,12 @@ class DateBase: public _file{
    * @return 插入正常则返回True,否则返回False
   */
   bool insertTable(string tableName);
+  /**
+   * @brief 删除数据库中tableName表项
+   * @param tableName 表名
+   * @return 删除正常则返回True，否则返回False
+  */
+  bool deleteTable(string tableName);
   private:
   // status = 1为正常状态
   // status = 0为非正常状态

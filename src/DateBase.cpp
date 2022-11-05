@@ -62,3 +62,13 @@ void DateBase::showDateBase(){
   }
   std::cout << endl;
 }
+
+bool DateBase::deleteTable(string tableName){
+  string Path = "../data/database/" + tableName;
+  if(!_file::isExist(Path)){
+    return false;
+  }else{
+    
+  }
+
+}
