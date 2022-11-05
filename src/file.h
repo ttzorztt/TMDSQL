@@ -152,6 +152,15 @@ string lockPath;
    * @return 如果删除正常，则返回True，否则返回False
   */
   bool deleteFile();
+  /**
+   * @brief 删除默认目录_file
+   * @return 如果删除正常，则返回True，否则返回False
+  */
   bool deleteDir();
+  /**
+   * @brief 删除目录
+   * @param Path 删除目录的路径
+   * @return 如果删除正常，则返回True，否则返回False
+  */
   bool static deleteDir(string Path);
 };
