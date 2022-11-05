@@ -1,3 +1,9 @@
+/*
+ * @Description: 主函数的实现
+ * @Autor: TMD
+ * @Date: 2022-11-01 22:24:29
+ * @LastEditTime: 2022-11-05 17:52:05
+ */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include<iostream>

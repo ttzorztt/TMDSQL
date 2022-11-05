@@ -1,8 +1,14 @@
+/*
+ * @Description: 实现DateBase类中的一些操作
+ * @Autor: TMD
+ * @Date: 2022-11-01 17:27:53
+ * @LastEditTime: 2022-11-05 17:56:33
+ */ 
 #ifndef _DATEBASE_H_
 #define _DATEBASE_H_
 #include "DateBase.h"
 #endif
-#ifndef _IOSTREAM_
+#ifndef _IOSTREAM_ 
 #define _IOSTREAM_
 #include <iostream>
 #endif
@@ -11,7 +17,6 @@ DateBase::DateBase(string name)
   status = 1;
   if(_file::isExist(name)) status = 0;
 }
-
 bool DateBase::create(){
   string Path = "../data/database/" + name;
   return _file::createDir(Path);

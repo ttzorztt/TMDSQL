@@ -1,3 +1,9 @@
+/*
+ * @Description: 文件操作类_file的实现 
+ * @Autor: TMD
+ * @Date: 2022-11-01 17:07:21
+ * @LastEditTime: 2022-11-05 17:52:09
+ */
 #include "file.h"
 _file::_file(string& Path){
   name = Path;
