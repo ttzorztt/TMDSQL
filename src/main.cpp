@@ -2,11 +2,11 @@
  * @Description: 主函数的实现
  * @Autor: TMD
  * @Date: 2022-11-01 22:24:29
- * @LastEditTime: 2022-11-05 17:52:05
+ * @LastEditTime: 2022-11-05 19:33:02
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
-#include<iostream>
+#include <iostream>
 #endif
 #ifndef _FILE_
 #define _FILE_
@@ -26,10 +26,13 @@
 #endif
 // #include <unistd.h>
 using namespace std;
-int main(int argc, char const *argv[])
-{
-  string path = "./";
-  DateBase a(path);
-  a.showDateBase();
+int main(int argc, char const *argv[]) {
+  DateBase a("tmd");
+  if (!a.isExist()) {
+    cout << "TMD" << endl;
+    a.create();
+  }
+  rmdir("ttt");
+  // a.showDateBase();
   return 0;
 }
