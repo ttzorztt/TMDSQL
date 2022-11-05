@@ -141,4 +141,17 @@ string lockPath;
    * @return 以vector的形式返回
   */
   vector<string> openDirReturnFileName();
+  /**
+   * @brief 删除文件
+   * @param Path 删除文件所在路径
+   * @return 如果正常删除，则返回True，否则返回False
+  */
+  bool static deleteFile(string Path);
+  /**
+   * @brief 删除_filezh中的默认文件
+   * @return 如果删除正常，则返回True，否则返回False
+  */
+  bool deleteFile();
+  bool deleteDir();
+  bool static deleteDir(string Path);
 };
