@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-06 15:47:11
+ * @LastEditTime : 2022-11-06 16:10:42
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -136,7 +136,6 @@ bool DataBase::deleteTable(string tableName) {
 bool DataBase::removeDataBase(string DataBaseName) {
   string Path = "../data/database/" + DataBaseName;
   if (access(Path.c_str(), F_OK) == -1) {
-    cout << "TMD" << endl;
     return false;
   } else {
     _dir::deleteDir(Path);
