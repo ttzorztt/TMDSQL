@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-05 21:41:17
+ * @LastEditTime : 2022-11-06 12:21:31
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -16,32 +16,29 @@
 #define _STRING_
 #include <string>
 #endif
-DataBase::DataBase(string name) : _file("../data/database/" + name) {
-  status = 1;
-  if (_file::isExist(name))
-    status = 0;
-}
+DataBase::DataBase(string name) : _dir("../data/database/" + name) {}
+
 bool DataBase::create() {
-  string Path = "../data/database/" + name;
-  return _file::createDir(Path);
-  return true;
+  string Path = returnDirPath();
+  cout << Path << endl;
+  return _dir::createDir(Path);
+  // return true;
 }
 
 bool DataBase::insertTable(string tableName) {
-  string Path = "../data/database/" + name + "/" + tableName;
+  string Path = returnDirPath() + "/" + tableName;
   return _file::createFile(Path);
 }
 
 bool DataBase::insertTable(string tableName, const vector<string>& tableItem) {
-  string Path = "../data/database/" + name + "/" + tableName;
+  string Path = returnDirPath() + "/" + tableName;
   _file::createFile(Path);
   _file::writeFile(Path, tableItem);
   return true;
 }
 
 void DataBase::showDataBase() {
-  vector<string> ans = openDirReturnFileName();
-
+  vector<string> ans = _dir::openDirReturnFileName(this->returnDirPath());
   int maxtablename = 0;
   for (string& str : ans) {
     maxtablename = max(maxtablename, (int)str.size() + 2);
@@ -67,6 +64,20 @@ void DataBase::showDataBase() {
   }
   std::cout << endl;
 }
+bool DataBase::isExist() {
+  if (access(this->returnDirPath().c_str(), F_OK) != -1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+bool DataBase::isExist(string DataBaseName) {
+  if (access(DataBaseName.c_str(), F_OK) != -1) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 bool DataBase::deleteTable(string tableName) {
   string Path = "../data/database/" + tableName;
@@ -80,5 +91,31 @@ bool DataBase::deleteTable(string tableName) {
     return false;
   } else {
     return true;
+  }
+}
+
+bool DataBase::removeDataBase(string DataBaseName) {
+  string Path = "../data/database/" + DataBaseName;
+  if (access(Path.c_str(), F_OK) != -1) {
+    return false;
+  } else {
+    _dir::deleteDir(Path);
+    if (access(Path.c_str(), F_OK) != -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+bool DataBase::removeDataBase() {
+  if (access(this->returnDirPath().c_str(), F_OK) != -1) {
+    return false;
+  } else {
+    _dir::deleteDir(this->returnDirPath());
+    if (access(this->returnDirPath().c_str(), F_OK) != -1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -2,15 +2,19 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-05 21:42:20
+ * @LastEditTime : 2022-11-06 12:22:57
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
 #endif
-#ifndef _FILE_
-#define _FILE_
+#ifndef _FILE_H_
+#define _FILE_H_
 #include "file.h"
+#endif
+#ifndef _DIR_H_
+#define _DIR_H_
+#include "dir.h"
 #endif
 #ifndef _DATEBASE_
 #define _DATEBASE_
@@ -52,7 +56,8 @@ int main(int argc, char const* argv[]) {
     a.create();
   }
   a.showDataBase();
-  DataBase::removeDataBase("../data/database/tmd");
-  // a.showDateBase();
+  // DataBase::removeDataBase("tmd");
+  // a.showDataBase();
+  // a.deleteDir();
   return 0;
 }

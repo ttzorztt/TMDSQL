@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-05 21:40:16
+ * @LastEditTime : 2022-11-06 11:17:13
  */
 #include "file.h"
 _file::_file(string Path) {
@@ -148,37 +148,7 @@ bool _file::readBuffOpen(bool need) {
   }
   return true;
 }
-bool _file::createDir(string dirName) {
-  string path = "mkdir " + dirName;
-  return mkdir(path.c_str(), 0777);
-}
 
-vector<string> _file::openDirReturnFileName(string dirPath) {
-  DIR* dirname = opendir(dirPath.c_str());
-  struct dirent* dirInfo;
-  vector<string> name;
-  while ((dirInfo = readdir(dirname)) != 0) {
-    name.push_back(dirInfo->d_name);
-  }
-  closedir(dirname);
-  return name;
-}
-vector<string> _file::openDirReturnFileName() {
-  DIR* dirname = opendir(name.c_str());
-  struct dirent* dirInfo;
-  vector<string> ret;
-  int count = 2;
-  while ((dirInfo = readdir(dirname)) != 0) {
-    if (count != 0) {
-      --count;
-      continue;
-    }
-    ret.push_back(dirInfo->d_name);
-  }
-
-  closedir(dirname);
-  return ret;
-}
 
 bool _file::deleteFile(string Path) {
   return remove(Path.c_str());
@@ -186,17 +156,4 @@ bool _file::deleteFile(string Path) {
 
 bool _file::deleteFile() {
   return remove(this->name.c_str());
-}
-
-bool _file::deleteDir() {
-  return rmdir(this->name.c_str());
-}
-
-/**
- * @brief
- * @param {string} Path
- * @return {*}
- */
-bool _file::deleteDir(string Path) {
-  return rmdir(Path.c_str());
 }

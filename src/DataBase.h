@@ -2,10 +2,14 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-05 21:39:39
+ * @LastEditTime : 2022-11-06 11:50:43
  */
-#ifndef _FILE_
-#define _FILE_
+#ifndef _DIR_H_
+#define _DIR_H_
+#include "dir.h"
+#endif
+#ifndef _FILE_H_
+#define _FILE_H_
 #include "file.h"
 #endif
 #ifndef _SET_
@@ -20,8 +24,20 @@ using namespace std;
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
-class DataBase : public _file {
+class DataBase : public _dir {
  public:
+  /**
+   * @brief 判断数据库是否存在
+   * @return True为存在，False为不存在
+   */
+  virtual bool isExist();
+
+  /**
+   * @brief 判断指定数据库是否存在
+   * @param  string DataBaseName 数据库名字
+   * @return True为存在，False为不存在
+   */
+  bool static isExist(string DataBaseName);
   /**
    * @brief  构造创建数据库对象
    * @param string name 数据库路径
@@ -69,7 +85,4 @@ class DataBase : public _file {
   bool static removeDataBase(string DataBaseName);
 
  private:
-  // status = 1为正常状态
-  // status = 0为非正常状态
-  int status;
 };
