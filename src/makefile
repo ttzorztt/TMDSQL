@@ -7,7 +7,7 @@ main.o: main.cpp
 	g++ -c main.cpp
 file.o: file.cpp
 	g++ -c file.cpp
-DateBase.o: DataBase.cpp
+DataBase.o: DataBase.cpp
 	g++ -c DataBase.cpp
 dir.o: dir.cpp
 	g++ -c dir.cpp

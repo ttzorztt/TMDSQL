@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-06 16:10:42
+ * @LastEditTime : 2022-11-06 21:02:38
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -146,6 +146,7 @@ bool DataBase::removeDataBase(string DataBaseName) {
     }
   }
 }
+
 bool DataBase::removeDataBase() {
   if (access(this->returnDirPath().c_str(), F_OK) == -1) {
     return false;

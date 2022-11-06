@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-06 19:48:33
+ * @LastEditTime : 2022-11-06 20:02:54
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -65,7 +65,7 @@ _dir(_dir& copy);
    * @brief 返回路径
    * @return 返回DirPath
    */
-  inline string returnDirPath();
+   string returnDirPath();
   /**
    * @brief <static> 判断指定文件是否存在
    * @param string name 文件路径

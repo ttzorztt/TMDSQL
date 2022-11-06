@@ -2,9 +2,11 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-06 19:33:37
+ * @LastEditTime : 2022-11-06 21:57:48
  */
 #include "file.h"
+#include <iostream>
+using namespace std;
 _file::_file(string Path) {
   int size = Path.size() - 1;
   while (size >= 0) {
@@ -21,10 +23,10 @@ _file::~_file() {
   writeFileBuff.close();
 }
 bool _file::isExist() {
-  return access(this->name.c_str(), F_OK);
+  return access(this->path.c_str(), F_OK) != -1;
 }
 bool _file::isExist(string _name) {
-  return access(_name.c_str(), F_OK);
+  return access(_name.c_str(), F_OK) != -1;
 }
 bool _file::writeFile(const string& str) {
   if (!writeBuffOpen(true)) {
@@ -56,13 +58,14 @@ bool _file::writeFile(string Path, const vector<string>& array) {
   _file tmd(Path);
   return tmd.writeFile(array);
 }
-vector<string> _file::readline() {
-  if (!readBuffOpen(true)) {
-    return {};
-  }
-  vector<string> ret;
+
+bool _file::readline(vector<string>& ret) {
   string _str;
-  getline(readFileBuff, _str);
+  std::cout << (getline(readFileBuff, _str) == NULL) << endl;
+  return true;
+  if (!readBuffOpen(true) && getline(readFileBuff, _str)) {
+    return false;
+  }
   int left = 0;
   int right = 1;
   int size = ret.size();
@@ -76,7 +79,7 @@ vector<string> _file::readline() {
       ++right;
     }
   }
-  return ret;
+  return true;
 }
 
 bool _file::addLock() {
@@ -90,12 +93,10 @@ bool _file::addLock() {
   }
   return false;
 }
-
 bool _file::removeLock() {
   if (!isExist()) {
     return false;
   }
-
   ifstream filereadbuff(lockPath);
   if (!filereadbuff.good()) {
     filereadbuff.close();
@@ -110,7 +111,6 @@ bool _file::removeLock() {
     }
   }
 }
-
 bool _file::createFile(string path) {
   if (_file::isExist(path)) {
     return false;
@@ -142,7 +142,7 @@ bool _file::writeBuffOpen(bool need) {
     return false;
   }
   if (!writeFileBuff.is_open()) {
-    writeFileBuff.open(name, ios::app);
+    writeFileBuff.open(path, ios::app);
   }
   return true;
 }
@@ -152,7 +152,7 @@ bool _file::readBuffOpen(bool need) {
     return false;
   }
   if (!readFileBuff.is_open()) {
-    readFileBuff.open(name);
+    readFileBuff.open(path);
   }
   return true;
 }
@@ -162,7 +162,7 @@ bool _file::deleteFile(string Path) {
 }
 
 bool _file::deleteFile() {
-  return remove(this->name.c_str());
+  return remove(this->path.c_str());
 }
 
 string _file::returnFilePath() {
@@ -171,6 +171,7 @@ string _file::returnFilePath() {
 _file::_file(_file& _copy) {
   this->lockPath = _copy.lockPath;
   this->name = _copy.name;
+  this->path = _copy.path;
 }
 string _file::returnFileName() {
   return name;

@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-06 20:00:30
+ * @LastEditTime : 2022-11-06 21:00:49
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -16,8 +16,8 @@
 #define _DIR_H_
 #include "dir.h"
 #endif
-#ifndef _DATEBASE_
-#define _DATEBASE_
+#ifndef _DATEBASE_H_
+#define _DATEBASE_H_
 #include "DataBase.h"
 #endif
 #ifndef _VECTOR_
@@ -51,9 +51,13 @@ void init() {
 int main(int argc, char const* argv[]) {
   init();
   _file test("../data/database/testbase/CPS1985.csv");
-  vector<string>ans = test.readline();
-  for(string& str: ans){
+  vector<string> ans;
+  while(test.readline(ans)){
+    cout << ans.size() << endl;
+  for (string& str : ans) {
     cout << str;
   }
   cout << endl;
+  }
+
 }
