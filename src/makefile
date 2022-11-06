@@ -1,7 +1,6 @@
-main: main.o file.o DataBase.o dir.o
+main: main.o file.o DataBase.o dir.o	
 	g++ main.o file.o DataBase.o dir.o -o main
 	./main
-	# make clean
 main.o: main.cpp
 	g++ -c main.cpp
 file.o: file.cpp

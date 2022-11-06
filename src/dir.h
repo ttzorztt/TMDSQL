@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-06 11:56:04
+ * @LastEditTime : 2022-11-06 16:05:13
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -44,13 +44,13 @@ class _dir {
    */
   vector<string> static openDirReturnFileName(string dirPath);
   /**
-   * @brief 创建目录
+   * @brief <static>创建目录
    * @param  string dirName 创建目录名
    * @return 正确创建则返回true，否则返回false
    */
   bool static createDir(string dirName);
   /**
-   * @brief 删除目录
+   * @brief <static>删除目录
    * @param string Path 删除目录的路径
    * @return 如果删除正常，则返回True，否则返回False
    */
@@ -59,7 +59,7 @@ class _dir {
    * @brief 返回路径
    * @return 返回DirPath
    */
-string returnDirPath();
+  string returnDirPath();
   /**
    * @brief <static> 判断指定文件是否存在
    * @param string name 文件路径

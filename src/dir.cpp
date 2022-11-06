@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-11-06 12:10:29
+ * @LastEditTime : 2022-11-06 12:47:10
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -18,7 +18,12 @@ vector<string> _dir::openDirReturnFileName(string dirPath) {
   DIR* dirname = opendir(dirPath.c_str());
   struct dirent* dirInfo;
   vector<string> name;
+  int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
+    if (count > 0) {
+      --count;
+      continue;
+    }
     name.push_back(dirInfo->d_name);
   }
   closedir(dirname);

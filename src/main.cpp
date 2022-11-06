@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-06 12:22:57
+ * @LastEditTime : 2022-11-06 15:51:27
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -50,14 +50,10 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  DataBase a("tmd");
+  DataBase a("aaaa");
   if (!a.isExist()) {
     cout << "TMD" << endl;
     a.create();
   }
-  a.showDataBase();
-  // DataBase::removeDataBase("tmd");
-  // a.showDataBase();
-  // a.deleteDir();
   return 0;
 }

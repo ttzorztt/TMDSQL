@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-06 12:21:31
+ * @LastEditTime : 2022-11-06 15:47:11
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -20,7 +20,6 @@ DataBase::DataBase(string name) : _dir("../data/database/" + name) {}
 
 bool DataBase::create() {
   string Path = returnDirPath();
-  cout << Path << endl;
   return _dir::createDir(Path);
   // return true;
 }
@@ -37,9 +36,13 @@ bool DataBase::insertTable(string tableName, const vector<string>& tableItem) {
   return true;
 }
 
-void DataBase::showDataBase() {
+void DataBase::showDataBaseTable() {
   vector<string> ans = _dir::openDirReturnFileName(this->returnDirPath());
   int maxtablename = 0;
+  if (ans.size() == 0) {
+    std::cout << "这个数据库是空的!" << endl;
+    return;
+  }
   for (string& str : ans) {
     maxtablename = max(maxtablename, (int)str.size() + 2);
   }
@@ -50,17 +53,53 @@ void DataBase::showDataBase() {
   for (string& str : ans) {
     int strnamesize = str.size();
     int left = (maxtablename - strnamesize) / 2;
-    for (int a = 0; a < left; ++a) {
-      std::cout << "*";
+    std::cout << "|";
+    for (int a = 1; a < left; ++a) {
+      std::cout << " ";
     }
     std::cout << str;
-    for (int a = maxtablename - strnamesize - left; a > 0; --a) {
-      std::cout << "*";
+    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
+      std::cout << " ";
     }
+    std::cout << "|";
     std::cout << endl;
   }
   for (int a = 0; a < maxtablename; ++a) {
     std::cout << "*";
+  }
+  std::cout << endl;
+}
+
+void DataBase::showDataBase() {
+  vector<string> ans = _dir::openDirReturnFileName("../data/database/");
+  int maxtablename = 0;
+  if (ans.size() == 0) {
+    std::cout << "暂时还没有建立数据库" << endl;
+    return;
+  }
+  for (string& str : ans) {
+    maxtablename = max(maxtablename, (int)str.size() + 2);
+  }
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "#";
+  }
+  std::cout << endl;
+  for (string& str : ans) {
+    int strnamesize = str.size();
+    int left = (maxtablename - strnamesize) / 2;
+    std::cout << "?";
+    for (int a = 1; a < left; ++a) {
+      std::cout << " ";
+    }
+    std::cout << str;
+    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
+      std::cout << " ";
+    }
+    std::cout << "?";
+    std::cout << endl;
+  }
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "#";
   }
   std::cout << endl;
 }
@@ -96,7 +135,8 @@ bool DataBase::deleteTable(string tableName) {
 
 bool DataBase::removeDataBase(string DataBaseName) {
   string Path = "../data/database/" + DataBaseName;
-  if (access(Path.c_str(), F_OK) != -1) {
+  if (access(Path.c_str(), F_OK) == -1) {
+    cout << "TMD" << endl;
     return false;
   } else {
     _dir::deleteDir(Path);
@@ -108,7 +148,7 @@ bool DataBase::removeDataBase(string DataBaseName) {
   }
 }
 bool DataBase::removeDataBase() {
-  if (access(this->returnDirPath().c_str(), F_OK) != -1) {
+  if (access(this->returnDirPath().c_str(), F_OK) == -1) {
     return false;
   } else {
     _dir::deleteDir(this->returnDirPath());

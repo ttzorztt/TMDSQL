@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-06 11:50:43
+ * @LastEditTime : 2022-11-06 15:35:43
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -11,14 +11,6 @@
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
-#endif
-#ifndef _SET_
-#define _SET_
-#include <set>
-#endif
-#ifndef _MAP_
-#define _MAP_
-#include <map>
 #endif
 using namespace std;
 /**
@@ -50,8 +42,15 @@ class DataBase : public _dir {
   bool create();
   /**
    * @brief 显示数据库内表项
+   * @return
    */
-  void showDataBase();
+  void showDataBaseTable();
+
+  /**
+   * @brief 显示所有数据库
+   * @return
+   */
+  void static showDataBase();
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字
