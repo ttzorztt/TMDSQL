@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-06 19:52:24
+ * @LastEditTime : 2022-11-06 19:59:20
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -52,11 +52,6 @@ class _file {
    * @return True写入正确,False 写入失败
    */
   bool writeFile(const vector<string>& array);
-  /**
-   * @brief 以行的形势读出数据
-   * @return 将一行数据以空格的形式分开，并存储在vector中，然后返回。
-   */
-  vector<string> readline();
 
   /**
    * @brief 创建_file默认的文件
@@ -106,6 +101,11 @@ class _file {
   string lockPath;
 
  public:
+  /**
+   * @brief 以行的形势读出数据
+   * @return 将一行数据以空格的形式分开，并存储在vector中，然后返回。
+   */
+  vector<string> readline();
   /**
    * @brief 判断_file默认文件是否存在
    * @return 若文件存在则返回True，否则返回False;

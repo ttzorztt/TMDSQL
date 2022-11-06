@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-06 19:27:21
+ * @LastEditTime : 2022-11-06 20:00:30
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -50,11 +50,10 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  DataBase a("aaaa");
-  if (!a.isExist()) {
-    cout << "TMD" << endl;
-    a.create();
-  }
   _file test("../data/database/testbase/CPS1985.csv");
-  cout << test.returnFileName() << " " << test.returnFilePath() << endl;
+  vector<string>ans = test.readline();
+  for(string& str: ans){
+    cout << str;
+  }
+  cout << endl;
 }
