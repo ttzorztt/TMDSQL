@@ -2,11 +2,19 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-06 11:17:13
+ * @LastEditTime : 2022-11-06 19:33:37
  */
 #include "file.h"
 _file::_file(string Path) {
-  name = Path;
+  int size = Path.size() - 1;
+  while (size >= 0) {
+    if (Path[size] == '/') {
+      break;
+    }
+    --size;
+  }
+  this->name = Path.substr(size + 1, INT64_MAX);
+  path = Path;
   lockPath = "../data/lock/." + Path;
 }
 _file::~_file() {
@@ -149,11 +157,21 @@ bool _file::readBuffOpen(bool need) {
   return true;
 }
 
-
 bool _file::deleteFile(string Path) {
   return remove(Path.c_str());
 }
 
 bool _file::deleteFile() {
   return remove(this->name.c_str());
+}
+
+string _file::returnFilePath() {
+  return path;
+}
+_file::_file(_file& _copy) {
+  this->lockPath = _copy.lockPath;
+  this->name = _copy.name;
+}
+string _file::returnFileName() {
+  return name;
 }

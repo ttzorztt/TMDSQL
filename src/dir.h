@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-06 16:05:13
+ * @LastEditTime : 2022-11-06 19:48:33
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -37,6 +37,12 @@ class _dir {
    * @return
    */
   _dir(string dirPath);
+/**
+ * @brief 拷贝构造函数
+ * @param  _dir& copy 拷贝值
+ * @return  
+ */
+_dir(_dir& copy);
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
    * @param string dirPath dir的路径
@@ -59,14 +65,13 @@ class _dir {
    * @brief 返回路径
    * @return 返回DirPath
    */
-  string returnDirPath();
+  inline string returnDirPath();
   /**
    * @brief <static> 判断指定文件是否存在
    * @param string name 文件路径
    * @return 若文件存在则返回True，否则返回False;
    */
   bool static isExist(string name);
-
   string dirPath;
   /**
    * @brief 删除默认目录 dirPath

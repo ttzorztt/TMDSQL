@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-06 15:35:43
+ * @LastEditTime : 2022-11-06 19:50:46
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -33,8 +33,16 @@ class DataBase : public _dir {
   /**
    * @brief  构造创建数据库对象
    * @param string name 数据库路径
+   * @return 
    */
   DataBase(string name);
+
+  /**
+   * @brief 拷贝构造函数
+   * @param  DataBase& copy
+   * @return 
+   */
+  DataBase(DataBase& copy);
   /**
    * @brief 创建数据库(底层就是创建文件夹)
    * @return 创建成功返回True，否则返回False
@@ -75,13 +83,11 @@ class DataBase : public _dir {
    * @return  正常返回
    */
   bool removeDataBase();
-
   /**
    * @brief <static>删除指定数据库
    * @param string DataBaseName
    * @return 删除正常则返回True，否则返回False
    */
   bool static removeDataBase(string DataBaseName);
-
  private:
 };

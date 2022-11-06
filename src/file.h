@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-06 11:38:24
+ * @LastEditTime : 2022-11-06 19:52:24
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -33,17 +33,12 @@
 #include <unistd.h>
 #endif
 using namespace std;
-    /**
-     * @brief
-     * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
-     */
-    class _file {
+/**
+ * @brief
+ * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
+ */
+class _file {
  protected:
-  /**
-   * @brief 判断_file默认文件是否存在
-   * @return 若文件存在则返回True，否则返回False;
-   */
-  virtual bool isExist();
   /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
@@ -73,7 +68,6 @@ using namespace std;
    * @return 如果删除正常，则返回True，否则返回False
    */
   bool deleteFile();
-
   /**
    * @brief 加锁
    * @return 加锁成功则返回True，并意味着当前没有读写冲突，
@@ -99,13 +93,11 @@ using namespace std;
    * @return 文件状态为need，则返回True
    */
   bool readBuffOpen(bool need);
-  /**
-   * @brief <static> 创建指定目录
-   * @param string dirName 创建目录名
-   * @return 创建正常则返回True,否则返回False
-   */
+
   // filePath是_file超类的文件路径
   string name;
+  // path 是_file的文件路径
+  string path;
   // writeFileBuff是写文件buff指针
   ofstream writeFileBuff;
   // readFileBuff是读文件buff指针
@@ -114,6 +106,11 @@ using namespace std;
   string lockPath;
 
  public:
+  /**
+   * @brief 判断_file默认文件是否存在
+   * @return 若文件存在则返回True，否则返回False;
+   */
+  virtual bool isExist();
   /**
    * @brief <static> 删除指定文件
    * @param string Path 删除文件所在路径
@@ -126,6 +123,13 @@ using namespace std;
    * @param string name 文件路径
    */
   _file(string name);
+
+  /**
+   * @brief 拷贝构造函数
+   * @param  _file& _copy 拷贝数据
+   * @return
+   */
+  _file(_file& _copy);
   /**
    * @brief 析构函数，释放并关闭文件
    */
@@ -156,4 +160,14 @@ using namespace std;
    * @return True表示文件创造成功，False表示文件创造失败
    */
   bool static createFile(string name);
+  /**
+   * @brief 返回文件的相对路径
+   * @return 返回文件的相对路径
+   */
+  inline string returnFilePath();
+  /**
+   * @brief 返回文件的名字
+   * @return  返回文件的名字
+   */
+  inline string returnFileName();
 };
