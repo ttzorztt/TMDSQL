@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-07 15:39:41
+ * @LastEditTime : 2022-11-07 22:19:36
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -40,9 +40,9 @@ class _super {
   std::string name;  //名字
   std::string path;  //相对路径
  public:
-  virtual bool isExist();
   virtual bool create();
   virtual bool remove();
+  virtual int returnCount();
   /**
    * @brief 返回名字
    * @return 返回名字
@@ -97,11 +97,12 @@ class _super {
    * @param  string Path 待计算路径
    * @return  文件名
    */
-  std::string static computeFileName(std::string Path);
+  std::string static computeName(std::string Path);
   /**
-   * @brief <static> 计算Path中的目录名，并返回
-   * @param  string Path 待计算路径
-   * @return  目录名
+   * @brief <static> 判断指定文件或目录是否存在
+   * @param string Path 路径
+   * @param type style 类型
+   * @return 若存在则返回True，否则返回False;
    */
-  std::string static computeDirName(std::string Path);
+  bool static isExist(std::string Path,type style);
 };

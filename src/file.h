@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-07 15:54:56
+ * @LastEditTime : 2022-11-07 22:34:26
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -37,7 +37,7 @@
  * @brief
  * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
  */
-class _file :public _super{
+class _file : public _super {
  protected:
   /**
    * @brief 以App的方式写入字符串
@@ -45,7 +45,6 @@ class _file :public _super{
    * @return True写入正确,False 写入失败
    */
   bool write(const std::vector<std::string>& array);
-
   /**
    * @brief 创建_file默认的文件
    * @return True表示文件创造成功，False表示文件创造失败
@@ -55,18 +54,8 @@ class _file :public _super{
    * @brief 删除_filezh中的默认文件
    * @return 如果删除正常，则返回True，否则返回False
    */
-  bool remove();
-  /**
-   * @brief 加锁
-   * @return 加锁成功则返回True，并意味着当前没有读写冲突，
-   * 加锁失败则返回False，并意味着当前存在读写冲突。
-   */
-  bool addLock();
-  /**
-   * @brief 删锁
-   * @return 删锁成功则返回True，否则返回False。
-   */
-  bool removeLock();
+  virtual bool remove();
+  
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -81,6 +70,7 @@ class _file :public _super{
    * @return 文件状态为need，则返回True
    */
   bool readBuffOpen(bool need);
+
  public:
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
@@ -104,11 +94,6 @@ class _file :public _super{
    * @return 读完或文件不存在返回False，否则返回True
    */
   bool readline(std::vector<std::string>& ret);
-  /**
-   * @brief 判断_file默认文件是否存在
-   * @return 若文件存在则返回True，否则返回False;
-   */
-  virtual bool isExist();
 
   /**
    * @brief 构造函数，传入文件路径
@@ -132,43 +117,25 @@ class _file :public _super{
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(std::string Path, const std::vector<std::string>& array);
-
-  /**
-   * @brief <static> 判断指定文件是否存在
-   * @param string name 文件路径
-   * @return 若文件存在则返回True，否则返回False;
-   */
-  bool static isExist(std::string name);
+  bool static writeFile(std::string Path,
+                        const std::vector<std::string>& array);
   /**
    * @brief <static> 创建指定文件
    * @param string path 需要创建的文件名字
+   * @param type stype 需要创建文件的类型
    * @return True表示文件创造成功，False表示文件创造失败
    */
-  bool static create(std::string name);
-  /**
-   * @brief 返回文件的相对路径
-   * @return 返回文件的相对路径
-   */
-  const std::string& returnPath();
-  /**
-   * @brief 返回文件的名字
-   * @return  返回文件的名字
-   */
-  const std::string& returnName();
-private:
+   bool static create(std::string path,type style);
+
+ private:
   // writeFileBuff是写文件buff指针
   std::ofstream writeFileBuff;
   // readFileBuff是读文件buff指针
   std::ifstream readFileBuff;
   // lockPath是加锁文件
   std::string lockPath;
+  //文件类型
+  type style;  
   //当前打开的文件数总数
   static int count;
-  //当前打开的表的数量
-  static int fileCount;
-  //当前打开的索引文件的数量
-  static int indexCount;
-  //当前打开的锁文件的数量
-  static int lockCount;
 };

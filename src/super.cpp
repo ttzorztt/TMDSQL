@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-07 15:40:52
+ * @LastEditTime : 2022-11-07 22:20:01
  */
 
 #ifndef _SUPER_H_
@@ -24,29 +24,38 @@ std::vector<std::string> _super::openDirReturnFileName(std::string Path) {
   closedir(dirname);
   return name;
 }
-bool _super::isExist(){return true;}
-bool _super::create(){return true;}
-bool _super::remove(){return true;}
-type _super::returnType(){return type::_TYPE_FILE;}
-std::string _super::returnName(){
+
+bool _super::create() {
+  return true;
+}
+bool _super::remove() {
+  return true;
+}
+type _super::returnType() {
+  return type::_TYPE_FILE;
+}
+std::string _super::returnName() {
   return name;
 }
-std::string _super::returnPath(){
+std::string _super::returnPath() {
   return path;
 }
-
-_super::_super(_super& copy){
+int _super::returnCount(){
+  return -1;
+}
+_super::~_super() {}
+_super::_super(_super& copy) {
   this->name = copy.name;
   this->path = copy.path;
 }
-_super::_super(std::string name,std::string path){
+_super::_super(std::string name, std::string path) {
   this->name = name;
   this->path = path;
 }
 bool _super::deleteFile(std::string Path) {
   return std::remove(Path.c_str());
 }
-std::string _super::computeFileName(std::string Path){
+std::string _super::computeName(std::string Path) {
   int size = Path.size() - 1;
   while (size >= 0) {
     if (Path[size] == '/') {
@@ -55,6 +64,24 @@ std::string _super::computeFileName(std::string Path){
     --size;
   }
   return Path.substr(size + 1, INT64_MAX);
+}
+bool _super::isExist(std::string Path, type style) {
+  switch (style) {
+    case type::_TYPE_DIR: {
+      return ::access(Path.c_str(), F_OK) != -1;
+      break;
+    }
+    case type::_TYPE_FILE:
+    case type::_TYPE_INDEX:
+    case type::_TYPE_LOCK: {
+      return access((Path + "./csv").c_str(), F_OK) != -1;
+      break;
+    }
+    default:{
+      
+    }
+  }
+  return false;
 }
 // bool _super::isExist() {
 //   switch (style) {
@@ -88,7 +115,7 @@ std::string _super::computeFileName(std::string Path){
 // bool _super::remove(){
 //     switch (style){
 //         case type::_TYPE_DIR :{
-            
+
 //             return std::remove(this->path.c_str());
 //             break;
 //         }

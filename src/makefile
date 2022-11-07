@@ -1,11 +1,10 @@
-main: main.o file.o DataBase.o dir.o table.o super.o
-	g++ main.o file.o DataBase.o dir.o table.o super.o -o main
+main: main.o file.o DataBase.o dir.o Table.o super.o
+	g++ main.o file.o DataBase.o dir.o Table.o super.o -o main
 	./main
-	make clean
 super.o: super.cpp
 	g++ -c super.cpp
-table.o: table.cpp
-	g++ -c table.cpp
+Table.o: Table.cpp
+	g++ -c Table.cpp
 main.o: main.cpp
 	g++ -c main.cpp
 file.o: file.cpp
@@ -15,4 +14,4 @@ DataBase.o: DataBase.cpp
 dir.o: dir.cpp
 	g++ -c dir.cpp
 clean:
-	mv *.o /tmp
+	@mv *.o /tmp

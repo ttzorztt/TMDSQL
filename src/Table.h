@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-07 10:10:55
+ * @LastEditTime : 2022-11-07 22:31:34
  */
 #ifndef _STRING_
 #define _STRING_
@@ -20,7 +20,7 @@ using namespace std;
 /**
  * @brief 封装表操作
  */
-class _table : protected _file {
+class Table : protected _file {
  private:
  public:
   /**
@@ -29,21 +29,21 @@ class _table : protected _file {
    * @param  string stableName 表名
    * @return
    */
-  _table(string datablaseName, string stableName);
+  Table(string datablaseName, string stableName);
   /**
    * @brief 构造函数
    * @param  DataBase database 数据库对象
    * @param  string stableName 表名
    * @return
    */
-  _table(DataBase database, string stableName);
+  Table(DataBase database, string stableName);
   /**
    * @brief 构造函数
    * @param  DataBase database 数据库对象
    * @param  _file tableName 表文件对象
    * @return
    */
-  _table(DataBase database, _file tableName);
+  Table(DataBase database, _file tableName);
   void createIndex();
-  ~_table();
+  ~Table();
 };

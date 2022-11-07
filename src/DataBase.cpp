@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-07 15:48:33
+ * @LastEditTime : 2022-11-07 21:58:48
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -22,12 +22,12 @@ bool DataBase::create() {
 
 bool DataBase::insertTable(std::string tableName) {
   std::string Path = returnPath() + "/" + tableName;
-  return _file::create(Path);
+  return _file::create(Path,type::_TYPE_FILE);
 }
 
 bool DataBase::insertTable(std::string tableName, const std::vector<std::string>& tableItem) {
   std::string Path = returnPath() + "/" + tableName;
-  _file::create(Path);
+  _file::create(Path,type::_TYPE_FILE);
   _file::writeFile(Path, tableItem);
   return true;
 }
