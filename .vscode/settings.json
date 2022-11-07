@@ -31,6 +31,8 @@
     "system_error": "cpp",
     "type_traits": "cpp",
     "tuple": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "map": "cpp",
+    "set": "cpp"
   }
 }

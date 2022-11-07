@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-07 09:20:38
+ * @LastEditTime : 2022-11-07 11:44:00
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -20,10 +20,6 @@
 #define _DIRENT_H_
 #include <dirent.h>
 #endif
-#ifndef _SYS_TYPES_H_
-#define _SYS_TYPES_H_
-#include <sys/types.h>
-#endif
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
 #include <sys/stat.h>
@@ -32,7 +28,6 @@
 #define _UNISTD_H_
 #include <unistd.h>
 #endif
-using namespace std;
 /**
  * @brief
  * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
@@ -44,7 +39,7 @@ class _file {
    * @param vector<string>& array vector<string>的类型数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool writeFile(const vector<string>& array);
+  bool writeFile(const std::vector<std::string>& array);
 
   /**
    * @brief 创建_file默认的文件
@@ -83,39 +78,39 @@ class _file {
   bool readBuffOpen(bool need);
 
   // filePath是_file超类的文件路径
-  string name;
+  std::string name;
   // path 是_file的文件路径
-  string path;
+  std::string path;
   // writeFileBuff是写文件buff指针
-  ofstream writeFileBuff;
+  std::ofstream writeFileBuff;
   // readFileBuff是读文件buff指针
-  ifstream readFileBuff;
+  std::ifstream readFileBuff;
   // lockPath是加锁文件
-  string lockPath;
+  std::string lockPath;
   
  public:
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
    */
-  const ofstream& returnWriteFileBuff();
+  const std::ofstream& returnWriteFileBuff();
   /**
    * @brief 返回类中默认的readFileBuff，用来操作
    * @return <const ifstream&> 返回readFileBuff
    */
-  const ifstream& returnReadFileBuff();
+  const std::ifstream& returnReadFileBuff();
   /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
    * @return True写入正确,False 写入失败
    */
-  bool writeFile(const string& str);
+  bool writeFile(const std::string& str);
   /**
    * @brief 以行的形势读出数据
    * @param vector<string>& ret 保存的方式
    * @return 读完或文件不存在返回False，否则返回True
    */
-  bool readline(vector<string>& ret);
+  bool readline(std::vector<std::string>& ret);
   /**
    * @brief 判断_file默认文件是否存在
    * @return 若文件存在则返回True，否则返回False;
@@ -126,13 +121,13 @@ class _file {
    * @param string Path 删除文件所在路径
    * @return 如果正常删除，则返回True，否则返回False
    */
-  bool static deleteFile(string Path);
+  bool static deleteFile(std::string Path);
 
   /**
    * @brief 构造函数，传入文件路径
    * @param string name 文件路径
    */
-  _file(string name);
+  _file(std::string name);
 
   /**
    * @brief 拷贝构造函数
@@ -150,34 +145,34 @@ class _file {
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(string Path, const vector<string>& array);
+  bool static writeFile(std::string Path, const std::vector<std::string>& array);
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Path 路径
    * @param string& str 写入的字符串
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(string Path, const string& str);
+  bool static writeFile(std::string Path, const std::string& str);
   /**
    * @brief <static> 判断指定文件是否存在
    * @param string name 文件路径
    * @return 若文件存在则返回True，否则返回False;
    */
-  bool static isExist(string name);
+  bool static isExist(std::string name);
   /**
    * @brief <static> 创建指定文件
    * @param string path 需要创建的文件名字
    * @return True表示文件创造成功，False表示文件创造失败
    */
-  bool static createFile(string name);
+  bool static createFile(std::string name);
   /**
    * @brief 返回文件的相对路径
    * @return 返回文件的相对路径
    */
-  const string& returnFilePath();
+  const std::string& returnFilePath();
   /**
    * @brief 返回文件的名字
    * @return  返回文件的名字
    */
-  const string& returnFileName();
+  const std::string& returnFileName();
 };

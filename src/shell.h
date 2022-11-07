@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-11-05 21:42:39
+ * @LastEditTime : 2022-11-07 10:41:16
  */
 #ifndef _SET_
 #define _SET_
@@ -21,7 +21,6 @@
 #include <string>
 #endif
 
-using namespace std;
 /***
 创建 数据库 XXX;
 选择 数据库 XXX;
@@ -36,8 +35,8 @@ class shell {
   int readStatus();
 
  private:
-  set<string> _GBKstatus;
-  map<string, int> _binaryStatus;
-  string strBuff;
-  vector<vector<string>> arraybuff;
+  std::set<std::string> _GBKstatus;
+  std::map<std::string, int> _binaryStatus;
+  std::string strBuff;
+  std::vector<std::vector<std::string>> arraybuff;
 };

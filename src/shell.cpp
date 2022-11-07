@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-11-05 21:43:04
+ * @LastEditTime : 2022-11-07 10:41:41
  */
 #include "shell.h"
 #include <iostream>
@@ -92,9 +92,9 @@ shell::shell() {
 }
 
 int shell::readStatus() {
-  string strbuff;
-  cin >> strbuff;
-  vector<string> ret;
+  std::string strbuff;
+  std::cin >> strbuff;
+  std::vector<std::string> ret;
   int size = strbuff.size();
   if (size % 2 == 0)
     return;

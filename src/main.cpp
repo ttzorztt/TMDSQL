@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-07 07:43:54
+ * @LastEditTime : 2022-11-07 11:43:33
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -28,6 +28,7 @@
 #define _STRING_
 #include <string>
 #endif
+
 using namespace std;
 
 /**
@@ -54,10 +55,10 @@ int main(int argc, char const* argv[]) {
   vector<string> ans;
   while(test.readline(ans)){
   for (string& str : ans) {
-    cout << str;
+    // cout << str;
   } 
   ans.clear();
-  cout << endl << endl;
+  // cout << endl << endl;
   } 
  
 }

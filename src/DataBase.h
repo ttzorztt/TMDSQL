@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-07 10:15:22
+ * @LastEditTime : 2022-11-07 10:35:27
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -12,13 +12,12 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-using namespace std;
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
 class DataBase : protected _dir {
  public:
- virtual string returnPath();
+ virtual std::string returnPath();
   /**
    * @brief 判断数据库是否存在
    * @return True为存在，False为不存在
@@ -30,13 +29,13 @@ class DataBase : protected _dir {
    * @param  string DataBaseName 数据库名字
    * @return True为存在，False为不存在
    */
-  bool static isExist(string DataBaseName);
+  bool static isExist(std::string DataBaseName);
   /**
    * @brief  构造创建数据库对象
    * @param string name 数据库路径
    * @return 
    */
-  DataBase(string name);
+  DataBase(std::string name);
 
   /**
    * @brief 拷贝构造函数
@@ -66,19 +65,19 @@ class DataBase : protected _dir {
    * @param vector<string>& tableItem 表头项
    * @return 插入正常则返回True,否则返回False
    */
-  bool insertTable(string tableName, const vector<string>& tableItem);
+  bool insertTable(std::string tableName, const std::vector<std::string>& tableItem);
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字
    * @return 插入正常则返回True,否则返回False
    */
-  bool insertTable(string tableName);
+  bool insertTable(std::string tableName);
   /**
    * @brief 删除数据库中tableName表项
    * @param string tableName 表名
    * @return 删除正常则返回True，否则返回False
    */
-  bool deleteTable(string tableName);
+  bool deleteTable(std::string tableName);
   /**
    * @brief 删除默认数据库
    * @return  正常返回
@@ -89,6 +88,6 @@ class DataBase : protected _dir {
    * @param string DataBaseName
    * @return 删除正常则返回True，否则返回False
    */
-  bool static removeDataBase(string DataBaseName);
+  bool static removeDataBase(std::string DataBaseName);
  private:
 };
