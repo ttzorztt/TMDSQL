@@ -2,38 +2,19 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-11-07 10:32:34
+ * @LastEditTime : 2022-11-07 15:52:47
  */
 #ifndef _DIR_H_
 #define _DIR_H_
 #include "dir.h"
 #endif
-_dir::_dir(_dir& copy){
-  this->dirPath = copy.returnPath();
-  this->dirName = copy.returnName();
-}
+_dir::_dir(_dir& copy): _super(this->dirPath,this->dirName){}
 bool _dir::deleteDir() {
   return rmdir(this->dirPath.c_str());
 }
-_dir::_dir(std::string dirPath) : dirPath(dirPath) {
-
+_dir::_dir(std::string dirPath) : _super(dirPath,_super::computeDirName(dirPath)){
 }
 
-std::vector<std::string> _dir::openDirReturnFileName(std::string dirPath) {
-  DIR* dirname = opendir(dirPath.c_str());
-  struct dirent* dirInfo;
-  std::vector<std::string> name;
-  int count = 2;
-  while ((dirInfo = readdir(dirname)) != 0) {
-    if (count > 0) {
-      --count;
-      continue;
-    }
-    name.push_back(dirInfo->d_name);
-  }
-  closedir(dirname);
-  return name;
-}
 std::string _dir::returnName(){
   return dirName;
 }

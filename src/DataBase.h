@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-07 10:35:27
+ * @LastEditTime : 2022-11-07 14:30:40
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -12,10 +12,14 @@
 #define _FILE_H_
 #include "file.h"
 #endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
+#include "super.h"
+#endif
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
-class DataBase : protected _dir {
+class DataBase : public _dir {
  public:
  virtual std::string returnPath();
   /**
@@ -23,7 +27,6 @@ class DataBase : protected _dir {
    * @return True为存在，False为不存在
    */
   virtual bool isExist();
-
   /**
    * @brief 判断指定数据库是否存在
    * @param  string DataBaseName 数据库名字
@@ -36,7 +39,6 @@ class DataBase : protected _dir {
    * @return 
    */
   DataBase(std::string name);
-
   /**
    * @brief 拷贝构造函数
    * @param  DataBase& copy
@@ -53,7 +55,6 @@ class DataBase : protected _dir {
    * @return
    */
   void showDataBaseTable();
-
   /**
    * @brief 显示所有数据库
    * @return

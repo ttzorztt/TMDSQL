@@ -2,8 +2,12 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-07 11:40:17
+ * @LastEditTime : 2022-11-07 15:39:41
  */
+#ifndef _VECTOR_
+#define _VECTOR_
+#include <vector>
+#endif
 #ifndef _STRING_
 #define _STRING_
 #include <string>
@@ -12,10 +16,7 @@
 #define _DIRENT_H_
 #include <dirent.h>
 #endif
-#ifndef _SYS_TYPES_H_
-#define _SYS_TYPES_H_
-#include <sys/types.h>
-#endif
+
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
 #include <sys/stat.h>
@@ -38,10 +39,10 @@ class _super {
  protected:
   std::string name;  //名字
   std::string path;  //相对路径
-  type style;        //类型
  public:
   virtual bool isExist();
   virtual bool create();
+  virtual bool remove();
   /**
    * @brief 返回名字
    * @return 返回名字
@@ -57,21 +58,6 @@ class _super {
    * @return 返回类型
    */
   type returnType();
-
-  /**
-   * @brief 构造函数
-   * @param string Path 文件相对路径
-   * @param type style 类型 {file:表,dir:数据库,index:索引,lock:锁}
-   * @return
-   */
-  _super(std::string Path, type style);
-  /**
-   * @brief 构造函数
-   * @param  string& Path 文件相对路径
-   * @param type style 类型 {file:表,dir:数据库,index:索引,lock:锁}
-   * @return
-   */
-  _super(std::string& Path, type style);
   /**
    * @brief 拷贝构造函数
    * @param  super& copy 拷贝值
@@ -79,6 +65,43 @@ class _super {
    * @return
    */
   _super(_super& copy);
-  
+  /**
+   * @brief 构造函数
+   * @param  string name 名字
+   * @param  string path 路径
+   * @return
+   */
+  _super(std::string name, std::string path);
   ~_super();
+  /**
+   * @brief <static> 返回目录中所有文件名字，即数据库中表名
+   * @param string dirPath dir的路径
+   * @return 以vector的形式返回
+   */
+  std::vector<std::string> static openDirReturnFileName(std::string dirPath);
+  /**
+   * @brief <static> 以App的方式写入字符串
+   * @param string Path 路径
+   * @param string& str 写入的字符串
+   * @return True写入正确,False 写入失败
+   */
+  bool static writeFile(std::string Path, const std::string& str);
+  /**
+   * @brief <static> 删除指定文件
+   * @param string Path 删除文件所在路径
+   * @return 如果正常删除，则返回True，否则返回False
+   */
+  bool static deleteFile(std::string Path);
+  /**
+   * @brief <static> 计算Path中的文件名，并返回
+   * @param  string Path 待计算路径
+   * @return  文件名
+   */
+  std::string static computeFileName(std::string Path);
+  /**
+   * @brief <static> 计算Path中的目录名，并返回
+   * @param  string Path 待计算路径
+   * @return  目录名
+   */
+  std::string static computeDirName(std::string Path);
 };

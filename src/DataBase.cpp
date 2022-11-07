@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-07 10:41:04
+ * @LastEditTime : 2022-11-07 15:48:33
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -11,10 +11,6 @@
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
-#endif
-#ifndef _STRING_
-#define _STRING_
-#include <string>
 #endif
 DataBase::DataBase(std::string name) : _dir("../data/database/" + name) {}
 
@@ -26,18 +22,18 @@ bool DataBase::create() {
 
 bool DataBase::insertTable(std::string tableName) {
   std::string Path = returnPath() + "/" + tableName;
-  return _file::createFile(Path);
+  return _file::create(Path);
 }
 
 bool DataBase::insertTable(std::string tableName, const std::vector<std::string>& tableItem) {
   std::string Path = returnPath() + "/" + tableName;
-  _file::createFile(Path);
+  _file::create(Path);
   _file::writeFile(Path, tableItem);
   return true;
 }
 
 void DataBase::showDataBaseTable() {
-  std::vector<std::string> ans = _dir::openDirReturnFileName(this->returnPath());
+  std::vector<std::string> ans = _super::openDirReturnFileName(this->returnPath());
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
@@ -73,7 +69,7 @@ std::string DataBase::returnPath(){
   return dirPath;
 }
 void DataBase::showDataBase() {
-  std::vector<std::string> ans = _dir::openDirReturnFileName("../data/database/");
+  std::vector<std::string> ans = _super::openDirReturnFileName("../data/database/");
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "暂时还没有建立数据库" << std::endl;

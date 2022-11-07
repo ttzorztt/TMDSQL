@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-07 11:43:33
+ * @LastEditTime : 2022-11-07 14:25:37
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -28,6 +28,10 @@
 #define _STRING_
 #include <string>
 #endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
+#include "super.h"
+#endif
 
 using namespace std;
 
@@ -51,14 +55,15 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  _file test("../data/database/testbase/CPS1985.csv");
-  vector<string> ans;
-  while(test.readline(ans)){
-  for (string& str : ans) {
-    // cout << str;
-  } 
-  ans.clear();
+  // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
+  // cout <<  test.isExist() << endl;
+  // cout << test.remove() << endl;
+  // vector<string> ans;
+  // while(test.readline(ans)){
+  // for (string& str : ans) {
+  //   // cout << str;
+  // } 
+  // ans.clear();
   // cout << endl << endl;
   } 
  
-}
