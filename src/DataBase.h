@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-07 09:55:27
+ * @LastEditTime : 2022-11-07 10:15:22
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -18,6 +18,7 @@ using namespace std;
  */
 class DataBase : protected _dir {
  public:
+ virtual string returnPath();
   /**
    * @brief 判断数据库是否存在
    * @return True为存在，False为不存在

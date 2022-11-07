@@ -69,7 +69,9 @@ void DataBase::showDataBaseTable() {
   }
   std::cout << endl;
 }
-
+string DataBase::returnPath(){
+  return dirPath;
+}
 void DataBase::showDataBase() {
   vector<string> ans = _dir::openDirReturnFileName("../data/database/");
   int maxtablename = 0;

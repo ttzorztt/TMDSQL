@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-06 18:55:26
+ * @LastEditTime : 2022-11-07 10:10:55
  */
 #ifndef _STRING_
 #define _STRING_
@@ -44,5 +44,6 @@ class _table : protected _file {
    * @return
    */
   _table(DataBase database, _file tableName);
+  void createIndex();
   ~_table();
 };

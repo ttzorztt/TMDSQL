@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-07 10:07:08
+ * @LastEditTime : 2022-11-07 10:13:04
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -35,17 +35,24 @@ using namespace std;
 class _dir {
  public:
   /**
+   * @brief 返回路径
+   * @return 返回DirPath
+   */
+  string returnDirPath();
+
+ public:
+  /**
    * @brief dir类中的构造函数，
    * @param string dirPath 目录路径
    * @return
    */
   _dir(string dirPath);
-/**
- * @brief 拷贝构造函数
- * @param  _dir& copy 拷贝值
- * @return  
- */
-_dir(_dir& copy);
+  /**
+   * @brief 拷贝构造函数
+   * @param  _dir& copy 拷贝值
+   * @return
+   */
+  _dir(_dir& copy);
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
    * @param string dirPath dir的路径
@@ -64,11 +71,7 @@ _dir(_dir& copy);
    * @return 如果删除正常，则返回True，否则返回False
    */
   bool static deleteDir(string Path);
-  /**
-   * @brief 返回路径
-   * @return 返回DirPath
-   */
-   string returnDirPath();
+
   /**
    * @brief <static> 判断指定文件是否存在
    * @param string name 文件路径
