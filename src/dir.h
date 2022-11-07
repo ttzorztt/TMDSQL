@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-06 20:02:54
+ * @LastEditTime : 2022-11-07 10:07:08
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -29,6 +29,9 @@
 #include <unistd.h>
 #endif
 using namespace std;
+/**
+ * @brief 封装一些对目录操作的函数
+ */
 class _dir {
  public:
   /**
