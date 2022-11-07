@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-06 19:50:46
+ * @LastEditTime : 2022-11-07 09:55:27
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -16,7 +16,7 @@ using namespace std;
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
-class DataBase : public _dir {
+class DataBase : protected _dir {
  public:
   /**
    * @brief 判断数据库是否存在
