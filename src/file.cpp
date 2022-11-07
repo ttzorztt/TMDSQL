@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-07 07:37:57
+ * @LastEditTime : 2022-11-07 09:17:15
  */
 #include "file.h"
 #include <iostream>
@@ -64,7 +64,7 @@ bool _file::readline(vector<string>& ret) {
   }
   string _str;
   getline(readFileBuff, _str);
-  if(this->returnReadFileBuff().eof()){
+  if (this->returnReadFileBuff().eof()) {
     return false;
   }
   int left = 0;
@@ -80,7 +80,7 @@ bool _file::readline(vector<string>& ret) {
       ++right;
     }
   }
-  return true; 
+  return true;
 }
 
 bool _file::addLock() {
@@ -177,11 +177,9 @@ _file::_file(_file& _copy) {
 const string& _file::returnFileName() {
   return name;
 }
-
-  const ofstream& _file::returnWriteFileBuff(){
-    return writeFileBuff;
-  }
-
-  const ifstream& _file::returnReadFileBuff(){
-    return readFileBuff;
-  }
+const ofstream& _file::returnWriteFileBuff() {
+  return writeFileBuff;
+}
+const ifstream& _file::returnReadFileBuff() {
+  return readFileBuff;
+}

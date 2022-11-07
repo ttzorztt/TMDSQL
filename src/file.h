@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-07 07:31:44
+ * @LastEditTime : 2022-11-07 09:20:38
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -92,7 +92,7 @@ class _file {
   ifstream readFileBuff;
   // lockPath是加锁文件
   string lockPath;
-
+  
  public:
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
