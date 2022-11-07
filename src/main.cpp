@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-06 21:00:49
+ * @LastEditTime : 2022-11-07 07:43:54
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -53,11 +53,11 @@ int main(int argc, char const* argv[]) {
   _file test("../data/database/testbase/CPS1985.csv");
   vector<string> ans;
   while(test.readline(ans)){
-    cout << ans.size() << endl;
   for (string& str : ans) {
     cout << str;
-  }
-  cout << endl;
-  }
-
+  } 
+  ans.clear();
+  cout << endl << endl;
+  } 
+ 
 }

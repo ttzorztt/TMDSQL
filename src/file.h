@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-06 20:58:27
+ * @LastEditTime : 2022-11-07 07:31:44
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -95,6 +95,16 @@ class _file {
 
  public:
   /**
+   * @brief 返回类中默认的writeFileBuff，用来操作
+   * @return <const ofstream&> 返回writeFileBuff
+   */
+  const ofstream& returnWriteFileBuff();
+  /**
+   * @brief 返回类中默认的readFileBuff，用来操作
+   * @return <const ifstream&> 返回readFileBuff
+   */
+  const ifstream& returnReadFileBuff();
+  /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
    * @return True写入正确,False 写入失败
@@ -105,7 +115,7 @@ class _file {
    * @param vector<string>& ret 保存的方式
    * @return 读完或文件不存在返回False，否则返回True
    */
-   bool readline(vector<string>& ret);
+  bool readline(vector<string>& ret);
   /**
    * @brief 判断_file默认文件是否存在
    * @return 若文件存在则返回True，否则返回False;
@@ -164,10 +174,10 @@ class _file {
    * @brief 返回文件的相对路径
    * @return 返回文件的相对路径
    */
-  string returnFilePath();
+  const string& returnFilePath();
   /**
    * @brief 返回文件的名字
    * @return  返回文件的名字
    */
-  string returnFileName();
+  const string& returnFileName();
 };

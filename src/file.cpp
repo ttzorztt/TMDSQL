@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-06 21:57:48
+ * @LastEditTime : 2022-11-07 07:37:57
  */
 #include "file.h"
 #include <iostream>
@@ -58,17 +58,18 @@ bool _file::writeFile(string Path, const vector<string>& array) {
   _file tmd(Path);
   return tmd.writeFile(array);
 }
-
 bool _file::readline(vector<string>& ret) {
+  if (!readBuffOpen(true)) {
+    return {};
+  }
   string _str;
-  std::cout << (getline(readFileBuff, _str) == NULL) << endl;
-  return true;
-  if (!readBuffOpen(true) && getline(readFileBuff, _str)) {
+  getline(readFileBuff, _str);
+  if(this->returnReadFileBuff().eof()){
     return false;
   }
   int left = 0;
   int right = 1;
-  int size = ret.size();
+  int size = _str.size();
   while (right <= size) {
     if (_str[right] == ' ') {
       ++right;
@@ -79,7 +80,7 @@ bool _file::readline(vector<string>& ret) {
       ++right;
     }
   }
-  return true;
+  return true; 
 }
 
 bool _file::addLock() {
@@ -165,7 +166,7 @@ bool _file::deleteFile() {
   return remove(this->path.c_str());
 }
 
-string _file::returnFilePath() {
+const string& _file::returnFilePath() {
   return path;
 }
 _file::_file(_file& _copy) {
@@ -173,6 +174,14 @@ _file::_file(_file& _copy) {
   this->name = _copy.name;
   this->path = _copy.path;
 }
-string _file::returnFileName() {
+const string& _file::returnFileName() {
   return name;
 }
+
+  const ofstream& _file::returnWriteFileBuff(){
+    return writeFileBuff;
+  }
+
+  const ifstream& _file::returnReadFileBuff(){
+    return readFileBuff;
+  }
