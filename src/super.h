@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-07 22:19:36
+ * @LastEditTime : 2022-11-08 16:10:32
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -30,7 +30,8 @@ enum type {
   _TYPE_FILE,   //普通文件，即表
   _TYPE_DIR,    //目录，即数据库
   _TYPE_INDEX,  // 索引文件
-  _TYPE_LOCK,   // 锁文件
+  _TYPE_FILE_LOCK,   // 表锁
+  _TYPE_TADABLASE_LOCK //数据库锁
 };
 /**
  * @brief 维护一些基础静态函数
@@ -43,6 +44,7 @@ class _super {
   virtual bool create();
   virtual bool remove();
   virtual int returnCount();
+  virtual bool isExist();
   /**
    * @brief 返回名字
    * @return 返回名字

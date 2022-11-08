@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-07 22:20:01
+ * @LastEditTime : 2022-11-08 16:13:25
  */
 
 #ifndef _SUPER_H_
@@ -43,6 +43,9 @@ std::string _super::returnPath() {
 int _super::returnCount(){
   return -1;
 }
+bool _super::isExist(){
+  return false;
+}
 _super::~_super() {}
 _super::_super(_super& copy) {
   this->name = copy.name;
@@ -73,12 +76,15 @@ bool _super::isExist(std::string Path, type style) {
     }
     case type::_TYPE_FILE:
     case type::_TYPE_INDEX:
-    case type::_TYPE_LOCK: {
+    case type::_TYPE_FILE_LOCK: {
       return access((Path + "./csv").c_str(), F_OK) != -1;
       break;
     }
+    case type::_TYPE_TADABLASE_LOCK: {
+      return ::access(("." + Path).c_str(), F_OK) != -1;
+    }
     default:{
-      
+      break;
     }
   }
   return false;

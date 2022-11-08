@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-07 22:31:34
+ * @LastEditTime : 2022-11-08 15:48:42
  */
 #ifndef _STRING_
 #define _STRING_
@@ -20,7 +20,7 @@ using namespace std;
 /**
  * @brief 封装表操作
  */
-class Table : protected _file {
+class Table : public _file {
  private:
  public:
   /**
