@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-08 16:13:25
+ * @LastEditTime : 2022-11-08 15:37:25
  */
 
 #ifndef _SUPER_H_
@@ -67,25 +67,31 @@ std::string _super::computeName(std::string Path) {
   return Path.substr(size + 1, INT64_MAX);
 }
 bool _super::isExist(std::string Path, type style) {
-  switch (style) {
-    case type::_TYPE_DIR: {
-      return ::access(Path.c_str(), F_OK) != -1;
-      break;
-    }
-    case type::_TYPE_FILE:
-    case type::_TYPE_INDEX:
-    case type::_TYPE_FILE_LOCK: {
-      return access((Path + "./csv").c_str(), F_OK) != -1;
-      break;
-    }
-    case type::_TYPE_TADABLASE_LOCK: {
-      return ::access(("." + Path).c_str(), F_OK) != -1;
-    }
-    default:{
-      break;
-    }
+  std::string truePath = _super::returnTruePath(Path,style);
+      return access(Path.c_str(), F_OK) != -1;
+}
+bool _super::isExist(std::string truePath){
+  return access(truePath.c_str(),F_OK) != -1;
+}
+std::string _super::returnTruePath(std::string Path, type style){
+  switch (style){
+  case type::_TYPE_DIR:
+    return Path;
+    break;
+  case type::_TYPE_FILE_LOCK:
+    return "." + Path + ".csv";
+    break;
+  case type::_TYPE_TADABLASE_LOCK:
+    return "." + Path;
+    break;
+  case type::_TYPE_FILE:
+  case type::_TYPE_INDEX:
+    return Path + ".csv";
+    break;
+  default:
+    break;
   }
-  return false;
+  return "";
 }
 // bool _super::isExist() {
 //   switch (style) {

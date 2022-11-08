@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-08 17:18:08
+ * @LastEditTime : 2022-11-08 15:23:34
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -74,6 +74,9 @@ class _super {
    * @return
    */
   _super(std::string name, std::string path);
+  /**
+   * @brief 析构函数  
+   */
   ~_super();
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
@@ -102,4 +105,17 @@ class _super {
    * @return 若存在则返回True，否则返回False;
    */
   bool static isExist(std::string Path,type style);
+  /**
+   * @brief <static> 判断是否存在
+   * @param string truePath 真实路径
+   * @return 若存在则返回True，否则返回False 
+   */
+  bool static isExist(std::string truePath);
+  /**
+   * @brief <static> 返回真实路径
+   * @param  string Path 模拟路径
+   * @param  type style 类型
+   * @return  底层路径
+   */
+  std::string static returnTruePath(std::string Path,type style);
 };
