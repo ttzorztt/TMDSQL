@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-08 07:51:37
+ * @LastEditTime : 2022-11-08 17:39:43
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -12,7 +12,7 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
-
+//当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Path)
     : _super(_super::computeName(Path), Path + ".csv") {
@@ -73,18 +73,32 @@ bool _file::readline(std::vector<std::string>& ret) {
   return true;
 }
 
-
-
 bool _file::create(std::string path, type style) {
   if (_super::isExist(path, style)) {
     return false;
   }
   std::ofstream filewritebuff;
+  switch (style)
+  {
+  case type::_TYPE_DIR :
+  break;
+  case type::_TYPE_TADABLASE_LOCK:
+  path = "." + path + ".csv";
+  break;
+  case type::_TYPE_FILE:
+  case type::_TYPE_INDEX:
+  path += ".csv";
+  break;
+  case type::_TYPE_FILE_LOCK:
+  path = "." + path + ".csv";
+  break;
+  default:
+    break;
+  }
   filewritebuff.open(path, std::ios::out);
   if (filewritebuff.good()) {
     filewritebuff.close();
     ++_file::count;
-
     return true;
   }
   filewritebuff.close();
@@ -98,7 +112,6 @@ bool _file::create() {
   if (writeFileBuff.good()) {
     writeFileBuff.close();
     ++_file::count;
-
     return true;
   }
   writeFileBuff.close();

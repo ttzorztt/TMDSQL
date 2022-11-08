@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-08 16:10:32
+ * @LastEditTime : 2022-11-08 17:18:08
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -88,12 +88,7 @@ class _super {
    * @return True写入正确,False 写入失败
    */
   bool static writeFile(std::string Path, const std::string& str);
-  /**
-   * @brief <static> 删除指定文件
-   * @param string Path 删除文件所在路径
-   * @return 如果正常删除，则返回True，否则返回False
-   */
-  bool static deleteFile(std::string Path);
+
   /**
    * @brief <static> 计算Path中的文件名，并返回
    * @param  string Path 待计算路径

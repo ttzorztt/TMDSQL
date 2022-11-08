@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:12:54
- * @LastEditTime : 2022-11-08 16:08:29
+ * @LastEditTime : 2022-11-08 17:27:41
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -16,7 +16,7 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
-class Lock : public _super {
+class Lock  {
  private:
   //当前打开的锁的总数的数量
   static int count;
@@ -25,9 +25,7 @@ class Lock : public _super {
   //当前打开数据库锁的数量
   static int databaseCount;
   //类型
-  type style;
  public:
- virtual type returnType();
   /**
    * @brief 构造函数
    * @param  Table table 表
@@ -55,7 +53,7 @@ class Lock : public _super {
    * @brief 锁的数量
    * @return 返回当前锁的数量
    */
-  virtual int returncount();
+  int static returncount();
   /**
    * @brief 文件锁的数量
    * @return 返回文件锁的数量
@@ -83,17 +81,6 @@ class Lock : public _super {
   bool static remove(std::string Path,type style);
   /**
    * @brief 加锁
-   * @return
-   * 加锁成功则返回True，并意味着当前没有读写冲突，加锁失败则返回False，并意味着当前存在读写冲突。
-   */
-  bool add();
-  /**
-   * @brief 删锁
-   * @return 删锁成功则返回True，否则返回False。
-   */
-  bool remove();
-  /**
-   * @brief 加锁
    * @param  Table table
    * @return
    * 加锁成功则返回True，并意味着当前没有读写冲突，加锁失败则返回False，并意味着当前存在读写冲突。
@@ -117,4 +104,6 @@ class Lock : public _super {
    * @return  删锁成功则返回True，否则返回False。
    */
   bool static remove(DataBase database);
+  
+  
 };

@@ -55,9 +55,7 @@ _super::_super(std::string name, std::string path) {
   this->name = name;
   this->path = path;
 }
-bool _super::deleteFile(std::string Path) {
-  return std::remove(Path.c_str());
-}
+
 std::string _super::computeName(std::string Path) {
   int size = Path.size() - 1;
   while (size >= 0) {
