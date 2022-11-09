@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-09 16:03:14
+ * @LastEditTime : 2022-11-09 17:34:25
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -55,8 +55,10 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  _file file("../data/database/testbase/app");
-  cout << file.isExist() << endl;
+  string Path = "../data/database/testdatabase1/table1";
+  _file file(Path,type::_TYPE_FILE);
+  // super::returnTruePath(Path,style);
+  //     return access(Path.c_str(), F_OK) != -1;
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
   // cout <<  test.isExist() << endl;
   // cout << test.remove() << endl;

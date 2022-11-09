@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-08 15:48:42
+ * @LastEditTime : 2022-11-09 17:24:08
  */
 #ifndef _STRING_
 #define _STRING_
@@ -23,6 +23,10 @@ using namespace std;
 class Table : public _file {
  private:
  public:
+   virtual bool create();
+  virtual bool remove();
+  virtual int returnCount();
+  virtual bool isExist();
   /**
    * @brief 构造函数
    * @param string databaseName 数据库名
@@ -46,4 +50,8 @@ class Table : public _file {
   Table(DataBase database, _file tableName);
   void createIndex();
   ~Table();
+private:
+type style;
+//记录打开表的个数
+ int static count;
 };

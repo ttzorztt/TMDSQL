@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-08 15:37:25
+ * @LastEditTime : 2022-11-09 17:34:09
  */
 
 #ifndef _SUPER_H_
@@ -68,7 +68,7 @@ std::string _super::computeName(std::string Path) {
 }
 bool _super::isExist(std::string Path, type style) {
   std::string truePath = _super::returnTruePath(Path,style);
-      return access(Path.c_str(), F_OK) != -1;
+      return access(truePath.c_str(), F_OK) != -1;
 }
 bool _super::isExist(std::string truePath){
   return access(truePath.c_str(),F_OK) != -1;

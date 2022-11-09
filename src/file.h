@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 16:52:40
+ * @LastEditTime : 2022-11-09 17:17:07
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -49,14 +49,6 @@ class _file : public _super {
    * @brief 创建_file默认的文件
    * @return True表示文件创造成功，False表示文件创造失败
    */
-  virtual bool create();
-  /**
-   * @brief 删除_file中的默认文件
-   * @return 如果删除正常，则返回True，否则返回False
-   */
-  virtual bool remove();
-
-
 
   /**
    * @brief
@@ -74,6 +66,22 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
+   virtual bool create();
+  /**
+   * @brief 删除_file中的默认文件
+   * @return 如果删除正常，则返回True，否则返回False
+   */
+  virtual bool remove();
+  /**
+   * @brief 判断是否存在
+   * @return 存在则返回True，否则返回False
+   */
+  virtual bool isExist();
+    /**
+     * @brief 打开的数量
+     * @return  数量
+     */
+    virtual int returnCount();
    /**
    * @brief 删除文件
    * @param  string path 文件路径
@@ -107,8 +115,9 @@ class _file : public _super {
   /**
    * @brief 构造函数，传入文件路径
    * @param string path 文件路径
+   * @param type style 类型
    */
-  _file(std::string path);
+  _file(std::string path,type style);
 
   /**
    * @brief 拷贝构造函数
