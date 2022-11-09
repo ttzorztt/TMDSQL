@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 09:13:31
+ * @LastEditTime : 2022-11-09 15:51:21
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -51,11 +51,13 @@ class _file : public _super {
    */
   virtual bool create();
   /**
-   * @brief 删除_filezh中的默认文件
+   * @brief 删除_file中的默认文件
    * @return 如果删除正常，则返回True，否则返回False
    */
   virtual bool remove();
-  
+
+
+
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -72,6 +74,12 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
+   /**
+   * @brief 删除文件
+   * @param  string path 文件路径
+   * @return 正常删除返回True，否则返回False
+   */
+  bool static remove(std::string path);
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
@@ -125,7 +133,7 @@ class _file : public _super {
    * @param type stype 需要创建的类型
    * @return True表示文件创造成功，False表示文件创造失败
    */
-   bool static create(std::string path,type style);
+  bool static create(std::string path, type style);
 
  private:
   // writeFileBuff是写文件buff指针
@@ -133,7 +141,7 @@ class _file : public _super {
   // readFileBuff是读文件buff指针
   std::ifstream readFileBuff;
   //文件类型
-  type style;  
+  type style;
   //当前打开的文件数总数
   static int count;
 };

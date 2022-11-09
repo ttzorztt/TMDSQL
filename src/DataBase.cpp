@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-07 21:58:48
+ * @LastEditTime : 2022-11-09 15:52:10
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -16,8 +16,7 @@ DataBase::DataBase(std::string name) : _dir("../data/database/" + name) {}
 
 bool DataBase::create() {
   std::string Path = returnPath();
-  return _dir::createDir(Path);
-  // return true;
+  return _dir::create(Path);
 }
 
 bool DataBase::insertTable(std::string tableName) {
@@ -65,9 +64,7 @@ void DataBase::showDataBaseTable() {
   }
   std::cout << std::endl;
 }
-std::string DataBase::returnPath(){
-  return dirPath;
-}
+
 void DataBase::showDataBase() {
   std::vector<std::string> ans = _super::openDirReturnFileName("../data/database/");
   int maxtablename = 0;
@@ -117,13 +114,13 @@ bool DataBase::isExist(std::string DataBaseName) {
 }
 
 bool DataBase::deleteTable(std::string tableName) {
-  return _file::deleteFile("../data/database/" + tableName);
+  return _file::remove("../data/database/" + tableName);
 }
 
 bool DataBase::removeDataBase(std::string DataBaseName) {
-  return _dir::deleteDir("../data/database/" + DataBaseName);
+  return _dir::remove("../data/database/" + DataBaseName);
 }
 
 bool DataBase::removeDataBase() {
-  return _dir::deleteDir("../data/database/" + dirName);
+  return _dir::remove("../data/database/" + this->name);
 }

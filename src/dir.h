@@ -36,6 +36,7 @@
  * @brief 封装一些对目录操作的函数
  */
 class _dir : public _super {
+public:
   /**
    * @brief 创建
    * @return 正常创建返回True，否则返回False
