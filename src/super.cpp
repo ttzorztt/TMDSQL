@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-09 17:34:09
+ * @LastEditTime : 2022-11-09 19:11:06
  */
 
 #ifndef _SUPER_H_
@@ -13,7 +13,7 @@ std::vector<std::string> _super::openDirReturnFileName(std::string Path) {
   DIR* dirname = opendir(Path.c_str());
   struct dirent* dirInfo;
   std::vector<std::string> name;
-  int count = 2;
+  int count = 2; 
   while ((dirInfo = readdir(dirname)) != 0) {
     if (count > 0) {
       --count;

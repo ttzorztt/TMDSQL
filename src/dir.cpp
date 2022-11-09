@@ -7,7 +7,7 @@
 #ifndef _DIR_H_
 #define _DIR_H_
 #include "dir.h"
-#endif
+#endif 
 #ifndef _STRING_
 #define _STRING_
 #include <string>
