@@ -2,8 +2,10 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-09 17:24:08
+ * @LastEditTime : 2022-11-09 19:03:59
  */
+#ifndef _TABLE_
+#define _TABLE_
 #ifndef _STRING_
 #define _STRING_
 #include <string>
@@ -55,3 +57,5 @@ type style;
 //记录打开表的个数
  int static count;
 };
+
+#endif

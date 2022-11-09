@@ -2,8 +2,10 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 17:17:07
+ * @LastEditTime : 2022-11-09 19:02:50
  */
+#ifndef _FILE_
+#define _FILE_
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
@@ -155,3 +157,4 @@ class _file : public _super {
   //当前打开的文件数总数
   static int count;
 };
+#endif

@@ -2,8 +2,10 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-11-07 10:41:16
+ * @LastEditTime : 2022-11-09 19:06:13
  */
+#ifndef _SHELL_
+#define _SHELL_
 #ifndef _SET_
 #define _SET_
 #include <set>
@@ -40,3 +42,4 @@ class shell {
   std::string strBuff;
   std::vector<std::vector<std::string>> arraybuff;
 };
+#endif

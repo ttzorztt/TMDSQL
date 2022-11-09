@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:00
- * @LastEditTime : 2022-11-09 16:22:10
+ * @LastEditTime : 2022-11-09 19:05:12
  */
 #ifndef _LOCK_H_
 #define _LOCK_H_
@@ -27,10 +27,6 @@ bool Lock::remove(std::string Path, type style) {
   if(_super::isExist(truePath,style)){
 
   } 
-
-
-  
-   
   switch (style) {
     case type::_TYPE_FILE: {
       std::string LockPath = Path + "csv";

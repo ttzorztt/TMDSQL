@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-09 17:34:25
+ * @LastEditTime : 2022-11-09 18:57:47
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -32,7 +32,10 @@
 #define _SUPER_H_
 #include "super.h"
 #endif
-
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
+#endif
 using namespace std;
 
 /**
@@ -55,8 +58,10 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  string Path = "../data/database/testdatabase1/table1";
-  _file file(Path,type::_TYPE_FILE);
+  string tablePath = "../data/database/testdatabase1/table1";
+  string databasePath = "../data/database/testdatabase1";
+  // DataBase database(databasePath);
+  // cout << database.isExist() << endl;
   // super::returnTruePath(Path,style);
   //     return access(Path.c_str(), F_OK) != -1;
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
@@ -70,4 +75,3 @@ int main(int argc, char const* argv[]) {
   // ans.clear();
   // cout << endl << endl;
   } 
- 

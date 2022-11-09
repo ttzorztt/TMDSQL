@@ -2,8 +2,11 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-09 16:48:35
+ * @LastEditTime : 2022-11-09 19:03:32
  */
+#ifndef _DATABSE_
+#define _DATABSE_
+
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
@@ -15,8 +18,7 @@
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
-#endif
-
+#endif  
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
@@ -39,12 +41,7 @@ class DataBase : public _dir {
    * @return True为存在，False为不存在
    */
   virtual bool isExist();
-  /**
-   * @brief 判断指定数据库是否存在
-   * @param  string DataBaseName 数据库名字
-   * @return True为存在，False为不存在
-   */
-  bool static isExist(std::string DataBaseName);
+
 
   /**
    * @brief 创建数据库(底层就是创建文件夹)
@@ -72,6 +69,12 @@ class DataBase : public _dir {
    * @return
    */
   void static showDataBase();
+    /**
+   * @brief 判断指定数据库是否存在
+   * @param  string DataBaseName 数据库名字
+   * @return True为存在，False为不存在
+   */
+  bool static isExist(std::string DataBaseName);
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字
@@ -102,3 +105,4 @@ class DataBase : public _dir {
   // 打开的数据库的个数
   int static count;
 };
+#endif

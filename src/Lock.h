@@ -2,8 +2,10 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:12:54
- * @LastEditTime : 2022-11-08 17:27:41
+ * @LastEditTime : 2022-11-09 19:05:44
  */
+#ifndef _LOCK_
+#define _LOCK_
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
@@ -107,3 +109,4 @@ class Lock  {
   
   
 };
+#endif

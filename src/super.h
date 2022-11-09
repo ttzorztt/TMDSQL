@@ -2,8 +2,10 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-08 15:23:34
+ * @LastEditTime : 2022-11-09 19:06:38
  */
+#ifndef _SUPER_
+#define _SUPER_
 #ifndef _VECTOR_
 #define _VECTOR_
 #include <vector>
@@ -119,3 +121,4 @@ class _super {
    */
   std::string static returnTruePath(std::string Path,type style);
 };
+#endif

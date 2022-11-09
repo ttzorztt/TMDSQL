@@ -2,8 +2,10 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-09 17:00:10
+ * @LastEditTime : 2022-11-09 19:03:19
  */
+#ifndef _DIR_
+#define _DIR_
 #ifndef _VECTOR_
 #define _VECTOR_
 #include <vector>
@@ -94,3 +96,4 @@ public:
   // 记录由_dir打开的文件
   int static count;
 };
+#endif
