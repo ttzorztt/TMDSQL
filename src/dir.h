@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-09 15:24:51
+ * @LastEditTime : 2022-11-09 17:00:10
  */
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -28,10 +28,6 @@
 #define _SUPER_H_
 #include "super.h"
 #endif
-#ifndef _TABLE_H_
-#define _TABLE_H_
-#include "Table.h"
-#endif
 /**
  * @brief 封装一些对目录操作的函数
  */
@@ -42,6 +38,23 @@ public:
    * @return 正常创建返回True，否则返回False
    */
   virtual bool create();
+    /**
+   * @brief 删除默认目录 dirPath
+   * @return 如果删除正常，则返回True，否则返回False
+   */
+  virtual bool remove();
+
+  /**
+   * @brief 判断文件是否存在
+   * @return 存在则返回True，否则返回False
+   */
+  virtual bool isExist();
+
+  /**
+   * @brief 由_dir打开的文件夹
+   * @return 个数
+   */
+  virtual int returnCount();
   /**
    * @brief dir类中的构造函数，
    * @param string dirPath 目录路径
@@ -66,21 +79,18 @@ public:
    * @return 如果删除正常，则返回True，否则返回False
    */
   bool static remove(std::string Path);
-
-  /**
-   * @brief 删除默认目录 dirPath
-   * @return 如果删除正常，则返回True，否则返回False
-   */
-  bool remove();
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
-   * @param Table table 表对象
+   * @param string Path 表对象
    * @return 以vector的形式返回
    */
-  std::vector<std::string> static openDirReturnFileName(Table table);
+  std::vector<std::string> static openDirReturnFileName(std::string Path);
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
    * @return 以vector的形式返回
    */
   std::vector<std::string> openDirReturnFileName();
+  private:
+  // 记录由_dir打开的文件
+  int static count;
 };

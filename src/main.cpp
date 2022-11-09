@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-07 14:25:37
+ * @LastEditTime : 2022-11-09 16:03:14
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -55,7 +55,8 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  
+  _file file("../data/database/testbase/app");
+  cout << file.isExist() << endl;
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
   // cout <<  test.isExist() << endl;
   // cout << test.remove() << endl;

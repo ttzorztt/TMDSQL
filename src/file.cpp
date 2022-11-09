@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-09 09:00:36
+ * @LastEditTime : 2022-11-09 16:53:04
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -49,7 +49,18 @@ bool _file::write(const std::vector<std::string>& array) {
   writeFileBuff << std::endl;
   return true;
 }
-
+bool _file::remove(std::string path,type style){
+  std::string truePath = _super::returnTruePath(path,style);
+    if (!_super::isExist(truePath)) {
+    return false;
+  }
+  std::remove(truePath.c_str());
+  if (!_super::isExist(truePath)) {
+    --_file::count;
+    return true;
+  }
+  return false;
+}
 bool _file::writeFile(std::string Path, const std::vector<std::string>& array) {
   _file tmd(Path);
   return tmd.write(array);
@@ -122,15 +133,7 @@ bool _file::readBuffOpen(bool need) {
 }
 
 bool _file::remove() {
-  if (!_super::isExist(this->path, type::_TYPE_FILE)) {
-    return false;
-  }
-  std::remove(this->path.c_str());
-  if (!_super::isExist(this->path, type::_TYPE_FILE)) {
-    --_file::count;
-    return true;
-  }
-  return false;
+  return _file::remove(this->path,style);
 }
 
 const std::ofstream& _file::returnWriteFileBuff() {

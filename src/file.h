@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 15:51:21
+ * @LastEditTime : 2022-11-09 16:52:40
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -77,9 +77,10 @@ class _file : public _super {
    /**
    * @brief 删除文件
    * @param  string path 文件路径
+   * @param type style 类型
    * @return 正常删除返回True，否则返回False
    */
-  bool static remove(std::string path);
+  bool static remove(std::string path,type style);
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
