@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-09 17:02:58
+ * @LastEditTime : 2022-11-09 19:24:43
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -15,7 +15,9 @@
   // 打开的数据库的个数
   int  DataBase::count = 0;
 DataBase::DataBase(std::string name) : _dir("../data/database/" + name) {}
-
+DataBase::DataBase(DataBase& databse): _dir(databse.returnPath()){
+  ++this->count;
+}
 bool DataBase::create() {
   std::string Path = returnPath();
   return _dir::create(Path);

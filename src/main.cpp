@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-09 19:11:01
+ * @LastEditTime : 2022-11-09 19:27:51
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -59,9 +59,9 @@ void init() {
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "../data/database/testdatabase1/table1";
-  string databasePath = "../data/database/testdatabase1";
+  string databasePath = "testdatabase1";
   DataBase database(databasePath);
-  // cout << database.isExist() << endl;
+  database.showDataBase();
   // super::returnTruePath(Path,style);
   //     return access(Path.c_str(), F_OK) != -1;
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
