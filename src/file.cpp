@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-08 17:39:43
+ * @LastEditTime : 2022-11-09 09:00:36
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -15,14 +15,18 @@
 //当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Path)
-    : _super(_super::computeName(Path), Path + ".csv") {
-  lockPath = "../data/lock/." + this->name + ".csv";
+    : _super(_super::computeName(Path), Path) {
+}
+_file::_file(_file& _copy) : _super(_copy.returnName(), _copy.returnPath()) {
+  this->name = _copy.name;
+  this->path = _copy.path;
+  ++_file::count;
 }
 _file::~_file() {
-  if(writeFileBuff.is_open()){
-  writeFileBuff.close();
+  if (writeFileBuff.is_open()) {
+    writeFileBuff.close();
   }
-  if(readFileBuff.is_open()){
+  if (readFileBuff.is_open()) {
     readFileBuff.close();
   }
 }
@@ -34,6 +38,7 @@ bool _file::write(const std::string& str) {
   writeFileBuff << str << std::endl;
   return true;
 }
+
 bool _file::write(const std::vector<std::string>& array) {
   if (!writeBuffOpen(true)) {
     return false;
@@ -44,10 +49,12 @@ bool _file::write(const std::vector<std::string>& array) {
   writeFileBuff << std::endl;
   return true;
 }
+
 bool _file::writeFile(std::string Path, const std::vector<std::string>& array) {
   _file tmd(Path);
   return tmd.write(array);
 }
+
 bool _file::readline(std::vector<std::string>& ret) {
   if (!readBuffOpen(true)) {
     return {};
@@ -74,27 +81,12 @@ bool _file::readline(std::vector<std::string>& ret) {
 }
 
 bool _file::create(std::string path, type style) {
-  if (_super::isExist(path, style)) {
+  if (_super::isExist(path, style) || style == type::_TYPE_DIR ||
+      style == type::_TYPE_TADABLASE_LOCK) {
     return false;
   }
   std::ofstream filewritebuff;
-  switch (style)
-  {
-  case type::_TYPE_DIR :
-  break;
-  case type::_TYPE_TADABLASE_LOCK:
-  path = "." + path + ".csv";
-  break;
-  case type::_TYPE_FILE:
-  case type::_TYPE_INDEX:
-  path += ".csv";
-  break;
-  case type::_TYPE_FILE_LOCK:
-  path = "." + path + ".csv";
-  break;
-  default:
-    break;
-  }
+  std::string truePath = _super::returnTruePath(path, style);
   filewritebuff.open(path, std::ios::out);
   if (filewritebuff.good()) {
     filewritebuff.close();
@@ -106,16 +98,7 @@ bool _file::create(std::string path, type style) {
 }
 
 bool _file::create() {
-  if (!writeBuffOpen(false)) {
-    return false;
-  }
-  if (writeFileBuff.good()) {
-    writeFileBuff.close();
-    ++_file::count;
-    return true;
-  }
-  writeFileBuff.close();
-  return false;
+ return _file::create(this->path,this->style);
 }
 
 bool _file::writeBuffOpen(bool need) {
@@ -150,16 +133,10 @@ bool _file::remove() {
   return false;
 }
 
-_file::_file(_file& _copy) : _super(_copy.returnName(), _copy.returnPath()) {
-  this->lockPath = _copy.lockPath;
-  this->name = _copy.name;
-  this->path = _copy.path;
-  ++_file::count;
-}
-
 const std::ofstream& _file::returnWriteFileBuff() {
   return writeFileBuff;
 }
+
 const std::ifstream& _file::returnReadFileBuff() {
   return readFileBuff;
 }

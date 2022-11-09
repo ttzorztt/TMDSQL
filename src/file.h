@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-07 22:34:26
+ * @LastEditTime : 2022-11-09 09:13:31
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -120,9 +120,9 @@ class _file : public _super {
   bool static writeFile(std::string Path,
                         const std::vector<std::string>& array);
   /**
-   * @brief <static> 创建指定文件
-   * @param string path 需要创建的文件名字
-   * @param type stype 需要创建文件的类型
+   * @brief <static> 创建
+   * @param string path 需要创建的名字
+   * @param type stype 需要创建的类型
    * @return True表示文件创造成功，False表示文件创造失败
    */
    bool static create(std::string path,type style);
@@ -132,8 +132,6 @@ class _file : public _super {
   std::ofstream writeFileBuff;
   // readFileBuff是读文件buff指针
   std::ifstream readFileBuff;
-  // lockPath是加锁文件
-  std::string lockPath;
   //文件类型
   type style;  
   //当前打开的文件数总数

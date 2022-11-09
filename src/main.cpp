@@ -55,6 +55,7 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
+  
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
   // cout <<  test.isExist() << endl;
   // cout << test.remove() << endl;
