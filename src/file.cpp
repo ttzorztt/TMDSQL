@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-09 19:10:46
+ * @LastEditTime : 2022-11-09 20:45:17
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -14,11 +14,11 @@
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
-_file::_file(std::string Path,type style) : _super(_super::computeName(Path), Path) {
+_file::_file(std::string Name,type style) : _super(Name) {
   this->style = style;
   ++_file::count;
 }
-_file::_file(_file& _copy) : _super(_copy.returnName(), _copy.returnPath()) {
+_file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
   ++_file::count;
 }
@@ -63,7 +63,7 @@ bool _file::remove(std::string path, type style) {
   return false;
 }
 bool _file::writeFile(std::string Path, const std::vector<std::string>& array) {
-  _file tmd(Path,type::_TYPE_FILE);
+  _file tmd(Path,type::_TYPE_TABLE);
   return tmd.write(array);
 }
 
@@ -92,14 +92,14 @@ bool _file::readline(std::vector<std::string>& ret) {
   return true;
 }
 
-bool _file::create(std::string path, type style) {
-  if (_super::isExist(path, style) || style == type::_TYPE_DIR ||
+bool _file::create(std::string name, type style) {
+  std::string truePath = _super::returnTruePath(name, style);
+  if (_super::isExist(truePath) || style == type::_TYPE_TABLE ||
       style == type::_TYPE_TADABLASE_LOCK) {
     return false;
   }
   std::ofstream filewritebuff;
-  std::string truePath = _super::returnTruePath(path, style);
-  filewritebuff.open(path, std::ios::out);
+  filewritebuff.open(truePath, std::ios::out);
   if (filewritebuff.good()) {
     filewritebuff.close();
     ++_file::count;
@@ -110,31 +110,31 @@ bool _file::create(std::string path, type style) {
 }
 
 bool _file::create() {
-  return _file::create(this->path, this->style);
+  return _file::create(this->name, this->style);
 }
 
 bool _file::writeBuffOpen(bool need) {
-  if (need && !_super::isExist(this->path, style)) {
+  if (need && !_super::isExist(this->name, style)) {
     return false;
   }
   if (!writeFileBuff.is_open()) {
-    writeFileBuff.open(path, std::ios::app);
+    writeFileBuff.open(name, std::ios::app);
   }
   return true;
 }
 
 bool _file::readBuffOpen(bool need) {
-  if (need && !_super::isExist(this->path, style)) {
+  if (need && !_super::isExist(this->name, style)) {
     return false;
   }
   if (!readFileBuff.is_open()) {
-    readFileBuff.open(path);
+    readFileBuff.open(_super::returnTruePath(name, style));
   }
   return true;
 }
 
 bool _file::remove() {
-  return _file::remove(this->path, style);
+  return _file::remove(this->name, style);
 }
 
 const std::ofstream& _file::returnWriteFileBuff() {
@@ -145,7 +145,7 @@ const std::ifstream& _file::returnReadFileBuff() {
   return readFileBuff;
 }
 bool _file::isExist() {
-  return _super::isExist(this->path + ".csv");
+  return _super::isExist(_super::returnTruePath(name, style));
 }
 int _file::returnCount() {
   return _file::count;

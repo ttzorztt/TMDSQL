@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-09 19:24:43
+ * @LastEditTime : 2022-11-09 21:53:50
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -14,24 +14,27 @@
 #endif
   // 打开的数据库的个数
   int  DataBase::count = 0;
-DataBase::DataBase(std::string name) : _dir("../data/database/" + name) {}
-DataBase::DataBase(DataBase& databse): _dir(databse.returnPath()){
+DataBase::DataBase(std::string name) : _dir(name) {}
+DataBase::DataBase(DataBase& databse): _dir(databse.returnName()){
   ++this->count;
 }
-bool DataBase::create() {
-  std::string Path = returnPath();
-  return _dir::create(Path);
-  // return true;
+type DataBase::returnType(){
+  return type::_TYPE_DADABASE;
 }
-
+bool DataBase::create() {
+  return _dir::create();
+}
+DataBase::~DataBase(){
+  --DataBase::count;
+}
 bool DataBase::insertTable(std::string tableName) {
-  std::string Path = returnPath() + "/" + tableName;
-  return _file::create(Path,type::_TYPE_FILE);
+  std::string Path = this->returnName() + "/" + tableName;
+  return _file::create(Path,type::_TYPE_TABLE);
 }
 
 bool DataBase::insertTable(std::string tableName, const std::vector<std::string>& tableItem) {
-  std::string Path = returnPath() + "/" + tableName;
-  _file::create(Path,type::_TYPE_FILE);
+  std::string Path = returnName() + "/" + tableName;
+  _file::create(Path,type::_TYPE_TABLE);
   _file::writeFile(Path, tableItem);
   return true;
 }
@@ -40,7 +43,12 @@ int DataBase::returnCount(){
 }
 
 void DataBase::showDataBaseTable() {
-  std::vector<std::string> ans = _super::openDirReturnFileName(this->returnPath());
+  std::string tmpPath = _super::returnTruePath(this->name,type::_TYPE_DADABASE);
+    if(!_super::isExist(tmpPath)){
+    std::cout << "数据库不存在!" << std::endl;
+    return;
+  }
+  std::vector<std::string> ans = _super::openDirReturnFileName(_super::returnTruePath(this->name,type::_TYPE_DADABASE));
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
@@ -49,6 +57,7 @@ void DataBase::showDataBaseTable() {
   for (std::string& str : ans) {
     maxtablename = std::max(maxtablename, (int)str.size() + 2);
   }
+   maxtablename += 2;
   for (int a = 0; a < maxtablename; ++a) {
     std::cout << "*";
   }
@@ -83,6 +92,7 @@ void DataBase::showDataBase() {
   for (std::string& str : ans) {
     maxtablename = std::max(maxtablename, (int)str.size() + 2);
   }
+  maxtablename += 2;
   for (int a = 0; a < maxtablename; ++a) {
     std::cout << "#";
   }
@@ -107,7 +117,7 @@ void DataBase::showDataBase() {
   std::cout << std::endl;
 }
 bool DataBase::isExist() {
-  return access(this->returnPath().c_str(), F_OK) != -1;
+  return access(_super::returnTruePath(this->name,type::_TYPE_DADABASE).c_str(), F_OK) != -1;
 }
 bool DataBase::isExist(std::string DataBaseName) {
   if (access(DataBaseName.c_str(), F_OK) != -1) {
@@ -118,7 +128,7 @@ bool DataBase::isExist(std::string DataBaseName) {
 }
 
 bool DataBase::deleteTable(std::string tableName) {
-  return _file::remove("../data/database/" + tableName,type::_TYPE_FILE);
+  return _file::remove("../data/database/" + tableName,type::_TYPE_TABLE);
 }
 
 bool DataBase::removeDataBase(std::string DataBaseName) {

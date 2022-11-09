@@ -2,24 +2,37 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-09 19:11:06
+ * @LastEditTime : 2022-11-09 22:09:38
  */
 
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
 #endif
-std::vector<std::string> _super::openDirReturnFileName(std::string Path) {
-  DIR* dirname = opendir(Path.c_str());
+std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
+  bool isTableOrDatabase = (".csv" == truePath.substr(truePath.size() - 4));
+  DIR* dirname = opendir(truePath.c_str());
   struct dirent* dirInfo;
   std::vector<std::string> name;
-  int count = 2; 
-  while ((dirInfo = readdir(dirname)) != 0) {
-    if (count > 0) {
-      --count;
-      continue;
+  int count = 2;
+  if (".csv" == truePath.substr(truePath.size() - 4)) {
+    while ((dirInfo = readdir(dirname)) != 0) {
+      if (count > 0) {
+        --count;
+        continue;
+      }
+      std::string tmpname = dirInfo->d_name;
+      name.push_back(tmpname.substr(0, tmpname.size() - 4));
     }
-    name.push_back(dirInfo->d_name);
+  } else {
+    while ((dirInfo = readdir(dirname)) != 0) {
+      if (count > 0) {
+        --count;
+        continue;
+      }
+      std::string tmpname = dirInfo->d_name;
+      name.push_back(tmpname.substr(0, tmpname.size()));
+    }
   }
   closedir(dirname);
   return name;
@@ -32,64 +45,49 @@ bool _super::remove() {
   return true;
 }
 type _super::returnType() {
-  return type::_TYPE_FILE;
+  return type::_TYPE_TABLE;
 }
 std::string _super::returnName() {
   return name;
 }
-std::string _super::returnPath() {
-  return path;
-}
-int _super::returnCount(){
+int _super::returnCount() {
   return -1;
 }
-bool _super::isExist(){
+bool _super::isExist() {
   return false;
 }
 _super::~_super() {}
 _super::_super(_super& copy) {
   this->name = copy.name;
-  this->path = copy.path;
 }
-_super::_super(std::string name, std::string path) {
+_super::_super(std::string name) {
   this->name = name;
-  this->path = path;
 }
 
-std::string _super::computeName(std::string Path) {
-  int size = Path.size() - 1;
-  while (size >= 0) {
-    if (Path[size] == '/') {
+bool _super::isExist(std::string name, type style) {
+  return access(_super::returnTruePath(name, style).c_str(), F_OK) != -1;
+}
+bool _super::isExist(std::string truePath) {
+  return access(truePath.c_str(), F_OK) != -1;
+}
+std::string _super::returnTruePath(std::string Name, type style) {
+  switch (style) {
+    case type::_TYPE_DADABASE:
+      return _databasePath + Name;
       break;
-    }
-    --size;
-  }
-  return Path.substr(size + 1, INT64_MAX);
-}
-bool _super::isExist(std::string Path, type style) {
-  std::string truePath = _super::returnTruePath(Path,style);
-      return access(truePath.c_str(), F_OK) != -1;
-}
-bool _super::isExist(std::string truePath){
-  return access(truePath.c_str(),F_OK) != -1;
-}
-std::string _super::returnTruePath(std::string Path, type style){
-  switch (style){
-  case type::_TYPE_DIR:
-    return Path;
-    break;
-  case type::_TYPE_FILE_LOCK:
-    return "." + Path + ".csv";
-    break;
-  case type::_TYPE_TADABLASE_LOCK:
-    return "." + Path;
-    break;
-  case type::_TYPE_FILE:
-  case type::_TYPE_INDEX:
-    return Path + ".csv";
-    break;
-  default:
-    break;
+    case type::_TYPE_TABLE_LOCK:
+      return _tableLockPath + "." + Name + ".csv";
+      break;
+    case type::_TYPE_TADABLASE_LOCK:
+      return _databaseLockPath + "." + Name;
+      break;
+    case type::_TYPE_TABLE:
+      return _tablePath + Name + ".csv";
+    case type::_TYPE_INDEX:
+      return _indexPath + Name + ".csv";
+      break;
+    default:
+      break;
   }
   return "";
 }

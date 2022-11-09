@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-11-09 19:17:36
+ * @LastEditTime : 2022-11-09 21:52:39
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -14,21 +14,20 @@
 #endif
 // 记录由dir打开的文件
 int  _dir::count = 0;
-_dir::_dir(_dir& copy) : _super(copy.returnName(), copy.returnPath()) {}
+_dir::_dir(_dir& copy) : _super(copy.returnName()) {}
 bool _dir::remove() {
-  std::string truePath = _super::returnTruePath(this->path, type::_TYPE_DIR);
-  return rmdir(truePath.c_str());
+  return rmdir(_super::returnTruePath(this->name, type::_TYPE_DADABASE).c_str());
 }
 int _dir::returnCount(){
   return _dir::count;
 }
 bool _dir::isExist(){
-  return _super::isExist(this->path);
+  return _super::isExist(_super::returnTruePath(this->name, type::_TYPE_DADABASE));
 }
-_dir::_dir(std::string dirPath)
-    : _super( _super::computeName(dirPath),dirPath) {}
+_dir::_dir(std::string dirName)
+    : _super(dirName) {}
 std::vector<std::string> _dir::openDirReturnFileName() {
-  DIR* dirname = opendir(this->path.c_str());
+  DIR* dirname = opendir(_super::returnTruePath(this->name, type::_TYPE_DADABASE).c_str());
   struct dirent* dirInfo;
   std::vector<std::string> ret;
   int count = 2;
@@ -43,7 +42,7 @@ std::vector<std::string> _dir::openDirReturnFileName() {
   return ret;
 }
 bool _dir::create(){
-  return _dir::create(this->path);
+  return _dir::create(_super::returnTruePath(this->name, type::_TYPE_DADABASE));
 }
 std::vector<std::string> _dir::openDirReturnFileName(std::string Path) {
   if (!_super::isExist(Path))
@@ -62,9 +61,9 @@ std::vector<std::string> _dir::openDirReturnFileName(std::string Path) {
   closedir(dirname);
   return ret;
 }
-bool _dir::create(std::string dirName) {
-  return mkdir(dirName.c_str(), 777);
+bool _dir::create(std::string truePath) {
+  return mkdir(truePath.c_str(), 777);
 }
-bool _dir::remove(std::string Path) {
-  return rmdir(Path.c_str());
+bool _dir::remove(std::string truePath) {
+  return rmdir(truePath.c_str());
 }

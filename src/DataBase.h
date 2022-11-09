@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-09 19:21:48
+ * @LastEditTime : 2022-11-09 21:35:34
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -24,6 +24,11 @@
  */
 class DataBase : public _dir {
  public:
+ /**
+  * @brief 析构函数
+  * @return  
+  */
+ ~DataBase();
   /**
    * @brief  构造创建数据库对象
    * @param string name 数据库路径
@@ -41,8 +46,12 @@ class DataBase : public _dir {
    * @return True为存在，False为不存在
    */
   virtual bool isExist();
-
-
+  /**
+   * @brief 类型
+   * @return type 类型
+   * 
+  */
+  virtual type returnType();
   /**
    * @brief 创建数据库(底层就是创建文件夹)
    * @return 创建成功返回True，否则返回False
@@ -61,7 +70,6 @@ class DataBase : public _dir {
    * @brief 显示数据库内表项
    * @return
    */
-
   void showDataBaseTable();
 
   /**

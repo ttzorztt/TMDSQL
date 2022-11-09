@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 19:02:50
+ * @LastEditTime : 2022-11-09 20:32:15
  */
 #ifndef _FILE_
 #define _FILE_
@@ -43,15 +43,10 @@ class _file : public _super {
  protected:
   /**
    * @brief 以App的方式写入字符串
-   * @param vector<string>& array vector<string>的类型数据写入数据库
+   * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
   bool write(const std::vector<std::string>& array);
-  /**
-   * @brief 创建_file默认的文件
-   * @return True表示文件创造成功，False表示文件创造失败
-   */
-
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -68,6 +63,10 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
+   /**
+   * @brief 创建_file默认的文件
+   * @return True表示文件创造成功，False表示文件创造失败
+   */
    virtual bool create();
   /**
    * @brief 删除_file中的默认文件
@@ -86,11 +85,11 @@ class _file : public _super {
     virtual int returnCount();
    /**
    * @brief 删除文件
-   * @param  string path 文件路径
+   * @param  string name 文件名
    * @param type style 类型
    * @return 正常删除返回True，否则返回False
    */
-  bool static remove(std::string path,type style);
+  bool static remove(std::string name,type style);
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
@@ -115,11 +114,11 @@ class _file : public _super {
   bool readline(std::vector<std::string>& ret);
 
   /**
-   * @brief 构造函数，传入文件路径
-   * @param string path 文件路径
+   * @brief 构造函数
+   * @param string Name 名
    * @param type style 类型
    */
-  _file(std::string path,type style);
+  _file(std::string Name, type style);
 
   /**
    * @brief 拷贝构造函数
@@ -133,19 +132,19 @@ class _file : public _super {
   ~_file();
   /**
    * @brief <static> 以App的方式写入字符串
-   * @param string Path 路径
+   * @param string Name 名字
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(std::string Path,
+  bool static writeFile(std::string Name,
                         const std::vector<std::string>& array);
   /**
    * @brief <static> 创建
-   * @param string path 需要创建的名字
+   * @param string Name 需要创建的名字
    * @param type stype 需要创建的类型
    * @return True表示文件创造成功，False表示文件创造失败
    */
-  bool static create(std::string path, type style);
+  bool static create(std::string Name, type style);
 
  private:
   // writeFileBuff是写文件buff指针

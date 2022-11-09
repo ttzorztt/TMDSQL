@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-09 19:03:19
+ * @LastEditTime : 2022-11-09 21:53:01
  */
 #ifndef _DIR_
 #define _DIR_
@@ -59,10 +59,10 @@ public:
   virtual int returnCount();
   /**
    * @brief dir类中的构造函数，
-   * @param string dirPath 目录路径
+   * @param string dirName 目录名字
    * @return
    */
-  _dir(std::string dirPath);
+  _dir(std::string dirName);
   /**
    * @brief 拷贝构造函数
    * @param  _dir& copy 拷贝值
@@ -71,22 +71,22 @@ public:
   _dir(_dir& copy);
   /**
    * @brief <static>创建目录
-   * @param  string dirName 创建目录名
+   * @param  string truePath 创建目录名
    * @return 正确创建则返回true，否则返回false
    */
-  bool static create(std::string dirName);
+  bool static create(std::string truePath);
   /**
    * @brief <static>删除目录
-   * @param string Path 删除目录的路径
+   * @param string truePath 删除目录的路径
    * @return 如果删除正常，则返回True，否则返回False
    */
-  bool static remove(std::string Path);
+  bool static remove(std::string truePath);
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
-   * @param string Path 表对象
+   * @param string truePath 目录
    * @return 以vector的形式返回
    */
-  std::vector<std::string> static openDirReturnFileName(std::string Path);
+  std::vector<std::string> static openDirReturnFileName(std::string truePath);
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
    * @return 以vector的形式返回

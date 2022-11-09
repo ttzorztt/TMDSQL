@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-09 19:03:59
+ * @LastEditTime : 2022-11-09 21:09:17
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -31,11 +31,10 @@ class Table : public _file {
   virtual bool isExist();
   /**
    * @brief 构造函数
-   * @param string databaseName 数据库名
    * @param  string stableName 表名
    * @return
    */
-  Table(string datablaseName, string stableName);
+  Table(string stableName);
   /**
    * @brief 构造函数
    * @param  DataBase database 数据库对象
@@ -43,13 +42,6 @@ class Table : public _file {
    * @return
    */
   Table(DataBase database, string stableName);
-  /**
-   * @brief 构造函数
-   * @param  DataBase database 数据库对象
-   * @param  _file tableName 表文件对象
-   * @return
-   */
-  Table(DataBase database, _file tableName);
   void createIndex();
   ~Table();
 private:
