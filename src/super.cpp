@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-09 22:09:38
+ * @LastEditTime : 2022-11-10 07:32:24
  */
 
 #ifndef _SUPER_H_
@@ -10,31 +10,24 @@
 #include "super.h"
 #endif
 std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
-  bool isTableOrDatabase = (".csv" == truePath.substr(truePath.size() - 4));
+  bool isTableOrDatabase = true;
   DIR* dirname = opendir(truePath.c_str());
   struct dirent* dirInfo;
   std::vector<std::string> name;
   int count = 2;
-  if (".csv" == truePath.substr(truePath.size() - 4)) {
     while ((dirInfo = readdir(dirname)) != 0) {
       if (count > 0) {
         --count;
         continue;
       }
       std::string tmpname = dirInfo->d_name;
-      name.push_back(tmpname.substr(0, tmpname.size() - 4));
-    }
-  } else {
-    while ((dirInfo = readdir(dirname)) != 0) {
-      if (count > 0) {
-        --count;
-        continue;
+      if(tmpname.substr(tmpname.size() - 4) == ".csv"){
+        name.push_back(tmpname.substr(0, tmpname.size() - 4));
+      }else{
+        name.push_back(tmpname);
       }
-      std::string tmpname = dirInfo->d_name;
-      name.push_back(tmpname.substr(0, tmpname.size()));
     }
-  }
-  closedir(dirname);
+
   return name;
 }
 

@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-09 20:45:17
+ * @LastEditTime : 2022-11-10 08:12:33
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -62,8 +62,8 @@ bool _file::remove(std::string path, type style) {
   }
   return false;
 }
-bool _file::writeFile(std::string Path, const std::vector<std::string>& array) {
-  _file tmd(Path,type::_TYPE_TABLE);
+bool _file::writeFile(std::string truePath, const std::vector<std::string>& array) {
+  _file tmd(truePath,type::_TYPE_TABLE);
   return tmd.write(array);
 }
 
@@ -94,7 +94,7 @@ bool _file::readline(std::vector<std::string>& ret) {
 
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_TABLE ||
+  if (_super::isExist(truePath) || style == type::_TYPE_DADABASE ||
       style == type::_TYPE_TADABLASE_LOCK) {
     return false;
   }

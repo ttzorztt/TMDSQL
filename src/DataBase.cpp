@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-09 21:53:50
+ * @LastEditTime : 2022-11-10 08:14:04
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -24,18 +24,24 @@ type DataBase::returnType(){
 bool DataBase::create() {
   return _dir::create();
 }
+bool DataBase::create(std::string name){
+  return _dir::create(_super::returnTruePath(name,type::_TYPE_DADABASE));
+}
+bool DataBase::remove(std::string name){
+  return _dir::remove(_super::returnTruePath(name,type::_TYPE_DADABASE));
+}
 DataBase::~DataBase(){
   --DataBase::count;
 }
 bool DataBase::insertTable(std::string tableName) {
-  std::string Path = this->returnName() + "/" + tableName;
-  return _file::create(Path,type::_TYPE_TABLE);
+  // std::string Path = _super::returnTruePath(this->returnName() + "/" + tableName,type::_TYPE_TABLE);
+  return _file::create(this->returnName() + "/" + tableName,type::_TYPE_TABLE);
 }
 
 bool DataBase::insertTable(std::string tableName, const std::vector<std::string>& tableItem) {
   std::string Path = returnName() + "/" + tableName;
   _file::create(Path,type::_TYPE_TABLE);
-  _file::writeFile(Path, tableItem);
+  _file::writeFile(_super::returnTruePath(Path,type::_TYPE_TABLE), tableItem);
   return true;
 }
 int DataBase::returnCount(){
@@ -49,7 +55,7 @@ void DataBase::showDataBaseTable() {
     return;
   }
   std::vector<std::string> ans = _super::openDirReturnFileName(_super::returnTruePath(this->name,type::_TYPE_DADABASE));
-  int maxtablename = 0;
+    int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
     return;

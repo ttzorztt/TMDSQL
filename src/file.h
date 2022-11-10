@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-09 20:32:15
+ * @LastEditTime : 2022-11-10 08:12:40
  */
 #ifndef _FILE_
 #define _FILE_
@@ -132,11 +132,11 @@ class _file : public _super {
   ~_file();
   /**
    * @brief <static> 以App的方式写入字符串
-   * @param string Name 名字
+   * @param string truePath 相对路径
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(std::string Name,
+  bool static writeFile(std::string truePath,
                         const std::vector<std::string>& array);
   /**
    * @brief <static> 创建

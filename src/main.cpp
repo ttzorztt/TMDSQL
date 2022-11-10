@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-09 22:00:40
+ * @LastEditTime : 2022-11-10 08:14:42
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -59,13 +59,25 @@ void init() {
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "../data/database/testdatabase1/table1";
-  string databasePath = "testdatabase2";
+  string databasePath = "testdatabase1";
   DataBase database(databasePath);
-  // cout << database.returnName() << " " << database.returnType() << endl;
   database.showDataBaseTable();
-  database.create();
-  DataBase::showDataBase();
-  database.remove();
+  database.showDataBase();
+  vector<string> Item;
+  Item.push_back("姓名");
+  Item.push_back("年龄");
+  Item.push_back("性别");
+  Item.push_back("吗卡巴卡");
+  database.insertTable("TMD2",Item);
+  // cout << database.returnName() << " " << database.returnType() << endl;
+  // database.showDataBaseTable();
+  // database.create();
+  // DataBase::showDataBase();
+  // int x;
+  // cin >> x;
+  // database.remove();
+  // DataBase::create(databasePath);
+  // DataBase::remove(databasePath);
   // super::returnTruePath(Path,style);
   //     return access(Path.c_str(), F_OK) != -1;
   // _super test("../data/database/testdatabase1",type::_TYPE_DIR);
