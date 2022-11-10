@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-10 07:15:22
+ * @LastEditTime : 2022-11-10 08:35:54
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -98,7 +98,7 @@ class DataBase : public _dir {
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字
-   * @param vector<string>& tableItem 表头项
+   * @param vector<string>& tableItem 表项
    * @return 插入正常则返回True,否则返回False
    */
   bool insertTable(std::string tableName,
@@ -114,7 +114,7 @@ class DataBase : public _dir {
    * @param string tableName 表名
    * @return 删除正常则返回True，否则返回False
    */
-  bool deleteTable(std::string tableName);
+  bool removeTable(std::string tableName);
 
   /**
    * @brief <static>删除指定数据库

@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-10 08:12:40
+ * @LastEditTime : 2022-11-10 09:32:20
  */
 #ifndef _FILE_
 #define _FILE_
@@ -63,11 +63,11 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
-   /**
+  /**
    * @brief 创建_file默认的文件
    * @return True表示文件创造成功，False表示文件创造失败
    */
-   virtual bool create();
+  virtual bool create();
   /**
    * @brief 删除_file中的默认文件
    * @return 如果删除正常，则返回True，否则返回False
@@ -78,18 +78,18 @@ class _file : public _super {
    * @return 存在则返回True，否则返回False
    */
   virtual bool isExist();
-    /**
-     * @brief 打开的数量
-     * @return  数量
-     */
-    virtual int returnCount();
-   /**
+  /**
+   * @brief 打开的数量
+   * @return  数量
+   */
+  virtual int returnCount();
+  /**
    * @brief 删除文件
-   * @param  string name 文件名
+   * @param  string Name 文件名
    * @param type style 类型
    * @return 正常删除返回True，否则返回False
    */
-  bool static remove(std::string name,type style);
+  bool static remove(std::string Name, type style);
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
@@ -132,12 +132,20 @@ class _file : public _super {
   ~_file();
   /**
    * @brief <static> 以App的方式写入字符串
-   * @param string truePath 相对路径
+   * @param string Name 名字
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(std::string truePath,
+  bool static writeFile(std::string Name,
                         const std::vector<std::string>& array);
+
+  /**
+   * @brief <static> 以App的方式写入字符串
+   * @param  string Name 名字
+   * @param  string& str 单个字符串
+   * @return  True写入正常，False写入失败
+   */
+  bool static writeFile(std::string Name, const std::string& str);
   /**
    * @brief <static> 创建
    * @param string Name 需要创建的名字
@@ -155,5 +163,6 @@ class _file : public _super {
   type style;
   //当前打开的文件数总数
   static int count;
+  std::string truePath;
 };
 #endif

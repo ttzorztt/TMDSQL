@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-10 08:12:33
+ * @LastEditTime : 2022-11-10 09:33:23
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -16,10 +16,12 @@
 int _file::count = 0;
 _file::_file(std::string Name,type style) : _super(Name) {
   this->style = style;
+  this->truePath = _super::returnTruePath(Name,type::_TYPE_TABLE);
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
+  this->truePath = _copy.truePath;
   ++_file::count;
 }
 _file::~_file() {
@@ -36,7 +38,7 @@ bool _file::write(const std::string& str) {
   if (!writeBuffOpen(true)) {
     return false;
   }
-  writeFileBuff << str << std::endl;
+  writeFileBuff << std::endl << str;
   return true;
 }
 
@@ -44,14 +46,17 @@ bool _file::write(const std::vector<std::string>& array) {
   if (!writeBuffOpen(true)) {
     return false;
   }
-  for (auto& x : array) {
-    writeFileBuff << x << " ";
+  int size = array.size();
+  if(size == 0) return false;
+  writeFileBuff << array[0];
+  for(int index = 1; index < size; ++index){
+    writeFileBuff << " " << array[index];
   }
   writeFileBuff << std::endl;
   return true;
 }
-bool _file::remove(std::string path, type style) {
-  std::string truePath = _super::returnTruePath(path, style);
+bool _file::remove(std::string Name, type style) {
+  std::string truePath = _super::returnTruePath(Name, style);
   if (!_super::isExist(truePath)) {
     return false;
   }
@@ -62,11 +67,14 @@ bool _file::remove(std::string path, type style) {
   }
   return false;
 }
-bool _file::writeFile(std::string truePath, const std::vector<std::string>& array) {
-  _file tmd(truePath,type::_TYPE_TABLE);
+bool _file::writeFile(std::string Name, const std::vector<std::string>& array) {
+  _file tmd(Name,type::_TYPE_TABLE);
   return tmd.write(array);
 }
-
+bool _file::writeFile(std::string Name, const std::string& str){
+  _file tmd(Name,type::_TYPE_TABLE);
+  return tmd.write(str);
+}
 bool _file::readline(std::vector<std::string>& ret) {
   if (!readBuffOpen(true)) {
     return {};
@@ -114,21 +122,21 @@ bool _file::create() {
 }
 
 bool _file::writeBuffOpen(bool need) {
-  if (need && !_super::isExist(this->name, style)) {
+  if (need && !_super::isExist(this->truePath)) {
     return false;
   }
   if (!writeFileBuff.is_open()) {
-    writeFileBuff.open(name, std::ios::app);
+    writeFileBuff.open(this->truePath, std::ios::app);
   }
   return true;
 }
 
 bool _file::readBuffOpen(bool need) {
-  if (need && !_super::isExist(this->name, style)) {
+  if (need && !_super::isExist(this->truePath)) {
     return false;
   }
   if (!readFileBuff.is_open()) {
-    readFileBuff.open(_super::returnTruePath(name, style));
+    readFileBuff.open(this->truePath);
   }
   return true;
 }

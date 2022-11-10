@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-10 08:14:42
+ * @LastEditTime : 2022-11-10 09:18:51
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -68,6 +68,10 @@ int main(int argc, char const* argv[]) {
   Item.push_back("年龄");
   Item.push_back("性别");
   Item.push_back("吗卡巴卡");
+  // if(database.isExist()){
+  //   cout << "TRUE" << endl;
+  //   database.removeTable("TMD2");
+  // }
   database.insertTable("TMD2",Item);
   // cout << database.returnName() << " " << database.returnType() << endl;
   // database.showDataBaseTable();
