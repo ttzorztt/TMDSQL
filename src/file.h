@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-10 09:32:20
+ * @LastEditTime : 2022-11-11 21:58:15
  */
 #ifndef _FILE_
 #define _FILE_
@@ -63,6 +63,11 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
+   /**
+   * @brief 真实路径
+   * @return {std::string} 返回真实路径
+   */
+  std::string returnTruePath();
   /**
    * @brief 创建_file默认的文件
    * @return True表示文件创造成功，False表示文件创造失败

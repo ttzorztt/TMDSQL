@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-11 21:17:47
+ * @LastEditTime : 2022-11-11 21:44:34
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -37,19 +37,9 @@ bool Table::isExist() {
   return _super::isExist(this->name, style);
 }
 
-bool Table::create(std::string databaseAndTableName){
-  return _super::isExist(databaseAndTableName, type::_TYPE_TABLE);
-}
-
- bool Table::remove(std::string databaseAndTableName){
-  return _file::remove(databaseAndTableName,type::_TYPE_TABLE); 
-}
- bool Table::append(const std::vector<string>& value){
-  return _file::writeFile(this->name,value);
-}
 void Table::updateIndex(){
 
 }
 std::vector<std::string> Table::find(std::string index){
-  
+  return {};
 }

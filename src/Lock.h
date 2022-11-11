@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:12:54
- * @LastEditTime : 2022-11-09 19:05:44
+ * @LastEditTime : 2022-11-11 21:50:12
  */
 #ifndef _LOCK_
 #define _LOCK_
@@ -28,6 +28,12 @@ class Lock  {
   static int databaseCount;
   //类型
  public:
+  /**
+   * @brief 构造函数
+   * @param  string name 名字
+   * @return  
+   */
+  Lock(std::string name);
   /**
    * @brief 构造函数
    * @param  Table table 表
@@ -106,7 +112,6 @@ class Lock  {
    * @return  删锁成功则返回True，否则返回False。
    */
   bool static remove(DataBase database);
-  
-  
+
 };
 #endif

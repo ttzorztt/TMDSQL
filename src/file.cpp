@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-10 09:33:23
+ * @LastEditTime : 2022-11-11 21:57:31
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -130,7 +130,9 @@ bool _file::writeBuffOpen(bool need) {
   }
   return true;
 }
-
+std::string _file::returnTruePath(){
+  return truePath;
+}
 bool _file::readBuffOpen(bool need) {
   if (need && !_super::isExist(this->truePath)) {
     return false;

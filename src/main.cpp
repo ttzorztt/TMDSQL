@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-11 20:38:46
+ * @LastEditTime : 2022-11-11 22:05:40
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -36,6 +36,10 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
+#ifndef _LOCK_H_
+#define _LOCK_H_
+#include "Lock.h"
+#endif
 using namespace std;
 
 /**
@@ -58,17 +62,16 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  string tablePath = "../data/database/testdatabase1/table1";
-  string databasePath = "testdatabase2";
-  DataBase database(databasePath);
-  database.showDataBaseTable();
-  database.create();
-  DataBase::showDataBase();
-  vector<string> Item;
-  Item.push_back("姓名");
-  Item.push_back("年龄");
-  Item.push_back("性别");
-  Item.push_back("吗卡巴卡");
+  string tablePath = "testdatabase1/CPS1985";
+  Table table(tablePath);
+  if(table.isExist()){
+    cout << "存在" << endl;
+  }else{
+    table.create();
+  }
+   cout << table.returnTruePath() << endl << table.returnName() << endl;
+   Lock::add(table);
+   _file::create(tablePath,type::_TYPE_TABLE_LOCK);
   // if(database.isExist()){
   //   cout << "TRUE" << endl;
   //   database.removeTable("TMD2");

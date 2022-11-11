@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-11 21:17:26
+ * @LastEditTime : 2022-11-11 21:23:24
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -62,24 +62,6 @@ class Table : public _file {
    * @return
    */
   Table(DataBase database, string tableName);
-  /**
-   * @brief <static> 创建指定的数据库中的表项
-   * @param  string databaseAndTableName 数据库名+表名
-   * @return 正常创建则返回True，否则返回False
-   */
-  bool static create(std::string databaseAndTableName);
-  /**
-   * @brief <static> 删除指定的数据库中的表项
-   * @param  string databaseAndTableName 数据库名+表名
-   * @return 正常创建则返回True，否则返回False
-   */
-  bool static remove(std::string databaseAndTableName);
-  /**
-   * @brief 添加数据
-   * @param std::vector<std::string>& value 插入值
-   * @return 正常插入则返回True，否则返回False
-   */
-  bool append(const std::vector<string>& value);
   /**
    * @brief 更新索引
    */

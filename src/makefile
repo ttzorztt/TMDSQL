@@ -1,6 +1,8 @@
-main: main.o file.o DataBase.o dir.o Table.o super.o
-	g++ main.o file.o DataBase.o dir.o Table.o super.o -o main
+main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o
+	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o -o main
 	./main
+Lock.o: Lock.cpp
+	g++ -c Lock.cpp
 super.o: super.cpp
 	g++ -c super.cpp
 Table.o: Table.cpp
