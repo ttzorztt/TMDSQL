@@ -2,11 +2,11 @@
  * @Description  : 封装索引操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:43
- * @LastEditTime : 2022-11-09 19:04:27
+ * @LastEditTime : 2022-11-11 21:19:17
  */
 #ifndef _INDEX_
 #define _INDEX_
-class index
+class index 
 {
 private:
   //当前打开的索引文件的数量

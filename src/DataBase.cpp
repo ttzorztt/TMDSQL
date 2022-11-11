@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-10 09:24:31
+ * @LastEditTime : 2022-11-11 20:33:07
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -44,7 +44,6 @@ bool DataBase::insertTable(std::string tableName,
   std::string Path = returnName() + "/" + tableName;
   if (!_super::isExist(Path, type::_TYPE_TABLE)) {
     _file::create(Path, type::_TYPE_TABLE);
-    _file::writeFile(Path,"\n");
   }
   _file::writeFile(Path, tableItem);
   return true;

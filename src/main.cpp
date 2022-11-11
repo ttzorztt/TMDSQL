@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-10 09:18:51
+ * @LastEditTime : 2022-11-11 20:38:46
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -59,10 +59,11 @@ void init() {
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "../data/database/testdatabase1/table1";
-  string databasePath = "testdatabase1";
+  string databasePath = "testdatabase2";
   DataBase database(databasePath);
   database.showDataBaseTable();
-  database.showDataBase();
+  database.create();
+  DataBase::showDataBase();
   vector<string> Item;
   Item.push_back("姓名");
   Item.push_back("年龄");
@@ -72,7 +73,8 @@ int main(int argc, char const* argv[]) {
   //   cout << "TRUE" << endl;
   //   database.removeTable("TMD2");
   // }
-  database.insertTable("TMD2",Item);
+
+  
   // cout << database.returnName() << " " << database.returnType() << endl;
   // database.showDataBaseTable();
   // database.create();

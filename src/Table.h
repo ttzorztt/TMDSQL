@@ -2,13 +2,17 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-09 21:09:17
+ * @LastEditTime : 2022-11-11 21:17:26
  */
 #ifndef _TABLE_
 #define _TABLE_
 #ifndef _STRING_
 #define _STRING_
 #include <string>
+#endif
+#ifndef _VECTOR_
+#define _VECTOR_
+#include <vector>
 #endif
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -25,25 +29,71 @@ using namespace std;
 class Table : public _file {
  private:
  public:
+   /**
+    * @brief 创建
+    * @return  正常创建则返回True，否则返回false
+    */
    virtual bool create();
+  /**
+   * @brief 删除
+   * @return  正常删除则返回True，否则返回False
+   */
   virtual bool remove();
+  /**
+   * @brief 获取数量
+   * @return  返回数量
+   */
   virtual int returnCount();
+  /**
+   * @brief 判断是否存在
+   * @return 存在则返回True,否则返回false
+   */
   virtual bool isExist();
   /**
    * @brief 构造函数
-   * @param  string stableName 表名
+   * @param  string databaseAndTableName 数据库名+表名
    * @return
    */
-  Table(string stableName);
+  Table(string databaseAndTableName);
   /**
    * @brief 构造函数
    * @param  DataBase database 数据库对象
-   * @param  string stableName 表名
+   * @param  string tableName 表名
    * @return
    */
-  Table(DataBase database, string stableName);
-  void createIndex();
+  Table(DataBase database, string tableName);
+  /**
+   * @brief <static> 创建指定的数据库中的表项
+   * @param  string databaseAndTableName 数据库名+表名
+   * @return 正常创建则返回True，否则返回False
+   */
+  bool static create(std::string databaseAndTableName);
+  /**
+   * @brief <static> 删除指定的数据库中的表项
+   * @param  string databaseAndTableName 数据库名+表名
+   * @return 正常创建则返回True，否则返回False
+   */
+  bool static remove(std::string databaseAndTableName);
+  /**
+   * @brief 添加数据
+   * @param std::vector<std::string>& value 插入值
+   * @return 正常插入则返回True，否则返回False
+   */
+  bool append(const std::vector<string>& value);
+  /**
+   * @brief 更新索引
+   */
+  void updateIndex();
+  /**
+   * @brief 析构函数
+   */  
   ~Table();
+  /**
+   * @brief 寻找索引为index的数据，(默认第一个每列第一个数据是索引)
+   * @param  string index 索引值
+   * @return 
+   */
+  std::vector<std::string> find(std::string index);
 private:
 type style;
 //记录打开表的个数
