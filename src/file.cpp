@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-11 21:57:31
+ * @LastEditTime : 2022-11-14 09:21:02
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -102,8 +102,7 @@ bool _file::readline(std::vector<std::string>& ret) {
 
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_DADABASE ||
-      style == type::_TYPE_TADABLASE_LOCK) {
+  if (_super::isExist(truePath) || style == type::_TYPE_DADABASE) {
     return false;
   }
   std::ofstream filewritebuff;
@@ -116,7 +115,6 @@ bool _file::create(std::string name, type style) {
   filewritebuff.close();
   return false;
 }
-
 bool _file::create() {
   return _file::create(this->name, this->style);
 }

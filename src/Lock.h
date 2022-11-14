@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:12:54
- * @LastEditTime : 2022-11-11 21:50:12
+ * @LastEditTime : 2022-11-14 09:47:49
  */
 #ifndef _LOCK_
 #define _LOCK_
@@ -18,22 +18,51 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
-class Lock  {
+class Lock : public _super {
  private:
   //当前打开的锁的总数的数量
   static int count;
   //当前打开的文件锁的数量
-  static int fileCount; 
+  static int tableCount; 
   //当前打开数据库锁的数量
   static int databaseCount;
   //类型
+  type style;
  public:
+   /**
+    * @brief 创建
+    * @return  创建正常则返回True，否则返回False
+    */
+   virtual bool create();
+  /**
+   * @brief 删除 
+   * @return  删除正常则返回True，否则返回False
+   */   
+  virtual bool remove();
+  /**
+   * @brief 返回static 的count
+   * @return count
+   */
+  virtual int returnCount();
+  /**
+   * @brief 是否存在
+   * @return  存在返回True，否则返回False
+   */
+  virtual bool isExist();
+  /**
+   * @brief <static> 是否存在
+   * @param  string name 名字
+   * @param  type style 类型
+   * @return  存在则返回True，否则返回False
+   */
+  bool static isExist(std::string name,type style);
   /**
    * @brief 构造函数
    * @param  string name 名字
+   * @param type style 类型
    * @return  
    */
-  Lock(std::string name);
+  Lock(std::string name,type style);
   /**
    * @brief 构造函数
    * @param  Table table 表
@@ -57,16 +86,17 @@ class Lock  {
    * @return
    */
   ~Lock();
+/**
+ * @brief 新建锁，增加count
+ * @return  
+ */
+void  newLockAddCount();
+  
   /**
-   * @brief 锁的数量
-   * @return 返回当前锁的数量
+   * @brief 表锁的数量
+   * @return 返回表锁的数量
    */
-  int static returncount();
-  /**
-   * @brief 文件锁的数量
-   * @return 返回文件锁的数量
-   */
-  int static returnFileCount();
+  int static returnTableCount();
   /**
    * @brief 数据库锁的数量
    * @return 返回数据库锁的数量
@@ -112,6 +142,5 @@ class Lock  {
    * @return  删锁成功则返回True，否则返回False。
    */
   bool static remove(DataBase database);
-
 };
 #endif

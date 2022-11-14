@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-11 22:05:40
+ * @LastEditTime : 2022-11-14 09:19:48
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -62,16 +62,16 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  string tablePath = "testdatabase1/CPS1985";
-  Table table(tablePath);
-  if(table.isExist()){
+  string tablePath = "testdatabase1";
+  DataBase database(tablePath);
+  if(database.isExist()){
     cout << "存在" << endl;
-  }else{
-    table.create();
   }
-   cout << table.returnTruePath() << endl << table.returnName() << endl;
-   Lock::add(table);
-   _file::create(tablePath,type::_TYPE_TABLE_LOCK);
+  // Lock::add(database
+  Lock::remove(database);
+  //  Lock::add(table);
+  // Lock::remove(table);
+  //  _file::create(tablePath,type::_TYPE_TABLE_LOCK);
   // if(database.isExist()){
   //   cout << "TRUE" << endl;
   //   database.removeTable("TMD2");

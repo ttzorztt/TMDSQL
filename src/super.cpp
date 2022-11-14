@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-10 07:32:24
+ * @LastEditTime : 2022-11-14 08:42:53
  */
 
 #ifndef _SUPER_H_
@@ -56,6 +56,19 @@ _super::_super(_super& copy) {
 _super::_super(std::string name) {
   this->name = name;
 }
+std::vector<std::string> _super::dispartDatabaseNameAndTableName(std::string TableName){
+  int size = TableName.size();
+  if(size == 0){
+    return {};
+  }
+  while(size >= 0){
+    if(TableName[size] == '/'){
+      break;
+    }
+    --size;
+  }
+  return {TableName.substr(0,size),TableName.substr(size+1)};
+}
 
 bool _super::isExist(std::string name, type style) {
   return access(_super::returnTruePath(name, style).c_str(), F_OK) != -1;
@@ -64,12 +77,14 @@ bool _super::isExist(std::string truePath) {
   return access(truePath.c_str(), F_OK) != -1;
 }
 std::string _super::returnTruePath(std::string Name, type style) {
+  std::vector<std::string> part;
   switch (style) {
     case type::_TYPE_DADABASE:
       return _databasePath + Name;
       break;
     case type::_TYPE_TABLE_LOCK:
-      return _tableLockPath + "." + Name + ".csv";
+      part = _super::dispartDatabaseNameAndTableName(Name);
+      return _tableLockPath + part[0] + "/" + "." + part[1] + ".csv";
       break;
     case type::_TYPE_TADABLASE_LOCK:
       return _databaseLockPath + "." + Name;

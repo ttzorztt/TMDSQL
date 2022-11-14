@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-09 22:05:36
+ * @LastEditTime : 2022-11-14 08:45:45
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -29,8 +29,9 @@
 const static std::string _tablePath = "../data/database/";
 const static std::string _databasePath = "../data/database/";
 const static std::string _indexPath = "../data/index/";
-const static std::string _tableLockPath = "../data/lock/database/";
+const static std::string _tableLockPath = "../data/lock/";
 const static std::string _databaseLockPath = "../data/lock/";
+const static std::string _logPath = "../data/log";
 // 封装一些文件或目录类型
 enum type {
   _TYPE_TABLE,           //普通文件，即表
@@ -94,7 +95,12 @@ class _super {
    * @return True写入正确,False 写入失败
    */
   bool static writeFile(std::string Name, const std::string& str);
-
+  /**
+   * @brief 分离数据库名和表名
+   * @param  string TableName 待分离的表名
+   * @return std::vector<string>[0] 是数据库名，std::vector<string>[1]是表名
+   */
+  std::vector<std::string> static dispartDatabaseNameAndTableName(std::string TableName);
   /**
    * @brief <static> 判断指定文件或目录是否存在
    * @param string Name 路径
