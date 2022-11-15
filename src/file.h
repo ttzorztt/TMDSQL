@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-15 15:58:53
+ * @LastEditTime : 2022-11-15 17:35:38
  */
 #ifndef _FILE_
 #define _FILE_
@@ -41,12 +41,7 @@
  */
 class _file : public _super {
  protected:
-  /**
-   * @brief 以App的方式写入字符串
-   * @param vector<string>& array 数据写入数据库
-   * @return True写入正确,False 写入失败
-   */
-  bool write(const std::vector<std::string>& array);
+
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -63,6 +58,12 @@ class _file : public _super {
   bool readBuffOpen(bool need);
 
  public:
+   /**
+   * @brief 以App的方式写入字符串
+   * @param vector<string>& array 数据写入数据库
+   * @return True写入正确,False 写入失败
+   */
+  bool write(const std::vector<std::string>& array);
    /**
    * @brief 真实路径
    * @return {std::string} 返回真实路径
@@ -106,12 +107,12 @@ class _file : public _super {
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
    */
-  const std::ofstream& returnWriteFileBuff();
+   std::ofstream& returnWriteFileBuff();
   /**
    * @brief 返回类中默认的readFileBuff，用来操作
    * @return <const ifstream&> 返回readFileBuff
    */
-  const std::ifstream& returnReadFileBuff();
+   std::ifstream& returnReadFileBuff();
   /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
@@ -124,7 +125,7 @@ class _file : public _super {
    * @return 读完或文件不存在返回False，否则返回True
    */
   bool readline(std::vector<std::string>& ret);
-
+  
   /**
    * @brief 构造函数
    * @param string Name 名

@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-15 14:16:58
+ * @LastEditTime : 2022-11-15 16:55:04
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -68,7 +68,6 @@ class Table : public _file {
   bool append(std::vector<std::string> value);
   bool static append(Table table,std::vector<std::string> value);
   bool static append(std::string tableName,std::vector<std::string> value);
-
   /**
    * @brief 更新索引
    */

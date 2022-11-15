@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-15 16:29:35
+ * @LastEditTime : 2022-11-15 18:11:55
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -151,11 +151,11 @@ bool _file::remove() {
   return _file::remove(this->name, style);
 }
 
-const std::ofstream& _file::returnWriteFileBuff() {
+ std::ofstream& _file::returnWriteFileBuff() {
   return writeFileBuff;
 }
 
-const std::ifstream& _file::returnReadFileBuff() {
+ std::ifstream& _file::returnReadFileBuff() {
   return readFileBuff;
 }
 bool _file::isExist() {

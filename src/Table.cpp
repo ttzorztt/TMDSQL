@@ -2,16 +2,13 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-15 16:34:30
+ * @LastEditTime : 2022-11-15 17:53:59
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
 #endif
-#ifndef _ALGORITHM_
-#define _ALGORITHM_
-#include <algorithm>
-#endif
+
 int Table::count = 0;
 Table::Table(string stableName)
     : _file(stableName, type::_TYPE_TABLE) {
@@ -29,10 +26,11 @@ Table::~Table() {
 }
 
 bool Table::create() {
-    return _file::create(this->name,style);
+    return _file::create(this->name,type::_TYPE_INDEX_TABLE) && 
+     _file::create(this->name,type::_TYPE_TABLE);
 }
 bool Table::remove() {
-    return _file::remove(this->name,style);
+    return _file::remove(this->name,type::_TYPE_INDEX_TABLE) && _file::remove(this->name,type::_TYPE_TABLE);
 }
 int Table::returnCount() {
   return Table::count;
