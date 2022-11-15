@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-11 21:23:24
+ * @LastEditTime : 2022-11-15 14:16:58
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -62,13 +62,20 @@ class Table : public _file {
    * @return
    */
   Table(DataBase database, string tableName);
+  bool appInsertIndex(std::string index,int fileIndex);
+  bool static appInsertIndex(std::string tableName,std::string index,int fileIndex);
+  bool static appInsertIndex(Table table,std::string index,int fileIndex);
+  bool append(std::vector<std::string> value);
+  bool static append(Table table,std::vector<std::string> value);
+  bool static append(std::string tableName,std::vector<std::string> value);
+
   /**
    * @brief 更新索引
    */
   void updateIndex();
   /**
    * @brief 析构函数
-   */  
+   */
   ~Table();
   /**
    * @brief 寻找索引为index的数据，(默认第一个每列第一个数据是索引)

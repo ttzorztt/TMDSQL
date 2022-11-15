@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-11 21:58:15
+ * @LastEditTime : 2022-11-15 15:58:53
  */
 #ifndef _FILE_
 #define _FILE_
@@ -95,6 +95,13 @@ class _file : public _super {
    * @return 正常删除返回True，否则返回False
    */
   bool static remove(std::string Name, type style);
+  
+  /**
+   * @brief 删除文件
+   * @param  string truePath 真实路径
+   * @return 正常删除则返回True，否则返回False
+   */
+  bool static remove(std::string truePath);
   /**
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
@@ -141,7 +148,7 @@ class _file : public _super {
    * @param vector<string>& array 数据写入数据库
    * @return True写入正确,False 写入失败
    */
-  bool static writeFile(std::string Name,
+  bool static write(std::string Name, type style,
                         const std::vector<std::string>& array);
 
   /**
@@ -150,7 +157,7 @@ class _file : public _super {
    * @param  string& str 单个字符串
    * @return  True写入正常，False写入失败
    */
-  bool static writeFile(std::string Name, const std::string& str);
+  bool static write(std::string Name, type style, const std::string& str);
   /**
    * @brief <static> 创建
    * @param string Name 需要创建的名字
@@ -158,7 +165,11 @@ class _file : public _super {
    * @return True表示文件创造成功，False表示文件创造失败
    */
   bool static create(std::string Name, type style);
-
+  /**
+   * @brief 返回type
+   * @return  类型
+   */
+  virtual type returnType();
  private:
   // writeFileBuff是写文件buff指针
   std::ofstream writeFileBuff;

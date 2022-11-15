@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-14 09:21:02
+ * @LastEditTime : 2022-11-15 16:29:35
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -16,7 +16,8 @@
 int _file::count = 0;
 _file::_file(std::string Name,type style) : _super(Name) {
   this->style = style;
-  this->truePath = _super::returnTruePath(Name,type::_TYPE_TABLE);
+  this->truePath = _super::returnTruePath(Name,style);
+  std::cout << this->truePath << std::endl;
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
@@ -56,7 +57,9 @@ bool _file::write(const std::vector<std::string>& array) {
   return true;
 }
 bool _file::remove(std::string Name, type style) {
-  std::string truePath = _super::returnTruePath(Name, style);
+  return _file::remove(_super::returnTruePath(Name, style));
+}
+bool  _file::remove(std::string truePath){
   if (!_super::isExist(truePath)) {
     return false;
   }
@@ -67,12 +70,12 @@ bool _file::remove(std::string Name, type style) {
   }
   return false;
 }
-bool _file::writeFile(std::string Name, const std::vector<std::string>& array) {
-  _file tmd(Name,type::_TYPE_TABLE);
+bool _file::write(std::string Name, type style,const std::vector<std::string>& array) {
+  _file tmd(Name,style);
   return tmd.write(array);
 }
-bool _file::writeFile(std::string Name, const std::string& str){
-  _file tmd(Name,type::_TYPE_TABLE);
+bool _file::write(std::string Name, type style ,const std::string& str){
+  _file tmd(Name,style);
   return tmd.write(str);
 }
 bool _file::readline(std::vector<std::string>& ret) {
@@ -88,7 +91,7 @@ bool _file::readline(std::vector<std::string>& ret) {
   int right = 1;
   int size = _str.size();
   while (right <= size) {
-    if (_str[right] == ' ') {
+    if (_str[right] != ',') {
       ++right;
       continue;
     } else {
@@ -100,6 +103,9 @@ bool _file::readline(std::vector<std::string>& ret) {
   return true;
 }
 
+type _file::returnType(){
+  return this->style;
+}
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
   if (_super::isExist(truePath) || style == type::_TYPE_DADABASE) {

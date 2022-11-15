@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-14 08:42:53
+ * @LastEditTime : 2022-11-15 15:51:10
  */
 
 #ifndef _SUPER_H_
@@ -91,8 +91,14 @@ std::string _super::returnTruePath(std::string Name, type style) {
       break;
     case type::_TYPE_TABLE:
       return _tablePath + Name + ".csv";
-    case type::_TYPE_INDEX:
+    case type::_TYPE_INDEX_TABLE:
       return _indexPath + Name + ".csv";
+      break;
+    case type::_TYPE_CREATE_INDEX_DATABASE:
+      return _indexPath + Name;
+      break;
+    case type::_TYPE_CREATE_LOCK_DATABASE:
+      return _databaseLockPath + Name;
       break;
     default:
       break;

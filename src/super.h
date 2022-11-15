@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-14 08:45:45
+ * @LastEditTime : 2022-11-15 15:50:41
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -34,28 +34,30 @@ const static std::string _databaseLockPath = "../data/lock/";
 const static std::string _logPath = "../data/log";
 // 封装一些文件或目录类型
 enum type {
-  _TYPE_TABLE,           //普通文件，即表
-  _TYPE_DADABASE,            //目录，即数据库
-  _TYPE_INDEX,          // 索引文件
-  _TYPE_TABLE_LOCK,      // 表锁
-  _TYPE_TADABLASE_LOCK  //数据库锁
+  _TYPE_TABLE,                  //普通文件，即表
+  _TYPE_DADABASE,               //目录，即数据库
+  _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
+  _TYPE_INDEX_TABLE,            // 索引下的表
+  _TYPE_TABLE_LOCK,             // 表锁
+  _TYPE_TADABLASE_LOCK,         //数据库锁
+  _TYPE_CREATE_LOCK_DATABASE    //创建lock下的数据库文件夹
 };
 /**
  * @brief 维护一些基础静态函数
  */
 class _super {
  protected:
-  //名字 
+  //名字
   //如果是表则需要加数据库名
   // 根据名字中是否有 '/'判断是数据库名或表名
-  std::string name;  
-  
+  std::string name;
+
  public:
   virtual bool create();
   virtual bool remove();
   virtual int returnCount();
   virtual bool isExist();
-    /**
+  /**
    * @brief 返回类型
    * @return 返回类型
    */
@@ -100,7 +102,8 @@ class _super {
    * @param  string TableName 待分离的表名
    * @return std::vector<string>[0] 是数据库名，std::vector<string>[1]是表名
    */
-  std::vector<std::string> static dispartDatabaseNameAndTableName(std::string TableName);
+  std::vector<std::string> static dispartDatabaseNameAndTableName(
+      std::string TableName);
   /**
    * @brief <static> 判断指定文件或目录是否存在
    * @param string Name 路径
@@ -120,6 +123,6 @@ class _super {
    * @param  type style 类型
    * @return  底层路径
    */
-  std::string static returnTruePath(std::string name,type style);
+  std::string static returnTruePath(std::string name, type style);
 };
 #endif

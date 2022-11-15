@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-11 20:33:07
+ * @LastEditTime : 2022-11-15 16:36:13
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -12,23 +12,33 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
+#endif
 // 打开的数据库的个数
 int DataBase::count = 0;
-DataBase::DataBase(std::string name) : _dir(name) {}
-DataBase::DataBase(DataBase& databse) : _dir(databse.returnName()) {
+DataBase::DataBase(std::string name) : _dir(name,type::_TYPE_DADABASE) {}
+DataBase::DataBase(DataBase& databse) : _dir(databse.returnName(),type::_TYPE_DADABASE) {
   ++this->count;
 }
 type DataBase::returnType() {
   return type::_TYPE_DADABASE;
 }
 bool DataBase::create() {
-  return _dir::create();
+  return DataBase::create(this->name);
 }
 bool DataBase::create(std::string name) {
-  return _dir::create(_super::returnTruePath(name, type::_TYPE_DADABASE));
+  return _dir::create(_super::returnTruePath(name, type::_TYPE_DADABASE)) &&
+
+   _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+
+   _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
 }
 bool DataBase::remove(std::string name) {
-  return _dir::remove(_super::returnTruePath(name, type::_TYPE_DADABASE));
+  return _dir::remove(_super::returnTruePath(name, type::_TYPE_DADABASE)) &&
+   _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+   _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
 }
 DataBase::~DataBase() {
   --DataBase::count;
@@ -44,8 +54,9 @@ bool DataBase::insertTable(std::string tableName,
   std::string Path = returnName() + "/" + tableName;
   if (!_super::isExist(Path, type::_TYPE_TABLE)) {
     _file::create(Path, type::_TYPE_TABLE);
+    _file::create(Path, type::_TYPE_INDEX_TABLE);
   }
-  _file::writeFile(Path, tableItem);
+  Table::append(Path,tableItem);
   return true;
 }
 int DataBase::returnCount() {
@@ -151,5 +162,5 @@ bool DataBase::removeDataBase(std::string DataBaseName) {
 }
 
 bool DataBase::remove() {
-  return _dir::remove("../data/database/" + this->name);
+  return DataBase::remove(this->name);
 }

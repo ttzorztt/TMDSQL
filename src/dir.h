@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-09 21:53:01
+ * @LastEditTime : 2022-11-15 16:00:10
  */
 #ifndef _DIR_
 #define _DIR_
@@ -34,18 +34,27 @@
  * @brief 封装一些对目录操作的函数
  */
 class _dir : public _super {
-public:
+ public:
   /**
    * @brief 创建
    * @return 正常创建返回True，否则返回False
    */
   virtual bool create();
-    /**
-   * @brief 删除默认目录 dirPath
+  /**
+   * @brief 删除默认目录 dirPath,只能删除空数据库
    * @return 如果删除正常，则返回True，否则返回False
    */
   virtual bool remove();
 
+  /**
+   * @brief 强制删除 (适用于非空目录)
+   */
+  void forceremove();
+  /**
+   * @brief <static> 强制删除 (适用于非空目录)
+   * @param  string name 目录名称
+   */
+  void static forceremove(std::string name);
   /**
    * @brief 判断文件是否存在
    * @return 存在则返回True，否则返回False
@@ -57,12 +66,19 @@ public:
    * @return 个数
    */
   virtual int returnCount();
+
+  /**
+   * @brief 返回type
+   * @return  类型
+   */
+  virtual type returnType();
   /**
    * @brief dir类中的构造函数，
    * @param string dirName 目录名字
+   * @param type style 类型
    * @return
    */
-  _dir(std::string dirName);
+  _dir(std::string dirName,type style);
   /**
    * @brief 拷贝构造函数
    * @param  _dir& copy 拷贝值
@@ -77,7 +93,7 @@ public:
   bool static create(std::string truePath);
   /**
    * @brief <static>删除目录
-   * @param string truePath 删除目录的路径
+   * @param string truePath 删除目录的路径，只能删除空数据库
    * @return 如果删除正常，则返回True，否则返回False
    */
   bool static remove(std::string truePath);
@@ -92,8 +108,10 @@ public:
    * @return 以vector的形式返回
    */
   std::vector<std::string> openDirReturnFileName();
-  private:
+
+ private:
   // 记录由_dir打开的文件
   int static count;
+  type style;
 };
 #endif
