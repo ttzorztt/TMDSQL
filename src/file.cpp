@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-15 18:11:55
+ * @LastEditTime : 2022-11-16 14:45:12
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -17,7 +17,6 @@ int _file::count = 0;
 _file::_file(std::string Name,type style) : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name,style);
-  std::cout << this->truePath << std::endl;
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
@@ -51,7 +50,7 @@ bool _file::write(const std::vector<std::string>& array) {
   if(size == 0) return false;
   writeFileBuff << array[0];
   for(int index = 1; index < size; ++index){
-    writeFileBuff << " " << array[index];
+    writeFileBuff << "," << array[index];
   }
   writeFileBuff << std::endl;
   return true;
@@ -80,7 +79,7 @@ bool _file::write(std::string Name, type style ,const std::string& str){
 }
 bool _file::readline(std::vector<std::string>& ret) {
   if (!readBuffOpen(true)) {
-    return {};
+    return false;
   }
   std::string _str;
   getline(readFileBuff, _str);
@@ -90,6 +89,8 @@ bool _file::readline(std::vector<std::string>& ret) {
   int left = 0;
   int right = 1;
   int size = _str.size();
+  std::cout << "stringSize:" << _str << std::endl;
+  
   while (right <= size) {
     if (_str[right] != ',') {
       ++right;
