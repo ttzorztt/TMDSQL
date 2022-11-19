@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-15 17:35:38
+ * @LastEditTime : 2022-11-19 20:50:28
  */
 #ifndef _FILE_
 #define _FILE_
@@ -35,6 +35,9 @@
 #define _UNISTD_H_
 #include <unistd.h>
 #endif
+
+// 文件指针
+#define POINTER int
 /**
  * @brief
  * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
@@ -151,7 +154,28 @@ class _file : public _super {
    */
   bool static write(std::string Name, type style,
                         const std::vector<std::string>& array);
-
+  /**
+   * @brief 设置读buff的seek
+   * @param  POINTER fileIndex 文件指针
+   * @return 
+   */
+  void setReadSeek(POINTER fileIndex);
+  /**
+   * @brief 设置写buff的seel
+   * @param  POINTER fileIndex 文件指针
+   * @return  
+   */
+  void setWriteSeek(POINTER fileIndex);
+  /**
+   * @brief 文件指针
+   * @return 返回文件指针
+   */
+  POINTER returnReadTell();
+  /**
+   * @brief 文件指针
+   * @return  返回文件指针
+   */
+  POINTER returnWriteTell();
   /**
    * @brief <static> 以App的方式写入字符串
    * @param  string Name 名字

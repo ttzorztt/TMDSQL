@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-19 15:02:38
+ * @LastEditTime : 2022-11-19 20:52:33
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -33,7 +33,18 @@ _file::~_file() {
   }
   --_file::count;
 }
-
+void _file::setReadSeek(POINTER fileIndex){
+  readFileBuff.seekg(fileIndex);
+}
+void _file::setWriteSeek(POINTER fileIndex){
+  writeFileBuff.seekp(fileIndex);
+}
+POINTER _file::returnReadTell(){
+  return readFileBuff.tellg();
+}
+POINTER _file::returnWriteTell(){
+  return writeFileBuff.tellp();
+}
 bool _file::write(const std::string& str) {
   if (!writeBuffOpen(true)) {
     return false;

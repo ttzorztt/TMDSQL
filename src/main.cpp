@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-19 20:22:24
+ * @LastEditTime : 2022-11-19 22:16:27
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -68,6 +68,8 @@ int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath,type::_TYPE_TABLE);
+  vector<string> value = table.find("王五");
+  cout << value.size() << endl;
   // cout << table.isExist() << endl;
 
 //   Table table(databasePath + "/" + "TMD");
