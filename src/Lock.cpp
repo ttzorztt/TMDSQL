@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:00
- * @LastEditTime : 2022-11-14 09:46:59
+ * @LastEditTime : 2022-11-19 15:15:30
  */
 #ifndef _LOCK_H_
 #define _LOCK_H_
@@ -98,7 +98,6 @@ bool Lock::remove(std::string Name, type style) {
 }
 bool Lock::add(std::string Name, type style) {
   if (_super::isExist(Name, style)) {
-    cout << "锁存在" << endl;
     return false;
   }
   return _file::create(Name, style);

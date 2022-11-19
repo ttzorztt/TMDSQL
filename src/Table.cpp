@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-15 17:53:59
+ * @LastEditTime : 2022-11-19 20:39:17
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -10,13 +10,12 @@
 #endif
 
 int Table::count = 0;
-Table::Table(string stableName)
-    : _file(stableName, type::_TYPE_TABLE) {
+Table::Table(std::string databaseAndTableName,type style): _file(databaseAndTableName, style) {
   this->style = type::_TYPE_TABLE;
   ++Table::count;
 }
-Table::Table(DataBase database, string tableName)
-    : _file(database.returnName() + "/" + tableName, type::_TYPE_TABLE) {
+Table::Table(DataBase database, std::string tableName,type style)
+    : _file(database.returnName() + "/" + tableName, style) {
   this->style = type::_TYPE_TABLE;
   ++Table::count;
 }
@@ -40,9 +39,16 @@ bool Table::isExist() {
 }
 
 void Table::updateIndex(){
-
+  
 }
 std::vector<std::string> Table::find(std::string index){
+  std::vector<std::string> value;
+  Table indexFile(this->name,type::_TYPE_INDEX_TABLE);
+  while(indexFile.readline(value)){
+    if(value[0] == index){
+      int x = atoi(value[1].c_str());
+    }
+  }
   return {};
 }
 
@@ -66,12 +72,24 @@ bool Table::append(std::string tableName,std::vector<std::string> value){
   return Table::appInsertIndex(tableName,value[0],fileIndex + 1);
   
 }
-bool Table::appInsertIndex(std::string index,int fileIndex){
+bool Table::appInsertIndex(std::string index,POINTER fileIndex){
   return Table::appInsertIndex(this->name,index,fileIndex);
 }
-bool Table::appInsertIndex(std::string tableName,std::string index,int fileIndex){
+bool Table::appInsertIndex(std::string tableName,std::string index,POINTER fileIndex){
   return _file::write(tableName,type::_TYPE_INDEX_TABLE,{index,std::to_string(fileIndex)});
 }
-bool Table::appInsertIndex(Table table,std::string index,int fileIndex){
+bool Table::appInsertIndex(Table table,std::string index,POINTER fileIndex){
   return Table::appInsertIndex(table.returnName(),index,fileIndex);
 }
+
+  std::vector<std::string> Table::indexReadline(POINTER fileIndex){
+    return Table::indexReadline(this->name,fileIndex);
+  }
+
+  std::vector<std::string>  Table::indexReadline(std::string tableName,POINTER fileIndex){
+    
+  }
+
+  std::vector<std::string>  Table::indexReadline(Table table,POINTER fileIndex){
+    return Table::indexReadline(table.returnName(),fileIndex);
+  }

@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-15 16:55:04
+ * @LastEditTime : 2022-11-19 20:37:46
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -22,7 +22,9 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-using namespace std;
+// 文件指针
+#define POINTER int
+
 /**
  * @brief 封装表操作
  */
@@ -52,22 +54,83 @@ class Table : public _file {
   /**
    * @brief 构造函数
    * @param  string databaseAndTableName 数据库名+表名
+   * @param type style 类型
    * @return
    */
-  Table(string databaseAndTableName);
+  Table(std::string databaseAndTableName,type style);
   /**
    * @brief 构造函数
    * @param  DataBase database 数据库对象
    * @param  string tableName 表名
+   * @param type style 类型
    * @return
    */
-  Table(DataBase database, string tableName);
-  bool appInsertIndex(std::string index,int fileIndex);
-  bool static appInsertIndex(std::string tableName,std::string index,int fileIndex);
-  bool static appInsertIndex(Table table,std::string index,int fileIndex);
+  Table(DataBase database, std::string tableName, type style);
+  /**
+   * @brief app 的方式写入index
+   * @param  string index 索引
+   * @param  POINTER fileIndex 文件指针
+   * @return  正常操作则返回True，否则返回False
+   */
+  bool appInsertIndex(std::string index,POINTER fileIndex);
+  /**
+   * @brief <static> app的方式写入
+   * @param  string tableName 表名
+   * @param  string index 索引
+   * @param  POINTER fileIndex 文件指针
+   * @return   正常操作则返回True，否则返回False
+   */
+  bool static appInsertIndex(std::string tableName,std::string index,POINTER fileIndex);
+  /**
+   * @brief <static> app的方式写入
+   * @param  Table table 表
+   * @param  string index 索引
+   * @param  POINTER fileIndex 文件指针
+   * @return   正常操作则返回True，否则返回False
+   */
+  bool static appInsertIndex(Table table,std::string index,POINTER fileIndex);
+
+  /**
+   * @brief 写入
+   * @param  vector<std::string> value 数组
+   * @return   正常操作则返回True，否则返回False
+   */
   bool append(std::vector<std::string> value);
+  /**
+   * @brief <static> 写入
+   * @param  Table table 表
+   * @param  vector<std::string> value 数组
+   * @return   正常操作则返回True，否则返回False
+   */
   bool static append(Table table,std::vector<std::string> value);
+  /**
+   * @brief <static> 写入
+   * @param  string tableName 表名
+   * @param  vector<std::string> value 数组
+   * @return   正常操作则返回True，否则返回False
+   */
   bool static append(std::string tableName,std::vector<std::string> value);
+
+  /**
+   * @brief  返回指针所指向的一行
+   * @param  POINTER fileIndex 指针
+   * @return vecotr<string> 
+   */
+  std::vector<std::string> indexReadline(POINTER fileIndex);
+  /**
+   * @brief <static> 返回指针所指向的一行
+   * @param  string tableName 表名
+   * @param  POINTER fileIndex 指针
+   * @return  vector<string>
+   */
+  std::vector<std::string> static indexReadline(std::string tableName,POINTER fileIndex);
+  /**
+   * @brief <static> 返回指针所指向的一行
+   * @param  Table table 表
+   * @param  POINTER fileIndex 指针
+   * @return  vector<string>
+   */
+  std::vector<std::string> static indexReadline(Table table,POINTER fileIndex);
   /**
    * @brief 更新索引
    */
@@ -79,9 +142,10 @@ class Table : public _file {
   /**
    * @brief 寻找索引为index的数据，(默认第一个每列第一个数据是索引)
    * @param  string index 索引值
-   * @return 
+   * @return vector<string> 这一行的数据
    */
   std::vector<std::string> find(std::string index);
+  
 private:
 type style;
 //记录打开表的个数

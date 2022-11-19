@@ -2,7 +2,7 @@
  * @Description  : 封装索引操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:43
- * @LastEditTime : 2022-11-15 17:43:33
+ * @LastEditTime : 2022-11-19 15:50:10
  */
 #ifndef _INDEX_
 #define _INDEX_
@@ -16,37 +16,46 @@
 #endif
 class Index 
 {
-private:
-  //当前打开的索引文件的数量
-  static int count;
 public:
     /**
-     * @brief 
+     * @brief 构造函数
      * @return  
      */
     Index(); 
     /**
-     * @brief 
+     * @brief 析构函数
      * @return  
      */
     ~Index();
     /**
-     * @brief 
-     * @return  
-     */
-    virtual int returnCount();
-    /**
-     * @brief 更新索引
+     * @brief <static> 更新索引
      * @param  string tableName 表名
      * @return  
      */
     void static update(std::string tableName);
     /**
-     * @brief 更新索引
+     * @brief <static> 更新索引
      * @param  Table table 表对象
      * @return  
      */
     void static update(Table table);
-    
+    /**
+     * @brief <static> 新文件创建索引文件
+     * @param  Table table 表对象
+     * @return 
+     */
+    void static create(Table table);
+    /**
+     * @brief <static> 新文件创建索引文件
+     * @param  string tableName 表名
+     * @return  
+     */
+    void static create(std::string tableName);
+    /**
+     * @brief <static> 新文件创建索引文件
+     * @param  _file file 
+     * @return  
+     */
+    void static create(_file file);
 }; 
 #endif

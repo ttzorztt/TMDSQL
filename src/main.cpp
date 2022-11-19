@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-15 18:07:15
+ * @LastEditTime : 2022-11-19 20:22:24
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -66,38 +66,41 @@ void init() {
 }
 int main(int argc, char const* argv[]) {
   init();
-  string databasePath = "testdatabase2";
-  Table table(databasePath + "/" + "TMD");
-  DataBase database(databasePath);
-  if (database.isExist()) {
-    cout << "存在" << endl;
-  } else {
-    database.create();
-  }
-  if(table.isExist()){
-    table.remove();
-  }
-  if(!table.isExist()){
-    table.create();
-     }
-    vector<string> value;
-  value.push_back("姓名");
-  value.push_back("年龄");
-  value.push_back("性别");
+  string tablePath = "testdatabase2/TMD";
+  Table table(tablePath,type::_TYPE_TABLE);
+  // cout << table.isExist() << endl;
 
-  database.insertTable("TMD",value);
-   value.clear();
-  value.push_back("张三");
-  value.push_back("14");
-  value.push_back("男");
-database.insertTable("TMD",value);
-value.clear();
-   value.push_back("王五");
-  value.push_back("17");
-  value.push_back("女");
-  database.insertTable("TMD",value);
+//   Table table(databasePath + "/" + "TMD");
+//   DataBase database(databasePath);
+//   if (database.isExist()) {
+//     cout << "存在" << endl;
+//   } else {
+//     database.create();
+//   }
+//   if(table.isExist()){
+//     table.remove();
+//   }
+//   if(!table.isExist()){
+//     table.create();
+//      }
+//     vector<string> value;
+//   value.push_back("姓名");
+//   value.push_back("年龄");
+//   value.push_back("性别");
+
+//   database.insertTable("TMD",value);
+//    value.clear();
+//   value.push_back("张三");
+//   value.push_back("14");
+//   value.push_back("男");
+// database.insertTable("TMD",value);
+// value.clear();
+//    value.push_back("王五");
+//   value.push_back("17");
+//   value.push_back("女");
+//   database.insertTable("TMD",value);
  
-  Index::update(table);
+//   Index::update(table);
   // database.remove();
 //   vector<string> value;
 //   value.push_back("姓名");
