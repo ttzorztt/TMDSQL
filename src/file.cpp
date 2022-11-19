@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-16 14:45:12
+ * @LastEditTime : 2022-11-19 15:02:38
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -78,6 +78,7 @@ bool _file::write(std::string Name, type style ,const std::string& str){
   return tmd.write(str);
 }
 bool _file::readline(std::vector<std::string>& ret) {
+  ret.clear();
   if (!readBuffOpen(true)) {
     return false;
   }
@@ -89,7 +90,6 @@ bool _file::readline(std::vector<std::string>& ret) {
   int left = 0;
   int right = 1;
   int size = _str.size();
-  std::cout << "stringSize:" << _str << std::endl;
   
   while (right <= size) {
     if (_str[right] != ',') {
@@ -101,6 +101,7 @@ bool _file::readline(std::vector<std::string>& ret) {
       ++right;
     }
   }
+  ret.push_back(_str.substr(left + 1));
   return true;
 }
 
