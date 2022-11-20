@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-20 21:10:54
+ * @LastEditTime : 2022-11-20 21:14:15
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -45,7 +45,7 @@ std::vector<std::string> Table::find(std::string index) {
   std::vector<std::string> value;
   Table indexFile(_file_.returnName(), type::_TYPE_INDEX_TABLE);
   while (_file_.readline(value)) {
-    std::cout << value[0] << " " << index << std::endl;
+    std::cout << value[0] << " " << value[1] << " " << index << std::endl;
     if (value[0] == index) {
       
       int x = atoi(value[1].c_str());
