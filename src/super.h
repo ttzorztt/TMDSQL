@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-15 15:50:41
+ * @LastEditTime : 2022-11-20 22:43:07
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -53,15 +53,15 @@ class _super {
   std::string name;
 
  public:
-  virtual bool create();
-  virtual bool remove();
-  virtual int returnCount();
-  virtual bool isExist();
+ virtual  bool create();
+ virtual  bool remove();
+ virtual  int returnCount();
+ virtual  bool isExist();
   /**
    * @brief 返回类型
    * @return 返回类型
    */
-  virtual type returnType();
+  type returnType();
   /**
    * @brief 返回名字
    * @return 返回名字

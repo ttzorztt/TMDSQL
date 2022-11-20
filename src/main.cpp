@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-19 22:16:27
+ * @LastEditTime : 2022-11-20 23:21:51
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -67,31 +67,36 @@ void init() {
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
+   _file file(tablePath, type::_TYPE_TABLE);
   Table table(tablePath,type::_TYPE_TABLE);
-  vector<string> value = table.find("王五");
-  cout << value.size() << endl;
-  cout << value[0] << ' ' << value[1] << " " << value[2] << endl;
+
+  // vector<string> value = table.find("王五");
+  // cout << value.size() << endl;
+  // cout << value[0] << ' ' << value[1] << " " << value[2] << endl;
+  
   // cout << table.isExist() << endl;
 
-//   Table table(databasePath + "/" + "TMD");
-//   DataBase database(databasePath);
-//   if (database.isExist()) {
-//     cout << "存在" << endl;
-//   } else {
-//     database.create();
-//   }
-//   if(table.isExist()){
-//     table.remove();
-//   }
-//   if(!table.isExist()){
-//     table.create();
-//      }
-//     vector<string> value;
-//   value.push_back("姓名");
-//   value.push_back("年龄");
-//   value.push_back("性别");
-
-//   database.insertTable("TMD",value);
+  // Table table(databasePath + "/" + "TMD");
+ 
+  DataBase database("testdatabase2");
+  if (database.isExist()) {
+    cout << "存在" << endl;
+  } else {
+    database.create();
+  }
+  if(table.isExist()){
+  
+    table.remove();
+  }
+  if(!table.isExist()){
+    table.create();
+     }
+    vector<string> value;
+  value.push_back("姓名");
+  value.push_back("年龄");
+  value.push_back("性别");
+// return 0;
+  database.insertTable("TMD",value);
 //    value.clear();
 //   value.push_back("张三");
 //   value.push_back("14");
