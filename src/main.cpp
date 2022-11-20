@@ -70,6 +70,7 @@ int main(int argc, char const* argv[]) {
   Table table(tablePath,type::_TYPE_TABLE);
   vector<string> value = table.find("王五");
   cout << value.size() << endl;
+  cout << value[0] << ' ' << value[1] << " " << value[2] << endl;
   // cout << table.isExist() << endl;
 
 //   Table table(databasePath + "/" + "TMD");

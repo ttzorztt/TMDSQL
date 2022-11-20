@@ -2,13 +2,13 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-19 22:14:01
+ * @LastEditTime : 2022-11-19 22:31:21
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
 #endif
-
+#include <iostream>
 int Table::count = 0;
 Table::Table(std::string databaseAndTableName, type style)
     : _file(databaseAndTableName, style) {
@@ -45,8 +45,12 @@ std::vector<std::string> Table::find(std::string index) {
   std::vector<std::string> value;
   Table indexFile(this->name, type::_TYPE_INDEX_TABLE);
   while (indexFile.readline(value)) {
+    std::cout << value[0] << " " << index << std::endl;
     if (value[0] == index) {
+      
       int x = atoi(value[1].c_str());
+      std::cout << x << std::endl;
+      return this->indexReadline(x);
     }
   }
   return {};
@@ -86,9 +90,11 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
 
 std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = returnReadTell();
+  std::cout << "OLDis " << oldIndex << "  " << fileIndex << std::endl;
   setReadSeek(fileIndex);
   std::vector<std::string> value;
   this->readline(value);
+  std::cout << value[0] << "  TMD " <<  value[1] << std::endl;
   setReadSeek(oldIndex);
   return value;
 }
