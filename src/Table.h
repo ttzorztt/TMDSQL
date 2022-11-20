@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-19 20:37:46
+ * @LastEditTime : 2022-11-20 21:04:37
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -28,7 +28,7 @@
 /**
  * @brief 封装表操作
  */
-class Table : public _file {
+class Table {
  private:
  public:
    /**
@@ -51,6 +51,7 @@ class Table : public _file {
    * @return 存在则返回True,否则返回false
    */
   virtual bool isExist();
+  std::string returnName();
   /**
    * @brief 构造函数
    * @param  string databaseAndTableName 数据库名+表名
@@ -150,6 +151,7 @@ private:
 type style;
 //记录打开表的个数
  int static count;
+_file _file_; 
 };
 
 #endif
