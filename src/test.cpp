@@ -2,7 +2,7 @@
  * @Description  : 测试库的使用
  * @Autor        : TMD
  * @Date         : 2022-11-21 09:21:28
- * @LastEditTime : 2022-11-21 10:46:31
+ * @LastEditTime : 2022-11-21 11:12:50
  */
 // C++多线程测试
 
@@ -12,6 +12,10 @@
 #include <mutex>
 using namespace std;
 std::atomic_int x; // 原子变量x
+std::atomic<int > x;
+
+
+
 std::mutex y; // 互斥变量 Y
 
 void funa() {
