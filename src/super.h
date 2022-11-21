@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-20 22:43:07
+ * @LastEditTime : 2022-11-21 07:39:45
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -31,16 +31,18 @@ const static std::string _databasePath = "../data/database/";
 const static std::string _indexPath = "../data/index/";
 const static std::string _tableLockPath = "../data/lock/";
 const static std::string _databaseLockPath = "../data/lock/";
-const static std::string _logPath = "../data/log";
+const static std::string _logPath = "../data/log/";
+const static std::string _PCBPath = "../data/PCB/";
 // 封装一些文件或目录类型
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
-  _TYPE_DADABASE,               //目录，即数据库
+  _TYPE_DATABASE,               //目录，即数据库
   _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
   _TYPE_INDEX_TABLE,            // 索引下的表
   _TYPE_TABLE_LOCK,             // 表锁
-  _TYPE_TADABLASE_LOCK,         //数据库锁
-  _TYPE_CREATE_LOCK_DATABASE    //创建lock下的数据库文件夹
+  _TYPE_DATABASE_LOCK,         //数据库锁
+  _TYPE_CREATE_LOCK_DATABASE,   //创建lock下的数据库文件夹
+  _TYPE_PCB                     // PCB的地址
 };
 /**
  * @brief 维护一些基础静态函数
@@ -53,10 +55,10 @@ class _super {
   std::string name;
 
  public:
- virtual  bool create();
- virtual  bool remove();
- virtual  int returnCount();
- virtual  bool isExist();
+  virtual bool create();
+  virtual bool remove();
+  virtual int returnCount();
+  virtual bool isExist();
   /**
    * @brief 返回类型
    * @return 返回类型

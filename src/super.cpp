@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-15 15:51:10
+ * @LastEditTime : 2022-11-21 07:37:32
  */
 
 #ifndef _SUPER_H_
@@ -15,18 +15,18 @@ std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
   struct dirent* dirInfo;
   std::vector<std::string> name;
   int count = 2;
-    while ((dirInfo = readdir(dirname)) != 0) {
-      if (count > 0) {
-        --count;
-        continue;
-      }
-      std::string tmpname = dirInfo->d_name;
-      if(tmpname.substr(tmpname.size() - 4) == ".csv"){
-        name.push_back(tmpname.substr(0, tmpname.size() - 4));
-      }else{
-        name.push_back(tmpname);
-      }
+  while ((dirInfo = readdir(dirname)) != 0) {
+    if (count > 0) {
+      --count;
+      continue;
     }
+    std::string tmpname = dirInfo->d_name;
+    if (tmpname.substr(tmpname.size() - 4) == ".csv") {
+      name.push_back(tmpname.substr(0, tmpname.size() - 4));
+    } else {
+      name.push_back(tmpname);
+    }
+  }
 
   return name;
 }
@@ -56,18 +56,19 @@ _super::_super(_super& copy) {
 _super::_super(std::string name) {
   this->name = name;
 }
-std::vector<std::string> _super::dispartDatabaseNameAndTableName(std::string TableName){
+std::vector<std::string> _super::dispartDatabaseNameAndTableName(
+    std::string TableName) {
   int size = TableName.size();
-  if(size == 0){
+  if (size == 0) {
     return {};
   }
-  while(size >= 0){
-    if(TableName[size] == '/'){
+  while (size >= 0) {
+    if (TableName[size] == '/') {
       break;
     }
     --size;
   }
-  return {TableName.substr(0,size),TableName.substr(size+1)};
+  return {TableName.substr(0, size), TableName.substr(size + 1)};
 }
 
 bool _super::isExist(std::string name, type style) {
@@ -79,26 +80,31 @@ bool _super::isExist(std::string truePath) {
 std::string _super::returnTruePath(std::string Name, type style) {
   std::vector<std::string> part;
   switch (style) {
-    case type::_TYPE_DADABASE:
+    case type::_TYPE_DATABASE:
       return _databasePath + Name;
       break;
     case type::_TYPE_TABLE_LOCK:
       part = _super::dispartDatabaseNameAndTableName(Name);
-      return _tableLockPath + part[0] + "/" + "." + part[1] + ".csv";
+      return _tableLockPath + part[0] + "." + part[1];
       break;
-    case type::_TYPE_TADABLASE_LOCK:
+    case type::_TYPE_DATABASE_LOCK:
       return _databaseLockPath + "." + Name;
       break;
     case type::_TYPE_TABLE:
-      return _tablePath + Name + ".csv";
+      part = _super::dispartDatabaseNameAndTableName(Name);
+      return _tablePath +part[0] + "." + part[1];
     case type::_TYPE_INDEX_TABLE:
-      return _indexPath + Name + ".csv";
+      return _indexPath + Name;
       break;
     case type::_TYPE_CREATE_INDEX_DATABASE:
       return _indexPath + Name;
       break;
     case type::_TYPE_CREATE_LOCK_DATABASE:
       return _databaseLockPath + Name;
+      break;
+    case type::_TYPE_PCB:
+      part = _super::dispartDatabaseNameAndTableName(Name);
+      return _PCBPath + part[0] + "." + part[1];
       break;
     default:
       break;

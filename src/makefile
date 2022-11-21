@@ -1,6 +1,8 @@
-main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o
-	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o -o main
+main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o
+	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o -o main
 	./main
+TablePCB.o: TablePCB.cpp
+	g++ -c TablePCB.cpp
 Index.o: Index.cpp
 	g++ -c Index.cpp
 Lock.o: Lock.cpp
