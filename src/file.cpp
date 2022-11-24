@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-11-20 22:13:06
+ * @LastEditTime : 2022-11-24 14:52:30
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -128,7 +128,7 @@ type _file::returnType(){
 }
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_DADABASE) {
+  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE) {
     return false;
   }
   std::ofstream filewritebuff;

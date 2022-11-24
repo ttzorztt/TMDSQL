@@ -2,7 +2,7 @@
  * @Description  : 封装锁操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:00
- * @LastEditTime : 2022-11-20 21:06:31
+ * @LastEditTime : 2022-11-24 14:53:25
  */
 #ifndef _LOCK_H_
 #define _LOCK_H_
@@ -31,7 +31,7 @@ Lock::Lock(Table table) : _super(table.returnName()) {
   ++count;
 }
 Lock::Lock(DataBase database) : _super(database.returnName()) {
-  this->style = type::_TYPE_TADABLASE_LOCK;
+  this->style = type::_TYPE_DATABASE_LOCK;
   ++databaseCount;
   ++count;
 }
@@ -41,7 +41,7 @@ Lock::~Lock() {
   case type::_TYPE_TABLE_LOCK :
     --tableCount;
     break;
-  case type:: _TYPE_TADABLASE_LOCK:
+  case type::_TYPE_DATABASE_LOCK:
     --databaseCount;
     break;
   default:
@@ -69,7 +69,7 @@ void Lock::newLockAddCount() {
     case type::_TYPE_TABLE_LOCK:
       this->tableCount++;
       break;
-    case type::_TYPE_TADABLASE_LOCK:
+    case type::_TYPE_DATABASE_LOCK:
       this->databaseCount++;
       break;
     default:
@@ -112,8 +112,8 @@ bool Lock::remove(Table table) {
 }
 
 bool Lock::add(DataBase database) {
-  return Lock::add(database.returnName(), type::_TYPE_TADABLASE_LOCK);
+  return Lock::add(database.returnName(), type::_TYPE_DATABASE_LOCK);
 }
 bool Lock::remove(DataBase database) {
-  return Lock::remove(database.returnName(), type::_TYPE_TADABLASE_LOCK);
+  return Lock::remove(database.returnName(), type::_TYPE_DATABASE_LOCK);
 }

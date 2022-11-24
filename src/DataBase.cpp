@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-20 23:22:43
+ * @LastEditTime : 2022-11-24 14:52:01
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -18,25 +18,25 @@
 #endif
 // 打开的数据库的个数
 int DataBase::count = 0;
-DataBase::DataBase(std::string name) : _dir(name,type::_TYPE_DADABASE) {}
-DataBase::DataBase(DataBase& databse) : _dir(databse.returnName(),type::_TYPE_DADABASE) {
+DataBase::DataBase(std::string name) : _dir(name,type::_TYPE_DATABASE) {}
+DataBase::DataBase(DataBase& databse) : _dir(databse.returnName(),type::_TYPE_DATABASE) {
   ++this->count;
 }
 type DataBase::returnType() {
-  return type::_TYPE_DADABASE;
+  return type::_TYPE_DATABASE;
 }
 bool DataBase::create() {
   return DataBase::create(this->name);
 }
 bool DataBase::create(std::string name) {
-  return _dir::create(_super::returnTruePath(name, type::_TYPE_DADABASE)) &&
+  return _dir::create(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
 
    _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
 
    _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
 }
 bool DataBase::remove(std::string name) {
-  return _dir::remove(_super::returnTruePath(name, type::_TYPE_DADABASE)) &&
+  return _dir::remove(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
    _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
    _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
 }
@@ -65,13 +65,13 @@ int DataBase::returnCount() {
 
 void DataBase::showDataBaseTable() {
   std::string tmpPath =
-      _super::returnTruePath(this->name, type::_TYPE_DADABASE);
+      _super::returnTruePath(this->name, type::_TYPE_DATABASE);
   if (!_super::isExist(tmpPath)) {
     std::cout << "数据库不存在!" << std::endl;
     return;
   }
   std::vector<std::string> ans = _super::openDirReturnFileName(
-      _super::returnTruePath(this->name, type::_TYPE_DADABASE));
+      _super::returnTruePath(this->name, type::_TYPE_DATABASE));
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
@@ -142,7 +142,7 @@ void DataBase::showDataBase() {
 }
 bool DataBase::isExist() {
   return access(
-             _super::returnTruePath(this->name, type::_TYPE_DADABASE).c_str(),
+             _super::returnTruePath(this->name, type::_TYPE_DATABASE).c_str(),
              F_OK) != -1;
 }
 bool DataBase::isExist(std::string DataBaseName) {

@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-11-15 16:14:41
+ * @LastEditTime : 2022-11-24 14:52:55
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -33,14 +33,14 @@ int _dir::returnCount() {
 }
 bool _dir::isExist() {
   return _super::isExist(
-      _super::returnTruePath(this->name, type::_TYPE_DADABASE));
+      _super::returnTruePath(this->name, type::_TYPE_DATABASE));
 }
 _dir::_dir(std::string dirName,type style) : _super(dirName) {
   this->style = style;
   }
 std::vector<std::string> _dir::openDirReturnFileName() {
   DIR* dirname =
-      opendir(_super::returnTruePath(this->name, type::_TYPE_DADABASE).c_str());
+      opendir(_super::returnTruePath(this->name, type::_TYPE_DATABASE).c_str());
   struct dirent* dirInfo;
   std::vector<std::string> ret;
   int count = 2;
@@ -56,7 +56,7 @@ std::vector<std::string> _dir::openDirReturnFileName() {
 }
 bool _dir::create() {
   return _dir::create(
-             _super::returnTruePath(this->name, type::_TYPE_DADABASE)) &&
+             _super::returnTruePath(this->name, type::_TYPE_DATABASE)) &&
          _dir::create(_super::returnTruePath(
              this->name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
          _dir::create(_super::returnTruePath(this->name,
@@ -91,7 +91,7 @@ bool _dir::remove(std::string truePath) {
 }
 
 void _dir::forceremove(std::string Name) {
-  std::string truePath = _super::returnTruePath(Name, type::_TYPE_DADABASE);
+  std::string truePath = _super::returnTruePath(Name, type::_TYPE_DATABASE);
   std::vector<std::string> value = _dir::openDirReturnFileName(truePath);
   for (std::string& str : value) {
     _file::remove(truePath + "/" + str);
