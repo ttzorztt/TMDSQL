@@ -2,7 +2,7 @@
  * @Description  : 测试库的使用
  * @Autor        : TMD
  * @Date         : 2022-11-21 09:21:28
- * @LastEditTime : 2022-11-21 11:12:50
+ * @LastEditTime : 2022-11-27 18:09:07
  */
 // C++多线程测试
 
@@ -10,53 +10,59 @@
 #include <thread>
 #include <atomic> // 原子类型，可用于互斥访问
 #include <mutex>
+#include <condition_variable> // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
+
 using namespace std;
-std::atomic_int x; // 原子变量x
-std::atomic<int > x;
-
-
-
-std::mutex y; // 互斥变量 Y
-
-void funa() {
-  cout << "fun()" << endl;
+std::mutex mx;
+std::condition_variable cv; // 条件变量
+int isReady = 0;
+const int n = 10;
+void printfA(){
+  std::unique_lock<std::mutex> lock(mx);
+  int i = 0;
+  while(i < n){
+    while (isReady != 0){
+      cv.wait(lock);
+    }
+    std::cout << "A" << endl;
+    isReady = 1;
+    ++i;
+    cv.notify_all(); //唤醒所有等待条件变量的线程
+  }
 }
-void funb(int x) {
-  cout << "funb(int)" << endl;
+void printfB(){
+  std::unique_lock<std::mutex> lock(mx);
+  int i = 0;
+  while(i < n){
+    while (isReady != 1){
+      cv.wait(lock);
+    }
+    std::cout << "B" << endl;
+    isReady = 2;
+    ++i;
+    cv.notify_all(); //唤醒所有等待条件变量的线程
+  }
 }
-void func(int& x) {
-  cout << "func(int&)" << endl;
-}
-void fund(int* x) {
-  cout << "fund(int*)" << endl;
-}
-class th {
- private:
-  /* data */
- public:
-  th(/* args */);
-  ~th();
-  void add();
-};
+void printfC(){
+  std::unique_lock<std::mutex> lock(mx);
+  int i = 0;
+  while(i < n){
+    while (isReady != 2){
+      cv.wait(lock);
+    }
+    std::cout << "C" << endl;
+    isReady = 0;
+    ++i;
+    cv.notify_all(); //唤醒所有等待条件变量的线程
+  }
+} 
 
-th::th(/* args */) {}
-
-th::~th() {}
-
-void f() {
-  int x = 10;
-  std::thread tha(funa);
-  std::thread thb(funb, x);
-  std::thread thc(func, std::ref(x));  // 传引用必须使用std::ref申明
-  std::thread thd(fund, &x);
-
-  thb.join();
+int main(){
+  thread tha(printfA);
+  thread thb(printfB);
+  thread thc(printfC);
   tha.join();
+  thb.join();
   thc.join();
-  thd.join();
-}
-int main(int argc, char const* argv[]) {
-//   f();
-cout << std::thread::hardware_concurrency() << endl;
   return 0;
 }
