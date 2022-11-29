@@ -2,47 +2,64 @@
  * @Description  : 测试库的使用
  * @Autor        : TMD
  * @Date         : 2022-11-21 09:21:28
- * @LastEditTime : 2022-11-29 17:45:04
+ * @LastEditTime : 2022-11-29 23:03:33
  */
 // C++多线程测试
 
+#include <condition_variable>  // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
 #include <iostream>
-#include <thread>
-#include <atomic> // 原子类型，可用于互斥访问
 #include <mutex>
-#include <condition_variable> // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
-
+#include <queue>
+#include <chrono> //时间
+#include <thread>
 using namespace std;
-
-std::mutex x;
+std::mutex mut;
+const int MAXCOUNT = 20;
+const int BUFFSIZE = 5;
 std::condition_variable cv;
-bool js = 0;
-int count = 0;
-void print_0(){
-  while(1){
-    std::lock_guard<std::mutex> locktmp(x);
-    if(count > 100) break;
-    if(js){
-      std::cout << "进程1  ：" << count << std::endl;
-      ++count;
-      js = false;
-    }
+std::queue<int> myque;
+// 生产者
+void input(int value){
+  std::unique_lock<std::mutex> tmp(mut);
+  while(myque.size() >= BUFFSIZE){
+    cv.wait(tmp);
+  }
+  cout << "生产者生产: " << value << endl;
+  myque.push(value);
+  cv.notify_all();
+}
+int output(){
+  std::unique_lock<std::mutex> tmp(mut);
+  while(myque.empty()){
+    cv.wait(tmp);
+  }
+  int ret = myque.front();
+  cout << "消费者消费  " << ret << endl;
+  myque.pop();
+  cv.notify_all();
+  return ret;
+}
+
+void p() {
+  int value = 0;
+  for(int a =0; a < 20; ++a){
+    input(value);
+    ++value;
+  std::this_thread::sleep_for(std::chrono::seconds(1)); 
   }
 }
-void print_1(){
-  while(1){
-    std::lock_guard<std::mutex> locktmp(x);
-    if(count > 100) break;
-    if(!js){
-      std::cout << "进程2  ：" << count << std::endl;
-      ++count;
-      js = true;
-    }
+
+// 消费者
+void c() {
+  for(int a =0; a < 20; ++a){
+    output();
+
+  std::this_thread::sleep_for(std::chrono::seconds(2)); 
   }
 }
-int main(){
-  std::thread tha(print_0);
-  std::thread thb(print_1);
+int main() {
+  std::thread tha(p);
+  std::thread thb(c);
   tha.join();
   thb.join();
 }
