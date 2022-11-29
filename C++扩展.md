@@ -1,4 +1,76 @@
 # 单例模式
+- 私有静态类对象
+- 将构造函数设置为非公有访问方式
+- 删除赋值和拷贝构造等函数等函数
+- 静态公有方法返回静态类对象
+- 类外初始化
+## 设计方式之饥汉模式--直接构建
+```c++
+#include <iostream>
+#include <mutex>
+#include <mutex>
+#include <condition_variable> // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
+using namespace std;
+class Obj{
+  private:
+  int value;
+  static Obj instance;
+  static int num;
+  Obj(int x = 0): value(x){}
+  Obj(const Obj& obj) = delete;
+  Obj& operator=(const Obj& ob) = delete;
+public:
+  static Obj& Create(){
+    return instance;
+  }
+};
+Obj Obj::instance(10);
+void funA(){
+  Obj& objA = Obj::Create();
+  cout << &objA << endl;
+}
+void funB(){
+  Obj& objB = Obj::Create();
+  cout << &objB << endl;
+}
+int main(){
+  thread tha(funA);
+  thread thb(funB);
+  tha.join();
+  thb.join();
+}
+```
+## 设计方式之懒汉模式--需要时构建
+```c++
+#include <mutex>
+#include <condition_variable> // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
+
+using namespace std;
+std::mutex mut;
+class Obj{
+  private:
+  int value;
+  static Obj* instance;
+  Obj(int x = 0): value(x){}
+  Obj(const Obj& obj) = delete;
+  Obj& operator=(const Obj& ob) = delete;
+public:
+  static Obj* Create(){
+    std::lock_guard<std::mutex> lock(mut);   //加锁，防止线程冲突
+    if(instance == NULL){
+      instance = new Obj(10);
+    }
+    return instance;
+  }
+};
+Obj* Obj::instance = NULL;
+int main(){
+  Obj* objA = Obj::Create();
+  Obj* objB = Obj::Create();
+  cout << &objA << endl << &objB << endl;
+}
+```
+
 
 # 多线程
 ## 编译方式
@@ -135,3 +207,45 @@ int main(){
 - 占有等待
 - 不可抢占
 - 循环等待
+### 避免死锁
+```C++
+// 同时获取xy才会加锁
+std::mutex x;
+std::mutex y;
+void func(){
+  std::unique_lock<std::mutex> lockx(x,std::defer_lock); 
+  std::unique_lock<std::mutex> locky(y,std::defer_lock);
+  std::lock(lockx,locky);
+  //
+}
+```
+
+- 例子: 两个进程分别打印奇数和偶数
+```c++
+std::mutex x;
+std::condition_variable cv;
+bool js = 0;
+int count = 0;
+void print_0(){
+  while(1){
+    std::lock_guard<std::mutex> locktmp(x);
+    if(count > 100) break;
+    if(js){
+      std::cout << "进程1  ：" << count << std::endl;
+      ++count;
+      js = false;
+    }
+  }
+}
+void print_1(){
+  while(1){
+    std::lock_guard<std::mutex> locktmp(x);
+    if(count > 100) break;
+    if(!js){
+      std::cout << "进程2  ：" << count << std::endl;
+      ++count;
+      js = true;
+    }
+  }
+}
+```
