@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-20 23:25:18
+ * @LastEditTime : 2022-11-30 23:19:06
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -26,7 +26,7 @@ Table::~Table() {
 }
 
 bool Table::create() {
-  return _file::create(this->returnName(), type::_TYPE_INDEX_TABLE) &&
+   _file::create(this->returnName(), type::_TYPE_INDEX_TABLE);
          _file::create(this->returnName(), type::_TYPE_TABLE);
 }
 bool Table::remove() {
@@ -37,8 +37,6 @@ int Table::returnCount() {
   return Table::count;
 }
 bool Table::isExist() {
-  std::cout << this->returnName() << std::endl;
-  return true;
   return _super::isExist(this->returnName(), style);
 }
 
@@ -58,16 +56,16 @@ std::vector<std::string> Table::find(std::string index) {
 }
 
 bool Table::append(std::vector<std::string> value) {
-int fileIndex = 0;
-   if (value.size() <= 0) {
+  int fileIndex = 0;
+  if (value.size() <= 0) {
     return false;
   }
   for (std::string& str : value) {
     fileIndex += str.size();
   }
-      if(this->readFileBuff.tellg() == 0){
-      return this->appInsertIndex(value[0],0); 
-  }
+  //     if(this->readFileBuff.tellg() == 0){
+  //     return this->appInsertIndex(value[0],0);
+  // }
   if (!this->write(value)) {
     return false;
   }
@@ -75,16 +73,15 @@ int fileIndex = 0;
   // 使用PCB记录最后一行的文件指针。用于索引建立。
   return this->appInsertIndex(value[0], fileIndex + 1);
 }
-Table::Table(Table& table): _file(table.name,table.style){
+Table::Table(Table& table) : _file(table.name, table.style) {
   this->style = table.style;
   ++this->count;
 }
 bool Table::append(Table table, std::vector<std::string> value) {
- return table.append(value);
+  return table.append(value);
 }
 bool Table::append(std::string tableName, std::vector<std::string> value) {
-  Table tmp(tableName,type::_TYPE_TABLE);
- 
+  Table tmp(tableName, type::_TYPE_TABLE);
   return tmp.append(value);
 }
 bool Table::appInsertIndex(std::string index, POINTER fileIndex) {
@@ -101,15 +98,15 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
 }
 
 std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
-  POINTER oldIndex =this->returnReadTell();
+  POINTER oldIndex = this->returnReadTell();
   this->readFileBuff.seekg(fileIndex);
   // _file_.setReadSeek(fileIndex);
   std::vector<std::string> value;
   this->readline(value);
-  for(std::string& x: value){
-   std::cout << x << std::endl;
+  for (std::string& x : value) {
+    std::cout << x << std::endl;
   }
-  std::cout << value[0] << "  TMD " <<  value[1] << std::endl;
+  std::cout << value[0] << "  TMD " << value[1] << std::endl;
   this->setReadSeek(oldIndex);
   return value;
 }

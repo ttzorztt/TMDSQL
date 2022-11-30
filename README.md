@@ -19,10 +19,17 @@
 ### `table.h && table.cpp`
   > 保护继承_file类，封装一些对表本身的操作 
 
-
 ### `shell.h && shell.cpp`
   > 对中文TMDsql语句的封装
 
+
+
+## tablePCB的内容
+1. name
+2. nextIndex
+  > 下一行的起始文件指针
+3. length
+  > 行数
 ## 数据文件存储方式
 ![tree](ohter/data_tree.png)
 - 总体思路

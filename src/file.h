@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-20 21:34:01
+ * @LastEditTime : 2022-11-30 23:17:34
  */
 #ifndef _FILE_
 #define _FILE_
@@ -37,21 +37,21 @@
 #endif
 
 // 文件指针
-#define POINTER int
 /**
  * @brief
  * 封装一些对于文件的函数的类。包括创建删除文件。文件的读写。以及读写锁的实现
  */
 class _file : public _super {
  protected:
-
+ 
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
    * @param bool need 希望文件状态，True期望文件存在，False期望文件不存在
+   * @param type_mode mode 文件打开模式
    * @return 文件状态为need，则返回True
    */
-  bool writeBuffOpen(bool need);
+  bool writeBuffOpen(bool need,MODE mode = type_mode::MODE_APP);
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断readbuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -64,9 +64,10 @@ class _file : public _super {
    /**
    * @brief 以App的方式写入字符串
    * @param vector<string>& array 数据写入数据库
+   * @param mode type_mode 模式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::vector<std::string>& array);
+  bool write(const std::vector<std::string>& array,type_mode mode=type_mode::MODE_APP);
    /**
    * @brief 真实路径
    * @return {std::string} 返回真实路径
@@ -119,9 +120,10 @@ class _file : public _super {
   /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
+   * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::string& str);
+  bool write(const std::string& str,type_mode mode = type_mode::MODE_APP);
   /**
    * @brief 以行的形势读出数据
    * @param vector<string>& ret 保存的方式
@@ -146,14 +148,20 @@ class _file : public _super {
    * @brief 析构函数，释放并关闭文件
    */
   ~_file();
+   /**
+    * @brief 输入PCB
+    * @return  
+    */
+   void inputPCBInformation();
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Name 名字
    * @param vector<string>& array 数据写入数据库
+   * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
   bool static write(std::string Name, type style,
-                        const std::vector<std::string>& array);
+                        const std::vector<std::string>& array, type_mode mode = type_mode::MODE_APP);
   /**
    * @brief 设置读buff的seek
    * @param  POINTER fileIndex 文件指针
@@ -180,9 +188,10 @@ class _file : public _super {
    * @brief <static> 以App的方式写入字符串
    * @param  string Name 名字
    * @param  string& str 单个字符串
+   * @param type_mode mode 写入方式
    * @return  True写入正常，False写入失败
    */
-  bool static write(std::string Name, type style, const std::string& str);
+  bool static write(std::string Name, type style, const std::string& str,type_mode mode=type_mode::MODE_APP);
   /**
    * @brief <static> 创建
    * @param string Name 需要创建的名字

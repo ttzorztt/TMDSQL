@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-20 23:21:51
+ * @LastEditTime : 2022-11-30 23:12:42
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -64,6 +64,7 @@ void init() {
     mkdir("../view", 777);
   }
 }
+
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
@@ -97,16 +98,16 @@ int main(int argc, char const* argv[]) {
   value.push_back("性别");
 // return 0;
   database.insertTable("TMD",value);
-//    value.clear();
-//   value.push_back("张三");
-//   value.push_back("14");
-//   value.push_back("男");
-// database.insertTable("TMD",value);
-// value.clear();
-//    value.push_back("王五");
-//   value.push_back("17");
-//   value.push_back("女");
-//   database.insertTable("TMD",value);
+   value.clear();
+  value.push_back("张三");
+  value.push_back("14");
+  value.push_back("男");
+database.insertTable("TMD",value);
+value.clear();
+   value.push_back("王五");
+  value.push_back("17");
+  value.push_back("女");
+  database.insertTable("TMD",value);
  
 //   Index::update(table);
   // database.remove();

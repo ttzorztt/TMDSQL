@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-11-21 07:39:45
+ * @LastEditTime : 2022-11-30 23:04:01
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -26,6 +26,9 @@
 #define _UNISTD_H_
 #include <unistd.h>
 #endif
+
+#define POINTER int
+#define MODE int
 const static std::string _tablePath = "../data/database/";
 const static std::string _databasePath = "../data/database/";
 const static std::string _indexPath = "../data/index/";
@@ -40,9 +43,14 @@ enum type {
   _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
   _TYPE_INDEX_TABLE,            // 索引下的表
   _TYPE_TABLE_LOCK,             // 表锁
-  _TYPE_DATABASE_LOCK,         //数据库锁
+  _TYPE_DATABASE_LOCK,          //数据库锁
   _TYPE_CREATE_LOCK_DATABASE,   //创建lock下的数据库文件夹
-  _TYPE_PCB                     // PCB的地址
+  _TYPE_PCB,                    // PCB的地址
+  _TYPE_CREATE_PCB_DATABASE
+};
+enum type_mode {
+  MODE_APP,  //每次写入前寻位到流结尾
+  MODE_OUT  //为写打开
 };
 /**
  * @brief 维护一些基础静态函数

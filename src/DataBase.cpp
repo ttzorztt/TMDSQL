@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-11-24 14:52:01
+ * @LastEditTime : 2022-11-30 21:12:14
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -18,8 +18,9 @@
 #endif
 // 打开的数据库的个数
 int DataBase::count = 0;
-DataBase::DataBase(std::string name) : _dir(name,type::_TYPE_DATABASE) {}
-DataBase::DataBase(DataBase& databse) : _dir(databse.returnName(),type::_TYPE_DATABASE) {
+DataBase::DataBase(std::string name) : _dir(name, type::_TYPE_DATABASE) {}
+DataBase::DataBase(DataBase& databse)
+    : _dir(databse.returnName(), type::_TYPE_DATABASE) {
   ++this->count;
 }
 type DataBase::returnType() {
@@ -30,15 +31,17 @@ bool DataBase::create() {
 }
 bool DataBase::create(std::string name) {
   return _dir::create(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
-
-   _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
-
-   _dir::create(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
+         _dir::create(
+             _super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+         _dir::create(
+             _super::returnTruePath(name, type::_TYPE_CREATE_PCB_DATABASE));
 }
 bool DataBase::remove(std::string name) {
   return _dir::remove(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
-   _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
-   _dir::remove(_super::returnTruePath(name, type::_TYPE_CREATE_LOCK_DATABASE));
+         _dir::remove(
+             _super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+         _dir::remove(
+             _super::returnTruePath(name, type::_TYPE_CREATE_PCB_DATABASE));
 }
 DataBase::~DataBase() {
   --DataBase::count;
@@ -56,7 +59,7 @@ bool DataBase::insertTable(std::string tableName,
     _file::create(Path, type::_TYPE_TABLE);
     _file::create(Path, type::_TYPE_INDEX_TABLE);
   }
-  Table::append(Path,tableItem);
+  std::cout << Table::append(Path, tableItem);
   return true;
 }
 int DataBase::returnCount() {

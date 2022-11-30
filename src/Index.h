@@ -2,7 +2,7 @@
  * @Description  : 封装索引操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:43
- * @LastEditTime : 2022-11-19 15:50:10
+ * @LastEditTime : 2022-11-30 23:11:59
  */
 #ifndef _INDEX_
 #define _INDEX_
@@ -49,7 +49,7 @@ public:
      * @brief <static> 新文件创建索引文件
      * @param  string tableName 表名
      * @return  
-     */
+     */ 
     void static create(std::string tableName);
     /**
      * @brief <static> 新文件创建索引文件

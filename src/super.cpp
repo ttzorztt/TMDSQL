@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-11-21 07:37:32
+ * @LastEditTime : 2022-11-30 21:11:12
  */
 
 #ifndef _SUPER_H_
@@ -85,14 +85,14 @@ std::string _super::returnTruePath(std::string Name, type style) {
       break;
     case type::_TYPE_TABLE_LOCK:
       part = _super::dispartDatabaseNameAndTableName(Name);
-      return _tableLockPath + part[0] + "." + part[1];
+      return _tableLockPath + part[0] + "/." + part[1];
       break;
     case type::_TYPE_DATABASE_LOCK:
-      return _databaseLockPath + "." + Name;
+      return _databaseLockPath + "/." + Name;
       break;
     case type::_TYPE_TABLE:
       part = _super::dispartDatabaseNameAndTableName(Name);
-      return _tablePath +part[0] + "." + part[1];
+      return _tablePath +part[0] + "/" + part[1];
     case type::_TYPE_INDEX_TABLE:
       return _indexPath + Name;
       break;
@@ -104,8 +104,10 @@ std::string _super::returnTruePath(std::string Name, type style) {
       break;
     case type::_TYPE_PCB:
       part = _super::dispartDatabaseNameAndTableName(Name);
-      return _PCBPath + part[0] + "." + part[1];
+      return _PCBPath + part[0] + "/" + part[1];
       break;
+      case type::_TYPE_CREATE_PCB_DATABASE:
+      return _PCBPath + Name;
     default:
       break;
   }
