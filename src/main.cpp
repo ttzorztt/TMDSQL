@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-11-30 23:12:42
+ * @LastEditTime : 2022-12-01 10:20:54
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -102,12 +102,12 @@ int main(int argc, char const* argv[]) {
   value.push_back("张三");
   value.push_back("14");
   value.push_back("男");
-database.insertTable("TMD",value);
+// database.insertTable("TMD",value);
 value.clear();
    value.push_back("王五");
   value.push_back("17");
   value.push_back("女");
-  database.insertTable("TMD",value);
+  // database.insertTable("TMD",value);
  
 //   Index::update(table);
   // database.remove();

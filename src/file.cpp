@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-01 07:55:34
+ * @LastEditTime : 2022-12-01 11:02:56
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -50,15 +50,14 @@ POINTER _file::returnReadTell() {
 POINTER _file::returnWriteTell() {
   return writeFileBuff.tellp();
 }
-bool _file::write(const std::string& str,
-                  type_mode mode ) {
+bool _file::write(const std::string& str, type_mode mode) {
   if (!writeBuffOpen(true, mode)) {
     return false;
   }
   switch (mode) {
     case type_mode::MODE_APP:
       writeFileBuff << std::endl << str;
-    case type_mode::MODE_OUT:
+    case type_mode::MODE_ATE:
       writeFileBuff << str;
     default:
       break;
@@ -66,9 +65,8 @@ bool _file::write(const std::string& str,
   return true;
 }
 
-bool _file::write(const std::vector<std::string>& array,
-                  type_mode mode) {
-  if (!writeBuffOpen(true,mode)) {
+bool _file::write(const std::vector<std::string>& array, type_mode mode) {
+  if (!writeBuffOpen(true, mode)) {
     return false;
   }
   int size = array.size();
@@ -98,25 +96,23 @@ bool _file::remove(std::string truePath) {
 bool _file::write(std::string Name,
                   type style,
                   const std::vector<std::string>& array,
-                  type_mode mode ) {
+                  type_mode mode) {
   _file tmd(Name, style);
   return tmd.write(array, mode);
 }
 bool _file::write(std::string Name,
                   type style,
                   const std::string& str,
-                  type_mode mode ) {
+                  type_mode mode) {
   _file tmd(Name, style);
   return tmd.write(str, mode);
 }
 bool _file::readline(std::vector<std::string>& ret) {
   ret.clear();
-
   if (!readBuffOpen(true)) {
     return false;
   }
   std::string _str;
-
   getline(readFileBuff, _str);
   if (this->returnReadFileBuff().eof()) {
     return false;
@@ -152,8 +148,8 @@ bool _file::create(std::string name, type style) {
   if (filewritebuff.good()) {
     filewritebuff.close();
     ++_file::count;
-    if(style == type::_TYPE_TABLE){
-      _file(name,type::_TYPE_PCB).inputPCBInformation();
+    if (style == type::_TYPE_PCB && !_file(name, type::_TYPE_PCB).isExist()) {
+      _file(name, type::_TYPE_PCB).inputPCBInformation();
     }
     return true;
   }
@@ -161,17 +157,15 @@ bool _file::create(std::string name, type style) {
   return false;
 }
 
-void _file::inputPCBInformation(){
-  if(style == type::_TYPE_PCB && !isExist()){
-  std::string input = this->name + ",0,0\n" ;
-  this->write(input,type_mode::MODE_OUT);
-  }
+void _file::inputPCBInformation() {
+  std::string input = this->name + ",0,0\n";
+  this->write(input, type_mode::MODE_ATE);
 }
 bool _file::create() {
   return _file::create(this->name, this->style);
 }
 
-bool _file::writeBuffOpen(bool need, MODE mode ) {
+bool _file::writeBuffOpen(bool need, MODE mode) {
   if (need && !_super::isExist(this->truePath)) {
     return false;
   }
@@ -180,13 +174,12 @@ bool _file::writeBuffOpen(bool need, MODE mode ) {
       case type_mode::MODE_APP:
         writeFileBuff.open(this->truePath, std::ios::app);
         break;
-      case type_mode::MODE_OUT:
-        writeFileBuff.open(this->truePath, std::ios::out);
+      case type_mode::MODE_ATE:
+        writeFileBuff.open(this->truePath, std::ios::ate);
         break;
       default:
         break;
     }
-    
   }
   return true;
 }

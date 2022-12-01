@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2022-11-30 22:22:17
+ * @LastEditTime : 2022-12-01 10:14:47
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -23,16 +23,27 @@
 /**
  * @brief 对于表的一些TCB数据
  */
-class TablePCB{
+class TablePCB {
  private:
- // 文件
+  // 文件
   _file file;
   // 指向文件结尾的文件指针
   POINTER endLineIndex;
   //行数
   int length;
-void readData();
-void writeData();
+  // 是否已经打开
+  bool open;
+  /**
+   * @brief 从文件中读取
+   * @return  
+   */
+  void readData();
+  /**
+   * @brief 写入文件
+   * @return  
+   */
+  void writeData();
+
  public:
   /**
    * @brief 文件名
@@ -44,8 +55,20 @@ void writeData();
    * @param  POINTER fileIndex 文件指针值
    */
   void setEndLineIndex(POINTER fileIndex);
- 
+
+  /**
+   * @brief 设置文件结束指针
+   * @param  Table table 表对象
+   * @param  POINTER fileIndex 待设置的文件指针
+   * @return  
+   */
   void static setEndLineIndex(Table table, POINTER fileIndex);
+  /**
+   * @brief 设置文件结束指针
+   * @param  string tableName 表名
+   * @param  POINTER fileIndex 待设置的文件指针
+   * @return  
+   */
   void static setEndLineIndex(std::string tableName, POINTER fileIndex);
 
   /**

@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-11-30 23:17:34
+ * @LastEditTime : 2022-12-01 08:07:01
  */
 #ifndef _FILE_
 #define _FILE_
@@ -43,7 +43,11 @@
  */
 class _file : public _super {
  protected:
- 
+    /**
+    * @brief 输入PCB
+    * @return  
+    */
+   void inputPCBInformation();
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -148,11 +152,7 @@ class _file : public _super {
    * @brief 析构函数，释放并关闭文件
    */
   ~_file();
-   /**
-    * @brief 输入PCB
-    * @return  
-    */
-   void inputPCBInformation();
+
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Name 名字

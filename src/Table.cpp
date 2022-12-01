@@ -2,11 +2,15 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-11-30 23:19:06
+ * @LastEditTime : 2022-12-01 10:47:52
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
+#endif
+#ifndef _TABLEPCB_H_
+#define _TABLEPCB_H_
+#include "TablePCB.h"
 #endif
 #include <iostream>
 int Table::count = 0;
@@ -28,10 +32,12 @@ Table::~Table() {
 bool Table::create() {
    _file::create(this->returnName(), type::_TYPE_INDEX_TABLE);
          _file::create(this->returnName(), type::_TYPE_TABLE);
+         _file::create(this->returnName(),type::_TYPE_PCB);
 }
 bool Table::remove() {
   return _file::remove(this->returnName(), type::_TYPE_INDEX_TABLE) &&
          _file::remove(this->returnName(), type::_TYPE_TABLE);
+         _file::remove(this->returnName(),type::_TYPE_PCB);
 }
 int Table::returnCount() {
   return Table::count;
@@ -56,20 +62,22 @@ std::vector<std::string> Table::find(std::string index) {
 }
 
 bool Table::append(std::vector<std::string> value) {
-  int fileIndex = 0;
+  TablePCB pcb(this->returnName());
+  int fileIndex = pcb.returnEndLineIndex();
+
   if (value.size() <= 0) {
     return false;
   }
   for (std::string& str : value) {
     fileIndex += str.size();
   }
-  //     if(this->readFileBuff.tellg() == 0){
-  //     return this->appInsertIndex(value[0],0);
-  // }
+  if(fileIndex == 0){
+     return this->appInsertIndex(value[0],0);
+     pcb.setEndLineIndex(fileIndex + 1);
+  }
   if (!this->write(value)) {
     return false;
   }
-
   // 使用PCB记录最后一行的文件指针。用于索引建立。
   return this->appInsertIndex(value[0], fileIndex + 1);
 }
@@ -82,6 +90,7 @@ bool Table::append(Table table, std::vector<std::string> value) {
 }
 bool Table::append(std::string tableName, std::vector<std::string> value) {
   Table tmp(tableName, type::_TYPE_TABLE);
+
   return tmp.append(value);
 }
 bool Table::appInsertIndex(std::string index, POINTER fileIndex) {
