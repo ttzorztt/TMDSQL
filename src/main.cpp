@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-01 10:20:54
+ * @LastEditTime : 2022-12-02 07:24:01
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -65,7 +65,18 @@ void init() {
   }
 }
 
-int main(int argc, char const* argv[]) {
+int main(int argc, char const *argv[])
+{
+  _file file("testdatabase2/TMD",type::_TYPE_PCB);
+
+  ofstream filewrite(file.returnTruePath(),ios::out | ios::trunc);
+  filewrite << "xxx" << endl;
+  // cout << file.isExist() << endl;
+  // file.write("T",type_mode::MODE_TRUNC);
+  return 0;
+}
+
+int main1(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
    _file file(tablePath, type::_TYPE_TABLE);

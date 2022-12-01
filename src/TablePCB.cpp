@@ -2,7 +2,7 @@
  * @Description  : 表的PCB实现
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:57
- * @LastEditTime : 2022-12-01 10:50:57
+ * @LastEditTime : 2022-12-02 07:19:55
  */
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_
@@ -37,7 +37,7 @@ TablePCB::~TablePCB() {
 void TablePCB::writeData() {
   file.write((file.returnName() + "," + std::to_string(this->endLineIndex) +
               "," + std::to_string(this->length)),
-             type_mode::MODE_OUT);
+             type_mode::MODE_TRUNC);
 }
 
 int TablePCB::returnEndLineIndex() {

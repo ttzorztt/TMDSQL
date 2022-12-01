@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-01 11:02:56
+ * @LastEditTime : 2022-12-02 07:21:46
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -57,7 +57,7 @@ bool _file::write(const std::string& str, type_mode mode) {
   switch (mode) {
     case type_mode::MODE_APP:
       writeFileBuff << std::endl << str;
-    case type_mode::MODE_ATE:
+    case type_mode::MODE_TRUNC:
       writeFileBuff << str;
     default:
       break;
@@ -159,7 +159,7 @@ bool _file::create(std::string name, type style) {
 
 void _file::inputPCBInformation() {
   std::string input = this->name + ",0,0\n";
-  this->write(input, type_mode::MODE_ATE);
+  this->write(input, type_mode::MODE_TRUNC);
 }
 bool _file::create() {
   return _file::create(this->name, this->style);
@@ -174,8 +174,8 @@ bool _file::writeBuffOpen(bool need, MODE mode) {
       case type_mode::MODE_APP:
         writeFileBuff.open(this->truePath, std::ios::app);
         break;
-      case type_mode::MODE_ATE:
-        writeFileBuff.open(this->truePath, std::ios::ate);
+      case type_mode::MODE_TRUNC:
+        writeFileBuff.open(this->truePath, std::ios::out|std::ios::trunc);
         break;
       default:
         break;

@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-01 10:57:34
+ * @LastEditTime : 2022-12-02 07:18:50
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -50,7 +50,7 @@ enum type {
 };
 enum type_mode {
   MODE_APP,  //每次写入前寻位到流结尾
-  MODE_ATE
+  MODE_TRUNC
 };
 /**
  * @brief 维护一些基础静态函数
