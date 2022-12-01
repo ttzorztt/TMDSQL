@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-02 07:24:01
+ * @LastEditTime : 2022-12-02 07:30:38
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -57,88 +57,82 @@ void init() {
   if (!access("../data/database", F_OK)) {
     mkdir("../data/database", 777);
   }
-  if (!access("../data/lock", F_OK)) {
-    mkdir("../data/lock", 777);
+  if (!access("../data/index", F_OK)) {
+    mkdir("../data/index", 777);
+  }
+  if (!access("../data/log", F_OK)) {
+    mkdir("../data/log", 777);
+  }
+  if (!access("../data/PCB", F_OK)) {
+    mkdir("../data/PCB", 777);
   }
   if (!access("../view", F_OK)) {
     mkdir("../view", 777);
   }
 }
 
-int main(int argc, char const *argv[])
-{
-  _file file("testdatabase2/TMD",type::_TYPE_PCB);
-
-  ofstream filewrite(file.returnTruePath(),ios::out | ios::trunc);
-  filewrite << "xxx" << endl;
-  // cout << file.isExist() << endl;
-  // file.write("T",type_mode::MODE_TRUNC);
-  return 0;
-}
-
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
-   _file file(tablePath, type::_TYPE_TABLE);
-  Table table(tablePath,type::_TYPE_TABLE);
+  _file file(tablePath, type::_TYPE_TABLE);
+  Table table(tablePath, type::_TYPE_TABLE);
 
   // vector<string> value = table.find("王五");
   // cout << value.size() << endl;
   // cout << value[0] << ' ' << value[1] << " " << value[2] << endl;
-  
+
   // cout << table.isExist() << endl;
 
   // Table table(databasePath + "/" + "TMD");
- 
+
   DataBase database("testdatabase2");
   if (database.isExist()) {
     cout << "存在" << endl;
   } else {
     database.create();
   }
-  if(table.isExist()){
-  
+  if (table.isExist()) {
     table.remove();
   }
-  if(!table.isExist()){
+  if (!table.isExist()) {
     table.create();
-     }
-    vector<string> value;
+  }
+  vector<string> value;
   value.push_back("姓名");
   value.push_back("年龄");
   value.push_back("性别");
-// return 0;
-  database.insertTable("TMD",value);
-   value.clear();
+  // return 0;
+  database.insertTable("TMD", value);
+  value.clear();
   value.push_back("张三");
   value.push_back("14");
   value.push_back("男");
-// database.insertTable("TMD",value);
-value.clear();
-   value.push_back("王五");
+  // database.insertTable("TMD",value);
+  value.clear();
+  value.push_back("王五");
   value.push_back("17");
   value.push_back("女");
   // database.insertTable("TMD",value);
- 
-//   Index::update(table);
-  // database.remove();
-//   vector<string> value;
-//   value.push_back("姓名");
-//   value.push_back("年龄");
-//   value.push_back("性别");
 
-//   database.insertTable("TMD",value);
-//   // table.append(value);
-//   value.clear();
-//   value.push_back("张三");
-//   value.push_back("14");
-//   value.push_back("男");
-// database.insertTable("TMD",value);
-// //   // table.append(value);
-//   value.clear();
-//   value.push_back("王五");
-//   value.push_back("17");
-//   value.push_back("女");
-// //   // table.append(value);
-//   database.insertTable("TMD",value);
+  //   Index::update(table);
+  // database.remove();
+  //   vector<string> value;
+  //   value.push_back("姓名");
+  //   value.push_back("年龄");
+  //   value.push_back("性别");
+
+  //   database.insertTable("TMD",value);
+  //   // table.append(value);
+  //   value.clear();
+  //   value.push_back("张三");
+  //   value.push_back("14");
+  //   value.push_back("男");
+  // database.insertTable("TMD",value);
+  // //   // table.append(value);
+  //   value.clear();
+  //   value.push_back("王五");
+  //   value.push_back("17");
+  //   value.push_back("女");
+  // //   // table.append(value);
+  //   database.insertTable("TMD",value);
 }

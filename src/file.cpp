@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-02 07:21:46
+ * @LastEditTime : 2022-12-02 07:28:03
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -17,15 +17,11 @@ int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
-  this->readBuffOpen(true);
-  this->writeBuffOpen(true);
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
-  this->readBuffOpen(true);
-  this->writeBuffOpen(true);
   ++_file::count;
 }
 _file::~_file() {
