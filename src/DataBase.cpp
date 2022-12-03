@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-12-01 10:21:20
+ * @LastEditTime : 2022-12-02 09:27:12
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -60,7 +60,6 @@ bool DataBase::insertTable(std::string tableName,
     file.create();
   }
   Table::append(Path, tableItem);
-  
   return true;
 }
 int DataBase::returnCount() {

@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-01 10:47:52
+ * @LastEditTime : 2022-12-03 22:14:12
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -30,13 +30,15 @@ Table::~Table() {
 }
 
 bool Table::create() {
-   _file::create(this->returnName(), type::_TYPE_INDEX_TABLE);
+  std::cout << _file::create(this->returnName(),type::_TYPE_PCB);
+   return  _file::create(this->returnName(), type::_TYPE_INDEX_TABLE) &&
+         _file::create(this->returnName(),type::_TYPE_PCB) &&
          _file::create(this->returnName(), type::_TYPE_TABLE);
-         _file::create(this->returnName(),type::_TYPE_PCB);
+         
 }
 bool Table::remove() {
   return _file::remove(this->returnName(), type::_TYPE_INDEX_TABLE) &&
-         _file::remove(this->returnName(), type::_TYPE_TABLE);
+         _file::remove(this->returnName(), type::_TYPE_TABLE) &&
          _file::remove(this->returnName(),type::_TYPE_PCB);
 }
 int Table::returnCount() {
@@ -54,7 +56,7 @@ std::vector<std::string> Table::find(std::string index) {
   while (indexFile.readline(value)) {
     if (value[0] == index) {
       int x = atoi(value[1].c_str());
-      // return {};
+      std::cout << "x: " << x << std::endl;
       return this->indexReadline(x);
     }
   }
@@ -63,23 +65,18 @@ std::vector<std::string> Table::find(std::string index) {
 
 bool Table::append(std::vector<std::string> value) {
   TablePCB pcb(this->returnName());
+  _file file(this->returnName(),type::_TYPE_PCB);
   int fileIndex = pcb.returnEndLineIndex();
-
   if (value.size() <= 0) {
     return false;
   }
+  this->write(value);
+  this->appInsertIndex(value[0],fileIndex + 2);
   for (std::string& str : value) {
     fileIndex += str.size();
   }
-  if(fileIndex == 0){
-     return this->appInsertIndex(value[0],0);
-     pcb.setEndLineIndex(fileIndex + 1);
-  }
-  if (!this->write(value)) {
-    return false;
-  }
-  // 使用PCB记录最后一行的文件指针。用于索引建立。
-  return this->appInsertIndex(value[0], fileIndex + 1);
+  pcb.addLength();
+  pcb.setEndLineIndex(fileIndex + 1);
 }
 Table::Table(Table& table) : _file(table.name, table.style) {
   this->style = table.style;
@@ -91,7 +88,7 @@ bool Table::append(Table table, std::vector<std::string> value) {
 bool Table::append(std::string tableName, std::vector<std::string> value) {
   Table tmp(tableName, type::_TYPE_TABLE);
 
-  return tmp.append(value);
+  return tmp.append(value); 
 }
 bool Table::appInsertIndex(std::string index, POINTER fileIndex) {
   return Table::appInsertIndex(this->returnName(), index, fileIndex);
@@ -108,10 +105,11 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
 
 std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = this->returnReadTell();
-  this->readFileBuff.seekg(fileIndex);
-  // _file_.setReadSeek(fileIndex);
+  this->readFileBuff.seekg(100);
+  std::cout << readFileBuff.tellg() << std::endl;
   std::vector<std::string> value;
   this->readline(value);
+  std::cout << value.size() << std::endl;
   for (std::string& x : value) {
     std::cout << x << std::endl;
   }

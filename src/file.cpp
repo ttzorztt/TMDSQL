@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-02 07:28:03
+ * @LastEditTime : 2022-12-03 22:18:44
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -15,11 +15,19 @@
 //当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {
+  if (isExist()) {
+    this->readBuffOpen(true);
+    this->writeBuffOpen(true);
+  }
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
+  if (isExist()) {
+    this->readBuffOpen(true);
+    this->writeBuffOpen(true);
+  }
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
   ++_file::count;
@@ -34,7 +42,6 @@ _file::~_file() {
   --_file::count;
 }
 void _file::setReadSeek(POINTER fileIndex) {
-  readFileBuff.clear();
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
 void _file::setWriteSeek(POINTER fileIndex) {
@@ -47,14 +54,11 @@ POINTER _file::returnWriteTell() {
   return writeFileBuff.tellp();
 }
 bool _file::write(const std::string& str, type_mode mode) {
-  if (!writeBuffOpen(true, mode)) {
-    return false;
-  }
   switch (mode) {
     case type_mode::MODE_APP:
       writeFileBuff << std::endl << str;
     case type_mode::MODE_TRUNC:
-      writeFileBuff << str;
+      writeFileBuff << str << std::endl;
     default:
       break;
   }
@@ -62,9 +66,6 @@ bool _file::write(const std::string& str, type_mode mode) {
 }
 
 bool _file::write(const std::vector<std::string>& array, type_mode mode) {
-  if (!writeBuffOpen(true, mode)) {
-    return false;
-  }
   int size = array.size();
   if (size == 0)
     return false;
@@ -105,18 +106,14 @@ bool _file::write(std::string Name,
 }
 bool _file::readline(std::vector<std::string>& ret) {
   ret.clear();
-  if (!readBuffOpen(true)) {
-    return false;
-  }
   std::string _str;
   getline(readFileBuff, _str);
   if (this->returnReadFileBuff().eof()) {
     return false;
-  }
+  }\
   int left = 0;
   int right = 1;
   int size = _str.size();
-
   while (right <= size) {
     if (_str[right] != ',') {
       ++right;
@@ -136,26 +133,24 @@ type _file::returnType() {
 }
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE) {
+  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE ) {
+  std::cout << "TTT" << std::endl;
     return false;
   }
   std::ofstream filewritebuff;
   filewritebuff.open(truePath, std::ios::out);
   if (filewritebuff.good()) {
-    filewritebuff.close();
     ++_file::count;
-    if (style == type::_TYPE_PCB && !_file(name, type::_TYPE_PCB).isExist()) {
-      _file(name, type::_TYPE_PCB).inputPCBInformation();
-    }
-    return true;
   }
   filewritebuff.close();
-  return false;
+  std::cout << " TMD " << _file(name,type::_TYPE_PCB).isExist() <<std::endl << name << " " << style << " " << std::endl;
+  _file(name,type::_TYPE_PCB).inputPCBInformation(); 
 }
-
 void _file::inputPCBInformation() {
-  std::string input = this->name + ",0,0\n";
+  std::string input = this->name + ",0,0";
   this->write(input, type_mode::MODE_TRUNC);
+  this->setReadSeek(0);
+  this->setWriteSeek(0);
 }
 bool _file::create() {
   return _file::create(this->name, this->style);
@@ -171,7 +166,7 @@ bool _file::writeBuffOpen(bool need, MODE mode) {
         writeFileBuff.open(this->truePath, std::ios::app);
         break;
       case type_mode::MODE_TRUNC:
-        writeFileBuff.open(this->truePath, std::ios::out|std::ios::trunc);
+        writeFileBuff.open(this->truePath, std::ios::out | std::ios::trunc);
         break;
       default:
         break;
@@ -185,9 +180,6 @@ std::string _file::returnTruePath() {
 bool _file::readBuffOpen(bool need) {
   if (need && !_super::isExist(this->truePath)) {
     return false;
-  }
-  if (!readFileBuff.is_open()) {
-    readFileBuff.open(this->truePath);
   }
   return true;
 }

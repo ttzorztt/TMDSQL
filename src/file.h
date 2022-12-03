@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-01 08:07:01
+ * @LastEditTime : 2022-12-02 08:12:40
  */
 #ifndef _FILE_
 #define _FILE_
@@ -43,11 +43,7 @@
  */
 class _file : public _super {
  protected:
-    /**
-    * @brief 输入PCB
-    * @return  
-    */
-   void inputPCBInformation();
+
   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断writebuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -56,15 +52,21 @@ class _file : public _super {
    * @return 文件状态为need，则返回True
    */
   bool writeBuffOpen(bool need,MODE mode = type_mode::MODE_APP);
-  /**
+
+
+ public:
+   /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断readbuff是否打开,若没有打开则打开，若已经打开，则啥也不干
    * @param bool need 期望文件状态，True期望文件存在，False期望文件不存在
    * @return 文件状态为need，则返回True
    */
   bool readBuffOpen(bool need);
-
- public:
+     /**
+    * @brief 输入PCB
+    * @return  
+    */
+   void inputPCBInformation();
    /**
    * @brief 以App的方式写入字符串
    * @param vector<string>& array 数据写入数据库

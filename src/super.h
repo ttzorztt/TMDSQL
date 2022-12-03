@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-02 07:18:50
+ * @LastEditTime : 2022-12-03 11:53:38
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -134,5 +134,5 @@ class _super {
    * @return  底层路径
    */
   std::string static returnTruePath(std::string name, type style);
-};
+}; 
 #endif

@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2022-12-01 10:14:47
+ * @LastEditTime : 2022-12-03 14:58:05
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -18,6 +18,7 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
+
 // 文件指针
 #define POINTER int
 /**
@@ -100,5 +101,10 @@ class TablePCB {
    * @brief 析构函数
    */
   ~TablePCB();
+  /**
+   * @brief 添加行数
+   * @return  
+   */
+  void addLength();
 };
 #endif
