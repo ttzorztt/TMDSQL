@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-12 10:27:27
+ * @LastEditTime : 2022-12-12 21:44:11
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -74,16 +74,16 @@ void init() {
     mkdir("../view", 777);
   }
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   _file file("testdatabase2/TMD",type::_TYPE_TABLE);
   std::cout << file.buffStatus << std::endl;
-  std::cout << file.isExist() << std::endl;
-  std::cout << file.write("TMD");
+  // std::cout << file.isExist() << std::endl;
+  // std::cout << file.write("TMD");
   // <<  " " << ve[1] << " " << ve[2] << std::endl;
   return 0; 
 }
 
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);
@@ -107,7 +107,6 @@ int main1(int argc, char const* argv[]) {
   if (!table.isExist()) {
     table.create();
   }
-  return 0;
   vector<string> ve;
   vector<string> value;
   value.push_back("姓名");

@@ -92,6 +92,7 @@ bool Table::append(std::vector<std::string> value) {
   }
   pcb.addLength();
   pcb.setEndLineIndex(fileIndex + 1);
+  pcb.~TablePCB();
   return true;
 }
 Table::Table(Table& table) : _file(table.name, table.style) {

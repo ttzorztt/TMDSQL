@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-12 10:32:22
+ * @LastEditTime : 2022-12-12 21:40:51
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -16,18 +16,19 @@
 int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {
   buffStatus = false;
-  this->isOpenBuff();
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
+  this->isOpenBuff();
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
-  this->isOpenBuff();
+  buffStatus = false;
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
   ++_file::count;
+  this->isOpenBuff();
 }
-_file::~_file() {
+_file::~_file() { 
   if (writeFileBuff.is_open()) {
     writeFileBuff.close();
   }
@@ -37,7 +38,9 @@ _file::~_file() {
   --_file::count;
 }
 void _file::isOpenBuff() {
+  std::cout << this->returnTruePath() << " " << this->isExist() << std::endl;
   if (this->isExist() && this->buffStatus == false) {
+    std::cout << "YMF" << std::endl;
     this->buffStatus = true;
     this->readBuffOpen(true);
     this->writeBuffOpen(true);
@@ -58,8 +61,6 @@ POINTER _file::returnWriteTell() {
 bool _file::write(const std::string str, type_mode mode) {
   this->isOpenBuff(); 
   if (buffStatus == true) {
-    std::cout << "BUff is open " << str << std::endl;
-    std::cout << writeFileBuff.is_open() << std::endl;
     switch (mode) {
       case type_mode::MODE_APP:
         writeFileBuff << std::endl << str;
@@ -180,7 +181,6 @@ bool _file::writeBuffOpen(bool need, MODE mode) {
       default:
         break;
     }
-    writeFileBuff << "fTTTTT" << std::endl;
    }
   return true;
 }
