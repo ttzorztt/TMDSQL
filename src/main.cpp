@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-03 22:10:33
+ * @LastEditTime : 2022-12-12 10:27:27
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -74,28 +74,16 @@ void init() {
     mkdir("../view", 777);
   }
 }
-int main1(int argc, char const* argv[]) {
-  _file file("testdatabase2/TMD", type::_TYPE_TABLE);
-  ifstream fi("../data/database/testdatabase2/TMD");
-  fi.seekg(35,ios::beg);
-  fi.clear();
-  string x;
-  std::getline(fi,x);
-  cout << x << endl;
-  return 0;
-  file.readBuffOpen(true);
-  file.readFileBuff.clear();
-  file.readFileBuff.seekg(12);
-  cout << "TELL: " << file.returnReadTell();
-  // file.setReadSeek(22);
-  vector<string> ve;
-  file.readline(ve);
-  std::cout << ve.size() << " " << ve[0];
+int main(int argc, char const* argv[]) {
+  _file file("testdatabase2/TMD",type::_TYPE_TABLE);
+  std::cout << file.buffStatus << std::endl;
+  std::cout << file.isExist() << std::endl;
+  std::cout << file.write("TMD");
   // <<  " " << ve[1] << " " << ve[2] << std::endl;
-  return 0;
+  return 0; 
 }
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);
@@ -105,6 +93,9 @@ int main(int argc, char const* argv[]) {
   // cout << table.isExist() << endl;
   // Table table(databasePath + "/" + "TMD");
   DataBase database("testdatabase2");
+  _file(tablePath,type::_TYPE_TABLE).remove();
+  _file(tablePath,type::_TYPE_INDEX_TABLE).remove();
+  _file(tablePath,type::_TYPE_PCB).remove();
   if (database.isExist()) {
     cout << "存在" << endl;
   } else {
@@ -114,7 +105,6 @@ int main(int argc, char const* argv[]) {
     table.remove();
   }
   if (!table.isExist()) {
-    
     table.create();
   }
   return 0;
@@ -126,7 +116,7 @@ int main(int argc, char const* argv[]) {
   database.insertTable("TMD", value);
   value.clear();
   value.push_back("张三");
-  value.push_back("14");
+  value.push_back("14"); 
   value.push_back("男");
   database.insertTable("TMD", value);
   value.clear();

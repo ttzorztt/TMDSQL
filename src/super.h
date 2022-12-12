@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-03 11:53:38
+ * @LastEditTime : 2022-12-04 08:09:44
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -29,12 +29,19 @@
 
 #define POINTER int
 #define MODE int
+//"../data/database/"
 const static std::string _tablePath = "../data/database/";
+//"../data/database/"
 const static std::string _databasePath = "../data/database/";
+//"../data/index/"
 const static std::string _indexPath = "../data/index/";
+//"../data/lock/"
 const static std::string _tableLockPath = "../data/lock/";
+//"../data/lock/"
 const static std::string _databaseLockPath = "../data/lock/";
+//"../data/log/"
 const static std::string _logPath = "../data/log/";
+//"../data/PCB/"
 const static std::string _PCBPath = "../data/PCB/";
 // 封装一些文件或目录类型
 enum type {

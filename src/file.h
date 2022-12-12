@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-02 08:12:40
+ * @LastEditTime : 2022-12-12 10:04:34
  */
 #ifndef _FILE_
 #define _FILE_
@@ -52,9 +52,19 @@ class _file : public _super {
    * @return 文件状态为need，则返回True
    */
   bool writeBuffOpen(bool need,MODE mode = type_mode::MODE_APP);
-
+  /**
+   * @brief 判断是否打开双buff
+   */
+  void isOpenBuff();
 
  public:
+ /**
+  * @brief 如果文件存在则打开双buff
+  * @param  string name 文件名字
+  * @param  type style 文件类型
+  * @return  
+  */
+ void  static isOpenBuff(std::string name,type style);
    /**
    * @brief
    * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断readbuff是否打开,若没有打开则打开，若已经打开，则啥也不干
@@ -73,7 +83,7 @@ class _file : public _super {
    * @param mode type_mode 模式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::vector<std::string>& array,type_mode mode=type_mode::MODE_APP);
+  bool write(const std::vector<std::string> &array,type_mode mode=type_mode::MODE_APP);
    /**
    * @brief 真实路径
    * @return {std::string} 返回真实路径
@@ -129,7 +139,7 @@ class _file : public _super {
    * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::string& str,type_mode mode = type_mode::MODE_APP);
+  bool write(const std::string str,type_mode mode = type_mode::MODE_APP);
   /**
    * @brief 以行的形势读出数据
    * @param vector<string>& ret 保存的方式
@@ -217,5 +227,7 @@ class _file : public _super {
   static int count;
   // 真实路径
   std::string truePath;
+  //Buff状态
+  bool buffStatus;
 };
 #endif

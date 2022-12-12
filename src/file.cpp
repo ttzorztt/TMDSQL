@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-03 22:18:44
+ * @LastEditTime : 2022-12-12 10:32:22
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -15,19 +15,14 @@
 //当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {
-  if (isExist()) {
-    this->readBuffOpen(true);
-    this->writeBuffOpen(true);
-  }
+  buffStatus = false;
+  this->isOpenBuff();
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
-  if (isExist()) {
-    this->readBuffOpen(true);
-    this->writeBuffOpen(true);
-  }
+  this->isOpenBuff();
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
   ++_file::count;
@@ -41,6 +36,13 @@ _file::~_file() {
   }
   --_file::count;
 }
+void _file::isOpenBuff() {
+  if (this->isExist() && this->buffStatus == false) {
+    this->buffStatus = true;
+    this->readBuffOpen(true);
+    this->writeBuffOpen(true);
+  }
+}
 void _file::setReadSeek(POINTER fileIndex) {
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
@@ -53,21 +55,26 @@ POINTER _file::returnReadTell() {
 POINTER _file::returnWriteTell() {
   return writeFileBuff.tellp();
 }
-bool _file::write(const std::string& str, type_mode mode) {
-  switch (mode) {
-    case type_mode::MODE_APP:
-      writeFileBuff << std::endl << str;
-    case type_mode::MODE_TRUNC:
-      writeFileBuff << str << std::endl;
-    default:
-      break;
+bool _file::write(const std::string str, type_mode mode) {
+  this->isOpenBuff(); 
+  if (buffStatus == true) {
+    std::cout << "BUff is open " << str << std::endl;
+    std::cout << writeFileBuff.is_open() << std::endl;
+    switch (mode) {
+      case type_mode::MODE_APP:
+        writeFileBuff << std::endl << str;
+      case type_mode::MODE_TRUNC:
+        writeFileBuff << str << std::endl;
+      default:
+        break;
+    }
   }
   return true;
 }
 
 bool _file::write(const std::vector<std::string>& array, type_mode mode) {
   int size = array.size();
-  if (size == 0)
+  if (size == 0 || buffStatus == false)
     return false;
   writeFileBuff << array[0];
   for (int index = 1; index < size; ++index) {
@@ -110,7 +117,7 @@ bool _file::readline(std::vector<std::string>& ret) {
   getline(readFileBuff, _str);
   if (this->returnReadFileBuff().eof()) {
     return false;
-  }\
+  }
   int left = 0;
   int right = 1;
   int size = _str.size();
@@ -133,8 +140,7 @@ type _file::returnType() {
 }
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE ) {
-  std::cout << "TTT" << std::endl;
+  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE) {
     return false;
   }
   std::ofstream filewritebuff;
@@ -143,8 +149,14 @@ bool _file::create(std::string name, type style) {
     ++_file::count;
   }
   filewritebuff.close();
-  std::cout << " TMD " << _file(name,type::_TYPE_PCB).isExist() <<std::endl << name << " " << style << " " << std::endl;
-  _file(name,type::_TYPE_PCB).inputPCBInformation(); 
+  _file::isOpenBuff(name, style);
+  if (style == type::_TYPE_PCB) {
+    _file(name, type::_TYPE_PCB).inputPCBInformation();
+  }
+  return true;
+}
+void _file::isOpenBuff(std::string name, type style) {
+  _file(name, style).isOpenBuff();
 }
 void _file::inputPCBInformation() {
   std::string input = this->name + ",0,0";
@@ -157,9 +169,6 @@ bool _file::create() {
 }
 
 bool _file::writeBuffOpen(bool need, MODE mode) {
-  if (need && !_super::isExist(this->truePath)) {
-    return false;
-  }
   if (!writeFileBuff.is_open()) {
     switch (mode) {
       case type_mode::MODE_APP:
@@ -171,7 +180,8 @@ bool _file::writeBuffOpen(bool need, MODE mode) {
       default:
         break;
     }
-  }
+    writeFileBuff << "fTTTTT" << std::endl;
+   }
   return true;
 }
 std::string _file::returnTruePath() {
@@ -181,6 +191,7 @@ bool _file::readBuffOpen(bool need) {
   if (need && !_super::isExist(this->truePath)) {
     return false;
   }
+  readFileBuff.open(this->truePath);
   return true;
 }
 
