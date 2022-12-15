@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-15 20:38:15
+ * @LastEditTime : 2022-12-15 21:08:24
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -75,13 +75,6 @@ void init() {
   }
 }
 int main1(int argc, char const* argv[]) {
-  _file file("testdatabase2/TMD",type::_TYPE_INDEX_TABLE);
-  cout << file.isExist();
-  file.write("FSFSFSF",type_mode::WRITEBUFF_MODE_APP);
-  // file.write("FFF");
-  // std::cout << file.isExist() << std::endl;
-  // std::cout << file.write("TMD");
-  // <<  " " << ve[1] << " " << ve[2] << std::endl;
   return 0; 
 }
 
@@ -122,9 +115,9 @@ int main(int argc, char const* argv[]) {
   value.push_back("女");
   database.insertTable("TMD", value);
   ve.clear();
-    return 0;
   ve = table.find("张三");
-  cout << ve[0] << ve[1] << ve[2] << endl;
+  std::cout << ve.size();
+  // cout << ve[0] << ve[1] << ve[2] << endl;
   //   Index::update(table);
   // database.remove();
   //   vector<string> value;

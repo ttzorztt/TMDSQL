@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-15 16:28:59
+ * @LastEditTime : 2022-12-15 20:59:56
  */
 #ifndef _FILE_
 #define _FILE_
@@ -199,7 +199,6 @@ class _file : public _super {
    * @return  类型
    */
   virtual type returnType();
-//  private:
   // writeFileBuff是写文件buff指针
   std::ofstream writeFileBuff;
   // readFileBuff是读文件buff指针
@@ -210,5 +209,7 @@ class _file : public _super {
   static int count;
   // 真实路径
   std::string truePath;
+  // 当前的OpenBUFF
+  type_mode nowMode;
 };
 #endif

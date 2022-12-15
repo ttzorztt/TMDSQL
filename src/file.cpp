@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-15 20:43:26
+ * @LastEditTime : 2022-12-15 21:54:33
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -18,11 +18,13 @@ _file::_file(std::string Name, type style) : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
+  this->nowMode = type_mode::DEFAULT;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
   ++_file::count;
+  this->nowMode = type_mode::DEFAULT;
 }
 _file::~_file() {
   if (writeFileBuff.is_open()) {
@@ -34,31 +36,37 @@ _file::~_file() {
   --_file::count;
 }
 void _file::setOpenBuff(MODE mode) {
-      switch (mode) {
-        case type_mode::READBUFF_MODE: {
-          if(readFileBuff.is_open()){
-          readFileBuff.clear();
-          }
-          readFileBuff.open(this->truePath);
-          break;
-        }
-        case type_mode::WRITEBUFF_MODE_APP:{
-          if(readFileBuff.is_open()){
-          writeFileBuff.clear();
-          }
-          writeFileBuff.open(this->truePath, std::ios::app);
-          break;
-        }
-        case type_mode::WRITEBUFF_MODE_TRUNC : {
-          if(readFileBuff.is_open()){
-          writeFileBuff.clear();
-          }
-          writeFileBuff.open(this->truePath, std::ios::trunc);
-          break;
-        }
-        default:
-          break;
+  if ((mode == type_mode::WRITEBUFF_MODE_APP && this->nowMode == type_mode::WRITEBUFF_MODE_APP) || (mode == type_mode::READBUFF_MODE && mode == this->nowMode )) {
+    return;
+  }
+  switch (mode) {
+    case type_mode::READBUFF_MODE: {
+      if (readFileBuff.is_open()) {
+        readFileBuff.clear();
       }
+      readFileBuff.open(this->truePath);
+      this->nowMode = type_mode::READBUFF_MODE;
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_APP: {
+      if (readFileBuff.is_open()) {
+        writeFileBuff.clear();
+      }
+      writeFileBuff.open(this->truePath, std::ios::app);
+      this->nowMode = type_mode::WRITEBUFF_MODE_APP;
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_TRUNC: {
+      if (readFileBuff.is_open()) {
+        writeFileBuff.clear();
+      }
+      writeFileBuff.open(this->truePath, std::ios::trunc);
+      this->nowMode = type_mode::WRITEBUFF_MODE_TRUNC;
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 void _file::setReadSeek(POINTER fileIndex) {
@@ -75,12 +83,12 @@ POINTER _file::returnWriteTell() {
 }
 bool _file::write(const std::string str, type_mode mode) {
   switch (mode) {
-    case type_mode::WRITEBUFF_MODE_APP : {
+    case type_mode::WRITEBUFF_MODE_APP: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
       writeFileBuff << std::endl << str;
       break;
     }
-    case type_mode::WRITEBUFF_MODE_TRUNC : {
+    case type_mode::WRITEBUFF_MODE_TRUNC: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
       writeFileBuff << str << std::endl;
       break;
@@ -90,17 +98,17 @@ bool _file::write(const std::string str, type_mode mode) {
 }
 bool _file::write(const std::vector<std::string>& array, type_mode mode) {
   switch (mode) {
-    case type_mode::WRITEBUFF_MODE_APP :{
+    case type_mode::WRITEBUFF_MODE_APP: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
       break;
     }
-    case type_mode::WRITEBUFF_MODE_TRUNC : {
+    case type_mode::WRITEBUFF_MODE_TRUNC: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
       break;
     }
   }
   int size = array.size();
-  if (size == 0){
+  if (size == 0) {
     return false;
   }
   writeFileBuff << array[0];
@@ -144,6 +152,7 @@ bool _file::readline(std::vector<std::string>& ret) {
   if (this->returnReadFileBuff().eof()) {
     return false;
   }
+  ret.clear();
   getline(readFileBuff, _str);
   int left = 0;
   int right = 1;
@@ -183,11 +192,11 @@ bool _file::create(std::string name, type style) {
   return true;
 }
 void _file::inputPCBInformation() {
-  std::string input = this->name + ",-2,0";
-  this->write(input,type_mode::WRITEBUFF_MODE_TRUNC);
+  std::string input = this->name + ",0,0";
+  this->write(input, type_mode::WRITEBUFF_MODE_TRUNC);
   this->setReadSeek(0);
   this->setWriteSeek(0);
-} 
+}
 bool _file::create() {
   return _file::create(this->name, this->style);
 }
