@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-15 21:52:06
+ * @LastEditTime : 2022-12-15 22:26:17
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -46,6 +46,7 @@ bool Table::create() {
     default:
       break;
   }
+  return false;
 }
 bool Table::remove() {
   switch (style) {
@@ -63,6 +64,7 @@ bool Table::remove() {
     default:
       break;
   }
+  return false;
 }
 int Table::returnCount() {
   return Table::count;
@@ -133,6 +135,7 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
 std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = this->returnReadTell();
   this->readFileBuff.seekg(fileIndex);
+  std::cout << "tell is" << this->readFileBuff.tellg() << std::endl;
   std::vector<std::string> value;
   this->readline(value);
   this->setReadSeek(oldIndex);
