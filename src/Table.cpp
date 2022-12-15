@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-15 17:02:41
+ * @LastEditTime : 2022-12-15 20:44:16
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -82,13 +82,12 @@ std::vector<std::string> Table::find(std::string index) {
 }
 
 bool Table::append(std::vector<std::string> value) {
-  
   TablePCB pcb(this->returnName());
   int fileIndex = pcb.returnEndLineIndex();
   if (value.size() <= 0) {
     return false;
   }
-  this->write("dssfsf",type_mode::WRITEBUFF_MODE_TRUNC);
+  this->write(value,type_mode::WRITEBUFF_MODE_APP);
   this->appInsertIndex(value[0], fileIndex + 2);
   for (std::string& str : value) {
     fileIndex += str.size();
@@ -117,7 +116,7 @@ bool Table::appInsertIndex(std::string tableName,
                            std::string index,
                            POINTER fileIndex) {
   return _file::write(tableName, type::_TYPE_INDEX_TABLE,
-                      {index, std::to_string(fileIndex)},type_mode::WRITEBUFF_MODE_TRUNC);
+                      {index, std::to_string(fileIndex)},type_mode::WRITEBUFF_MODE_APP);
 }
 bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
   return Table::appInsertIndex(table.returnName(), index, fileIndex);

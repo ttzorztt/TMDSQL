@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-15 17:03:32
+ * @LastEditTime : 2022-12-15 20:43:26
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -47,6 +47,7 @@ void _file::setOpenBuff(MODE mode) {
           writeFileBuff.clear();
           }
           writeFileBuff.open(this->truePath, std::ios::app);
+          break;
         }
         case type_mode::WRITEBUFF_MODE_TRUNC : {
           if(readFileBuff.is_open()){

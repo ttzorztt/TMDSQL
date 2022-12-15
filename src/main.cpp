@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-15 17:04:02
+ * @LastEditTime : 2022-12-15 20:38:15
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -75,10 +75,9 @@ void init() {
   }
 }
 int main1(int argc, char const* argv[]) {
-  std::ofstream c;
-  c.open("../data/PCB/testdatabase2/TMD",std::ios::trunc);
-  c << "sadfsdf";
-  
+  _file file("testdatabase2/TMD",type::_TYPE_INDEX_TABLE);
+  cout << file.isExist();
+  file.write("FSFSFSF",type_mode::WRITEBUFF_MODE_APP);
   // file.write("FFF");
   // std::cout << file.isExist() << std::endl;
   // std::cout << file.write("TMD");
@@ -90,12 +89,7 @@ int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);
-  // vector<string> value = table.find("王五");
-  // cout << value.size() << endl;
-  // cout << value[0] << ' ' << value[1] << " " << value[2] << endl;
-  // cout << table.isExist() << endl;
-  // Table table(databasePath + "/" + "TMD");
-  DataBase database("testdatabase2");
+  DataBase database("testdatabase2"); 
   _file(tablePath,type::_TYPE_TABLE).remove();
   _file(tablePath,type::_TYPE_INDEX_TABLE).remove();
   _file(tablePath,type::_TYPE_PCB).remove();   

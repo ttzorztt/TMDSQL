@@ -2,7 +2,7 @@
  * @Description  : 封装索引操作
  * @Autor        : TMD
  * @Date         : 2022-11-07 22:13:51
- * @LastEditTime : 2022-11-19 20:26:47
+ * @LastEditTime : 2022-12-15 17:15:39
  */
 
 #ifndef _INDEX_H_
@@ -41,12 +41,12 @@ void Index::update(std::string name) {
   oldIndex.readline(value);
   int tmpcount = std::atoi(value[value.size() - 1].c_str());
 
-  newIndex.write(value);
+  newIndex.write(value,type_mode::WRITEBUFF_MODE_APP);
   while (oldIndex.readline(value)) {
     int size = std::atoi(value[value.size() - 1].c_str());
     tmpcount += size;
     value[value.size() - 1] = std::to_string(tmpcount);
-    newIndex.write(value);
+    newIndex.write(value,type_mode::WRITEBUFF_MODE_APP);
   }
   oldIndex.remove();
   rename(_super::returnTruePath(newIndex.returnName(), type::_TYPE_INDEX_TABLE)
@@ -81,7 +81,7 @@ if(!indexFile.isExist() || !dataFile.isExist()){
     for(std::string& str: value){
       size += str.size();
     }
-    indexFile.write({value[0],std::to_string(size)});
+    indexFile.write({value[0],std::to_string(size)},type_mode::WRITEBUFF_MODE_APP);
   }
   
 }
