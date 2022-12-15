@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-12 21:44:11
+ * @LastEditTime : 2022-12-15 17:04:02
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -75,8 +75,11 @@ void init() {
   }
 }
 int main1(int argc, char const* argv[]) {
-  _file file("testdatabase2/TMD",type::_TYPE_TABLE);
-  std::cout << file.buffStatus << std::endl;
+  std::ofstream c;
+  c.open("../data/PCB/testdatabase2/TMD",std::ios::trunc);
+  c << "sadfsdf";
+  
+  // file.write("FFF");
   // std::cout << file.isExist() << std::endl;
   // std::cout << file.write("TMD");
   // <<  " " << ve[1] << " " << ve[2] << std::endl;
@@ -95,7 +98,7 @@ int main(int argc, char const* argv[]) {
   DataBase database("testdatabase2");
   _file(tablePath,type::_TYPE_TABLE).remove();
   _file(tablePath,type::_TYPE_INDEX_TABLE).remove();
-  _file(tablePath,type::_TYPE_PCB).remove();
+  _file(tablePath,type::_TYPE_PCB).remove();   
   if (database.isExist()) {
     cout << "存在" << endl;
   } else {
@@ -113,6 +116,7 @@ int main(int argc, char const* argv[]) {
   value.push_back("年龄");
   value.push_back("性别");
   database.insertTable("TMD", value);
+  
   value.clear();
   value.push_back("张三");
   value.push_back("14"); 

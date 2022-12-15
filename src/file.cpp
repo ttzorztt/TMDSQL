@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-12 21:40:51
+ * @LastEditTime : 2022-12-15 17:03:32
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -15,20 +15,16 @@
 //当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {
-  buffStatus = false;
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
-  this->isOpenBuff();
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
-  buffStatus = false;
   this->style = _copy.returnType();
   this->truePath = _copy.truePath;
   ++_file::count;
-  this->isOpenBuff();
 }
-_file::~_file() { 
+_file::~_file() {
   if (writeFileBuff.is_open()) {
     writeFileBuff.close();
   }
@@ -37,15 +33,33 @@ _file::~_file() {
   }
   --_file::count;
 }
-void _file::isOpenBuff() {
-  std::cout << this->returnTruePath() << " " << this->isExist() << std::endl;
-  if (this->isExist() && this->buffStatus == false) {
-    std::cout << "YMF" << std::endl;
-    this->buffStatus = true;
-    this->readBuffOpen(true);
-    this->writeBuffOpen(true);
-  }
+void _file::setOpenBuff(MODE mode) {
+      switch (mode) {
+        case type_mode::READBUFF_MODE: {
+          if(readFileBuff.is_open()){
+          readFileBuff.clear();
+          }
+          readFileBuff.open(this->truePath);
+          break;
+        }
+        case type_mode::WRITEBUFF_MODE_APP:{
+          if(readFileBuff.is_open()){
+          writeFileBuff.clear();
+          }
+          writeFileBuff.open(this->truePath, std::ios::app);
+        }
+        case type_mode::WRITEBUFF_MODE_TRUNC : {
+          if(readFileBuff.is_open()){
+          writeFileBuff.clear();
+          }
+          writeFileBuff.open(this->truePath, std::ios::trunc);
+          break;
+        }
+        default:
+          break;
+      }
 }
+
 void _file::setReadSeek(POINTER fileIndex) {
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
@@ -59,24 +73,35 @@ POINTER _file::returnWriteTell() {
   return writeFileBuff.tellp();
 }
 bool _file::write(const std::string str, type_mode mode) {
-  this->isOpenBuff(); 
-  if (buffStatus == true) {
-    switch (mode) {
-      case type_mode::MODE_APP:
-        writeFileBuff << std::endl << str;
-      case type_mode::MODE_TRUNC:
-        writeFileBuff << str << std::endl;
-      default:
-        break;
+  switch (mode) {
+    case type_mode::WRITEBUFF_MODE_APP : {
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
+      writeFileBuff << std::endl << str;
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_TRUNC : {
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
+      writeFileBuff << str << std::endl;
+      break;
     }
   }
   return true;
 }
-
 bool _file::write(const std::vector<std::string>& array, type_mode mode) {
+  switch (mode) {
+    case type_mode::WRITEBUFF_MODE_APP :{
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_TRUNC : {
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
+      break;
+    }
+  }
   int size = array.size();
-  if (size == 0 || buffStatus == false)
+  if (size == 0){
     return false;
+  }
   writeFileBuff << array[0];
   for (int index = 1; index < size; ++index) {
     writeFileBuff << "," << array[index];
@@ -113,17 +138,17 @@ bool _file::write(std::string Name,
   return tmd.write(str, mode);
 }
 bool _file::readline(std::vector<std::string>& ret) {
-  ret.clear();
+  this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
-  getline(readFileBuff, _str);
   if (this->returnReadFileBuff().eof()) {
     return false;
   }
+  getline(readFileBuff, _str);
   int left = 0;
   int right = 1;
   int size = _str.size();
   while (right <= size) {
-    if (_str[right] != ',') {
+    if (_str[right] != ',' && _str[right] != ' ') {
       ++right;
       continue;
     } else {
@@ -150,49 +175,24 @@ bool _file::create(std::string name, type style) {
     ++_file::count;
   }
   filewritebuff.close();
-  _file::isOpenBuff(name, style);
+
   if (style == type::_TYPE_PCB) {
     _file(name, type::_TYPE_PCB).inputPCBInformation();
   }
   return true;
 }
-void _file::isOpenBuff(std::string name, type style) {
-  _file(name, style).isOpenBuff();
-}
 void _file::inputPCBInformation() {
-  std::string input = this->name + ",0,0";
-  this->write(input, type_mode::MODE_TRUNC);
+  std::string input = this->name + ",-2,0";
+  this->write(input,type_mode::WRITEBUFF_MODE_TRUNC);
   this->setReadSeek(0);
   this->setWriteSeek(0);
-}
+} 
 bool _file::create() {
   return _file::create(this->name, this->style);
 }
 
-bool _file::writeBuffOpen(bool need, MODE mode) {
-  if (!writeFileBuff.is_open()) {
-    switch (mode) {
-      case type_mode::MODE_APP:
-        writeFileBuff.open(this->truePath, std::ios::app);
-        break;
-      case type_mode::MODE_TRUNC:
-        writeFileBuff.open(this->truePath, std::ios::out | std::ios::trunc);
-        break;
-      default:
-        break;
-    }
-   }
-  return true;
-}
 std::string _file::returnTruePath() {
   return truePath;
-}
-bool _file::readBuffOpen(bool need) {
-  if (need && !_super::isExist(this->truePath)) {
-    return false;
-  }
-  readFileBuff.open(this->truePath);
-  return true;
 }
 
 bool _file::remove() {

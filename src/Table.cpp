@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-12 09:32:50
+ * @LastEditTime : 2022-12-15 17:02:41
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -17,6 +17,7 @@ int Table::count = 0;
 Table::Table(std::string databaseAndTableName, type style)
     : _file(databaseAndTableName, style) {
   this->style = type::_TYPE_TABLE;
+  
   ++Table::count;
 }
 Table::Table(DataBase database, std::string tableName, type style)
@@ -48,6 +49,7 @@ bool Table::create() {
            str += "0";
          }
          std::cout << str << std::endl << std::endl;
+         return true;
 }
 bool Table::remove() {
         if(type::_TYPE_TABLE){
@@ -55,6 +57,7 @@ bool Table::remove() {
          _file::remove(this->returnName(), type::_TYPE_TABLE) &&
          _file::remove(this->returnName(), type::_TYPE_PCB);
         }
+        return true;
 } 
 int Table::returnCount() {
   return Table::count;
@@ -79,20 +82,21 @@ std::vector<std::string> Table::find(std::string index) {
 }
 
 bool Table::append(std::vector<std::string> value) {
+  
   TablePCB pcb(this->returnName());
-  _file file(this->returnName(), type::_TYPE_PCB);
   int fileIndex = pcb.returnEndLineIndex();
   if (value.size() <= 0) {
     return false;
   }
-  this->write(value);
+  this->write("dssfsf",type_mode::WRITEBUFF_MODE_TRUNC);
   this->appInsertIndex(value[0], fileIndex + 2);
   for (std::string& str : value) {
     fileIndex += str.size();
   }
+  // std::cout << "fileIndex is "<<  fileIndex << std::endl;
   pcb.addLength();
   pcb.setEndLineIndex(fileIndex + 1);
-  pcb.~TablePCB();
+  // std::cout << pcb.returnEndLineIndex();
   return true;
 }
 Table::Table(Table& table) : _file(table.name, table.style) {
@@ -104,7 +108,6 @@ bool Table::append(Table table, std::vector<std::string> value) {
 }
 bool Table::append(std::string tableName, std::vector<std::string> value) {
   Table tmp(tableName, type::_TYPE_TABLE);
-
   return tmp.append(value);
 }
 bool Table::appInsertIndex(std::string index, POINTER fileIndex) {
@@ -114,7 +117,7 @@ bool Table::appInsertIndex(std::string tableName,
                            std::string index,
                            POINTER fileIndex) {
   return _file::write(tableName, type::_TYPE_INDEX_TABLE,
-                      {index, std::to_string(fileIndex)});
+                      {index, std::to_string(fileIndex)},type_mode::WRITEBUFF_MODE_TRUNC);
 }
 bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
   return Table::appInsertIndex(table.returnName(), index, fileIndex);

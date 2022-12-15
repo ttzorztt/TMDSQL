@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2022-12-03 14:58:05
+ * @LastEditTime : 2022-12-15 10:32:11
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -25,7 +25,7 @@
  * @brief 对于表的一些TCB数据
  */
 class TablePCB {
- private:
+ public:
   // 文件
   _file file;
   // 指向文件结尾的文件指针

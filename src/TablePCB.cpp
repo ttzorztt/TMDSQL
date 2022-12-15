@@ -2,7 +2,7 @@
  * @Description  : 表的PCB实现
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:57
- * @LastEditTime : 2022-12-03 15:00:37
+ * @LastEditTime : 2022-12-15 16:52:17
  */
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_
@@ -31,13 +31,12 @@ TablePCB::TablePCB(Table table) : file(table.returnName(), type::_TYPE_PCB) {
 }
 
 void TablePCB::readData() {
-  std::vector<std::string> vec;
+  std::vector<std::string> vec; 
   file.readline(vec);
   if (vec.empty()) {
     std::cout << "empty" << std::endl;
     return;
   }
-  std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
   this->endLineIndex = atoi(vec[1].c_str());
   this->length = atoi(vec[2].c_str());
 }
@@ -49,7 +48,11 @@ void TablePCB::addLength(){
   ++this->length;
 }
 void TablePCB::writeData() {
-  file.write({file.returnName(),std::to_string(endLineIndex),std::to_string(length)},type_mode::MODE_TRUNC);
+  std::vector<std::string> tmp(3);
+  tmp[0] = file.returnName();
+  tmp[1] = std::to_string(endLineIndex);
+  tmp[2] = std::to_string(length);
+  file.write(tmp,type_mode::WRITEBUFF_MODE_TRUNC);
 }
 
 int TablePCB::returnEndLineIndex() {

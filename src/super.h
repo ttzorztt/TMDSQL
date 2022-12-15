@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-04 08:09:44
+ * @LastEditTime : 2022-12-15 16:22:32
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -56,8 +56,9 @@ enum type {
   _TYPE_CREATE_PCB_DATABASE
 };
 enum type_mode {
-  MODE_APP,  //每次写入前寻位到流结尾
-  MODE_TRUNC
+  READBUFF_MODE,  //每次写入前寻位到流结尾
+  WRITEBUFF_MODE_TRUNC,
+  WRITEBUFF_MODE_APP
 };
 /**
  * @brief 维护一些基础静态函数
