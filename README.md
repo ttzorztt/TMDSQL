@@ -7,29 +7,39 @@
 - 使用双级缓存进行数据读取。使得读取速度加快。
 - 主键采取聚簇索引的底层形式。并采取缓冲形式进行查询速度的优化。
 
+## 运行须知
+- 本项目采用UTF-8的编码方式，而在UTF-8的编码方式中，一个汉字是三个字节。而项目编写时采取的环境是`gcc version 10.2.1 20210110 (Debian 10.2.1-6)`,linux中默认采取UTF-8的编码方式，如果采取windows系统，可能需要进行一些设置或者在编译的时候加上一些参数来将其设置为UTF-8.
 ## src目录及其主要功能介绍
 ### `dir.h && dir.cpp`
   > 主要实现目录操作，在内核中，目录对应于数据库，封装_dir类。
 ### `file.h && file.cpp`
   > 封装文件操作类_file,在内核中，文件对应表。
-
 ### `DataBase.h && DataBase.cpp` 
   > 保护继承_dir类，调用一些_file的静态函数以辅助实现对数据库本身的操作
-
 ### `table.h && table.cpp`
   > 保护继承_file类，封装一些对表本身的操作 
-
 ### `shell.h && shell.cpp`
   > 对中文TMDsql语句的封装
-
-
-
+### `super.h && super.cpp`
+  > 对所有公有函数，枚举量以及全局静态const常量的声明与定义。
+### `Index.h && Index.cpp`
+  > 封装对表索引操作的声明与定义
+### `TablePCB.h && TablePCB.cpp`
+  > 封装对表PCB操作的声明与定义
+### `DataBase.h && DataBase.cpp`
+  > 封装对数据库PCB操作的声明和定义
+## data目录的结构
+### database
+  > 数据库存放路径，其子文件夹为各个数据库文件夹，文件夹名即为数据库名，而该文件夹内，为表名，不含后缀，可以拿记事本以UTF-8的编码方式打开，内置数据存放方式是以CSV方式存放。
+### index
+  > 索引文件存储路径，其子文件夹为各个数据库
 ## tablePCB的内容
 1. name
 2. nextIndex
   > 下一行的起始文件指针
 3. length
   > 行数
+
 ## 数据文件存储方式
 ![tree](ohter/data_tree.png)
 - 总体思路

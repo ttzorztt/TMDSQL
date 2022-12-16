@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-15 22:26:17
+ * @LastEditTime : 2022-12-16 08:48:54
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -12,6 +12,7 @@
 #define _TABLEPCB_H_
 #include "TablePCB.h"
 #endif
+
 #include <iostream>
 int Table::count = 0;
 Table::Table(std::string databaseAndTableName, type style)
@@ -81,7 +82,6 @@ std::vector<std::string> Table::find(std::string index) {
   while (indexFile.readline(value)) {
     if (value[0] == index) {
       int x = atoi(value[1].c_str());
-      std::vector<std::string> re = indexReadline(x);
       return this->indexReadline(x);
     }
   }
@@ -94,17 +94,17 @@ bool Table::append(std::vector<std::string> value) {
   if (value.size() <= 0) {
     return false;
   }
+  std::cout << "fileIndex first: " << fileIndex << std::endl;
   this->write(value, type_mode::WRITEBUFF_MODE_APP);
-  if (fileIndex == 0) {
-    this->appInsertIndex(value[0], fileIndex);
-  } else {
-    this->appInsertIndex(value[0], fileIndex + 2);
-  }
+  this->appInsertIndex(value[0], fileIndex);
   for (std::string& str : value) {
     fileIndex += str.size();
+    std::cout << "TMD: " << str << " " << str.size() << std::endl; 
   }
+  
+  std::cout << "fileIndex end: " << fileIndex << std::endl;
   pcb.addLength();
-  pcb.setEndLineIndex(fileIndex + 1);
+  pcb.setEndLineIndex(fileIndex + 4);
   return true;
 }
 Table::Table(Table& table) : _file(table.name, table.style) {
@@ -134,8 +134,8 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
 
 std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = this->returnReadTell();
-  this->readFileBuff.seekg(fileIndex);
-  std::cout << "tell is" << this->readFileBuff.tellg() << std::endl;
+  this->setOpenBuff(type_mode::READBUFF_MODE);
+  this->setReadSeek(fileIndex);
   std::vector<std::string> value;
   this->readline(value);
   this->setReadSeek(oldIndex);

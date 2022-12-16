@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-15 21:08:24
+ * @LastEditTime : 2022-12-16 07:28:17
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -103,8 +103,9 @@ int main(int argc, char const* argv[]) {
   value.push_back("年龄");
   value.push_back("性别");
   database.insertTable("TMD", value);
-  
-  value.clear();
+
+  return 0;
+    value.clear();
   value.push_back("张三");
   value.push_back("14"); 
   value.push_back("男");
@@ -115,9 +116,10 @@ int main(int argc, char const* argv[]) {
   value.push_back("女");
   database.insertTable("TMD", value);
   ve.clear();
-  ve = table.find("张三");
+  ve = table.find("王五");
   std::cout << ve.size();
-  // cout << ve[0] << ve[1] << ve[2] << endl;
+  cout << ve[0] << ve[1] << ve[2] << endl;
+  ve.clear();
   //   Index::update(table);
   // database.remove();
   //   vector<string> value;
