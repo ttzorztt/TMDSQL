@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-16 08:48:54
+ * @LastEditTime : 2022-12-16 19:54:13
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -96,15 +96,18 @@ bool Table::append(std::vector<std::string> value) {
   }
   std::cout << "fileIndex first: " << fileIndex << std::endl;
   this->write(value, type_mode::WRITEBUFF_MODE_APP);
-  this->appInsertIndex(value[0], fileIndex);
+  if (fileIndex == 0) {
+      this->appInsertIndex(value[0], 0);
+  } else {
+    this->appInsertIndex(value[0], fileIndex);
+  }
+  fileIndex += value.size();
   for (std::string& str : value) {
     fileIndex += str.size();
-    std::cout << "TMD: " << str << " " << str.size() << std::endl; 
   }
-  
   std::cout << "fileIndex end: " << fileIndex << std::endl;
   pcb.addLength();
-  pcb.setEndLineIndex(fileIndex + 4);
+  pcb.setEndLineIndex(fileIndex);
   return true;
 }
 Table::Table(Table& table) : _file(table.name, table.style) {

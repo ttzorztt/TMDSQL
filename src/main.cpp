@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-16 07:28:17
+ * @LastEditTime : 2022-12-17 08:57:36
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -75,17 +75,17 @@ void init() {
   }
 }
 int main1(int argc, char const* argv[]) {
-  return 0; 
+  return 0;
 }
 
 int main(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);
-  DataBase database("testdatabase2"); 
-  _file(tablePath,type::_TYPE_TABLE).remove();
-  _file(tablePath,type::_TYPE_INDEX_TABLE).remove();
-  _file(tablePath,type::_TYPE_PCB).remove();   
+  DataBase database("testdatabase2");
+  _file(tablePath, type::_TYPE_TABLE).remove();
+  _file(tablePath, type::_TYPE_INDEX_TABLE).remove();
+  _file(tablePath, type::_TYPE_PCB).remove();
   if (database.isExist()) {
     cout << "存在" << endl;
   } else {
@@ -102,24 +102,29 @@ int main(int argc, char const* argv[]) {
   value.push_back("姓名");
   value.push_back("年龄");
   value.push_back("性别");
+  value.push_back("爱好");
   database.insertTable("TMD", value);
-
-  return 0;
-    value.clear();
+  value.clear();
   value.push_back("张三");
-  value.push_back("14"); 
+  value.push_back("14");
   value.push_back("男");
+  value.push_back("打球");
   database.insertTable("TMD", value);
   value.clear();
   value.push_back("王五");
   value.push_back("17");
   value.push_back("女");
+  value.push_back("打乒乓球");
   database.insertTable("TMD", value);
   ve.clear();
-  ve = table.find("王五");
+  ve = table.find("张三");
   std::cout << ve.size();
-  cout << ve[0] << ve[1] << ve[2] << endl;
+  cout << ve[0] << ve[1] << ve[2] << ve[3] << endl;
   ve.clear();
+  ve = table.find("张三");
+  std::cout << ve.size();
+  cout << ve[0] << endl;
+  // ve.clear();
   //   Index::update(table);
   // database.remove();
   //   vector<string> value;
