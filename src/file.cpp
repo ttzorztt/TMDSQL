@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-16 08:49:03
+ * @LastEditTime : 2022-12-17 09:39:50
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -11,10 +11,6 @@
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
-#endif
-#ifndef _SET_UTF_8_
-#define _SET_UTF_8_ 
-#pragma execution_character_set("GBK2312")
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
