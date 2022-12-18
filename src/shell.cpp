@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-17 16:40:38
+ * @LastEditTime : 2022-12-18 10:22:52
  */
 #include "shell.h"
 #include <iostream>
@@ -10,19 +10,14 @@
 /**
 
 一、数据库的基本操作 
-1、数据库的登录及退出
-2、查看所有数据库
+
 3、显示数据库版本
-4、显示时间
-5、创建数据库
 6、查看创建数据库的语句
 7、查看当前使用的数据库
 8、查看当前用户
 9、使用某个数据库
 10、删除数据库
 二、数据表的基本操作
-1、查看当前数据库中的所有表
-2、创建表
 3、查看表结构
 4、查看创建表的语句
 5、向表中插入，更新，删除数据
@@ -74,7 +69,8 @@ shell::shell() {
   _GBKstatus.insert("加");
   _GBKstatus.insert("显");
   _GBKstatus.insert("示");
-
+  _GBKstatus.insert("退");
+  _GBKstatus.insert("出");
   _binaryStatus["创"] = 1;
   _binaryStatus["建"] = 2;
   _binaryStatus["数"] = 3;

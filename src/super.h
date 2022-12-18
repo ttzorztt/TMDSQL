@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-15 20:58:00
+ * @LastEditTime : 2022-12-18 10:35:23
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -53,7 +53,7 @@ enum type {
   _TYPE_DATABASE_LOCK,          //数据库锁
   _TYPE_CREATE_LOCK_DATABASE,   //创建lock下的数据库文件夹
   _TYPE_PCB,                    // PCB的地址
-  _TYPE_CREATE_PCB_DATABASE
+  _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
 };
 enum type_mode {
   READBUFF_MODE,  //每次写入前寻位到流结尾
@@ -143,5 +143,5 @@ class _super {
    * @return  底层路径
    */
   std::string static returnTruePath(std::string name, type style);
-}; 
+};
 #endif
