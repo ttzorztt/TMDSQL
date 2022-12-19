@@ -2,7 +2,7 @@
  * @Description  : 单例模式字符集获取
  * @Autor        : TMD
  * @Date         : 2022-12-18 10:35:56
- * @LastEditTime : 2022-12-18 19:28:20
+ * @LastEditTime : 2022-12-19 17:03:43
  */
 #ifndef _CHARACTER_
 #define _CHARACTER_
@@ -18,19 +18,25 @@
 #define _MAP_
 #include <unordered_map>
 #endif
+
 class Character {
  private:
-  static std::vector<std::string> value;
+  //单例模式
   static Character charObj;
-  static int count;
-  static std::unordered_map<std::string,int> HashMap;
+  // CID
+  static std::unordered_map<std::string, int> HashMapCID;
+  /**
+   * @brief 构造函数
+   * @return
+   */
   Character();
   Character(const Character& obj) = delete;
   Character& operator=(const Character& obj) = delete;
-  void readData();
  public:
+  /**
+   * @brief 单例模式的构造函数
+   * @return
+   */
   static Character& Create();
-  void static print();
-  void static add(std::string x);
 };
 #endif
