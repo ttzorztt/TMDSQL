@@ -1,5 +1,5 @@
 main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o User.o Character.o
-	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o -o User.o Character.o main
+	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o  User.o Character.o -o main
 	./main
 Character.o: Character.cpp
 	g++ -c Character.cpp

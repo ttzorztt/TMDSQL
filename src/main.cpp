@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-17 08:57:36
+ * @LastEditTime : 2022-12-20 10:59:23
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -74,11 +74,13 @@ void init() {
     mkdir("../view", 777);
   }
 }
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
+  // _file tmp(_TruePathForUserData);
+  // tmp.deleteLine("root");
   return 0;
 }
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);

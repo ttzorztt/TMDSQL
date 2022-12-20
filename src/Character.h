@@ -2,7 +2,7 @@
  * @Description  : 单例模式字符集获取
  * @Autor        : TMD
  * @Date         : 2022-12-18 10:35:56
- * @LastEditTime : 2022-12-19 17:03:43
+ * @LastEditTime : 2022-12-20 10:57:05
  */
 #ifndef _CHARACTER_
 #define _CHARACTER_

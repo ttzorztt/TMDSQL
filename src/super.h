@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-19 17:02:11
+ * @LastEditTime : 2022-12-19 20:13:45
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -44,6 +44,7 @@ const static std::string _logPath = "../data/log/";
 //"../data/PCB/"
 const static std::string _PCBPath = "../data/PCB/";
 // 封装一些文件或目录类型
+const static std::string _TruePathForUserData = "../data/User/pd";
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
@@ -54,6 +55,7 @@ enum type {
   _TYPE_CREATE_LOCK_DATABASE,   //创建lock下的数据库文件夹
   _TYPE_PCB,                    // PCB的地址
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
+  _TYPE_USERDATA,
 };
 enum type_mode {
   READBUFF_MODE,  //每次写入前寻位到流结尾
@@ -66,9 +68,11 @@ enum type_mode {
  */
 class _super {
  protected:
-  //名字
-  //如果是表则需要加数据库名
-  // 根据名字中是否有 '/'判断是数据库名或表名
+  /**
+   * 名字
+   * 如果是表则需要加数据库名
+   * 根据名字中是否有 '/'判断是数据库名或表名
+   */
   std::string name;
 
  public:

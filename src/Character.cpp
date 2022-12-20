@@ -2,17 +2,12 @@
  * @Description  : 字符集获取
  * @Autor        : TMD
  * @Date         : 2022-12-18 10:36:09
- * @LastEditTime : 2022-12-19 17:03:04
+ * @LastEditTime : 2022-12-20 10:59:00
  */
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
 #include "Character.h"
 #endif
-#ifndef _IOSTREAM_
-#define _IOSTREAM_
-#include <iostream>
-#endif
-Character Character::charObj;
 Character::Character() {
   HashMapCID["退出"] = 1;
   HashMapCID["创建"] = 2;

@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-15 20:59:56
+ * @LastEditTime : 2022-12-20 10:41:44
  */
 #ifndef _FILE_
 #define _FILE_
@@ -138,6 +138,12 @@ class _file : public _super {
   _file(std::string Name, type style);
 
   /**
+   * @brief 构造函数
+   * @param  string TruePath 真实路径
+   * @return  
+   */
+  _file(std::string TruePath);
+  /**
    * @brief 拷贝构造函数
    * @param  _file& _copy 拷贝数据
    * @return
@@ -147,7 +153,11 @@ class _file : public _super {
    * @brief 析构函数，释放并关闭文件
    */
   ~_file();
-
+  /**
+   * @brief 删除一行
+   * @param  string index 索引
+   */
+  void deleteLine(std::string index);
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Name 名字
@@ -211,5 +221,7 @@ class _file : public _super {
   std::string truePath;
   // 当前的OpenBUFF
   type_mode nowMode;
+  // buff
+  static std::vector<std::string> buff;
 };
 #endif

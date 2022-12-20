@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-17 09:39:50
+ * @LastEditTime : 2022-12-20 10:46:15
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -14,11 +14,18 @@
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
+std::vector<std::string> _file::buff;
 _file::_file(std::string Name, type style) : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
+}
+_file::_file(std::string TruePath) : _super("pd"){
+  this->truePath = TruePath;
+  ++_file::count;
+  this->nowMode = type_mode::DEFAULT;
+  this->style = type::_TYPE_USERDATA;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
@@ -34,6 +41,20 @@ _file::~_file() {
     readFileBuff.close();
   }
   --_file::count;
+}
+void _file::deleteLine(std::string index){
+  std::string oldTruePath = this->truePath;
+  _file tmp("." +oldTruePath);
+  tmp.create();
+  while(this->readline(buff)){
+    if(buff[0] == index){
+      continue;
+    }else{
+      tmp.write(buff,type_mode::WRITEBUFF_MODE_APP);
+    }
+  }
+  this->remove();
+  rename(("." + oldTruePath).c_str(),oldTruePath.c_str());
 }
 void _file::setOpenBuff(MODE mode) {
   if ((mode == type_mode::WRITEBUFF_MODE_APP && this->nowMode == type_mode::WRITEBUFF_MODE_APP) || (mode == type_mode::READBUFF_MODE && mode == this->nowMode )) {
