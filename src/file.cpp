@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-20 10:46:15
+ * @LastEditTime : 2022-12-21 08:11:41
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -44,8 +44,11 @@ _file::~_file() {
 }
 void _file::deleteLine(std::string index){
   std::string oldTruePath = this->truePath;
-  _file tmp("." +oldTruePath);
-  tmp.create();
+
+  std::cout << "delete is" << _file::create(oldTruePath + "tmp") << std::endl;
+  _file tmp(oldTruePath + "tmp");
+  std::cout << tmp.isExist() << std::endl;
+  this->setReadSeek(0);
   while(this->readline(buff)){
     if(buff[0] == index){
       continue;
@@ -54,7 +57,7 @@ void _file::deleteLine(std::string index){
     }
   }
   this->remove();
-  rename(("." + oldTruePath).c_str(),oldTruePath.c_str());
+  rename((oldTruePath + "tmp").c_str(),oldTruePath.c_str());
 }
 void _file::setOpenBuff(MODE mode) {
   if ((mode == type_mode::WRITEBUFF_MODE_APP && this->nowMode == type_mode::WRITEBUFF_MODE_APP) || (mode == type_mode::READBUFF_MODE && mode == this->nowMode )) {
@@ -195,6 +198,22 @@ bool _file::readline(std::vector<std::string>& ret) {
 type _file::returnType() {
   return this->style;
 }
+bool _file::create(std::string TruePath){
+  if (_super::isExist(TruePath)) {
+    return false;
+  }
+  std::ofstream filewritebuff;
+  filewritebuff.open(TruePath, std::ios::out);
+  if (filewritebuff.good()) {
+    ++_file::count;
+  }
+  filewritebuff.close();
+
+  if (TruePath.substr(8,3) == "../data/PCB") {
+    _file(TruePath).inputPCBInformation();
+  }
+  return true;
+}
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
   if (_super::isExist(truePath) || style == type::_TYPE_DATABASE) {
@@ -238,7 +257,7 @@ std::ifstream& _file::returnReadFileBuff() {
   return readFileBuff;
 }
 bool _file::isExist() {
-  return _super::isExist(_super::returnTruePath(name, style));
+  return _super::isExist(this->truePath);
 }
 int _file::returnCount() {
   return _file::count;

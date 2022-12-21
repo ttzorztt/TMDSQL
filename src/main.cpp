@@ -2,11 +2,15 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-20 10:59:23
+ * @LastEditTime : 2022-12-21 09:40:06
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
+#endif
+#ifndef _CHARACTER_H_
+#define _CHARACTER_H_
+#include "Character.h"
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -48,6 +52,10 @@
 #define _TABLEPCB_H_
 #include "TablePCB.h"
 #endif
+#ifndef _USER_H_
+#define _USER_H_
+#include "User.h"
+#endif
 using namespace std;
 
 /**
@@ -75,8 +83,6 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
-  // _file tmp(_TruePathForUserData);
-  // tmp.deleteLine("root");
   return 0;
 }
 

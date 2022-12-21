@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-20 10:41:44
+ * @LastEditTime : 2022-12-20 21:17:05
  */
 #ifndef _FILE_
 #define _FILE_
@@ -204,6 +204,13 @@ class _file : public _super {
    * @return True表示文件创造成功，False表示文件创造失败
    */
   bool static create(std::string Name, type style);
+
+  /**
+   * @brief 创建文件
+   * @param  string TruePath 真实路径
+   * @return  True表示文件创造成功，False表示文件创造失败
+   */
+  bool static create(std::string TruePath);
   /**
    * @brief 返回type
    * @return  类型

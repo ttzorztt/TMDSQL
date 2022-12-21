@@ -2,7 +2,7 @@
  * @Description  : 单例模式字符集获取
  * @Autor        : TMD
  * @Date         : 2022-12-18 10:35:56
- * @LastEditTime : 2022-12-20 10:57:05
+ * @LastEditTime : 2022-12-20 16:24:24
  */
 #ifndef _CHARACTER_
 #define _CHARACTER_
@@ -14,8 +14,8 @@
 #define _VECTOR_
 #include <vector>
 #endif
-#ifndef _MAP_
-#define _MAP_
+#ifndef _UNORDERED_MAP_
+#define _UNORDERED_MAP_
 #include <unordered_map>
 #endif
 
