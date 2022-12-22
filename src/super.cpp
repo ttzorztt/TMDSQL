@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-12-18 10:33:49
+ * @LastEditTime : 2022-12-21 17:00:54
  */
 
 #ifndef _SUPER_H_
@@ -33,6 +33,23 @@ std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
 
 bool _super::create() {
   return true;
+}
+void _super::stringToVector( const std::string& _str,std::vector<std::string>& vec){
+  vec.clear();
+  int left = 0;
+  int right = 1;
+  int size = _str.size();
+  while (right <= size) {
+    if (_str[right] != ',' && _str[right] != ' ') {
+      ++right;
+      continue;
+    } else {
+      vec.push_back(_str.substr(left, right - left));
+      left = right + 1;
+      ++right;
+    }
+  }
+  vec.push_back(_str.substr(left));
 }
 bool _super::remove() {
   return true;

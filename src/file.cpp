@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-21 08:11:41
+ * @LastEditTime : 2022-12-21 17:02:27
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -176,22 +176,8 @@ bool _file::readline(std::vector<std::string>& ret) {
   if (this->returnReadFileBuff().eof()) {
     return false;
   }
-  ret.clear();
   getline(readFileBuff, _str); 
-  int left = 0;
-  int right = 1;
-  int size = _str.size();
-  while (right <= size) {
-    if (_str[right] != ',' && _str[right] != ' ') {
-      ++right;
-      continue;
-    } else {
-      ret.push_back(_str.substr(left, right - left));
-      left = right + 1;
-      ++right;
-    }
-  }
-  ret.push_back(_str.substr(left));
+  _super::stringToVector(_str,ret);
   return true;
 }
 

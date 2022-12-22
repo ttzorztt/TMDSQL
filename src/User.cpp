@@ -2,10 +2,10 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-21 09:32:47
+ * @LastEditTime : 2022-12-21 17:48:04
  */
 #ifndef _USER_H_
-#define _SUER_H_
+#define _USER_H_
 #include "User.h"
 #endif
 #ifndef _STRING_
@@ -25,7 +25,7 @@ User::User(std::string UserName, std::string UserPassword)
     : UserName(UserName),
       UserPassword(UserPassword),
       loginStatus(false),
-      reset(false) {
+      reset(false),FUNC() {
   this->readAllNameDate();
   this->loginStatus = this->login();
 }

@@ -2,14 +2,19 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-18 10:22:52
+ * @LastEditTime : 2022-12-21 21:56:34
  */
+#ifndef _SHELL_H_
+#define _SHELL_H_
 #include "shell.h"
-#include <iostream>
-
+#endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
+#include "super.h"
+#endif
 /**
 
-一、数据库的基本操作 
+一、数据库的基本操作
 
 3、显示数据库版本
 6、查看创建数据库的语句
@@ -55,50 +60,36 @@ Tip: 将代码放在前部，将用户输入自定义字符放在后端，以@�
 显示 表;
 
 */
-
-shell::shell() {
-  _GBKstatus.insert("创");
-  _GBKstatus.insert("建");
-  _GBKstatus.insert("数");
-  _GBKstatus.insert("据");
-  _GBKstatus.insert("库");
-  _GBKstatus.insert("选");
-  _GBKstatus.insert("择");
-  _GBKstatus.insert("表");
-  _GBKstatus.insert("添");
-  _GBKstatus.insert("加");
-  _GBKstatus.insert("显");
-  _GBKstatus.insert("示");
-  _GBKstatus.insert("退");
-  _GBKstatus.insert("出");
-  _binaryStatus["创"] = 1;
-  _binaryStatus["建"] = 2;
-  _binaryStatus["数"] = 3;
-  _binaryStatus["据"] = 4;
-  _binaryStatus["库"] = 5;
-  _binaryStatus["选"] = 6;
-  _binaryStatus["择"] = 7;
-  _binaryStatus["表"] = 8;
-  _binaryStatus["添"] = 9;
-  _binaryStatus["加"] = 10;
-  _binaryStatus["显"] = 11;
-  _binaryStatus["示"] = 12;
-}
-
-int shell::readStatus() {
-  std::string strbuff;
-  std::cin >> strbuff;
-  std::vector<std::string> ret;
-  int size = strbuff.size();
-  if (size % 2 == 0)
-    return;
-  else {
-    int tmp = 0;
-    while (tmp < size) {
-      tmp += 2;
-      if (_GBKstatus.count(strbuff.substr(tmp, 2))) {
-      } else {
-      }
-    }
+std::unordered_map<std::string, int> shell::HashMapCID = {
+    {"退出", 0},   {"创建", 1},      {"数据库", 2}, {"删除", 3}, {"选择", 4},
+    {"重命名", 5}, {"登录", 6},      {"显示", 7},   {"插入", 8}, {"查询", 9},
+    {"表", 10},    {"普通用户", 11}, {"管理员", 12}};
+shell::shell() {}
+shell::~shell() {}
+bool shell::read(std::string str) {
+  _super::stringToVector(str, vecBuff);
+  if (!HashMapCID.count(vecBuff[0])) {
+    return false;
   }
+  switch (HashMapCID[vecBuff[0]]) {
+    case 退出:
+      break;
+    case 创建:
+      break;
+    case 删除:
+      break;
+    case 重命名:
+      break;
+    case 登录:
+      break;
+    case 插入:
+      break;
+    case 查询:
+      break;
+    case 显示:
+    break;
+    default:
+      break;
+  }
+  return false;
 }

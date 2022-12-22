@@ -2,15 +2,11 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-21 09:40:06
+ * @LastEditTime : 2022-12-21 17:03:05
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
-#endif
-#ifndef _CHARACTER_H_
-#define _CHARACTER_H_
-#include "Character.h"
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -55,6 +51,10 @@
 #ifndef _USER_H_
 #define _USER_H_
 #include "User.h"
+#endif
+#ifndef _SHELL_H_
+#define _SHELL_H_
+#include "shell.h"
 #endif
 using namespace std;
 
@@ -154,4 +154,5 @@ int main1(int argc, char const* argv[]) {
   //   value.push_back("女");
   // //   // table.append(value);
   //   database.insertTable("TMD",value);
+  return 0;
 }

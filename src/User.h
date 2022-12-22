@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-21 09:32:01
+ * @LastEditTime : 2022-12-21 17:47:17
  */
 
 #ifndef _STRING_
@@ -20,6 +20,10 @@
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
+#endif
+#ifndef _SHELL_H_
+#define _SHELL_H_
+#include "shell.h"
 #endif
 // 权限
 enum TYPE_POWER {
@@ -45,9 +49,12 @@ class User {
   static std::vector<std::string> buff;
   // 登录名buff，创建或添加用户的时候对比
   static std::set<std::string> nameBuff;
+  // 当前登录的用户
+  static std::set<std::string> nowLoginId;
   // 修改位
   bool reset;
-
+  // 操作
+  shell FUNC;
   /**
    * @brief 读入所有用户名，以供创建用户的时候对比ID，并填充nameBuff
    * @return  

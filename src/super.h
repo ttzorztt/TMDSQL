@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-20 17:18:49
+ * @LastEditTime : 2022-12-21 17:35:23
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -107,6 +107,14 @@ class _super {
    * @brief 析构函数
    */
   ~_super();
+
+  /**
+   * @brief 用空格或逗号分割开的 string 转换为 vector，
+   * @param  string str 字符串
+   * @param  vector<std::string> vec 数组
+   * @return  
+   */
+  void static stringToVector(const std::string& str,std::vector<std::string>& vec);
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
    * @param string truePath 路径
