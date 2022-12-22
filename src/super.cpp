@@ -2,18 +2,18 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-12-21 17:00:54
+ * @LastEditTime : 2022-12-22 10:21:49
  */
 
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
 #endif
-std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
+vstring _super::openDirReturnFileName(std::string truePath) {
   bool isTableOrDatabase = true;
   DIR* dirname = opendir(truePath.c_str());
   struct dirent* dirInfo;
-  std::vector<std::string> name;
+  vstring vectorbuff;
   int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
     if (count > 0) {
@@ -22,19 +22,19 @@ std::vector<std::string> _super::openDirReturnFileName(std::string truePath) {
     }
     std::string tmpname = dirInfo->d_name;
     if (tmpname.substr(tmpname.size() - 4) == ".csv") {
-      name.push_back(tmpname.substr(0, tmpname.size() - 4));
+      vectorbuff.push_back(tmpname.substr(0, tmpname.size() - 4));
     } else {
-      name.push_back(tmpname);
+      vectorbuff.push_back(tmpname);
     }
   }
 
-  return name;
+  return vectorbuff;
 }
 
 bool _super::create() {
   return true;
 }
-void _super::stringToVector( const std::string& _str,std::vector<std::string>& vec){
+void _super::stringToVector( const std::string& _str,revstring vec){
   vec.clear();
   int left = 0;
   int right = 1;
@@ -73,7 +73,7 @@ _super::_super(_super& copy) {
 _super::_super(std::string name) {
   this->name = name;
 }
-std::vector<std::string> _super::dispartDatabaseNameAndTableName(
+vstring _super::dispartDatabaseNameAndTableName(
     std::string TableName) {
   int size = TableName.size();
   if (size == 0) {
@@ -95,21 +95,21 @@ bool _super::isExist(std::string truePath) {
   return access(truePath.c_str(), F_OK) != -1;
 }
 std::string _super::returnTruePath(std::string Name, type style) {
-  std::vector<std::string> part;
+  vstring vectorbuff;
   switch (style) {
     case type::_TYPE_DATABASE:
       return _databasePath + Name;
       break;
     case type::_TYPE_TABLE_LOCK:
-      part = _super::dispartDatabaseNameAndTableName(Name);
-      return _tableLockPath + part[0] + "/." + part[1];
+      vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
+      return _tableLockPath + vectorbuff[0] + "/." + vectorbuff[1];
       break;
     case type::_TYPE_DATABASE_LOCK:
       return _databaseLockPath + "/." + Name;
       break;
     case type::_TYPE_TABLE:
-      part = _super::dispartDatabaseNameAndTableName(Name);
-      return _tablePath +part[0] + "/" + part[1];
+      vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
+      return _tablePath +vectorbuff[0] + "/" + vectorbuff[1];
     case type::_TYPE_INDEX_TABLE:
       return _indexPath + Name;
       break;
@@ -120,8 +120,8 @@ std::string _super::returnTruePath(std::string Name, type style) {
       return _databaseLockPath + Name;
       break;
     case type::_TYPE_PCB:
-      part = _super::dispartDatabaseNameAndTableName(Name);
-      return _PCBPath + part[0] + "/" + part[1];
+      vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
+      return _PCBPath + vectorbuff[0] + "/" + vectorbuff[1];
       break;
       case type::_TYPE_CREATE_PCB_DATABASE:
       return _PCBPath + Name;

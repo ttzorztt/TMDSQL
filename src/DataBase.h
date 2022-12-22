@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-11-15 16:02:19
+ * @LastEditTime : 2022-12-22 10:02:29
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -98,11 +98,11 @@ class DataBase : public _dir {
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字
-   * @param vector<string>& tableItem 表项
+   * @param revstring tableItem 表项
    * @return 插入正常则返回True,否则返回False
    */
   bool insertTable(std::string tableName,
-                   const std::vector<std::string>& tableItem);
+                   const revstring tableItem);
   /**
    * @brief 向数据库内插入表
    * @param string tableName 表名字

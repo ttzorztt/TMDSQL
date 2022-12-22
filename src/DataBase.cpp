@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-12-15 09:28:01
+ * @LastEditTime : 2022-12-22 10:24:06
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -52,7 +52,7 @@ bool DataBase::insertTable(std::string tableName) {
   return _file::create(this->returnName() + "/" + tableName, type::_TYPE_TABLE);
 }
 bool DataBase::insertTable(std::string tableName,
-                           const std::vector<std::string>& tableItem) {
+                           const revstring tableItem) {
   Table::append(returnName() + "/" + tableName, tableItem);
   return true;
 }
@@ -67,7 +67,7 @@ void DataBase::showDataBaseTable() {
     std::cout << "数据库不存在!" << std::endl;
     return;
   }
-  std::vector<std::string> ans = _super::openDirReturnFileName(
+  vstring ans = _super::openDirReturnFileName(
       _super::returnTruePath(this->name, type::_TYPE_DATABASE));
   int maxtablename = 0;
   if (ans.size() == 0) {
@@ -103,7 +103,7 @@ void DataBase::showDataBaseTable() {
 }
 
 void DataBase::showDataBase() {
-  std::vector<std::string> ans =
+  vstring ans =
       _super::openDirReturnFileName("../data/database/");
   int maxtablename = 0;
   if (ans.size() == 0) {

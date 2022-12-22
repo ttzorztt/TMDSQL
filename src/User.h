@@ -2,12 +2,16 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-21 17:47:17
+ * @LastEditTime : 2022-12-22 09:53:07
  */
 
 #ifndef _STRING_
 #define _STRING_
 #include <string>
+#endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
+#include "super.h"
 #endif
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -21,16 +25,7 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-#ifndef _SHELL_H_
-#define _SHELL_H_
-#include "shell.h"
-#endif
-// 权限
-enum TYPE_POWER {
-  ROOT,     // 超级管理员
-  Manager,  // 管理员
-  NORMAL    // 普通用户
-};
+
 class User {
  private:
   // 用户名
@@ -45,23 +40,19 @@ class User {
   static int count;
   // UserData文件
   static _file pd;
-  // readline的buff
-  static std::vector<std::string> buff;
   // 登录名buff，创建或添加用户的时候对比
   static std::set<std::string> nameBuff;
   // 当前登录的用户
   static std::set<std::string> nowLoginId;
   // 修改位
   bool reset;
-  // 操作
-  shell FUNC;
   /**
    * @brief 读入所有用户名，以供创建用户的时候对比ID，并填充nameBuff
    * @return  
    */
   void readAllNameDate();
   /**
-   * @brief 判断是否登录
+   * @brief 判断是否登录,并设置赋值帐号密码，登录状态，以及权限
    * @return 正常登录True，登录错误False
    */
   bool login();
@@ -78,12 +69,12 @@ class User {
   * @brief 返回登录状态
   * @return  True表示登录正常，False表示登录错误
   */
- bool ReturnLoginStatus();
+ bool ReturnLoginStatus() const;
  /**
   * @brief 返回权限
   * @return  0为Root权限，1为管理员权限，2为普通用户权限
   */
- TYPE_POWER ReturnPower();
+TYPE_POWER ReturnPower() const;
  /**
   * @brief 添加普通用户 (管理员或超级管理员)
   * @param  string UserName 用户名
@@ -98,6 +89,7 @@ class User {
   * @return  权限不够的话返回False，正常添加返回True
   */
  bool addManagerUser(std::string UserName,std::string UserPassword);
+ User();
   User(const User& copy) = delete;
   /**
    * @brief 尝试
@@ -120,11 +112,6 @@ class User {
    * @param  string Userpasswd 密码
    */
   void resetPassword(std::string Userpassword);
-  /**
-   * @brief 退出
-   * @return
-   */
-  void quit();
   /**
    * @brief 添加用户，
    * @param  TYPE_POWER op 当前User的权限

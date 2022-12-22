@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-21 17:35:23
+ * @LastEditTime : 2022-12-22 10:19:22
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -27,8 +27,11 @@
 #include <unistd.h>
 #endif
 
-#define POINTER int
-#define MODE int
+typedef std::vector<std::string>& revstring;
+typedef std::vector<std::string> vstring;
+typedef int POINTER;
+typedef int MODE;
+#define UserVectorBuff vstring vectorbuff(4);
 //"../data/database/"
 const static std::string _tablePath = "../data/database/";
 //"../data/database/"
@@ -45,6 +48,13 @@ const static std::string _logPath = "../data/log/";
 const static std::string _PCBPath = "../data/PCB/";
 // 封装一些文件或目录类型
 const static std::string _TruePathForUserData = "../data/User/pd";
+// 权限
+enum TYPE_POWER {
+  ROOT,     // 超级管理员
+  Manager,  // 管理员
+  NORMAL,   // 普通用户
+  NONE      //未登录
+};
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
@@ -111,16 +121,17 @@ class _super {
   /**
    * @brief 用空格或逗号分割开的 string 转换为 vector，
    * @param  string str 字符串
-   * @param  vector<std::string> vec 数组
-   * @return  
+   * @param  revstring vec 数组
+   * @return
    */
-  void static stringToVector(const std::string& str,std::vector<std::string>& vec);
+  void static stringToVector(const std::string& str,
+                             revstring vec);
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
    * @param string truePath 路径
    * @return 以vector的形式返回
    */
-  std::vector<std::string> static openDirReturnFileName(std::string truePath);
+  vstring static openDirReturnFileName(std::string truePath);
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string name 路径+名字
@@ -131,9 +142,9 @@ class _super {
   /**
    * @brief 分离数据库名和表名
    * @param  string TableName 待分离的表名
-   * @return std::vector<string>[0] 是数据库名，std::vector<string>[1]是表名
+   * @return vstring[0] 是数据库名，vstring[1]是表名
    */
-  std::vector<std::string> static dispartDatabaseNameAndTableName(
+  vstring static dispartDatabaseNameAndTableName(
       std::string TableName);
   /**
    * @brief <static> 判断指定文件或目录是否存在

@@ -2,14 +2,10 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-11-15 16:00:10
+ * @LastEditTime : 2022-12-22 10:24:20
  */
 #ifndef _DIR_
 #define _DIR_
-#ifndef _VECTOR_
-#define _VECTOR_
-#include <vector>
-#endif
 #ifndef _STRING_
 #define _STRING_
 #include <string>
@@ -102,12 +98,12 @@ class _dir : public _super {
    * @param string truePath 目录
    * @return 以vector的形式返回
    */
-  std::vector<std::string> static openDirReturnFileName(std::string truePath);
+  vstring static openDirReturnFileName(std::string truePath);
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
    * @return 以vector的形式返回
    */
-  std::vector<std::string> openDirReturnFileName();
+  vstring openDirReturnFileName();
 
  private:
   // 记录由_dir打开的文件

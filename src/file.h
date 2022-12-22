@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-20 21:17:05
+ * @LastEditTime : 2022-12-22 10:28:04
  */
 #ifndef _FILE_
 #define _FILE_
@@ -13,10 +13,6 @@
 #ifndef _FSTREAM_
 #define _FSTREAM_
 #include <fstream>
-#endif
-#ifndef _VECTOR_
-#define _VECTOR_
-#include <vector>
 #endif
 #ifndef _STRING_
 #define _STRING_
@@ -62,11 +58,11 @@ class _file : public _super {
    void inputPCBInformation();
    /**
    * @brief 以App的方式写入字符串
-   * @param vector<string>& array 数据写入数据库
+   * @param vstring array 数据写入数据库
    * @param mode type_mode 模式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::vector<std::string> &array,type_mode mode);
+  bool write(const vstring array,type_mode mode);
    /**
    * @brief 真实路径
    * @return {std::string} 返回真实路径
@@ -125,10 +121,10 @@ class _file : public _super {
   bool write(const std::string str,type_mode mode);
   /**
    * @brief 以行的形势读出数据
-   * @param vector<string>& ret 保存的方式
+   * @param revstring ret 保存的方式
    * @return 读完或文件不存在返回False，否则返回True
    */
-  bool readline(std::vector<std::string>& ret);
+  bool readline(revstring ret);
   
   /**
    * @brief 构造函数
@@ -161,12 +157,12 @@ class _file : public _super {
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Name 名字
-   * @param vector<string>& array 数据写入数据库
+   * @param vstring array 数据写入数据库
    * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
   bool static write(std::string Name, type style,
-                        const std::vector<std::string>& array, type_mode mode );
+                        const vstring array, type_mode mode );
   /**
    * @brief 设置读buff的seek
    * @param  POINTER fileIndex 文件指针
@@ -226,9 +222,7 @@ class _file : public _super {
   static int count;
   // 真实路径
   std::string truePath;
-  // 当前的OpenBUFF
+  // 当前的OpenMode
   type_mode nowMode;
-  // buff
-  static std::vector<std::string> buff;
 };
 #endif

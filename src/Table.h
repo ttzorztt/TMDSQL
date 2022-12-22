@@ -2,17 +2,13 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2022-11-21 06:51:21
+ * @LastEditTime : 2022-12-22 10:25:15
  */
 #ifndef _TABLE_
 #define _TABLE_
 #ifndef _STRING_
 #define _STRING_
 #include <string>
-#endif
-#ifndef _VECTOR_
-#define _VECTOR_
-#include <vector>
 #endif
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -96,42 +92,42 @@ class Table : public _file{
    * @param  vector<std::string> value 数组
    * @return   正常操作则返回True，否则返回False
    */
-  bool append(std::vector<std::string> value);
+  bool append(vstring value);
   /**
    * @brief <static> 写入
    * @param  Table table 表
    * @param  vector<std::string> value 数组
    * @return   正常操作则返回True，否则返回False
    */
-  bool static append(Table table,std::vector<std::string> value);
+  bool static append(Table table,vstring value);
   /**
    * @brief <static> 写入
    * @param  string tableName 表名
    * @param  vector<std::string> value 数组
    * @return   正常操作则返回True，否则返回False
    */
-  bool static append(std::string tableName,std::vector<std::string> value);
+  bool static append(std::string tableName,vstring value);
 
   /**
    * @brief  返回指针所指向的一行
    * @param  POINTER fileIndex 指针
    * @return vecotr<string> 
    */
-  std::vector<std::string> indexReadline(POINTER fileIndex);
+  vstring indexReadline(POINTER fileIndex);
   /**
    * @brief <static> 返回指针所指向的一行
    * @param  string tableName 表名
    * @param  POINTER fileIndex 指针
-   * @return  vector<string>
+   * @return  vstring
    */
-  std::vector<std::string> static indexReadline(std::string tableName,POINTER fileIndex);
+  vstring static indexReadline(std::string tableName,POINTER fileIndex);
   /**
    * @brief <static> 返回指针所指向的一行
    * @param  Table table 表
    * @param  POINTER fileIndex 指针
-   * @return  vector<string>
+   * @return  vstring
    */
-  std::vector<std::string> static indexReadline(Table table,POINTER fileIndex);
+  vstring static indexReadline(Table table,POINTER fileIndex);
   /**
    * @brief 更新索引
    */
@@ -143,9 +139,9 @@ class Table : public _file{
   /**
    * @brief 寻找索引为index的数据，(默认第一个每列第一个数据是索引)
    * @param  string index 索引值
-   * @return vector<string> 这一行的数据
+   * @return vstring 这一行的数据
    */
-  std::vector<std::string> find(std::string index);
+  vstring find(std::string index);
   
 private:
 type style;

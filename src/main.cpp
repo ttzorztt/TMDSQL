@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-21 17:03:05
+ * @LastEditTime : 2022-12-22 10:24:29
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -19,10 +19,6 @@
 #ifndef _DATEBASE_H_
 #define _DATEBASE_H_
 #include "DataBase.h"
-#endif
-#ifndef _VECTOR_
-#define _VECTOR_
-#include <vector>
 #endif
 #ifndef _STRING_
 #define _STRING_
@@ -83,6 +79,8 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
+  shell x;
+  x.read("退出,重命名");
   return 0;
 }
 
@@ -105,8 +103,8 @@ int main1(int argc, char const* argv[]) {
   if (!table.isExist()) {
     table.create();
   }
-  vector<string> ve;
-  vector<string> value;
+  vstring ve;
+  vstring value;
   value.push_back("姓名");
   value.push_back("年龄");
   value.push_back("性别");
@@ -135,7 +133,7 @@ int main1(int argc, char const* argv[]) {
   // ve.clear();
   //   Index::update(table);
   // database.remove();
-  //   vector<string> value;
+  //   vstring value;
   //   value.push_back("姓名");
   //   value.push_back("年龄");
   //   value.push_back("性别");

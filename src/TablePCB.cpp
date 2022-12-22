@@ -31,7 +31,7 @@ TablePCB::TablePCB(Table table) : file(table.returnName(), type::_TYPE_PCB) {
 }
 
 void TablePCB::readData() {
-  std::vector<std::string> vec; 
+  vstring vec; 
   file.readline(vec);
   if (vec.empty()) {
     std::cout << "empty" << std::endl;
@@ -48,7 +48,7 @@ void TablePCB::addLength(){
   ++this->length;
 }
 void TablePCB::writeData() {
-  std::vector<std::string> tmp(3);
+  vstring tmp(3);
   tmp[0] = file.returnName();
   tmp[1] = std::to_string(endLineIndex);
   tmp[2] = std::to_string(length);

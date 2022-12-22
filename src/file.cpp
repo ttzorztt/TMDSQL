@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-21 17:02:27
+ * @LastEditTime : 2022-12-22 10:27:26
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -14,7 +14,6 @@
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
-std::vector<std::string> _file::buff;
 _file::_file(std::string Name, type style) : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
@@ -44,16 +43,16 @@ _file::~_file() {
 }
 void _file::deleteLine(std::string index){
   std::string oldTruePath = this->truePath;
-
+ vstring vectorbuff;
   std::cout << "delete is" << _file::create(oldTruePath + "tmp") << std::endl;
   _file tmp(oldTruePath + "tmp");
   std::cout << tmp.isExist() << std::endl;
   this->setReadSeek(0);
-  while(this->readline(buff)){
-    if(buff[0] == index){
+  while(this->readline(vectorbuff)){
+    if(vectorbuff[0] == index){
       continue;
     }else{
-      tmp.write(buff,type_mode::WRITEBUFF_MODE_APP);
+      tmp.write(vectorbuff,type_mode::WRITEBUFF_MODE_APP);
     }
   }
   this->remove();
@@ -120,7 +119,7 @@ bool _file::write(const std::string str, type_mode mode) {
   }
   return true;
 }
-bool _file::write(const std::vector<std::string>& array, type_mode mode) {
+bool _file::write(const vstring array, type_mode mode) {
   switch (mode) {
     case type_mode::WRITEBUFF_MODE_APP: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
@@ -158,7 +157,7 @@ bool _file::remove(std::string truePath) {
 }
 bool _file::write(std::string Name,
                   type style,
-                  const std::vector<std::string>& array,
+                  const vstring array,
                   type_mode mode) {
   _file tmd(Name, style);
   return tmd.write(array, mode);
@@ -170,7 +169,7 @@ bool _file::write(std::string Name,
   _file tmd(Name, style);
   return tmd.write(str, mode);
 }
-bool _file::readline(std::vector<std::string>& ret) {
+bool _file::readline(revstring ret) {
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
   if (this->returnReadFileBuff().eof()) {

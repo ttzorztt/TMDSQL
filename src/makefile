@@ -1,7 +1,8 @@
-main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o shell.o User.o 
-	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o shell.o User.o -o main
+main: main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o shell.o User.o menuOutput.o
+	g++ main.o file.o DataBase.o dir.o Table.o super.o Lock.o Index.o TablePCB.o shell.o User.o menuOutput.o -o main
 	./main
-
+menuOutput.o: menuOutput.cpp
+	g++ -c menuOutput.cpp
 User.o: User.cpp
 	g++ -c User.cpp
 TablePCB.o: TablePCB.cpp

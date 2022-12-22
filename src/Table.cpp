@@ -76,8 +76,8 @@ bool Table::isExist() {
 
 void Table::updateIndex() {}
 
-std::vector<std::string> Table::find(std::string index) {
-  std::vector<std::string> value;
+vstring Table::find(std::string index) {
+  vstring value;
   Table indexFile(this->returnName(), type::_TYPE_INDEX_TABLE);
   while (indexFile.readline(value)) {
     if (value[0] == index) {
@@ -88,7 +88,7 @@ std::vector<std::string> Table::find(std::string index) {
   return {};
 }
 
-bool Table::append(std::vector<std::string> value) {
+bool Table::append(vstring value) {
   TablePCB pcb(this->returnName());
   int fileIndex = pcb.returnEndLineIndex();
   if (value.size() <= 0) {
@@ -114,10 +114,10 @@ Table::Table(Table& table) : _file(table.name, table.style) {
   this->style = table.style;
   ++this->count;
 }
-bool Table::append(Table table, std::vector<std::string> value) {
+bool Table::append(Table table, vstring value) {
   return table.append(value);
 }
-bool Table::append(std::string tableName, std::vector<std::string> value) {
+bool Table::append(std::string tableName, vstring value) {
   Table tmp(tableName, type::_TYPE_TABLE);
   return tmp.append(value);
 }
@@ -135,22 +135,22 @@ bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
   return Table::appInsertIndex(table.returnName(), index, fileIndex);
 }
 
-std::vector<std::string> Table::indexReadline(POINTER fileIndex) {
+vstring Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = this->returnReadTell();
   this->setOpenBuff(type_mode::READBUFF_MODE);
   this->setReadSeek(fileIndex);
-  std::vector<std::string> value;
+  vstring value;
   this->readline(value);
   this->setReadSeek(oldIndex);
   return value;
 }
 
-std::vector<std::string> Table::indexReadline(std::string tableName,
+vstring Table::indexReadline(std::string tableName,
                                               POINTER fileIndex) {
   Table _table(tableName, type::_TYPE_TABLE);
   return _table.indexReadline(fileIndex);
 }
 
-std::vector<std::string> Table::indexReadline(Table table, POINTER fileIndex) {
+vstring Table::indexReadline(Table table, POINTER fileIndex) {
   return table.indexReadline(fileIndex);
 }

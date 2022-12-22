@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-21 21:54:06
+ * @LastEditTime : 2022-12-22 10:30:36
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -14,22 +14,18 @@
 #define _UNORDERED_MAP_
 #include <unordered_map>
 #endif
-#ifndef _VECTOR_
-#define _VECTOR_
-#include <vector>
-#endif
 #ifndef _STRING_
 #define _STRING_
 #include <string>
 #endif
-/***
-创建 数据库 XXX;
-选择 数据库 XXX;
-删除 数据库 XXX;
-选择 表 XXX;
-创建 表 XXX;
-删除 表 XXX;
-*/
+#ifndef _SUPER_H_
+#define _SUPER_H_
+#include "super.h"
+#endif
+#ifndef _USER_H_
+#define _USER_H_
+#include "User.h"
+#endif
 enum TYPE_CID {
   退出,
   创建,
@@ -47,7 +43,6 @@ enum TYPE_CID {
 };
 class shell {
  public:
-  
   shell();
   ~shell();
   /**
@@ -56,10 +51,15 @@ class shell {
    * @return 符合语法返回True，否则返回False
    */
   bool read(std::string data);
+  /**
+   * @brief 输入创建后的操作
+   * @param  revstring value string的数组
+   * @return  
+   */
+  void toCreate(revstring value);
  private:
+ User user;
  // CID
   static std::unordered_map<std::string, int> HashMapCID;
-  // vecBuff
-  static std::vector<std::string> vecBuff;
 };
 #endif
