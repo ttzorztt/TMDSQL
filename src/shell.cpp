@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-22 10:31:09
+ * @LastEditTime : 2022-12-22 15:27:59
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -33,7 +33,7 @@ bool shell::read(std::string str) {
       menuOutput::printExit(user);
       break;
     case 创建:
-      
+      toCreate(vectorbuff);
       break;
     case 删除:
       break;
