@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-22 10:19:22
+ * @LastEditTime : 2022-12-24 10:19:03
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -26,7 +26,10 @@
 #define _UNISTD_H_
 #include <unistd.h>
 #endif
-
+#ifndef _UNORDERED_MAP_
+#define _UNORDERED_MAP_
+#include "unordered_map"
+#endif
 typedef std::vector<std::string>& revstring;
 typedef std::vector<std::string> vstring;
 typedef int POINTER;
@@ -55,6 +58,10 @@ enum TYPE_POWER {
   NORMAL,   // 普通用户
   NONE      //未登录
 };
+static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 11},
+                                                   {TYPE_POWER::Manager, 12},
+                                                   {TYPE_POWER::ROOT, 16},
+                                                   {TYPE_POWER::NONE, 13}};
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
@@ -124,8 +131,7 @@ class _super {
    * @param  revstring vec 数组
    * @return
    */
-  void static stringToVector(const std::string& str,
-                             revstring vec);
+  void static stringToVector(const std::string& str, revstring vec);
   /**
    * @brief <static> 返回目录中所有文件名字，即数据库中表名
    * @param string truePath 路径
@@ -144,8 +150,7 @@ class _super {
    * @param  string TableName 待分离的表名
    * @return vstring[0] 是数据库名，vstring[1]是表名
    */
-  vstring static dispartDatabaseNameAndTableName(
-      std::string TableName);
+  vstring static dispartDatabaseNameAndTableName(std::string TableName);
   /**
    * @brief <static> 判断指定文件或目录是否存在
    * @param string Name 路径

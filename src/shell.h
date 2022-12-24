@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-22 10:30:36
+ * @LastEditTime : 2022-12-24 10:28:03
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -41,8 +41,15 @@ enum TYPE_CID {
   普通用户,
   管理员
 };
-class shell {
+class shell : public User,menuOutput {
  public:
+ /**
+  * @brief 登录
+  * @param  string ID 帐号
+  * @param  string password 密码
+  * @return  
+  */
+ bool logn(std::string ID,std::string password);
   shell();
   ~shell();
   /**

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-22 15:27:59
+ * @LastEditTime : 2022-12-24 10:29:49
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -22,7 +22,14 @@ std::unordered_map<std::string, int> shell::HashMapCID = {
     {"表", 10},    {"普通用户", 11}, {"管理员", 12}};
 shell::shell(): user(){}
 shell::~shell() {}
+bool shell::logn(std::string ID,std::string password){
+  return this->user.login(ID,password);
+}
 bool shell::read(std::string str) {
+  if(!this->user.ReturnLoginStatus()){
+    
+    // menuOutput::printExit(user);
+  }
   vstring vectorbuff;
   _super::stringToVector(str, vectorbuff);
   if (!HashMapCID.count(vectorbuff[0])) {
@@ -30,7 +37,7 @@ bool shell::read(std::string str) {
   }
   switch (HashMapCID[vectorbuff[0]]) {
     case 退出:
-      menuOutput::printExit(user);
+      // menuOutput::printExit(user);
       break;
     case 创建:
       toCreate(vectorbuff);
