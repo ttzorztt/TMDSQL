@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-25 16:47:18
+ * @LastEditTime : 2022-12-25 22:02:44
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -68,21 +68,32 @@ bool shell::read(std::string str) {
       if (vectorbuff.size() != 3) {
         menuOutput::printCommandError(user.ReturnPower());
       } else {
-        bool Login = this->login(vectorbuff[1],vectorbuff[2]);
+        bool Login = this->login(vectorbuff[1], vectorbuff[2]);
         menuOutput::printLoginOrNot(Login);
       }
       break;
     case 插入:
+      if (user.ReturnLoginStatus() < 2) {
+        toInsert(vectorbuff);
+      } else {
+        menuOutput::printPowerNoEnough(user.ReturnPower());
+      }
       break;
     case 查询:
+      toFind(vectorbuff);
       break;
     case 显示:
+      toShow(vectorbuff);
       break;
     default:
+      menuOutput::printCommandError(user.ReturnPower());
       break;
   }
   return false;
 }
-void shell::toCreate(revstring value){}
-void shell::toDelete(revstring value){}
-void shell::toRename(revstring value){}
+void shell::toCreate(revstring value) {}
+void shell::toDelete(revstring value) {}
+void shell::toRename(revstring value) {}
+void shell::toInsert(revstring value) {}
+void shell::toFind(revstring value) {}
+void shell::toShow(revstring value) {}

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-25 16:05:41
+ * @LastEditTime : 2022-12-25 22:02:01
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -36,6 +36,24 @@ class shell : public User {
   * @return  
   */
  bool logn(std::string ID,std::string password);
+ /**
+  * @brief 输入插入后的操作
+  * @param  revstring value string数组
+  * @return  
+  */
+ void toInsert(revstring value);
+ /**
+  * @brief 输入查询后的操作
+  * @param  revstring value string数组
+  * @return  
+  */
+ void toFind(revstring value);
+ /**
+  * @brief 输入显示后的操作
+  * @param  revstring value string数组
+  * @return  
+  */
+ void toShow(revstring value);
   shell();
   ~shell();
   /**

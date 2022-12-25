@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2022-12-25 16:44:51
+ * @LastEditTime : 2022-12-25 21:57:23
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -23,7 +23,7 @@ void menuOutput::printPower(TYPE_POWER power) {
     case TYPE_POWER::NORMAL:
       print("(用户) -=> ");
     case TYPE_POWER::NONE:
-      print("(未登录) -=> ? ");
+      print("(未登录) -=> ");
   }
 }
 void menuOutput::printExit(TYPE_POWER power) {
