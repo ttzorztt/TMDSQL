@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-24 10:19:03
+ * @LastEditTime : 2022-12-25 16:36:37
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -62,6 +62,21 @@ static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 11},
                                                    {TYPE_POWER::Manager, 12},
                                                    {TYPE_POWER::ROOT, 16},
                                                    {TYPE_POWER::NONE, 13}};
+enum TYPE_CID {
+  退出,
+  创建,
+  数据库,
+  删除,
+  选择,
+  重命名,
+  登录,
+  显示,
+  插入,
+  查询,
+  表,
+  普通用户,
+  管理员
+};
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
@@ -80,6 +95,7 @@ enum type_mode {
   WRITEBUFF_MODE_APP,
   DEFAULT
 };
+
 /**
  * @brief 维护一些基础静态函数
  */

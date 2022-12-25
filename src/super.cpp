@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-12-24 10:15:19
+ * @LastEditTime : 2022-12-25 16:44:46
  */
 
 #ifndef _SUPER_H_
@@ -95,6 +95,7 @@ bool _super::isExist(std::string name, type style) {
 bool _super::isExist(std::string truePath) {
   return access(truePath.c_str(), F_OK) != -1;
 }
+
 std::string _super::returnTruePath(std::string Name, type style) {
   vstring vectorbuff;
   switch (style) {

@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-22 10:24:29
+ * @LastEditTime : 2022-12-25 16:37:40
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -79,8 +79,8 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
-  shell x;
-  x.read("退出,重命名");
+  // shell x;
+  // x.read("退出,重命名");
   return 0;
 }
 

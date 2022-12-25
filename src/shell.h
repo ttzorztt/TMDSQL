@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-24 10:28:03
+ * @LastEditTime : 2022-12-25 16:05:41
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -26,22 +26,8 @@
 #define _USER_H_
 #include "User.h"
 #endif
-enum TYPE_CID {
-  退出,
-  创建,
-  数据库,
-  删除,
-  选择,
-  重命名,
-  登录,
-  显示,
-  插入,
-  查询,
-  表,
-  普通用户,
-  管理员
-};
-class shell : public User,menuOutput {
+
+class shell : public User {
  public:
  /**
   * @brief 登录
@@ -64,6 +50,19 @@ class shell : public User,menuOutput {
    * @return  
    */
   void toCreate(revstring value);
+  /**
+   * @brief 输入删除后的操作
+   * @param  revstring value value<string>数组
+   * @return  
+   */
+  void toDelete(revstring value);
+  /**
+   * @brief 输入重命名后的操作
+   * @param  revstring value value[string]数组
+   * @return  
+   */
+  void toRename(revstring value);
+  
  private:
  User user;
  // CID

@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-22 10:29:12
+ * @LastEditTime : 2022-12-25 16:23:47
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -20,17 +20,24 @@
 std::set<std::string> User::nameBuff;
 int User::count = 0;
 _file User::pd(_TruePathForUserData);
-User::User() : loginStatus(false), reset(false), power(TYPE_POWER::NONE) {}
+User::User()
+    : loginStatus(false),
+      reset(false),
+      power(TYPE_POWER::NONE),
+      UserName(""),
+      UserPassword("") {}
 User::User(std::string UserName, std::string UserPassword)
     : UserName(UserName),
       UserPassword(UserPassword),
       loginStatus(false),
       reset(false),
       power(TYPE_POWER::NONE) {
-  this->readAllNameDate();
+  if (nameBuff.size() == 0) {
+    this->readAllNameDate();
+  }
+  ++count;
   this->loginStatus = this->login();
 }
-
 void User::readAllNameDate() {
   UserVectorBuff;
   while (pd.readline(vectorbuff)) {
@@ -40,12 +47,16 @@ void User::readAllNameDate() {
 void User::addUser(std::string UserName,
                    std::string Userpassword,
                    TYPE_POWER power) {
-                     UserVectorBuff;
+  UserVectorBuff;
   vectorbuff.clear();
   vectorbuff.push_back(UserName);
   vectorbuff.push_back(UserPassword);
   vectorbuff.push_back(std::to_string((int)power));
   pd.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
+  ++count;
+  if (nameBuff.size() == 0) {
+    this->readAllNameDate();
+  }
 }
 bool User::addNormalUser(std::string UserName, std::string Userpassword) {
   if (power >= 2)
@@ -93,7 +104,7 @@ void User::resetPassword(std::string Userpassword) {
   _file tmp(_TruePathForUserData);
   this->reset = true;
 }
-TYPE_POWER User::ReturnPower() const{
+TYPE_POWER User::ReturnPower() const {
   return this->power;
 }
 User::~User() {
