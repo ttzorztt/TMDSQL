@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-25 16:37:40
+ * @LastEditTime : 2022-12-26 16:48:54
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -81,6 +81,14 @@ void init() {
 int main(int argc, char const* argv[]) {
   // shell x;
   // x.read("退出,重命名");
+  // vstring v;
+  // v.push_back("1");
+  // v.push_back("2");
+  // cout << v.size() << endl;
+  // v.clear();
+
+  // cout << v.size() << endl;
+  
   return 0;
 }
 

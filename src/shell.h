@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-25 22:02:01
+ * @LastEditTime : 2022-12-26 16:50:00
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -29,31 +29,13 @@
 
 class shell : public User {
  public:
- /**
-  * @brief 登录
-  * @param  string ID 帐号
-  * @param  string password 密码
-  * @return  
-  */
- bool logn(std::string ID,std::string password);
- /**
-  * @brief 输入插入后的操作
-  * @param  revstring value string数组
-  * @return  
-  */
- void toInsert(revstring value);
- /**
-  * @brief 输入查询后的操作
-  * @param  revstring value string数组
-  * @return  
-  */
- void toFind(revstring value);
- /**
-  * @brief 输入显示后的操作
-  * @param  revstring value string数组
-  * @return  
-  */
- void toShow(revstring value);
+  /**
+   * @brief 登录
+   * @param  string ID 帐号
+   * @param  string password 密码
+   * @return
+   */
+  bool logn(std::string ID, std::string password);
   shell();
   ~shell();
   /**
@@ -62,28 +44,106 @@ class shell : public User {
    * @return 符合语法返回True，否则返回False
    */
   bool read(std::string data);
+ private:
+  // 当前工作路径
+  vstring pwd;
+  // CID
+  static std::unordered_map<std::string, int> HashMapCID;
+  /**
+   * @brief 输出选择后的操作
+   * @param  revstring value string数组
+   * @return  
+   */
+  void toChoose(revstring value);
+  /**
+   * @brief 输出选择表后的操作
+   * @param  revstring value string数组
+   * @return  
+   */
+  void toChooseTable(revstring value);
+  /**
+   * @brief 输入选择数据库后的操作
+   * @param  revstring value string数组
+   * @return  
+   */
+  void toChooseDatabase(revstring value);
+  /**
+   * @brief 输入选择数据库表后的操作
+   * @param  revstring value string数组
+   * @return  
+   */
+  void toChooseDatabaseTable(revstring value);
+  /**
+   * @brief 输入插入后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toInsert(revstring value);
+  /**
+   * @brief 输入查询后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toFind(revstring value);
+  /**
+   * @brief 输入显示后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toShow(revstring value);
   /**
    * @brief 输入创建后的操作
    * @param  revstring value string的数组
-   * @return  
+   * @return
    */
   void toCreate(revstring value);
   /**
+   * @brief 输入创建，表后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toCreateTable(revstring value);
+  /**
+   * @brief 输入创建，数据库后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toCreateDatabase(revstring value);
+  /**
    * @brief 输入删除后的操作
    * @param  revstring value value<string>数组
-   * @return  
+   * @return
    */
   void toDelete(revstring value);
   /**
+   * @brief
+   * @param  revstring value
+   * @return
+   */
+  void toDeleteTable(revstring value);
+  /**
+   * @brief
+   * @param  revstring value
+   * @return
+   */
+  void toDeleteDatabase(revstring value);
+  /**
    * @brief 输入重命名后的操作
    * @param  revstring value value[string]数组
-   * @return  
+   * @return
    */
   void toRename(revstring value);
-  
- private:
- User user;
- // CID
-  static std::unordered_map<std::string, int> HashMapCID;
+  /**
+   * @brief 输出重命名表后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toRenameTable(revstring value);
+  /**
+   * @brief 输入重命名数据库后的操作
+   * @param  revstring value string数组
+   * @return
+   */
+  void toRenameDatabase(revstring value);
 };
 #endif
