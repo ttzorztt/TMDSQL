@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-26 16:50:30
+ * @LastEditTime : 2022-12-27 11:54:12
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -25,21 +25,135 @@ shell::~shell() {}
 bool shell::logn(std::string ID, std::string password) {
   return login(ID, password);
 }
-void shell::toChoose(revstring value){
+void shell::toChoose(revstring value) {
+  switch (value.size()) {
+    case 3:
+      if (value[2] == "数据库") {
+      }
+      break;
+    case 2:
+    case 1:
+    default:
+      menuOutput::printCommandError(ReturnPower());
+      break;
+  }
+  if (value.size() == 1 || !HashMapCID.count(value[1])) {
+    menuOutput::printCommandError(ReturnPower());
+  }
+  switch (HashMapCID[value[1]]) {
+    case 数据库:
+      toChooseDatabase(value);
+      break;
+    case 表:
+      toChooseTable(value);
+      break;
+    default:
+      menuOutput::printCommandError(ReturnPower());
+  }
+}
+void shell::toChooseDatabase(revstring value) {
+  switch (value.size()) {
+    case 3:
+      if (HashMapCID.count(value[2])) {
+        menuOutput::printCommandError(ReturnPower());
+      }
+      break;
+    case 2:
+      menuOutput::printCommandError(ReturnPower());
+      break;
+    default:
+      break;
+  }
+  if (value.size() == 2) {
+    menuOutput::printCommandError(ReturnPower());
+  }
+  if (!HashMapCID.count(value[2]) && value.size() == 3) {
+    switch (pwd.size()) {
+      case 0:
+        menuOutput::printNotLogin();
+        break;
+      default:
+        if (!User::HaveDatabase(value[2])) {
+          menuOutput::printNotExistsDatabase(ReturnPower());
+        }
+        pwd.clear();
+        pwd.push_back("/");
+        pwd.push_back(value[2]);
+        break;
+    }
+  }
+}
+void shell::toChooseTable(revstring value) {
+  if (value.size() == 2) {
+    menuOutput::printCommandError(ReturnPower());
+  }
+  switch (pwd.size()) {
+    case 0:
+      menuOutput::printNotLogin();
+      break;
+    case 1:
+      menuOutput::printNotChooseDatabase(ReturnPower());
+      break;
+    case 2:
 
+    default:
+      break;
+  }
+  if (pwd.size() == 1) {
+  }
+}
+void shell::toChooseDatabaseTable(revstring value) {}
+bool shell::aidCheckData(std::string _str) {
+  for (char& ch : _str) {
+    if (checkErrorName.count(ch)) {
+      return false;
+    }
+  }
+  return true;
+}
+bool shell::check(std::string _str) {
+  vstring vectorbuff;
+  _super::stringToVector(_str, vectorbuff);
+  int size = vectorbuff.size();
+  if (size == 0 || !(HashMapCID.count(vectorbuff[0]))) {
+    return false;
+  }
+  int stap = 0;
+  for (; stap < size; ++stap) {
+    if (HashMapCID.count(vectorbuff[stap])) {
+      command.push_back(HashMapCID[vectorbuff[stap]]);
+    } else {
+      if (vectorbuff[stap][0] != '@') {
+        return false;
+      }
+      std::string tmp = vectorbuff[stap].substr(1);
+      if (!aidCheckData(tmp)){
+        return false;
+      }
+      data.push_back(tmp);
+      break;
+    }
+  }
+  for (++stap; stap < size; ++stap) {
+    if(aidCheckData(vectorbuff[stap])){
+      data.push_back(vectorbuff[stap]);
+    }else{
+      return false;
+    }
+  }
 }
 bool shell::read(std::string str) {
-  if (!this->ReturnLoginStatus()) {
+  if (!this->ReturnLoginStatus()) {  //未登录
     menuOutput::printExit(ReturnPower());
   }
+  //error
   vstring vectorbuff;
-  _super::stringToVector(str, vectorbuff);
   if (!HashMapCID.count(vectorbuff[0])) {
     return false;
   }
   switch (HashMapCID[vectorbuff[0]]) {
     case 选择:
-    toChoose(vectorbuff);
+      toChoose(vectorbuff);
       break;
     case 退出:
       if (vectorbuff.size() == 1) {
@@ -97,15 +211,7 @@ bool shell::read(std::string str) {
   }
   return false;
 }
-void shell::toChooseTable(revstring value){
 
-}
-void shell::toChooseDatabase(revstring value){
-  
-}
-void shell::toChooseDatabaseTable(revstring value){
-  
-}
 void shell::toCreate(revstring value) {
   if (!HashMapCID.count(value[1])) {
     menuOutput::printCommandError(ReturnPower());
@@ -159,17 +265,17 @@ void shell::toRename(revstring value) {
 void shell::toRenameTable(revstring value) {}
 void shell::toRenameDatabase(revstring value) {}
 void shell::toInsert(revstring value) {
-   if (!HashMapCID.count(value[1])) {
+  if (!HashMapCID.count(value[1])) {
     menuOutput::printCommandError(ReturnPower());
   }
 }
 void shell::toFind(revstring value) {
-   if (!HashMapCID.count(value[1])) {
+  if (!HashMapCID.count(value[1])) {
     menuOutput::printCommandError(ReturnPower());
   }
 }
 void shell::toShow(revstring value) {
-   if (!HashMapCID.count(value[1])) {
+  if (!HashMapCID.count(value[1])) {
     menuOutput::printCommandError(ReturnPower());
   }
 }

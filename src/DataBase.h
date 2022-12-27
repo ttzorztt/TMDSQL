@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-12-22 10:02:29
+ * @LastEditTime : 2022-12-27 10:42:11
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -19,10 +19,17 @@
 #define _FILE_H_
 #include "file.h"
 #endif  
+#ifndef _UNORDERED_SET_
+#define _UNORDERED_SET_
+#include <unordered_set>
+#endif
 /**
  * @brief 封装对数据库的操作，比如创建，删除。建立表等函数。
  */
 class DataBase : public _dir {
+  private:
+   // 数据库中的表
+  std::unordered_set<std::string> SetOfTable;
  public:
  /**
   * @brief 析构函数
@@ -115,7 +122,14 @@ class DataBase : public _dir {
    * @return 删除正常则返回True，否则返回False
    */
   bool removeTable(std::string tableName);
-
+  
+  /**
+   * @brief 判断数据库中有没有表
+   * @param  string DataBaseName 数据库名
+   * @param  string tableName 表名
+   * @return  存在返回true，不存在返回false
+   */
+  bool static isExistsTable(std::string DataBaseName,std::string tableName);
   /**
    * @brief <static>删除指定数据库
    * @param string DataBaseName

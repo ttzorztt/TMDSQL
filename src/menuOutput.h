@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2022-12-25 16:44:41
+ * @LastEditTime : 2022-12-27 11:05:41
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -28,11 +28,15 @@ class menuOutput {
   void static printPowerNoEnough(TYPE_POWER power);
   /**
    * @brief 输出没有登录
-   * @param  TYPE_POWER power 权限
    * @return
    */
-  void static printNotLogin(TYPE_POWER power);
-
+  void static printNotLogin();
+  /**
+   * @brief 输出没有选择数据库
+   * @param  TYPE_POWER power 权限
+   * @return  
+   */
+  void static printNotChooseDatabase(TYPE_POWER power);
   /**
    * @brief 输出指令错误
    * @param  TYPE_POWER power 权限
@@ -47,14 +51,19 @@ class menuOutput {
    * @return
    */
   void static printLoginOrNot(bool login, TYPE_POWER power = TYPE_POWER::NONE, std::string ID = "");
-
+  /**
+   * @brief 输出不存在该数据库
+   * @param  TYPE_POWER power 权限
+   * @return  
+   */
+  void static printNotExistsDatabase(TYPE_POWER power);
  private:
   /**
    * @brief 输出权限提示符
    * @param TYPE_POWER power 权限
    * @return
    */
-  inline void static printPower(TYPE_POWER power);
+  inline void static printPower(TYPE_POWER power = TYPE_POWER::NONE);
   /**
  * @brief 换行输出
  * @param  string _str 输出字段

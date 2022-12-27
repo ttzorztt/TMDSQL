@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-26 16:50:00
+ * @LastEditTime : 2022-12-27 11:42:22
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -49,6 +49,22 @@ class shell : public User {
   vstring pwd;
   // CID
   static std::unordered_map<std::string, int> HashMapCID;
+  // 指令
+  vint command;
+  // 用户输入数据
+  vstring data;
+  /**
+   * @brief 语法检查以及指令与数据分类存储
+   * @param  string _str 待检查字符串
+   * @return 指令不存在问题的话，返回True，存在问题则返回false
+   */
+  bool check(std::string _str);
+  /**
+   * @brief 语法检查是否含有'/'，'!'等违规字符
+   * @param  string _str 待检查字符
+   * @return 没有问题的话，返回true，否则返回false;
+   */
+  bool aidCheckData(std::string _str);
   /**
    * @brief 输出选择后的操作
    * @param  revstring value string数组

@@ -2,16 +2,12 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-25 16:44:22
+ * @LastEditTime : 2022-12-27 11:02:20
  */
 
 #ifndef _STRING_
 #define _STRING_
 #include <string>
-#endif
-#ifndef _SUPER_H_
-#define _SUPER_H_
-#include "super.h"
 #endif
 #ifndef _VECTOR_
 #define _VECTOR_
@@ -65,6 +61,19 @@ class User {
    */
   void addUser(std::string UserName,std::string UserPassword,TYPE_POWER power);
  public:
+  /**
+   * @brief 数据库中有没有表
+   * @param string DatabaseName 数据库名
+   * @param  string tableName 表名
+   * @return  true表示有，false表示没有
+   */
+  bool DatabaseHaveTable(std::string DatabaseName,std::string tableName);
+  /**
+   * @brief 有没有该数据库
+   * @param  string DatabaseName 数据库名
+   * @return true表示有，false表示没有
+   */
+  bool HaveDatabase(std::string DatabaseName);
  /**
   * @brief 返回登录状态
   * @return  True表示登录正常，False表示登录错误

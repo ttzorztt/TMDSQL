@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-12-22 10:24:06
+ * @LastEditTime : 2022-12-27 10:44:24
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -18,10 +18,20 @@
 #endif
 // 打开的数据库的个数
 int DataBase::count = 0;
-DataBase::DataBase(std::string name) : _dir(name, type::_TYPE_DATABASE) {}
+DataBase::DataBase(std::string name) : _dir(name, type::_TYPE_DATABASE) {
+  ++this->count;
+  vstring buff = _super::openDirReturnFileName(returnTruePath());
+  for(std::string& str: buff){
+    SetOfTable.insert(str);
+  }
+}
 DataBase::DataBase(DataBase& databse)
     : _dir(databse.returnName(), type::_TYPE_DATABASE) {
   ++this->count;
+    vstring buff = _super::openDirReturnFileName(returnTruePath());
+  for(std::string& str: buff){
+    SetOfTable.insert(str);
+  }
 }
 type DataBase::returnType() {
   return type::_TYPE_DATABASE;
@@ -49,11 +59,17 @@ DataBase::~DataBase() {
 bool DataBase::insertTable(std::string tableName) {
   // std::string Path = _super::returnTruePath(this->returnName() + "/" +
   // tableName,type::_TYPE_TABLE);
-  return _file::create(this->returnName() + "/" + tableName, type::_TYPE_TABLE);
+  bool tmp = _file::create(this->returnName() + "/" + tableName, type::_TYPE_TABLE);
+  if(tmp){
+    SetOfTable.insert(tableName);
+    return true;
+  }
+  return false;
 }
 bool DataBase::insertTable(std::string tableName,
                            const revstring tableItem) {
   Table::append(returnName() + "/" + tableName, tableItem);
+  SetOfTable.insert(tableName);
   return true;
 }
 int DataBase::returnCount() {
@@ -153,7 +169,15 @@ bool DataBase::isExist(std::string DataBaseName) {
 bool DataBase::removeTable(std::string tableName) {
   return _file::remove(this->returnName() + "/" + tableName, type::_TYPE_TABLE);
 }
-
+bool DataBase::isExistsTable(std::string DataBaseName,std::string tableName){
+  vstring buff = _super::openDirReturnFileName(_super::returnTruePath(DataBaseName,type::_TYPE_DATABASE));
+  for(std::string& str : buff){
+    if(str == tableName){
+      return true;
+    }
+  }
+  return false;
+}
 bool DataBase::removeDataBase(std::string DataBaseName) {
   return _dir::remove("../data/database/" + DataBaseName);
 }

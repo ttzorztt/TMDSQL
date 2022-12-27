@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-12-22 10:20:30
+ * @LastEditTime : 2022-12-27 09:35:37
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -21,6 +21,7 @@
 int _dir::count = 0;
 _dir::_dir(_dir& copy) : _super(copy.returnName()) {
   this->style = copy.returnType();
+  this->truePath = copy.returnTruePath();
 }
 void _dir::forceremove() {
   _dir::forceremove(this->name);
@@ -37,7 +38,11 @@ bool _dir::isExist() {
 }
 _dir::_dir(std::string dirName,type style) : _super(dirName) {
   this->style = style;
+  this->truePath = _super::returnTruePath(dirName,style);
   }
+std::string _dir::returnTruePath(){
+  return this->truePath;
+}
 vstring _dir::openDirReturnFileName() {
   DIR* dirname =
       opendir(_super::returnTruePath(this->name, type::_TYPE_DATABASE).c_str());

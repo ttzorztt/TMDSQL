@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-25 16:23:47
+ * @LastEditTime : 2022-12-27 11:57:25
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -16,7 +16,14 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-
+#ifndef _DATABASE_H_
+#define _DATABASE_H_
+#include "DataBase.h"
+#endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
+#endif
 std::set<std::string> User::nameBuff;
 int User::count = 0;
 _file User::pd(_TruePathForUserData);
@@ -95,6 +102,9 @@ bool User::login(std::string UserName, std::string UserPassword) {
 bool User::ReturnLoginStatus() const {
   return this->loginStatus;
 }
+bool User::DatabaseHaveTable(std::string DatabaseName,std::string TableName){
+ return Table(DatabaseName + "/" +TableName,type::_TYPE_TABLE).isExist();
+}
 void User::resetPassword(std::string Userpassword) {
   if (!this->loginStatus) {
     return;
@@ -103,6 +113,9 @@ void User::resetPassword(std::string Userpassword) {
   rename(_TruePathForUserData.c_str(), ("." + _TruePathForUserData).c_str());
   _file tmp(_TruePathForUserData);
   this->reset = true;
+}
+bool User::HaveDatabase(std::string DatabaseName){
+  return DataBase(DatabaseName).isExist();
 }
 TYPE_POWER User::ReturnPower() const {
   return this->power;

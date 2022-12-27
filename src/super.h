@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-25 16:36:37
+ * @LastEditTime : 2022-12-27 11:51:26
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -30,8 +30,14 @@
 #define _UNORDERED_MAP_
 #include "unordered_map"
 #endif
-typedef std::vector<std::string>& revstring;
+#ifndef _UNORDERED_SET_
+#define _UNORDERED_SET_
+#include <unordered_set>
+#endif
 typedef std::vector<std::string> vstring;
+typedef std::vector<std::string>& revstring;
+typedef std::vector<int> vint;
+typedef std::vector<int>& revint;
 typedef int POINTER;
 typedef int MODE;
 #define UserVectorBuff vstring vectorbuff(4);
@@ -62,6 +68,10 @@ static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 11},
                                                    {TYPE_POWER::Manager, 12},
                                                    {TYPE_POWER::ROOT, 16},
                                                    {TYPE_POWER::NONE, 13}};
+static std::unordered_set<char> checkErrorName{
+    '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
+    ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',
+    ':', ';', '\'', '\"', ',', '<', '>', '.', '?', '/'};
 enum TYPE_CID {
   退出,
   创建,

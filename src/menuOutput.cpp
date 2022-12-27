@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2022-12-25 21:57:23
+ * @LastEditTime : 2022-12-27 11:06:20
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -30,9 +30,17 @@ void menuOutput::printExit(TYPE_POWER power) {
   printPower(power);
   printl("已退出!");
 }
-void menuOutput::printNotLogin(TYPE_POWER power) {
-  printPower(power);
+void menuOutput::printNotLogin() {
+  printPower();
   printl("未登录,请登录后操作!");
+}
+void menuOutput::printNotChooseDatabase(TYPE_POWER power){
+  printPower(power);
+  printl("未选择数据库，请先选择数据库");
+}
+void menuOutput::printNotExistsDatabase(TYPE_POWER power){
+  printPower(power);
+  printl("该数据库不存在!");
 }
 void menuOutput::printPowerNoEnough(TYPE_POWER power) {
   printPower(power);

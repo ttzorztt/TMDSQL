@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-12-22 10:24:20
+ * @LastEditTime : 2022-12-27 09:32:57
  */
 #ifndef _DIR_
 #define _DIR_
@@ -104,10 +104,11 @@ class _dir : public _super {
    * @return 以vector的形式返回
    */
   vstring openDirReturnFileName();
-
+  std::string returnTruePath();
  private:
   // 记录由_dir打开的文件
   int static count;
   type style;
+  std::string truePath;
 };
 #endif
