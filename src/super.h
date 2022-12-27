@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-27 11:51:26
+ * @LastEditTime : 2022-12-27 16:15:36
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -87,6 +87,7 @@ enum TYPE_CID {
   普通用户,
   管理员
 };
+typedef std::vector<TYPE_CID> vCID;
 enum type {
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库

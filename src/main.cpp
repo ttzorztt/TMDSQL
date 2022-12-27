@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-26 16:48:54
+ * @LastEditTime : 2022-12-27 17:45:14
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -52,6 +52,10 @@
 #define _SHELL_H_
 #include "shell.h"
 #endif
+#ifndef _MENUOUTPUT_H_
+#define _MENUOUTPUT_H_
+#include "menuOutput.h"
+#endif
 using namespace std;
 
 /**
@@ -79,8 +83,15 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
-  // shell x;
-  // x.read("退出,重命名");
+  shell x;
+  string tmp;
+  while (1) {
+    while(cin.get() == '\n'){
+      menuOutput::printPower();
+    }
+    cin >> tmp;
+    x.read(tmp);
+  }
   // vstring v;
   // v.push_back("1");
   // v.push_back("2");
@@ -88,7 +99,7 @@ int main(int argc, char const* argv[]) {
   // v.clear();
 
   // cout << v.size() << endl;
-  
+
   return 0;
 }
 

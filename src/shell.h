@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-27 11:42:22
+ * @LastEditTime : 2022-12-27 17:18:46
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -48,9 +48,9 @@ class shell : public User {
   // 当前工作路径
   vstring pwd;
   // CID
-  static std::unordered_map<std::string, int> HashMapCID;
+  static std::unordered_map<std::string, TYPE_CID> HashMapCID;
   // 指令
-  vint command;
+  vCID command;
   // 用户输入数据
   vstring data;
   /**
@@ -67,99 +67,83 @@ class shell : public User {
   bool aidCheckData(std::string _str);
   /**
    * @brief 输出选择后的操作
-   * @param  revstring value string数组
    * @return  
    */
-  void toChoose(revstring value);
+  void toChoose();
   /**
    * @brief 输出选择表后的操作
-   * @param  revstring value string数组
    * @return  
    */
-  void toChooseTable(revstring value);
+  void toChooseTable();
   /**
    * @brief 输入选择数据库后的操作
-   * @param  revstring value string数组
    * @return  
    */
-  void toChooseDatabase(revstring value);
+  void toChooseDatabase();
   /**
    * @brief 输入选择数据库表后的操作
-   * @param  revstring value string数组
    * @return  
    */
-  void toChooseDatabaseTable(revstring value);
+  void toChooseDatabaseTable();
   /**
    * @brief 输入插入后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toInsert(revstring value);
+  void toInsert();
   /**
    * @brief 输入查询后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toFind(revstring value);
+  void toFind();
   /**
    * @brief 输入显示后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toShow(revstring value);
+  void toShow();
   /**
    * @brief 输入创建后的操作
-   * @param  revstring value string的数组
    * @return
    */
-  void toCreate(revstring value);
+  void toCreate();
   /**
    * @brief 输入创建，表后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toCreateTable(revstring value);
+  void toCreateTable();
   /**
    * @brief 输入创建，数据库后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toCreateDatabase(revstring value);
+  void toCreateDatabase();
   /**
    * @brief 输入删除后的操作
-   * @param  revstring value value<string>数组
    * @return
    */
-  void toDelete(revstring value);
+  void toDelete();
   /**
-   * @brief
-   * @param  revstring value
+   * @brief 输入删除表后的操作
    * @return
    */
-  void toDeleteTable(revstring value);
+  void toDeleteTable();
   /**
-   * @brief
-   * @param  revstring value
+   * @brief 输入删除数据库后的操作
    * @return
    */
-  void toDeleteDatabase(revstring value);
+  void toDeleteDatabase();
   /**
    * @brief 输入重命名后的操作
-   * @param  revstring value value[string]数组
    * @return
    */
-  void toRename(revstring value);
+  void toRename();
   /**
    * @brief 输出重命名表后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toRenameTable(revstring value);
+  void toRenameTable();
   /**
    * @brief 输入重命名数据库后的操作
-   * @param  revstring value string数组
    * @return
    */
-  void toRenameDatabase(revstring value);
+  void toRenameDatabase();
 };
 #endif
