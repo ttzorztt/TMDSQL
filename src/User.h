@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-27 11:02:20
+ * @LastEditTime : 2022-12-27 22:02:48
  */
 
 #ifndef _STRING_
@@ -84,6 +84,12 @@ class User {
   * @return  0为Root权限，1为管理员权限，2为普通用户权限
   */
 TYPE_POWER ReturnPower() const;
+
+/**
+ * @brief 返回用户帐号
+ * @return 帐号
+ */
+std::string ReturnUserName() const;
  /**
   * @brief 添加普通用户 (管理员或超级管理员)
   * @param  string UserName 用户名

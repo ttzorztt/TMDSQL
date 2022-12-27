@@ -111,4 +111,9 @@
 该指令需要`pwd.size() > 1`,也就是说pwd中必须已经选择到数据库，可以选择到表，最起码当前已经指定数据库。
 
 ### `登录`
-- <font color="red">登录</font> <font color="blue">帐号</font> <font color="blue">密码</font>
+- <font color="red">登录</font> <font color="blue">帐号</font> <font color="blue">密码</font> <br>
+  - 登录失败显示:
+  >(?) -= > 登录失败!
+  - 登录成功:
+  >(?) -= > 登录成功，欢迎您,帐号!
+  

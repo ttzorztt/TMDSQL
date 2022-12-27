@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-27 17:39:01
+ * @LastEditTime : 2022-12-27 22:03:20
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -15,6 +15,10 @@
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
 #include "menuOutput.h"
+#endif
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
+#include <iostream>
 #endif
 std::unordered_map<std::string, TYPE_CID> shell::HashMapCID = {
     {"退出", 退出},    {"创建", 创建}, {"数据库", 数据库},
@@ -155,6 +159,7 @@ bool shell::check(std::string _str) {
       return false;
     }
   }
+  return true;
 }
 bool shell::read(std::string str) {
   if (!check(str)) {
@@ -194,7 +199,15 @@ bool shell::read(std::string str) {
       //   menuOutput::printPowerNoEnough(ReturnPower());
       // }
       // break;
-    case 登录:
+    case 登录: {
+      bool Login = false;
+      if (data.size() == 2) {
+        Login = this->login(data[0], data[1]);
+        pwd.push_back("/");
+      }
+      menuOutput::printLoginOrNot(Login, ReturnPower(),ReturnUserName());
+      break;
+    }
       // if (vectorbuff.size() != 3) {
       //   menuOutput::printCommandError(ReturnPower());
       // } else {
@@ -219,6 +232,9 @@ bool shell::read(std::string str) {
       // menuOutput::printCommandError(ReturnPower());
       break;
   }
+  menuOutput::printPower(ReturnPower());
+  command.clear();
+  data.clear();
   return false;
 }
 
@@ -285,8 +301,8 @@ void shell::toFind() {
   //   }
 }
 void shell::toShow() {
-  if(command.size() == 1 && data.size() == 0){
-    menuOutput::printPWD(pwd,ReturnPower());
+  if (command.size() == 1 && data.size() == 0) {
+    menuOutput::printPWD(pwd, ReturnPower());
   }
   //   if (!HashMapCID.count(value[1])) {
   //     menuOutput::printCommandError(ReturnPower());

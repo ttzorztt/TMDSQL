@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2022-12-27 17:34:37
+ * @LastEditTime : 2022-12-27 21:26:22
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -77,7 +77,8 @@ class menuOutput {
    * @param TYPE_POWER power 权限
    * @return
    */
-  inline void static printPower(TYPE_POWER power = TYPE_POWER::NONE);
+ void static printPower(TYPE_POWER power = TYPE_POWER::NONE);
+
  private:
   /**
    * @brief 换行输出

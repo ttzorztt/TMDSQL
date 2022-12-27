@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-27 17:45:14
+ * @LastEditTime : 2022-12-27 21:47:47
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -86,11 +86,12 @@ int main(int argc, char const* argv[]) {
   shell x;
   string tmp;
   while (1) {
-    while(cin.get() == '\n'){
-      menuOutput::printPower();
+    getline(cin, tmp);
+    if (tmp == "") {
+      menuOutput::printPower(x.ReturnPower());
+    } else {
+      x.read(tmp);
     }
-    cin >> tmp;
-    x.read(tmp);
   }
   // vstring v;
   // v.push_back("1");

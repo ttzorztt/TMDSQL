@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-27 11:57:25
+ * @LastEditTime : 2022-12-27 22:03:38
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -23,6 +23,10 @@
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
+#endif
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
+#include <iostream>
 #endif
 std::set<std::string> User::nameBuff;
 int User::count = 0;
@@ -77,6 +81,9 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
   this->addUser(UserName, UserPassword, TYPE_POWER::Manager);
   return true;
 }
+std::string User::ReturnUserName() const{
+  return this->UserName;
+}
 bool User::login() {
   pd.setReadSeek(0);
   UserVectorBuff;
@@ -84,7 +91,7 @@ bool User::login() {
     if (vectorbuff[0] == this->UserName) {
       if (vectorbuff[1] == this->UserPassword) {
         this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
-        ++this->count;
+         ++this->count;
         return true;
       } else {
         return false;
