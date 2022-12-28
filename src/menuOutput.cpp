@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2022-12-27 21:36:31
+ * @LastEditTime : 2022-12-28 08:38:49
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -53,8 +53,11 @@ void menuOutput::printNotExistsDatabase(TYPE_POWER power) {
 void menuOutput::printPWD(vstring& pwd, TYPE_POWER power) {
   printPower(power);
   print("当前路径为: ");
+  if(pwd.size() == 0){
+    print("[]");
+  }
   for (std::string& str : pwd) {
-    print(str);
+    print("[" + str + "]");
   }
   printl("");
 }

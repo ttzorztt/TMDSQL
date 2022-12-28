@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2022-12-27 21:47:47
+ * @LastEditTime : 2022-12-28 08:02:12
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -63,26 +63,27 @@ using namespace std;
  * @return
  */
 void init() {
-  if (!access("../data", F_OK)) {
+  if (access("../data", F_OK)) {
     mkdir("../data", 777);
   }
-  if (!access("../data/database", F_OK)) {
+  if (access("../data/database", F_OK)) {
     mkdir("../data/database", 777);
   }
-  if (!access("../data/index", F_OK)) {
+  if (access("../data/index", F_OK)) {
     mkdir("../data/index", 777);
   }
-  if (!access("../data/log", F_OK)) {
+  if (access("../data/log", F_OK)) {
     mkdir("../data/log", 777);
   }
-  if (!access("../data/PCB", F_OK)) {
+  if (access("../data/PCB", F_OK)) {
     mkdir("../data/PCB", 777);
   }
-  if (!access("../view", F_OK)) {
+  if (access("../view", F_OK)) {
     mkdir("../view", 777);
   }
 }
 int main(int argc, char const* argv[]) {
+  init();
   shell x;
   string tmp;
   while (1) {
