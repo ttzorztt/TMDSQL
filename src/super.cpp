@@ -2,40 +2,28 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-12-25 16:44:46
+ * @LastEditTime : 2022-12-30 11:01:06
  */
 
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
 #endif
-
-vstring _super::openDirReturnFileName(std::string truePath) {
-  bool isTableOrDatabase = true;
-  DIR* dirname = opendir(truePath.c_str());
-  struct dirent* dirInfo;
-  vstring vectorbuff;
-  int count = 2;
-  while ((dirInfo = readdir(dirname)) != 0) {
-    if (count > 0) {
-      --count;
-      continue;
-    }
-    std::string tmpname = dirInfo->d_name;
-    if (tmpname.substr(tmpname.size() - 4) == ".csv") {
-      vectorbuff.push_back(tmpname.substr(0, tmpname.size() - 4));
-    } else {
-      vectorbuff.push_back(tmpname);
-    }
-  }
-
-  return vectorbuff;
+bool  _super::createDir(std::string path) {
+#ifdef __WIN32__
+  return  mkdir(path.c_str());
+#endif
+#ifdef __linux__
+  return mkdir(path.c_str(), 777);
+#endif
 }
+
+
 
 bool _super::create() {
   return true;
 }
-void _super::stringToVector( const std::string& _str,revstring vec){
+void _super::stringToVector(const std::string& _str, revstring vec) {
   vec.clear();
   int left = 0;
   int right = 1;
@@ -74,8 +62,7 @@ _super::_super(_super& copy) {
 _super::_super(std::string name) {
   this->name = name;
 }
-vstring _super::dispartDatabaseNameAndTableName(
-    std::string TableName) {
+vstring _super::dispartDatabaseNameAndTableName(std::string TableName) {
   int size = TableName.size();
   if (size == 0) {
     return {};
@@ -111,7 +98,7 @@ std::string _super::returnTruePath(std::string Name, type style) {
       break;
     case type::_TYPE_TABLE:
       vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
-      return _tablePath +vectorbuff[0] + "/" + vectorbuff[1];
+      return _tablePath + vectorbuff[0] + "/" + vectorbuff[1];
     case type::_TYPE_INDEX_TABLE:
       return _indexPath + Name;
       break;
@@ -125,7 +112,7 @@ std::string _super::returnTruePath(std::string Name, type style) {
       vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
       return _PCBPath + vectorbuff[0] + "/" + vectorbuff[1];
       break;
-      case type::_TYPE_CREATE_PCB_DATABASE:
+    case type::_TYPE_CREATE_PCB_DATABASE:
       return _PCBPath + Name;
     default:
       break;

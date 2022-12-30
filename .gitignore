@@ -1,4 +1,4 @@
 src/*.o
 .vscode/
-TMSQL
-TMSQL.exe
+src/TMSQL
+src/TMSQL.exe

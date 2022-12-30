@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2022-12-27 16:15:36
+ * @LastEditTime : 2022-12-30 10:50:30
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -64,6 +64,8 @@ enum TYPE_POWER {
   NORMAL,   // 普通用户
   NONE      //未登录
 };
+
+
 static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 11},
                                                    {TYPE_POWER::Manager, 12},
                                                    {TYPE_POWER::ROOT, 16},
@@ -124,6 +126,12 @@ class _super {
   virtual bool remove();
   virtual int returnCount();
   virtual bool isExist();
+   /**
+ * @brief 不同操作系统下创建文件夹
+ * @param  string path 路径
+ * @return 
+ */
+ bool static createDir(std::string path);
   /**
    * @brief 返回类型
    * @return 返回类型
@@ -159,12 +167,7 @@ class _super {
    * @return
    */
   void static stringToVector(const std::string& str, revstring vec);
-  /**
-   * @brief <static> 返回目录中所有文件名字，即数据库中表名
-   * @param string truePath 路径
-   * @return 以vector的形式返回
-   */
-  vstring static openDirReturnFileName(std::string truePath);
+
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string name 路径+名字

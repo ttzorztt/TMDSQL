@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-12-27 09:35:37
+ * @LastEditTime : 2022-12-30 10:44:01
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -27,7 +27,7 @@ void _dir::forceremove() {
   _dir::forceremove(this->name);
 }
 bool _dir::remove() {
-  return _dir::remove(_super::returnTruePath(this->name,style));
+  return _dir::remove(_super::returnTruePath(this->name, style));
 }
 int _dir::returnCount() {
   return _dir::count;
@@ -36,18 +36,19 @@ bool _dir::isExist() {
   return _super::isExist(
       _super::returnTruePath(this->name, type::_TYPE_DATABASE));
 }
-_dir::_dir(std::string dirName,type style) : _super(dirName) {
+_dir::_dir(std::string dirName, type style) : _super(dirName) {
   this->style = style;
-  this->truePath = _super::returnTruePath(dirName,style);
-  }
-std::string _dir::returnTruePath(){
+  this->truePath = _super::returnTruePath(dirName, style);
+}
+std::string _dir::returnTruePath() {
   return this->truePath;
 }
-vstring _dir::openDirReturnFileName() {
+void _dir::openDirReturnFileName(vstring& ret) {
+  #ifdef __linux__
   DIR* dirname =
       opendir(_super::returnTruePath(this->name, type::_TYPE_DATABASE).c_str());
   struct dirent* dirInfo;
-  vstring ret;
+  
   int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
     if (count != 0) {
@@ -57,7 +58,20 @@ vstring _dir::openDirReturnFileName() {
     ret.push_back(dirInfo->d_name);
   }
   closedir(dirname);
-  return ret;
+  #endif
+  #ifdef __WIN32__
+  intptr_t handle;
+  _finddata_t findData;
+  handle = _findfirst(this->name.c_str(), &findData);  // 查找目录中的第一个文件
+  if (handle == -1) {
+    return ;
+  }
+  do {
+      ret.push_back(findData.name);
+  } while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件
+  _findclose(handle);  // 关闭搜索句柄
+  return;
+  #endif
 }
 bool _dir::create() {
   return _dir::create(
@@ -68,28 +82,41 @@ bool _dir::create() {
                                              type::_TYPE_CREATE_LOCK_DATABASE));
 }
 
-type _dir::returnType(){
+type _dir::returnType() {
   return this->style;
 }
-vstring _dir::openDirReturnFileName(std::string truePath) {
+void _dir::openDirReturnFileName(std::string truePath,vstring& ret) {
   if (!_super::isExist(truePath))
-    return {};
+    return ;
+  #ifdef __linux__
   DIR* dirname = opendir(truePath.c_str());
   struct dirent* dirInfo;
-  vstring vectorbuff;
   int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
     if (count != 0) {
       --count;
       continue;
     }
-    vectorbuff.push_back(dirInfo->d_name);
+    ret.push_back(dirInfo->d_name);
   }
   closedir(dirname);
-  return vectorbuff;
+  #endif
+  #ifdef __WIN32__
+  intptr_t handle;
+  _finddata_t findData;
+  handle = _findfirst(truePath.c_str(), &findData);  // 查找目录中的第一个文件
+  if (handle == -1) {
+    return ;
+  }
+  do {
+      ret.push_back(findData.name);
+  } while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件
+  _findclose(handle);  // 关闭搜索句柄
+  return;
+  #endif
 }
 bool _dir::create(std::string truePath) {
-  return mkdir(truePath.c_str(), 777) == 0;
+  return createDir(truePath.c_str());
 }
 bool _dir::remove(std::string truePath) {
   return rmdir(truePath.c_str()) == 0;
@@ -98,7 +125,7 @@ bool _dir::remove(std::string truePath) {
 void _dir::forceremove(std::string Name) {
   std::string truePath = _super::returnTruePath(Name, type::_TYPE_DATABASE);
   vstring vectorbuff;
-  vectorbuff = _dir::openDirReturnFileName(truePath);
+  _dir::openDirReturnFileName(truePath,vectorbuff);
   for (std::string& str : vectorbuff) {
     _file::remove(truePath + "/" + str);
     std::cout << truePath + "/" + str << std::endl;

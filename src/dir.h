@@ -2,8 +2,9 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-12-27 09:32:57
+ * @LastEditTime : 2022-12-30 12:30:01
  */
+#pragma execution_character_set("utf-8")
 #ifndef _DIR_
 #define _DIR_
 #ifndef _STRING_
@@ -25,6 +26,12 @@
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
+#endif
+#ifdef __WIN32__
+#ifndef _IO_
+#define _IO_
+#include <io.h>
+#endif
 #endif
 /**
  * @brief 封装一些对目录操作的函数
@@ -95,15 +102,18 @@ class _dir : public _super {
   bool static remove(std::string truePath);
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
-   * @param string truePath 目录
-   * @return 以vector的形式返回
+   * @param  string truePath 目录 
+   * @param  vstring ret string数组
+   * @return  
    */
-  vstring static openDirReturnFileName(std::string truePath);
+  void static openDirReturnFileName(std::string truePath,vstring& ret);
+
   /**
    * @brief 返回默认目录中所有文件名字，即数据库中表名
-   * @return 以vector的形式返回
+   * @param  vstring& ret string数组
+   * @return  
    */
-  vstring openDirReturnFileName();
+  void openDirReturnFileName(vstring& ret);
   std::string returnTruePath();
  private:
   // 记录由_dir打开的文件
