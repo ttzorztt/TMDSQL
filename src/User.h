@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-27 22:02:48
+ * @LastEditTime : 2022-12-30 19:18:20
  */
 
 #ifndef _STRING_
@@ -52,6 +52,7 @@ class User {
    * @return 正常登录True，登录错误False
    */
   bool login();
+
   /**
    * @brief 添加用户
    * @param  string UserName 帐号
@@ -61,19 +62,24 @@ class User {
    */
   void addUser(std::string UserName,std::string UserPassword,TYPE_POWER power);
  public:
+   /**
+   * @brief 退出登录
+   * @return  
+   */
+  void exitLogin();
   /**
    * @brief 数据库中有没有表
    * @param string DatabaseName 数据库名
    * @param  string tableName 表名
    * @return  true表示有，false表示没有
    */
-  bool DatabaseHaveTable(std::string DatabaseName,std::string tableName);
+  bool static DatabaseHaveTable(std::string DatabaseName,std::string tableName);
   /**
    * @brief 有没有该数据库
    * @param  string DatabaseName 数据库名
    * @return true表示有，false表示没有
    */
-  bool HaveDatabase(std::string DatabaseName);
+  bool static HaveDatabase(std::string DatabaseName);
  /**
   * @brief 返回登录状态
   * @return  True表示登录正常，False表示登录错误

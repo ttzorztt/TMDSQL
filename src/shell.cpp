@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-27 22:03:20
+ * @LastEditTime : 2022-12-31 21:22:32
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -21,11 +21,11 @@
 #include <iostream>
 #endif
 std::unordered_map<std::string, TYPE_CID> shell::HashMapCID = {
-    {"退出", 退出},    {"创建", 创建}, {"数据库", 数据库},
-    {"删除", 删除},    {"选择", 选择}, {"重命名", 重命名},
-    {"登录", 登录},    {"显示", 显示}, {"插入", 插入},
-    {"查询", 查询},    {"表", 表},     {"普通用户", 普通用户},
-    {"管理员", 管理员}};
+    {"退出", 退出},     {"创建", 创建}, {"数据库", 数据库},
+    {"删除", 删除},     {"选择", 选择}, {"重命名", 重命名},
+    {"登录", 登录},     {"显示", 显示}, {"插入", 插入},
+    {"查询", 查询},     {"表", 表},     {"普通用户", 普通用户},
+    {"管理员", 管理员}, {"执行", 执行}};
 shell::shell() : User() {
   menuOutput::printPower();
 }
@@ -171,12 +171,9 @@ bool shell::read(std::string str) {
       toChoose();
       break;
     case 退出:
-      // if (vectorbuff.size() == 1) {
-      //   menuOutput::printExit(ReturnPower());
-      // } else {
-      //   menuOutput::printCommandError(ReturnPower());
-      // }
-      // break;
+      exitLogin();
+      menuOutput::printExit(ReturnPower());
+      break;
     case 创建:
       // if (ReturnPower() < 2) {  // 管理员和超级管理员权限
       //   toCreate(vectorbuff);
@@ -205,7 +202,7 @@ bool shell::read(std::string str) {
         Login = this->login(data[0], data[1]);
         pwd.push_back("/");
       }
-      menuOutput::printLoginOrNot(Login, ReturnPower(),ReturnUserName());
+      menuOutput::printLoginOrNot(Login, ReturnPower(), ReturnUserName());
       break;
     }
       // if (vectorbuff.size() != 3) {

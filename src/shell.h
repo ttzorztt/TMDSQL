@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-27 17:18:46
+ * @LastEditTime : 2022-12-30 19:06:15
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -65,6 +65,7 @@ class shell : public User {
    * @return 没有问题的话，返回true，否则返回false;
    */
   bool aidCheckData(std::string _str);
+  
   /**
    * @brief 输出选择后的操作
    * @return  

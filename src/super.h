@@ -87,7 +87,8 @@ enum TYPE_CID {
   查询,
   表,
   普通用户,
-  管理员
+  管理员,
+  执行
 };
 typedef std::vector<TYPE_CID> vCID;
 enum type {

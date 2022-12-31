@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-27 22:03:38
+ * @LastEditTime : 2022-12-31 07:32:51
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -29,6 +29,7 @@
 #include <iostream>
 #endif
 std::set<std::string> User::nameBuff;
+std::set<std::string> User::nowLoginId;
 int User::count = 0;
 _file User::pd(_TruePathForUserData);
 User::User()
@@ -53,6 +54,13 @@ void User::readAllNameDate() {
   UserVectorBuff;
   while (pd.readline(vectorbuff)) {
     User::nameBuff.insert(vectorbuff[0]);
+  }
+}
+void User::exitLogin(){
+  if(loginStatus){
+  this->power = TYPE_POWER::NONE;
+  this->loginStatus = false;
+  this->nowLoginId.erase(this->UserName);
   }
 }
 void User::addUser(std::string UserName,
@@ -82,7 +90,7 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
   return true;
 }
 std::string User::ReturnUserName() const{
-  return this->UserName;
+  return (this->loginStatus) ? this->UserName : "";
 }
 bool User::login() {
   pd.setReadSeek(0);
