@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-01 17:43:45
+ * @LastEditTime : 2023-01-01 17:48:15
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -83,6 +83,10 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
+  ifstream fi("../data/database/testdatabase2/TMD");
+  string st;
+  fi >> st;
+  return 0;
   _file file("../data/database/testdatabase2/TMD");
   std::cout << file.isExist() << std::endl;
   vstring t;
