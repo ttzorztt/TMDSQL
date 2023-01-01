@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2022-12-31 21:22:32
+ * @LastEditTime : 2023-01-01 17:07:08
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -16,17 +16,24 @@
 #define _MENUOUTPUT_H_
 #include "menuOutput.h"
 #endif
+#ifndef _DATABASE_H_
+#define _DATABASE_H_
+#include "DataBase.h"
+#endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
+#endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
 #endif
 std::unordered_map<std::string, TYPE_CID> shell::HashMapCID = {
-    {"退出", 退出},     {"创建", 创建}, {"数据库", 数据库},
-    {"删除", 删除},     {"选择", 选择}, {"重命名", 重命名},
-    {"登录", 登录},     {"显示", 显示}, {"插入", 插入},
-    {"查询", 查询},     {"表", 表},     {"普通用户", 普通用户},
+    {"退出", 退出},     {"创建", 创建},     {"数据库", 数据库}, {"删除", 删除},
+    {"选择", 选择},     {"重命名", 重命名}, {"登录", 登录},     {"显示", 显示},
+    {"插入", 插入},     {"查询", 查询},     {"表", 表},         {"用户", 用户},
     {"管理员", 管理员}, {"执行", 执行}};
-shell::shell() : User() {
+shell::shell() : User(), commandCount(0), need(true) {
   menuOutput::printPower();
 }
 shell::~shell() {}
@@ -65,7 +72,7 @@ void shell::toChoose() {
 void shell::toChooseDatabase() {
   switch (pwd.size()) {
     case 0: {
-      menuOutput::printNotLogin();
+      menuOutput::printNotLogin(need);
     }
     case 1:
     case 2:
@@ -75,7 +82,7 @@ void shell::toChooseDatabase() {
         pwd.push_back("/");
         pwd.push_back(data[0]);
       } else {
-        menuOutput::printCommandError(ReturnPower());
+        menuOutput::printCommandError(ReturnPower(), need);
       }
     }
     default: {
@@ -87,20 +94,20 @@ void shell::toChooseDatabase() {
 void shell::toChooseTable() {
   switch (pwd.size()) {
     case 0: {
-      menuOutput::printNotLogin();
+      menuOutput::printNotLogin(need);
       return;
     }
     case 1: {
-      menuOutput::printNotChooseDatabase(ReturnPower());
+      menuOutput::printNotChooseDatabase(ReturnPower(), need);
       return;
     }
     case 2:
     case 3: {
-      if (User::DatabaseHaveTable(pwd[2], data[0])) {
+      if (User::DatabaseHaveTable(pwd[1], data[0])) {
         pwd.push_back(data[0]);
         return;
       } else {
-        menuOutput::printDatabaseNotHaveTable(ReturnPower());
+        menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
       }
       break;
     }
@@ -117,7 +124,7 @@ void shell::toChooseDatabaseTable() {
     pwd.push_back(data[0]);
     pwd.push_back(data[1]);
   } else {
-    menuOutput::printCommandError(ReturnPower());
+    menuOutput::printCommandError(ReturnPower(), need);
   }
   return;
 }
@@ -129,9 +136,7 @@ bool shell::aidCheckData(std::string _str) {
   }
   return true;
 }
-bool shell::check(std::string _str) {
-  vstring vectorbuff;
-  _super::stringToVector(_str, vectorbuff);
+bool shell::check(revstring vectorbuff) {
   int size = vectorbuff.size();
   if (size == 0 || !(HashMapCID.count(vectorbuff[0]))) {
     return false;
@@ -161,27 +166,30 @@ bool shell::check(std::string _str) {
   }
   return true;
 }
-bool shell::read(std::string str) {
-  if (!check(str)) {
-    menuOutput::printCommandError(ReturnPower());
-    return false;
-  }
+bool shell::check(std::string _str) {
+  vstring vectorbuff;
+  _super::stringToVector(_str, vectorbuff);
+  return check(vectorbuff);
+}
+
+void shell::read() {
+  ++commandCount;
   switch (command[0]) {
     case 选择:
       toChoose();
       break;
     case 退出:
       exitLogin();
-      menuOutput::printExit(ReturnPower());
+      menuOutput::printExit(ReturnPower(), need);
       break;
     case 创建:
-      // if (ReturnPower() < 2) {  // 管理员和超级管理员权限
-      //   toCreate(vectorbuff);
-      // } else {
-      //   menuOutput::printPowerNoEnough(
-      //       ReturnPower());  // 普通用户或未登录没有权限创建
-      // }
-      // break;
+      if (ReturnPower() < 2) {  // 管理员和超级管理员权限
+        toCreate();
+      } else {
+        menuOutput::printPowerNoEnough(
+            ReturnPower());  // 普通用户或未登录没有权限创建
+      }
+      break;
     case 删除:
       // if (ReturnPower() < 2) {
       //   toDelete(vectorbuff);
@@ -200,9 +208,10 @@ bool shell::read(std::string str) {
       bool Login = false;
       if (data.size() == 2) {
         Login = this->login(data[0], data[1]);
+        pwd.clear();
         pwd.push_back("/");
       }
-      menuOutput::printLoginOrNot(Login, ReturnPower(), ReturnUserName());
+      menuOutput::printLoginOrNot(Login, ReturnPower(), ReturnUserName(), need);
       break;
     }
       // if (vectorbuff.size() != 3) {
@@ -225,17 +234,82 @@ bool shell::read(std::string str) {
     case 显示:
       toShow();
       break;
+    case 执行:
+      toExecute();
+      break;
     default:
       // menuOutput::printCommandError(ReturnPower());
       break;
   }
-  menuOutput::printPower(ReturnPower());
   command.clear();
   data.clear();
-  return false;
 }
-
+void shell::read(std::string str) {
+  if (!check(str)) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
+  read();
+}
+void shell::read(revstring value) {
+  if (!check(value)) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
+  read();
+}
+void shell::toExecute() {
+  _file file("../data/SQL/" + data[0]);
+  if (!file.isExist()) {
+    menuOutput::printNotFindSQL(ReturnPower());
+    return;
+  }
+  vstring tmp;
+  command.clear();
+  data.clear();
+  this->need = false;
+  while (file.readline(tmp)) {
+    if (!tmp.size()) {
+      return;
+    }
+    read(tmp);
+  }
+  this->need = true;
+  menuOutput::printPower(ReturnPower());
+}
 void shell::toCreate() {
+  if (command.size() == 0 || command.size() > 2 || data.size() == 0 ||
+      data.size() > 2) {
+    menuOutput::printCommandError(ReturnPower(), need);
+  }
+  switch (command[1]) {
+    case 数据库:
+      if (command.size() == 2 && data.size() == 1) {
+        toCreateDatabase();
+      }
+      break;
+    case 表:
+    if (command.size() == 2 && data.size() == 1) {
+      toCreateTable();
+    }
+      break;
+    case 用户:
+    if (command.size() == 2 && data.size() == 2) {
+      toCreateUser();
+    }
+      break;
+    case 管理员:
+    if(ReturnPower()){
+      menuOutput::printPowerNoEnough(ReturnPower(),need);
+    }
+    if (command.size() == 2 && data.size() == 2) {
+      toCreateManager();
+    }
+      break;
+    default:
+      menuOutput::printCommandError(ReturnPower(), need);
+      break;
+  }
   //   if (!HashMapCID.count(value[1])) {
   //     menuOutput::printCommandError(ReturnPower());
   //   }
@@ -247,11 +321,33 @@ void shell::toCreate() {
   //       toCreateDatabase(value);
   //       break;
   //     default:
-  //       menuOutput::printCommandError(ReturnPower());
+  //
   //   }
 }
-void shell::toCreateTable() {}
-void shell::toCreateDatabase() {}
+void shell::toCreateTable() {
+  Table table(data[0],type::_TYPE_TABLE);
+  if(table.isExist()){
+    menuOutput::printTableIsExists(ReturnPower(),need);
+  }else{
+    table.create();
+  }
+}
+void shell::toCreateDatabase() {
+  DataBase database(data[0]);
+  if(database.isExist()){
+    menuOutput::printDatabaseIsExists(ReturnPower(),need);
+  }else{
+    database.create();
+  }
+}
+void shell::toCreateManager(){
+  User tmp;
+  tmp.addNormalUser(data[0],data[1]);
+}
+void shell::toCreateUser(){
+  User tmp;
+  tmp.addNormalUser(data[0],data[1]);
+}
 void shell::toDelete() {
   //   if (!HashMapCID.count(value[1])) {
   //     menuOutput::printCommandError(ReturnPower());
@@ -299,7 +395,7 @@ void shell::toFind() {
 }
 void shell::toShow() {
   if (command.size() == 1 && data.size() == 0) {
-    menuOutput::printPWD(pwd, ReturnPower());
+    menuOutput::printPWD(pwd, ReturnPower(), need);
   }
   //   if (!HashMapCID.count(value[1])) {
   //     menuOutput::printCommandError(ReturnPower());

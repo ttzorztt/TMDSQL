@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2022-12-30 19:06:15
+ * @LastEditTime : 2023-01-01 14:38:28
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -29,13 +29,6 @@
 
 class shell : public User {
  public:
-  /**
-   * @brief 登录
-   * @param  string ID 帐号
-   * @param  string password 密码
-   * @return
-   */
-  bool logn(std::string ID, std::string password);
   shell();
   ~shell();
   /**
@@ -43,16 +36,38 @@ class shell : public User {
    * @param  string data 数据
    * @return 符合语法返回True，否则返回False
    */
-  bool read(std::string data);
+  void read(std::string data);
+  /**
+   * @brief 读入数据
+   * @param  revstring data string数组
+   * @return  符合语法返回True，否则返回false
+   */
+  void read(revstring data);
  private:
   // 当前工作路径
   vstring pwd;
   // CID
   static std::unordered_map<std::string, TYPE_CID> HashMapCID;
-  // 指令
+  // 用户输入指令
   vCID command;
   // 用户输入数据
   vstring data;
+  // 用户输入的指令计数
+  int commandCount;
+  // 是否需要显示提示符
+  bool need;
+  /**
+   * @brief 执行指令
+   * @return 语法正确与否
+   */
+  void read();
+  /**
+   * @brief 登录
+   * @param  string ID 帐号
+   * @param  string password 密码
+   * @return
+   */
+  bool logn(std::string ID, std::string password);
   /**
    * @brief 语法检查以及指令与数据分类存储
    * @param  string _str 待检查字符串
@@ -60,30 +75,40 @@ class shell : public User {
    */
   bool check(std::string _str);
   /**
+   * @brief 语法检查以及指令与数据分类存储
+   * @param  revstring value string 数组
+   * @return 指令的语法检查
+   */
+  bool check(revstring value);
+  /**
    * @brief 语法检查是否含有'/'，'!'等违规字符
    * @param  string _str 待检查字符
    * @return 没有问题的话，返回true，否则返回false;
    */
   bool aidCheckData(std::string _str);
-  
+  /**
+   * @brief 执行脚本
+   * @return
+   */
+  void toExecute();
   /**
    * @brief 输出选择后的操作
-   * @return  
+   * @return
    */
   void toChoose();
   /**
    * @brief 输出选择表后的操作
-   * @return  
+   * @return
    */
   void toChooseTable();
   /**
    * @brief 输入选择数据库后的操作
-   * @return  
+   * @return
    */
   void toChooseDatabase();
   /**
    * @brief 输入选择数据库表后的操作
-   * @return  
+   * @return
    */
   void toChooseDatabaseTable();
   /**
@@ -116,6 +141,16 @@ class shell : public User {
    * @return
    */
   void toCreateDatabase();
+  /**
+   * @brief 输入创建管理员后的操作
+   * @return  
+   */
+  void toCreateManager();
+  /**
+   * @brief 输入创建用户后的操作
+   * @return  
+   */
+  void toCreateUser();
   /**
    * @brief 输入删除后的操作
    * @return

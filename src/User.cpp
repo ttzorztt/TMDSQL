@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2022-12-31 07:32:51
+ * @LastEditTime : 2023-01-01 17:36:21
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -37,7 +37,11 @@ User::User()
       reset(false),
       power(TYPE_POWER::NONE),
       UserName(""),
-      UserPassword("") {}
+      UserPassword("") {
+  if (nameBuff.size() == 0) {
+    this->readAllNameDate();
+  }
+}
 User::User(std::string UserName, std::string UserPassword)
     : UserName(UserName),
       UserPassword(UserPassword),
@@ -56,11 +60,11 @@ void User::readAllNameDate() {
     User::nameBuff.insert(vectorbuff[0]);
   }
 }
-void User::exitLogin(){
-  if(loginStatus){
-  this->power = TYPE_POWER::NONE;
-  this->loginStatus = false;
-  this->nowLoginId.erase(this->UserName);
+void User::exitLogin() {
+  if (loginStatus) {
+    this->power = TYPE_POWER::NONE;
+    this->loginStatus = false;
+    this->nowLoginId.erase(this->UserName);
   }
 }
 void User::addUser(std::string UserName,
@@ -89,17 +93,19 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
   this->addUser(UserName, UserPassword, TYPE_POWER::Manager);
   return true;
 }
-std::string User::ReturnUserName() const{
+std::string User::ReturnUserName() const {
   return (this->loginStatus) ? this->UserName : "";
 }
 bool User::login() {
   pd.setReadSeek(0);
   UserVectorBuff;
   while (pd.readline(vectorbuff)) {
+    std::cout << "************************" << std::endl;
+    std::cout << vectorbuff[0] << " " << vectorbuff[1] << std::endl;
     if (vectorbuff[0] == this->UserName) {
       if (vectorbuff[1] == this->UserPassword) {
         this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
-         ++this->count;
+        ++this->count;
         return true;
       } else {
         return false;
@@ -117,8 +123,8 @@ bool User::login(std::string UserName, std::string UserPassword) {
 bool User::ReturnLoginStatus() const {
   return this->loginStatus;
 }
-bool User::DatabaseHaveTable(std::string DatabaseName,std::string TableName){
- return Table(DatabaseName + "/" +TableName,type::_TYPE_TABLE).isExist();
+bool User::DatabaseHaveTable(std::string DatabaseName, std::string TableName) {
+  return Table(DatabaseName + "/" + TableName, type::_TYPE_TABLE).isExist();
 }
 void User::resetPassword(std::string Userpassword) {
   if (!this->loginStatus) {
@@ -129,7 +135,7 @@ void User::resetPassword(std::string Userpassword) {
   _file tmp(_TruePathForUserData);
   this->reset = true;
 }
-bool User::HaveDatabase(std::string DatabaseName){
+bool User::HaveDatabase(std::string DatabaseName) {
   return DataBase(DatabaseName).isExist();
 }
 TYPE_POWER User::ReturnPower() const {

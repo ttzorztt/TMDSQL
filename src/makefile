@@ -1,4 +1,4 @@
-TMDSQL: mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Lockl.o Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o TMDSQL.exe
+TMDSQL: mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Lockl.o Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o 
 	g++ -static mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Lockl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o -o TMDSQL
 	./TMDSQL
 TMDSQL.exe: mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Lockw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o

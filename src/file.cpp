@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2022-12-22 10:27:26
+ * @LastEditTime : 2023-01-01 17:26:51
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -170,12 +170,16 @@ bool _file::write(std::string Name,
   return tmd.write(str, mode);
 }
 bool _file::readline(revstring ret) {
+  ret.clear();
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
   if (this->returnReadFileBuff().eof()) {
     return false;
   }
-  getline(readFileBuff, _str); 
+  getline(readFileBuff, _str);
+  if(_str == ""){
+    return false;
+  }
   _super::stringToVector(_str,ret);
   return true;
 }

@@ -96,8 +96,6 @@
   >(超级管理员) -=> 
 ## 支持语句
   > 总体来说，TMDSQL支持中文，且关键字之间用`空格`隔开，结尾没有封号，每条指令必读独立占据一行。
-
-
 - **以下对于指令介绍，由于未知用户权限，将未知用户的用户提示符改为`(?) -=>`**
 - **红色字体为关键字，蓝色字体为用户输入随意字符串,需要使用@开头，后面的则不需要**
 ### `选择`
@@ -137,11 +135,16 @@
   >(?) -= > 登录成功，欢迎您,帐号!
 
 ### `执行`
+- <font color="red">执行</font>  &nbsp; &nbsp; <font color="blue">@脚本名</font> 
+  > path是执行SQL语句的脚本文件。编码格式无论是windows系统版本还是linux版本，均需要采取UTF-8的编码格式。 <br>
 
-### `帮助`
+- **注意: 需要将脚本放置于./data/SQL目录下，然后使用如上指令，脚本名需要是放置在SQL的全程，带后缀的那种。**
 
-
-
+### `创建`
+-  <font color="red">创建</font>  <font color="red">普通用户</font>  <font color="blue">@ID</font>  <font color="blue">Password</font>  
+> 该指令需要OP < 2,也就是需要管理员权限或者超级管理员ROOT权限才能执行。该指令会添加密码为Password的普通用户ID
+-  <font color="red">创建</font>  <font color="red">管理员</font>  <font color="blue">@ID</font>  <font color="blue">password</font> 
+> 该指令需要OP < 1,也就是需要超级管理员ROOT权限才能执行。会添加密码为password的管理员ID。
 ## BUG记录
 ### linux下交叉编译windows程序
 > 安装Mingw，命令如下：
