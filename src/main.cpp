@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-01 17:48:15
+ * @LastEditTime : 2023-01-02 20:41:01
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -83,37 +83,26 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
-  ifstream fi("../data/database/testdatabase2/TMD");
-  string st;
-  fi >> st;
-  return 0;
-  _file file("../data/database/testdatabase2/TMD");
-  std::cout << file.isExist() << std::endl;
-  vstring t;
-  while(file.readline(t)){
-    std::cout << t.size() << std::endl;
-  }
-  file.setReadSeek(0);
-  std::cout << "sss" << std::endl;
-  while(file.readline(t)){
-    std::cout << t.size() << std::endl;
-  }
-  // User user("root","root");
-  // cout << user.ReturnPower() << " " << user.ReturnLoginStatus() << endl;
-  // user.addNormalUser("aaa","aaa");
-  return 0;
+  // ifstream fi("../data/database/testdatabase2/TMD");
+  // string st;
+  // fi >> st;
+  // cout << st;
+  // fi.seekg(0, std::ios::beg);
+  // fi >> st;
+  // cout << st;
+  // return 0;
   init();
   shell x;
   string tmp = "执行 @SQL";
   x.read(tmp);
-  // while (1) {
-  //   getline(cin, tmp);
-  //   if (tmp == "") {
-  //     menuOutput::printPower(x.ReturnPower());
-  //   }else  {
-  //     x.read(tmp);
-  //   }
-  // }
+  while (1) {
+    getline(cin, tmp);
+    if (tmp == "") {
+      menuOutput::printPower(x.ReturnPower());
+    }else  {
+      x.read(tmp);
+    }
+  }
   // vstring v;
   // v.push_back("1");
   // v.push_back("2");

@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-01 17:26:51
+ * @LastEditTime : 2023-01-02 20:37:49
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -93,6 +93,10 @@ void _file::setOpenBuff(MODE mode) {
 }
 
 void _file::setReadSeek(POINTER fileIndex) {
+  if(this->readFileBuff.eof()){
+    this->readFileBuff.clear();
+    this->readFileBuff.open(this->truePath);
+  }
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
 void _file::setWriteSeek(POINTER fileIndex) {

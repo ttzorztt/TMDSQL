@@ -165,3 +165,8 @@ sudo apt install mingw-w64*
 ```bash
 x86_64-w64-mingw32-g++ -static -c xxx.cpp -o xxx.o
 ```
+
+### ifstream 的seekg失效
+> 在读取文件的时候，读取到文件结尾后尝试使用seekg设置指针重新指向-1，但无法使用readline读取，诡异的是使用tellg返回的居然是设置后的-1。
+- 尝试1: 使用clear函数，无效。如果没有查询到eof重新设置seek有效，但并不知道是否到了eof。
+- 尝试2: 既然最开始可以使用，那么不如关闭后重新打开。成功。如此每次setseek的时候，查看一下eof的状态。如果达到文件尾的时候，就close后重新open。

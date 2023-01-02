@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2022-12-27 09:56:54
+ * @LastEditTime : 2023-01-02 14:07:27
  */
 #ifndef _FILE_
 #define _FILE_
@@ -44,13 +44,6 @@ class _file : public _super {
    * @param MODE mode 文件打开模式
    */
   void setOpenBuff(MODE mode);
-   /**
-   * @brief
-   * 判断文件是否存在打开,若没打开或者希望关闭则返回False，若文件打开则判断readbuff是否打开,若没有打开则打开，若已经打开，则啥也不干
-   * @param bool need 期望文件状态，True期望文件存在，False期望文件不存在
-   * @return 文件状态为need，则返回True
-   */
-  bool readBuffOpen(bool need);
      /**
     * @brief 输入PCB
     * @return  

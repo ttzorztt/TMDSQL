@@ -208,8 +208,9 @@ void shell::read() {
       bool Login = false;
       if (data.size() == 2) {
         Login = this->login(data[0], data[1]);
-        pwd.clear();
-        pwd.push_back("/");
+        if (pwd.size() == 0) {
+          pwd.push_back("/");
+        }
       }
       menuOutput::printLoginOrNot(Login, ReturnPower(), ReturnUserName(), need);
       break;
@@ -289,22 +290,22 @@ void shell::toCreate() {
       }
       break;
     case 表:
-    if (command.size() == 2 && data.size() == 1) {
-      toCreateTable();
-    }
+      if (command.size() == 2 && data.size() == 1) {
+        toCreateTable();
+      }
       break;
     case 用户:
-    if (command.size() == 2 && data.size() == 2) {
-      toCreateUser();
-    }
+      if (command.size() == 2 && data.size() == 2) {
+        toCreateUser();
+      }
       break;
     case 管理员:
-    if(ReturnPower()){
-      menuOutput::printPowerNoEnough(ReturnPower(),need);
-    }
-    if (command.size() == 2 && data.size() == 2) {
-      toCreateManager();
-    }
+      if (ReturnPower()) {
+        menuOutput::printPowerNoEnough(ReturnPower(), need);
+      }
+      if (command.size() == 2 && data.size() == 2) {
+        toCreateManager();
+      }
       break;
     default:
       menuOutput::printCommandError(ReturnPower(), need);
@@ -325,28 +326,28 @@ void shell::toCreate() {
   //   }
 }
 void shell::toCreateTable() {
-  Table table(data[0],type::_TYPE_TABLE);
-  if(table.isExist()){
-    menuOutput::printTableIsExists(ReturnPower(),need);
-  }else{
+  Table table(data[0], type::_TYPE_TABLE);
+  if (table.isExist()) {
+    menuOutput::printTableIsExists(ReturnPower(), need);
+  } else {
     table.create();
   }
 }
 void shell::toCreateDatabase() {
   DataBase database(data[0]);
-  if(database.isExist()){
-    menuOutput::printDatabaseIsExists(ReturnPower(),need);
-  }else{
+  if (database.isExist()) {
+    menuOutput::printDatabaseIsExists(ReturnPower(), need);
+  } else {
     database.create();
   }
 }
-void shell::toCreateManager(){
+void shell::toCreateManager() {
   User tmp;
-  tmp.addNormalUser(data[0],data[1]);
+  tmp.addNormalUser(data[0], data[1]);
 }
-void shell::toCreateUser(){
+void shell::toCreateUser() {
   User tmp;
-  tmp.addNormalUser(data[0],data[1]);
+  tmp.addNormalUser(data[0], data[1]);
 }
 void shell::toDelete() {
   //   if (!HashMapCID.count(value[1])) {

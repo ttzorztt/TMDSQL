@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-01 17:36:21
+ * @LastEditTime : 2023-01-02 20:36:14
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -77,18 +77,16 @@ void User::addUser(std::string UserName,
   vectorbuff.push_back(std::to_string((int)power));
   pd.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
   ++count;
-  if (nameBuff.size() == 0) {
-    this->readAllNameDate();
-  }
+  nameBuff.insert(UserName);
 }
 bool User::addNormalUser(std::string UserName, std::string Userpassword) {
-  if (power >= 2)
+  if (power >= 2 || nameBuff.count(UserName))
     return false;
   this->addUser(UserName, UserPassword, TYPE_POWER::NORMAL);
   return true;
 }
 bool User::addManagerUser(std::string UserName, std::string Userpassword) {
-  if (power >= 1)
+  if (power >= 1 ||  nameBuff.count(UserName))
     return false;
   this->addUser(UserName, UserPassword, TYPE_POWER::Manager);
   return true;
