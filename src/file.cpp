@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-02 20:37:49
+ * @LastEditTime : 2023-01-03 21:27:00
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -94,7 +94,7 @@ void _file::setOpenBuff(MODE mode) {
 
 void _file::setReadSeek(POINTER fileIndex) {
   if(this->readFileBuff.eof()){
-    this->readFileBuff.clear();
+    this->readFileBuff.close();
     this->readFileBuff.open(this->truePath);
   }
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
@@ -177,6 +177,7 @@ bool _file::readline(revstring ret) {
   ret.clear();
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
+  
   if (this->returnReadFileBuff().eof()) {
     return false;
   }

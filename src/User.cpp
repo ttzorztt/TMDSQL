@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-02 20:36:14
+ * @LastEditTime : 2023-01-03 21:28:01
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -80,8 +80,11 @@ void User::addUser(std::string UserName,
   nameBuff.insert(UserName);
 }
 bool User::addNormalUser(std::string UserName, std::string Userpassword) {
-  if (power >= 2 || nameBuff.count(UserName))
+  if (power >= 2 || nameBuff.count(UserName)){
+    std::cout << "TTT" << std::endl;
     return false;
+  }
+    
   this->addUser(UserName, UserPassword, TYPE_POWER::NORMAL);
   return true;
 }
@@ -98,9 +101,7 @@ bool User::login() {
   pd.setReadSeek(0);
   UserVectorBuff;
   while (pd.readline(vectorbuff)) {
-    std::cout << "************************" << std::endl;
-    std::cout << vectorbuff[0] << " " << vectorbuff[1] << std::endl;
-    if (vectorbuff[0] == this->UserName) {
+     if (vectorbuff[0] == this->UserName) {
       if (vectorbuff[1] == this->UserPassword) {
         this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
         ++this->count;

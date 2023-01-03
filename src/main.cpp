@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-02 20:41:01
+ * @LastEditTime : 2023-01-03 21:29:50
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -83,6 +83,7 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
+
   // ifstream fi("../data/database/testdatabase2/TMD");
   // string st;
   // fi >> st;
@@ -95,14 +96,14 @@ int main(int argc, char const* argv[]) {
   shell x;
   string tmp = "执行 @SQL";
   x.read(tmp);
-  while (1) {
-    getline(cin, tmp);
-    if (tmp == "") {
-      menuOutput::printPower(x.ReturnPower());
-    }else  {
-      x.read(tmp);
-    }
-  }
+  // while (1) {
+  //   getline(cin, tmp);
+  //   if (tmp == "") {
+  //     menuOutput::printPower(x.ReturnPower());
+  //   }else  {
+  //     x.read(tmp);
+  //   }
+  // }
   // vstring v;
   // v.push_back("1");
   // v.push_back("2");
