@@ -97,26 +97,26 @@
 ## 支持语句
   > 总体来说，TMDSQL支持中文，且关键字之间用`空格`隔开，结尾没有封号，每条指令必读独立占据一行。
 - **以下对于指令介绍，由于未知用户权限，将未知用户的用户提示符改为`(?) -=>`**
-- **红色字体为关键字，蓝色字体为用户输入随意字符串,需要使用@开头，后面的则不需要**
+- **加粗字体为关键字，斜体为用户输入随意字符串,需要使用@开头，后面的则不需要**
 ### `选择`
 - 使用 `选择`指令，首先判断是否登录，如果没有登录，无法操作，登录后根据登录帐号的权限，使用该指令会让当前shell的pwd改变，但是需要先选择数据库，然后选择表. <br>
 如果使用选择类指令的时候，pwd.size() == 0,也就是没有登录，则会输出: <br>
   >(未登录) -=> 未登录,请登录后操作!
-- <font color="red">选择</font> <font color="red">数据库</font> <font style=color:blue>@测试数据库1</font> <br> 
+- **选择** &nbsp; **数据库** &nbsp; _@测试数据库1_ <br> 
     pwd.size() > 0，不管当前pwd到达那一步，都可以直接修改pwd
-- <font color="red">选择</font> <font color="red">表</font> <font color="blue">@测试表1</font>
+- **选择** &nbsp; **表** &nbsp; _@测试表1_
   - pwd.size() == 1,表示当前没有选择数据库，则无法选择，提示: <br>
       >(?) -= > 无法执行该指令，请先选择数据库!
-  - pwd.size() == 2 表示已经选择数据库，且已经选择的数据库中有没有<font color="blue">测试表1</font>,提示: <br>
+  - pwd.size() == 2 表示已经选择数据库，且已经选择的数据库中有没有测试表1,提示: <br>
       >(?) -= > 无法执行该指令，该数据库中不存在此表
 
-- <font color="red">选择</font> <font color="red">数据库</font> <font color="red">表</font> <font color="blue">@测试数据库1</font> <font color="blue">测试表1</font> <br>
+- **选择** &nbsp; **数据库** &nbsp; **表** &nbsp; _@测试数据库1_ &nbsp; _测试表1_ <br>
 如果测试数据库1中没有测试表1，则显示: <br>
   >(?) -= > 无法执行该指令，该数据库中不存在此表
 ### `显示`
-- <font color="red">显示</font>
+- **显示**
   - 使用`显示`指令，根据当前的pwd分为四种情况：
-    - pwd = `[]`,使用该指令后，无法执行除去登录以外的任何操作。
+    - pwd = [] &nbsp; 
     >(未登录) -=> 未登录,请登录后操作!
     - pwd = ["/"]
     >(?) -= > 当前路径为: /
@@ -124,27 +124,33 @@
     >(?) -= > 当前路径为: /测试数据库1
     - pwd = ["/"]["测试数据库1"]["测试表1"]
     >(?) -= > 当前路径为: /测试数据库1/测试表1
-- <font color="red">显示</font> <font color="red">数据库</font> <br>
-该指令需要`pwd.size() > 1`,也就是说pwd中必须已经选择到数据库，可以选择到表，最起码当前已经指定数据库。
+- **显示** &nbsp; **数据库**  &nbsp; _@DBID_(=pwd[1]) <br>
+  - 该指令需要`pwd.size() > 1`,也就是说pwd中必须已经选择到数据库，可以选择到表，最起码当前已经指定当前数据库。
 
 ### `登录`
-- <font color="red">登录</font> <font color="blue">帐号</font> <font color="blue">密码</font> <br>
+- **登录** &nbsp; _@帐号_ &nbsp; _密码_ <br>
   - 登录失败显示:
   >(?) -= > 登录失败!
   - 登录成功:
   >(?) -= > 登录成功，欢迎您,帐号!
 
 ### `执行`
-- <font color="red">执行</font>  &nbsp; &nbsp; <font color="blue">@脚本名</font> 
+- **执行**  &nbsp;  _@脚本名_
   > path是执行SQL语句的脚本文件。编码格式无论是windows系统版本还是linux版本，均需要采取UTF-8的编码格式。 <br>
 
 - **注意: 需要将脚本放置于./data/SQL目录下，然后使用如上指令，脚本名需要是放置在SQL的全程，带后缀的那种。**
 
 ### `创建`
--  <font color="red">创建</font>  <font color="red">普通用户</font>  <font color="blue">@ID</font>  <font color="blue">Password</font>  
+-  **创建** &nbsp; **普通用户**  _@ID_ &nbsp; _Password_  
 > 该指令需要OP < 2,也就是需要管理员权限或者超级管理员ROOT权限才能执行。该指令会添加密码为Password的普通用户ID
--  <font color="red">创建</font>  <font color="red">管理员</font>  <font color="blue">@ID</font>  <font color="blue">password</font> 
+-  **创建** &nbsp;  **管理员** &nbsp;  _@ID_ &nbsp;_password_
 > 该指令需要OP < 1,也就是需要超级管理员ROOT权限才能执行。会添加密码为password的管理员ID。
+-  **创建** &nbsp; **数据库** &nbsp; _@DBID_
+> 该指令需要OP < 2,也就是管理员或超级管理员ROOT权限才可以执行。会创建名为DBID的数据库。
+- **创建** &nbsp; **表** &nbsp; _@TBID_
+> 该指令需要OP < 2，也就是管理员或超级管理员权限才可执行。但在此之前需要选定数据库。如果没有选择数据库的话会输出:
+
+>(?) -= > 该指令无法执行，没有选择数据库!
 ## BUG记录
 ### linux下交叉编译windows程序
 > 安装Mingw，命令如下：
