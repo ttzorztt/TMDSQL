@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-01 14:38:28
+ * @LastEditTime : 2023-01-04 10:39:28
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -141,16 +141,6 @@ class shell : public User {
    * @return
    */
   void toCreateDatabase();
-  /**
-   * @brief 输入创建管理员后的操作
-   * @return  
-   */
-  void toCreateManager();
-  /**
-   * @brief 输入创建用户后的操作
-   * @return  
-   */
-  void toCreateUser();
   /**
    * @brief 输入删除后的操作
    * @return

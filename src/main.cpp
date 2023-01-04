@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-03 21:29:50
+ * @LastEditTime : 2023-01-04 11:27:51
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -83,14 +83,8 @@ void init() {
   }
 }
 int main(int argc, char const* argv[]) {
-
-  // ifstream fi("../data/database/testdatabase2/TMD");
-  // string st;
-  // fi >> st;
-  // cout << st;
-  // fi.seekg(0, std::ios::beg);
-  // fi >> st;
-  // cout << st;
+  // Table table("DB1/TTT", type::_TYPE_TABLE);
+  // table.create();
   // return 0;
   init();
   shell x;

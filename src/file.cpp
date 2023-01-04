@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-03 21:27:00
+ * @LastEditTime : 2023-01-04 17:17:34
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -219,7 +219,6 @@ bool _file::create(std::string name, type style) {
     ++_file::count;
   }
   filewritebuff.close();
-
   if (style == type::_TYPE_PCB) {
     _file(name, type::_TYPE_PCB).inputPCBInformation();
   }

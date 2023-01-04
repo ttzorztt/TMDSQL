@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-01 17:00:31
+ * @LastEditTime : 2023-01-04 16:58:27
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -16,7 +16,7 @@ menuOutput::menuOutput() {}
 menuOutput::~menuOutput() {}
 void menuOutput::printDatabaseIsExists(TYPE_POWER power, bool need) {
   printPower(power,need);
-  printl("无法执行该指令，目标数据库已存在");
+  std::cout << "无法执行该指令，目标数据库已存在" << std::endl;
   printPower(power,need);
 }
 void menuOutput::printPower(TYPE_POWER power, bool need) {
@@ -25,78 +25,83 @@ void menuOutput::printPower(TYPE_POWER power, bool need) {
   }
   switch (power) {
     case TYPE_POWER::ROOT: {
-      print("(超级管理员) -=> ");
+      std::cout << "(超级管理员) -=> ";
       break;
     }
     case TYPE_POWER::Manager: {
-      print("(管理员) -=> ");
+      std::cout << "(管理员) -=> ";
       break;
     }
     case TYPE_POWER::NORMAL: {
-      print("(用户) -=> ");
+      std::cout << "(用户) -=> ";
       break;
     }
     case TYPE_POWER::NONE: {
-      print("(未登录) -=> ");
+      std::cout << "(未登录) -=> ";
       break;
     }
   }
 }
 void menuOutput::printTableIsExists(TYPE_POWER power,bool need){
   printPower(power,need);
-  printl("无法执行该指令，目标表已存在");
+  std::cout << "无法执行该指令，目标表已存在" << std::endl;
   printPower(power,need);
 }
 void menuOutput::printNotFindSQL(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("无法执行该指令，目标脚本不存在!");
+  std::cout << "无法执行该指令，目标脚本不存在!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printExit(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("已退出!");
+  std::cout << "已退出!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printNotLogin(bool need) {
   printPower(TYPE_POWER::NONE, need);
-  printl("未登录,请登录后操作!");
+  std::cout << "未登录,请登录后操作!" << std::endl;
   printPower(TYPE_POWER::NONE, need);
 }
-void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need) {
+void menuOutput::printNotExistsTable(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("无法执行该指令，请先选择数据库!");
+  std::cout << "目标表不存在!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printNotExistsDatabase(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("该数据库不存在!");
+  std::cout << "目标数据库不存在!" << std::endl;
   printPower(power, need);
+}
+void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need){
+  printPower(power,need);
+  std::cout << "该指令无法执行，没有选择数据库!" << std::endl;
+   printPower(power,need);
 }
 void menuOutput::printPWD(vstring& pwd, TYPE_POWER power, bool need) {
   printPower(power, need);
-  print("当前路径为: ");
+  std::cout << "当前路径为: ";
   if (pwd.size() == 0) {
-    print("[]");
+    std::cout << "[]";
   }
   for (std::string& str : pwd) {
-    print("[" + str + "]");
+    std::cout << "[" + str + "]";
   }
-  printl("");
+  std::cout << std::endl;
   printPower(power, need);
 }
 void menuOutput::printPowerNoEnough(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("您没有执行该指令的权限!");
+  std::cout << "您没有执行该指令的权限!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printDatabaseNotHaveTable(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("无法执行该指令，该数据库中不存在此表");
+  std::cout << "无法执行该指令，该数据库中不存在此表" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printCommandError(TYPE_POWER power, bool need) {
   printPower(power, need);
-  printl("无法执行该指令,该指令输入错误，请重新输入!");
+  std::cout << "无法执行该指令,该指令输入错误，请重新输入!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printLoginOrNot(bool Login,
@@ -105,15 +110,9 @@ void menuOutput::printLoginOrNot(bool Login,
                                  bool need) {
   printPower(power, need);
   if (Login) {
-    printl("登录成功，欢迎您，" + ID + "!");
+    std::cout << "登录成功，欢迎您，" + ID + "!" << std::endl;
   } else {
-    printl("登录失败!");
+    std::cout << "登录失败!" << std::endl;
   }
   printPower(power, need);
-}
-void menuOutput::printl(std::string _str) {
-  std::cout << _str << std::endl;
-}
-void menuOutput::print(std::string _str) {
-  std::cout << _str;
 }

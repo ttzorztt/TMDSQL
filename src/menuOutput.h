@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-01 17:01:21
+ * @LastEditTime : 2023-01-04 16:54:00
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -85,6 +85,13 @@ class menuOutput {
    */
   void static printNotExistsDatabase(TYPE_POWER power, bool need = true);
   /**
+   * @brief 输出不存在该表
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printNotExistsTable(TYPE_POWER power,bool need = true);
+  /**
    * @brief 输出表已存在
    * @param  TYPE_POWER power 权限
    * @param  bool need 是否需要提示符
@@ -112,19 +119,4 @@ class menuOutput {
    * @return
    */
   void static printNotFindSQL(TYPE_POWER power, bool need = true);
-  /**
-   * @brief 换行输出
-   * @param  string _str 输出字段
-   * @param bool need 是否需要提示符
-   * @return
-   */
-   void static printl(std::string _str);
-  /**
-   * @brief 输出(不换行)
-   * @param  string _str 输出字段
-   * @param bool need 是否需要提示符
-   * @return
-   */
-   void static print(std::string _str);
-
 };

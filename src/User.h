@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2022-12-30 19:18:20
+ * @LastEditTime : 2023-01-04 11:47:30
  */
 
 #ifndef _STRING_
@@ -67,19 +67,6 @@ class User {
    * @return  
    */
   void exitLogin();
-  /**
-   * @brief 数据库中有没有表
-   * @param string DatabaseName 数据库名
-   * @param  string tableName 表名
-   * @return  true表示有，false表示没有
-   */
-  bool static DatabaseHaveTable(std::string DatabaseName,std::string tableName);
-  /**
-   * @brief 有没有该数据库
-   * @param  string DatabaseName 数据库名
-   * @return true表示有，false表示没有
-   */
-  bool static HaveDatabase(std::string DatabaseName);
  /**
   * @brief 返回登录状态
   * @return  True表示登录正常，False表示登录错误

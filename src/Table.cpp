@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2022-12-27 09:57:04
+ * @LastEditTime : 2023-01-04 16:36:44
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -12,21 +12,21 @@
 #define _TABLEPCB_H_
 #include "TablePCB.h"
 #endif
-
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
 #include <iostream>
+#endif
 int Table::count = 0;
 Table::Table(std::string databaseAndTableName, type style)
     : _file(databaseAndTableName, style) {
-  this->style = type::_TYPE_TABLE;
-
+  this->style = style;
   ++Table::count;
 }
 Table::Table(DataBase database, std::string tableName, type style)
     : _file(database.returnName() + "/" + tableName, style) {
-  this->style = type::_TYPE_TABLE;
+  this->style = style;
   ++Table::count;
 }
-
 Table::~Table() {
   --Table::count;
 }

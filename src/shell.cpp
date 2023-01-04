@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-03 21:30:49
+ * @LastEditTime : 2023-01-04 17:19:55
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -77,12 +77,12 @@ void shell::toChooseDatabase() {
     case 1:
     case 2:
     case 3: {
-      if (User::HaveDatabase(data[0])) {
+      if (DataBase(data[0]).isExist()) {
         pwd.clear();
         pwd.push_back("/");
         pwd.push_back(data[0]);
       } else {
-        menuOutput::printCommandError(ReturnPower(), need);
+        menuOutput::printDatabaseIsExists(ReturnPower(), need);
       }
     }
     default: {
@@ -103,7 +103,7 @@ void shell::toChooseTable() {
     }
     case 2:
     case 3: {
-      if (User::DatabaseHaveTable(pwd[1], data[0])) {
+      if(Table(pwd[1] + "/" + data[0],type::_TYPE_TABLE).isExist()){
         pwd.push_back(data[0]);
         return;
       } else {
@@ -118,7 +118,12 @@ void shell::toChooseTable() {
   return;
 }
 void shell::toChooseDatabaseTable() {
-  if (User::DatabaseHaveTable(data[0], data[1])) {
+  if(!DataBase(data[0]).isExist()){
+    menuOutput::printNotExistsDatabase(ReturnPower(),need);
+  }else if(!Table(data[0] + "/" + data[1],type::_TYPE_TABLE).isExist()){
+    menuOutput::printNotExistsTable(ReturnPower(),need);
+  }
+  if (Table(data[0] + "/" + data[1],type::_TYPE_TABLE).isExist()) {
     pwd.clear();
     pwd.push_back("/");
     pwd.push_back(data[0]);
@@ -137,6 +142,8 @@ bool shell::aidCheckData(std::string _str) {
   return true;
 }
 bool shell::check(revstring vectorbuff) {
+  command.clear();
+  data.clear();
   int size = vectorbuff.size();
   if (size == 0 || !(HashMapCID.count(vectorbuff[0]))) {
     return false;
@@ -242,8 +249,6 @@ void shell::read() {
       // menuOutput::printCommandError(ReturnPower());
       break;
   }
-  command.clear();
-  data.clear();
 }
 void shell::read(std::string str) {
   if (!check(str)) {
@@ -287,16 +292,23 @@ void shell::toCreate() {
     case 数据库:
       if (command.size() == 2 && data.size() == 1) {
         toCreateDatabase();
+        return;
       }
       break;
     case 表:
+      if (pwd.size() < 2) {
+        menuOutput::printNotChooseDatabase(ReturnPower(), need);
+        return;
+      }
       if (command.size() == 2 && data.size() == 1) {
         toCreateTable();
+        return;
       }
       break;
     case 用户:
       if (command.size() == 2 && data.size() == 2) {
-        toCreateUser();
+        addNormalUser(data[0], data[1]);
+        return;
       }
       break;
     case 管理员:
@@ -304,7 +316,8 @@ void shell::toCreate() {
         menuOutput::printPowerNoEnough(ReturnPower(), need);
       }
       if (command.size() == 2 && data.size() == 2) {
-        toCreateManager();
+        addManagerUser(data[0], data[1]);
+        return;
       }
       break;
     default:
@@ -326,7 +339,11 @@ void shell::toCreate() {
   //   }
 }
 void shell::toCreateTable() {
-  Table table(data[0], type::_TYPE_TABLE);
+  if(!DataBase(pwd[1]).isExist()){
+    menuOutput::printNotExistsDatabase(ReturnPower(),need);
+    return;
+  }
+  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
   if (table.isExist()) {
     menuOutput::printTableIsExists(ReturnPower(), need);
   } else {
@@ -340,14 +357,6 @@ void shell::toCreateDatabase() {
   } else {
     database.create();
   }
-}
-void shell::toCreateManager() {
-  User tmp;
-  tmp.addNormalUser(data[0], data[1]);
-}
-void shell::toCreateUser() {
-  User tmp;
-  tmp.addNormalUser(data[0], data[1]);
 }
 void shell::toDelete() {
   //   if (!HashMapCID.count(value[1])) {

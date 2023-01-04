@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:24
- * @LastEditTime : 2022-12-30 10:44:01
+ * @LastEditTime : 2023-01-04 11:35:51
  */
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -116,7 +116,7 @@ void _dir::openDirReturnFileName(std::string truePath,vstring& ret) {
   #endif
 }
 bool _dir::create(std::string truePath) {
-  return createDir(truePath.c_str());
+  return createDir(truePath.c_str()) == 0;
 }
 bool _dir::remove(std::string truePath) {
   return rmdir(truePath.c_str()) == 0;
