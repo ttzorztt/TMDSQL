@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-03 21:28:01
+ * @LastEditTime : 2023-01-04 10:32:31
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -81,7 +81,7 @@ void User::addUser(std::string UserName,
 }
 bool User::addNormalUser(std::string UserName, std::string Userpassword) {
   if (power >= 2 || nameBuff.count(UserName)){
-    std::cout << "TTT" << std::endl;
+    std::cout << "TTT" << power << std::endl;
     return false;
   }
     
