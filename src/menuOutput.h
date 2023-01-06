@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-04 16:54:00
+ * @LastEditTime : 2023-01-06 12:47:31
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -88,21 +88,21 @@ class menuOutput {
    * @brief 输出不存在该表
    * @param  TYPE_POWER power 权限
    * @param  bool need 是否需要提示符
-   * @return  
+   * @return
    */
-  void static printNotExistsTable(TYPE_POWER power,bool need = true);
+  void static printNotExistsTable(TYPE_POWER power, bool need = true);
   /**
    * @brief 输出表已存在
    * @param  TYPE_POWER power 权限
    * @param  bool need 是否需要提示符
-   * @return  
+   * @return
    */
-  void static printTableIsExists(TYPE_POWER power,bool need = true);
+  void static printTableIsExists(TYPE_POWER power, bool need = true);
   /**
    * @brief 输出数据库存在，无法添加
    * @param  TYPE_POWER power 权限
    * @param  bool need 是否需要提示符
-   * @return  
+   * @return
    */
   void static printDatabaseIsExists(TYPE_POWER power, bool need = true);
   /**
@@ -119,4 +119,35 @@ class menuOutput {
    * @return
    */
   void static printNotFindSQL(TYPE_POWER power, bool need = true);
+  /**
+   * @brief 输出系统中存在的DBID数据库中的表
+   * @param  TYPE_POWER power 权限
+   * @param  string DBID 数据库名
+   * @param  bool need 是否需要输出提示符
+   * @return
+   */
+  void static printShowDatabase(TYPE_POWER power,
+                                     std::string DBID,
+                                     bool need = true);
+  /**
+   * @brief 输出系统中存在的数据库
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要输出提示符
+   * @return
+   */
+  void static printShowDatabase(TYPE_POWER power, bool need = true);
+  /**
+   * @brief 输出制定数据库中的表内容
+   * @param  TYPE_POWER power
+   * @param  string DBID
+   * @param string TBID
+   * @param int number 默认输出5行
+   * @param  bool need
+   * @return
+   */
+  void static printShowTable(TYPE_POWER power,
+                             std::string DBID,
+                             std::string TBID,
+                             int number = 5,
+                             bool need = true);
 };

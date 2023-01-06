@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-04 11:27:51
+ * @LastEditTime : 2023-01-06 12:42:20
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -85,7 +85,6 @@ void init() {
 int main(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
-  // return 0;
   init();
   shell x;
   string tmp = "执行 @SQL";

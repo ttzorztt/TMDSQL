@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2022-12-15 10:32:11
+ * @LastEditTime : 2023-01-06 13:36:02
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -18,7 +18,6 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
-
 // 文件指针
 #define POINTER int
 /**
@@ -32,8 +31,8 @@ class TablePCB {
   POINTER endLineIndex;
   //行数
   int length;
-  // 是否已经打开
-  bool open;
+  //每一列的最大字符数
+  vstring maxSize;
   /**
    * @brief 从文件中读取
    * @return  
@@ -44,7 +43,6 @@ class TablePCB {
    * @return  
    */
   void writeData();
-
  public:
   /**
    * @brief 文件名

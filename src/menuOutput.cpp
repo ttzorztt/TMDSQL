@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-04 16:58:27
+ * @LastEditTime : 2023-01-06 12:46:25
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -12,12 +12,99 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
+#ifndef _DIR_H_
+#define _DIR_H_
+#include "dir.h"
+#endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
+#endif
 menuOutput::menuOutput() {}
 menuOutput::~menuOutput() {}
+void menuOutput::printShowDatabase(TYPE_POWER power, bool need) {
+  printPower(power, need);
+  vstring ans;
+  _dir::openDirReturnFileName("../data/database/", ans);
+  int maxtablename = 0;
+  if (ans.size() == 0) {
+    std::cout << "暂时还没有建立数据库" << std::endl;
+    return;
+  }
+  for (std::string& str : ans) {
+    maxtablename = std::max(maxtablename, (int)str.size() + 2);
+  }
+  maxtablename += 2;
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "#";
+  }
+  std::cout << std::endl;
+  for (std::string& str : ans) {
+    int strnamesize = str.size();
+    int left = (maxtablename - strnamesize) / 2;
+    std::cout << "?";
+    for (int a = 1; a < left; ++a) {
+      std::cout << " ";
+    }
+    std::cout << str;
+    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
+      std::cout << " ";
+    }
+    std::cout << "?";
+    std::cout << std::endl;
+  }
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "#";
+  }
+  std::cout << std::endl;
+  printPower(power, need);
+}
+void menuOutput::printShowDatabase(TYPE_POWER power,
+                                   std::string DBID,
+                                   bool need) {
+  std::string tmpPath = _super::returnTruePath(DBID, type::_TYPE_DATABASE);
+  if (!_super::isExist(tmpPath)) {
+    std::cout << "数据库不存在!" << std::endl;
+    return;
+  }
+  vstring ans;
+  _dir::openDirReturnFileName(tmpPath, ans);
+  int maxtablename = 0;
+  if (ans.size() == 0) {
+    std::cout << "这个数据库是空的!" << std::endl;
+    return;
+  }
+  for (std::string& str : ans) {
+    maxtablename = std::max(maxtablename, (int)str.size() + 2);
+  }
+  maxtablename += 2;
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "*";
+  }
+  std::cout << std::endl;
+  for (std::string& str : ans) {
+    int strnamesize = str.size();
+    int left = (maxtablename - strnamesize) / 2;
+    std::cout << "|";
+    for (int a = 1; a < left; ++a) {
+      std::cout << " ";
+    }
+    std::cout << str;
+    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
+      std::cout << " ";
+    }
+    std::cout << "|";
+    std::cout << std::endl;
+  }
+  for (int a = 0; a < maxtablename; ++a) {
+    std::cout << "*";
+  }
+  std::cout << std::endl;
+}
 void menuOutput::printDatabaseIsExists(TYPE_POWER power, bool need) {
-  printPower(power,need);
+  printPower(power, need);
   std::cout << "无法执行该指令，目标数据库已存在" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
 void menuOutput::printPower(TYPE_POWER power, bool need) {
   if (!need) {
@@ -42,10 +129,10 @@ void menuOutput::printPower(TYPE_POWER power, bool need) {
     }
   }
 }
-void menuOutput::printTableIsExists(TYPE_POWER power,bool need){
-  printPower(power,need);
+void menuOutput::printTableIsExists(TYPE_POWER power, bool need) {
+  printPower(power, need);
   std::cout << "无法执行该指令，目标表已存在" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
 void menuOutput::printNotFindSQL(TYPE_POWER power, bool need) {
   printPower(power, need);
@@ -72,10 +159,10 @@ void menuOutput::printNotExistsDatabase(TYPE_POWER power, bool need) {
   std::cout << "目标数据库不存在!" << std::endl;
   printPower(power, need);
 }
-void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need){
-  printPower(power,need);
+void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need) {
+  printPower(power, need);
   std::cout << "该指令无法执行，没有选择数据库!" << std::endl;
-   printPower(power,need);
+  printPower(power, need);
 }
 void menuOutput::printPWD(vstring& pwd, TYPE_POWER power, bool need) {
   printPower(power, need);
@@ -113,6 +200,25 @@ void menuOutput::printLoginOrNot(bool Login,
     std::cout << "登录成功，欢迎您，" + ID + "!" << std::endl;
   } else {
     std::cout << "登录失败!" << std::endl;
+  }
+  printPower(power, need);
+}
+
+void menuOutput::printShowTable(TYPE_POWER power,
+                                std::string DBID,
+                                std::string TBID,
+                                int number,
+                                bool need) {
+  printPower(power, need);
+  Table table(DBID + "/" + TBID, type::_TYPE_TABLE);
+  std::cout << table.isExist()  << number<< std::endl;
+  vstring tmp;
+  while (table.readline(tmp) && number) {
+    for (std::string& str : tmp) {
+      std::cout << str << " ";
+    }
+    std::cout << std::endl;
+    --number;
   }
   printPower(power, need);
 }

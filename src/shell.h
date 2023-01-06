@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-04 10:39:28
+ * @LastEditTime : 2023-01-05 10:00:00
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -126,6 +126,21 @@ class shell : public User {
    * @return
    */
   void toShow();
+  /**
+   * @brief 输入显示数据库后的操作
+   * @return  
+   */
+  void toShowDatabase();
+  /**
+   * @brief 输入显示数据库表后的操作
+   * @return  
+   */
+  void toShowDatabaseTable();
+  /**
+   * @brief 输入显示表后的操作
+   * @return  
+   */
+  void toShowTable();
   /**
    * @brief 输入创建后的操作
    * @return

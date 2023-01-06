@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-04 17:40:38
+ * @LastEditTime : 2023-01-06 12:47:50
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -103,7 +103,7 @@ void shell::toChooseTable() {
     }
     case 2:
     case 3: {
-      if(Table(pwd[1] + "/" + data[0],type::_TYPE_TABLE).isExist()){
+      if (Table(pwd[1] + "/" + data[0], type::_TYPE_TABLE).isExist()) {
         pwd.push_back(data[0]);
         return;
       } else {
@@ -118,12 +118,12 @@ void shell::toChooseTable() {
   return;
 }
 void shell::toChooseDatabaseTable() {
-  if(!DataBase(data[0]).isExist()){
-    menuOutput::printNotExistsDatabase(ReturnPower(),need);
-  }else if(!Table(data[0] + "/" + data[1],type::_TYPE_TABLE).isExist()){
-    menuOutput::printNotExistsTable(ReturnPower(),need);
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+  } else if (!Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
   }
-  if (Table(data[0] + "/" + data[1],type::_TYPE_TABLE).isExist()) {
+  if (Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
     pwd.clear();
     pwd.push_back("/");
     pwd.push_back(data[0]);
@@ -339,8 +339,8 @@ void shell::toCreate() {
   //   }
 }
 void shell::toCreateTable() {
-  if(!DataBase(pwd[1]).isExist()){
-    menuOutput::printNotExistsDatabase(ReturnPower(),need);
+  if (!DataBase(pwd[1]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
     return;
   }
   Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
@@ -404,10 +404,78 @@ void shell::toFind() {
   //   }
 }
 void shell::toShow() {
-  if (command.size() == 1 && data.size() == 0) {
-    menuOutput::printPWD(pwd, ReturnPower(), need);
+  switch (command.size()) {
+    case 1: {
+      if (data.size() == 0) {
+        menuOutput::printPWD(pwd, ReturnPower(), need);
+      } else {
+        menuOutput::printCommandError(ReturnPower(), need);
+      }
+      break;
+    }
+    case 2: {
+      switch (command[1]) {
+        case 数据库:
+          toShowDatabase();
+          break;
+        case 表:
+          toShowTable();
+          break;
+        default:
+          menuOutput::printCommandError(ReturnPower(), need);
+          break;
+      }
+      break;
+    }
+    case 3: {
+      toShowDatabaseTable();
+      break;
+    }
+    default:
+      menuOutput::printCommandError(ReturnPower(), need);
+      break;
   }
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
+}
+void shell::toShowDatabase() {
+  switch (data.size()) {
+    case 0:
+      menuOutput::printShowDatabase(ReturnPower(), need);
+      return;
+    case 1:
+      menuOutput::printShowDatabase(ReturnPower(), data[0], need);
+      return;
+    default:
+      menuOutput::printCommandError(ReturnPower(), need);
+      return;
+  }
+}
+void shell::toShowTable() {
+  if (pwd.size() <= 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    return;
+  }
+  if (!DataBase(pwd[1]).isExist()) {
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    return;
+  }
+  switch (data.size()) {
+    case 1: {
+      menuOutput::printShowTable(ReturnPower(), pwd[1], data[0], 5,need);
+      return;
+    } break;
+    case 2: {
+      menuOutput::printShowTable(ReturnPower(),pwd[1],data[0],_super::stringToInt(data[1]),need);
+      return;
+    }
+    default: {
+      menuOutput::printCommandError(ReturnPower(), need);
+      return;
+    }
+  }
+}
+void shell::toShowDatabaseTable() {
+  if (command[1] != 数据库 || command[2] != 表) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
 }

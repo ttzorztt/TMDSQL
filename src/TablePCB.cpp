@@ -2,13 +2,16 @@
  * @Description  : 表的PCB实现
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:57
- * @LastEditTime : 2022-12-15 20:40:25
+ * @LastEditTime : 2023-01-06 13:41:33
  */
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_
 #include "TablePCB.h"
 #endif
-#include "iostream"
+#ifndef _IOSTREAM_  
+#define _IOSTREAM_  
+#include <iostream>
+#endif
 TablePCB::TablePCB(std::string tableName) : file(tableName, type::_TYPE_PCB) {
   if (file.isExist()) {
     readData();
@@ -39,6 +42,7 @@ void TablePCB::readData() {
   }
   this->endLineIndex = atoi(vec[1].c_str());
   this->length = atoi(vec[2].c_str());
+  for()
 }
 
 TablePCB::~TablePCB() {
@@ -63,9 +67,6 @@ std::string TablePCB::returnName() {
 }
 void TablePCB::setEndLineIndex(int value) {
   this->endLineIndex = value;
-}
-bool TablePCB::isOpen() {
-  return this->open;
 }
 void TablePCB::setEndLineIndex(Table table, POINTER fileIndex) {
   TablePCB pcb(table);

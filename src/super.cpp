@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2022-12-30 11:01:06
+ * @LastEditTime : 2023-01-06 12:29:58
  */
 
 #ifndef _SUPER_H_
@@ -17,9 +17,6 @@ bool  _super::createDir(std::string path) {
   return mkdir(path.c_str(), 777);
 #endif
 }
-
-
-
 bool _super::create() {
   return true;
 }
@@ -118,4 +115,12 @@ std::string _super::returnTruePath(std::string Name, type style) {
       break;
   }
   return "";
+}
+int _super::stringToInt(std::string& str){
+  for(char& ch : str){
+    if(ch > '9' || ch < '0'){
+      return -1;
+    }
+  }
+  return atoi(str.c_str());
 }
