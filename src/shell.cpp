@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-06 12:47:50
+ * @LastEditTime : 2023-01-08 15:26:40
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -437,16 +437,32 @@ void shell::toShow() {
   }
 }
 void shell::toShowDatabase() {
-  switch (data.size()) {
-    case 0:
-      menuOutput::printShowDatabase(ReturnPower(), need);
-      return;
-    case 1:
-      menuOutput::printShowDatabase(ReturnPower(), data[0], need);
-      return;
-    default:
+  switch (command.size()) {
+    case 2: {
+      switch (data.size()) {
+        case 0:
+          menuOutput::printShowDatabase(ReturnPower(), need);
+          return;
+        case 1:
+          menuOutput::printShowDatabase(ReturnPower(), data[0], need);
+          return;
+        default:
+          menuOutput::printCommandError(ReturnPower(), need);
+          return;
+      }
+      break;
+    }
+    case 3: {
+      if (command[2] != 表) {
+        menuOutput::printCommandError(ReturnPower(), need);
+        return;
+      }
+      toShowDatabaseTable();
+      break;
+    }
+    default: {
       menuOutput::printCommandError(ReturnPower(), need);
-      return;
+    }
   }
 }
 void shell::toShowTable() {
@@ -460,11 +476,12 @@ void shell::toShowTable() {
   }
   switch (data.size()) {
     case 1: {
-      menuOutput::printShowTable(ReturnPower(), pwd[1], data[0], 5,need);
+      menuOutput::printShowTable(ReturnPower(), pwd[1], data[0], 5, need);
       return;
     } break;
     case 2: {
-      menuOutput::printShowTable(ReturnPower(),pwd[1],data[0],_super::stringToInt(data[1]),need);
+      menuOutput::printShowTable(ReturnPower(), pwd[1], data[0],
+                                 _super::stringToInt(data[1]), need);
       return;
     }
     default: {
@@ -474,8 +491,22 @@ void shell::toShowTable() {
   }
 }
 void shell::toShowDatabaseTable() {
-  if (command[1] != 数据库 || command[2] != 表) {
-    menuOutput::printCommandError(ReturnPower(), need);
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
     return;
+  }
+  if (!Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  switch (data.size()) {
+    case 2:
+      menuOutput::printShowTable(ReturnPower(), data[0], data[1], 5, need);
+      return;
+    case 3:
+    menuOutput::printShowTable(ReturnPower(),data[0],data[1],_super::stringToInt(data[2]),need);
+    return;
+    default:
+      break;
   }
 }

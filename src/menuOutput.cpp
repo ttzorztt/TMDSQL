@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-06 12:46:25
+ * @LastEditTime : 2023-01-08 12:14:58
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -209,16 +209,21 @@ void menuOutput::printShowTable(TYPE_POWER power,
                                 std::string TBID,
                                 int number,
                                 bool need) {
-  printPower(power, need);
-  Table table(DBID + "/" + TBID, type::_TYPE_TABLE);
-  std::cout << table.isExist()  << number<< std::endl;
-  vstring tmp;
-  while (table.readline(tmp) && number) {
-    for (std::string& str : tmp) {
-      std::cout << str << " ";
+  if (number < 0) {
+    menuOutput::printCommandError(power, need);
+    return;
+  } else if (number > 0) {
+    printPower(power, need);
+    Table table(DBID + "/" + TBID, type::_TYPE_TABLE);
+    std::cout << table.isExist() << number << std::endl;
+    vstring tmp;
+    while (table.readline(tmp) && number) {
+      for (std::string& str : tmp) {
+        std::cout << str << " ";
+      }
+      std::cout << std::endl;
+      --number;
     }
-    std::cout << std::endl;
-    --number;
+    printPower(power, need);
   }
-  printPower(power, need);
 }

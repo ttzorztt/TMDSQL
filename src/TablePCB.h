@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2023-01-06 13:36:02
+ * @LastEditTime : 2023-01-08 11:41:33
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -43,6 +43,11 @@ class TablePCB {
    * @return  
    */
   void writeData();
+  /**
+   * @brief 初始化
+   * @return  
+   */
+  void init();
  public:
   /**
    * @brief 文件名
@@ -81,20 +86,22 @@ class TablePCB {
    */
   std::string returnFileSize();
   /**
-   * @brief 文件是否打开
-   * @return 打开则返回True，否则返回False；
+   * @brief 构造函数
+   * @param  string DBID 数据库名
+   * @param  string TBID 表名
    */
-  bool isOpen();
+  TablePCB(std::string DBID,std::string TBID);
   /**
    * @brief 构造函数
-   * @param  string TableName 表名
+   * @param  string DBIDAndTBID 数据库+表名
+   * @return  
    */
-  TablePCB(std::string TableName);
+  TablePCB(std::string DBIDAndTBID);
   /**
    * @brief 构造函数
-   * @param  Table table 表对象
+   * @param  Table& table 表对象
    */
-  TablePCB(Table table);
+  TablePCB(Table& table);
   /**
    * @brief 析构函数
    */
