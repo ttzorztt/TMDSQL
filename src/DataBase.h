@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2022-12-27 10:42:11
+ * @LastEditTime : 2023-01-09 15:47:52
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -73,6 +73,11 @@ class DataBase : public _dir {
    * @return  正常返回
    */
   virtual bool remove();
+  /**
+   * @brief 强制删除(非空集合)
+   * @return  
+   */
+  void forceremove();
   /**
    * @brief 删除数据库
    * @param  string name 待删除的数据库名

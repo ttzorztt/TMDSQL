@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2022-12-30 10:53:24
+ * @LastEditTime : 2023-01-09 15:57:05
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -120,7 +120,14 @@ void DataBase::showDataBaseTable() {
   }
   std::cout << std::endl;
 }
-
+void DataBase::forceremove(){
+   vstring vectorbuff;
+   this->openDirReturnFileName(vectorbuff);
+  for (std::string& str : vectorbuff) {
+    Table(name+"/"+str,type::_TYPE_TABLE).remove();
+  }
+  this->remove();
+}
 void DataBase::showDataBase() {
   vstring ans;
   _dir::openDirReturnFileName("../data/database/", ans);

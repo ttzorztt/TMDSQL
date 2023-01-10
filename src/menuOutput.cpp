@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-08 12:14:58
+ * @LastEditTime : 2023-01-09 16:11:31
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -60,15 +60,15 @@ void menuOutput::printShowDatabase(TYPE_POWER power, bool need) {
   printPower(power, need);
 }
 void menuOutput::printShowDatabase(TYPE_POWER power,
-                                   std::string DBID,
+                                   DataBase& database,
                                    bool need) {
-  std::string tmpPath = _super::returnTruePath(DBID, type::_TYPE_DATABASE);
-  if (!_super::isExist(tmpPath)) {
+  
+  if (!database.isExist()) {
     std::cout << "数据库不存在!" << std::endl;
     return;
   }
   vstring ans;
-  _dir::openDirReturnFileName(tmpPath, ans);
+  database.openDirReturnFileName(ans);
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
@@ -205,8 +205,7 @@ void menuOutput::printLoginOrNot(bool Login,
 }
 
 void menuOutput::printShowTable(TYPE_POWER power,
-                                std::string DBID,
-                                std::string TBID,
+                                Table& table,
                                 int number,
                                 bool need) {
   if (number < 0) {
@@ -214,8 +213,6 @@ void menuOutput::printShowTable(TYPE_POWER power,
     return;
   } else if (number > 0) {
     printPower(power, need);
-    Table table(DBID + "/" + TBID, type::_TYPE_TABLE);
-    std::cout << table.isExist() << number << std::endl;
     vstring tmp;
     while (table.readline(tmp) && number) {
       for (std::string& str : tmp) {

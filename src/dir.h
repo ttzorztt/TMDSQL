@@ -2,7 +2,7 @@
  * @Description  : 目录操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 11:10:04
- * @LastEditTime : 2022-12-30 12:30:01
+ * @LastEditTime : 2023-01-09 15:39:19
  */
 #pragma execution_character_set("utf-8")
 #ifndef _DIR_
@@ -48,16 +48,6 @@ class _dir : public _super {
    * @return 如果删除正常，则返回True，否则返回False
    */
   virtual bool remove();
-
-  /**
-   * @brief 强制删除 (适用于非空目录)
-   */
-  void forceremove();
-  /**
-   * @brief <static> 强制删除 (适用于非空目录)
-   * @param  string name 目录名称
-   */
-  void static forceremove(std::string name);
   /**
    * @brief 判断文件是否存在
    * @return 存在则返回True，否则返回False

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-05 10:00:00
+ * @LastEditTime : 2023-01-09 15:08:23
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -56,6 +56,11 @@ class shell : public User {
   int commandCount;
   // 是否需要显示提示符
   bool need;
+   /**
+  * @brief 判断是否输入"确认"
+  * @return  如果输入返回True，否则返回False
+  */
+ bool inputACK();
   /**
    * @brief 执行指令
    * @return 语法正确与否
@@ -171,6 +176,21 @@ class shell : public User {
    * @return
    */
   void toDeleteDatabase();
+  /**
+   * @brief 输入删除数据库表后的操作
+   * @return  
+   */
+  void toDeleteDatabaseTable();
+  /**
+   * @brief 输入删除用户后的操作
+   * @return  
+   */
+  void toDeleteUser();
+  /**
+   * @brief 输入删除用户后的操作
+   * @return  
+   */
+  void toDeleteManager();
   /**
    * @brief 输入重命名后的操作
    * @return

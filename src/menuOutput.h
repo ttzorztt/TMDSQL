@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-06 12:47:31
+ * @LastEditTime : 2023-01-09 15:17:35
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -11,6 +11,14 @@
 #ifndef _STRING_
 #define _STRING_
 #include <string>
+#endif
+#ifndef _DATABASE_H_
+#define _DATABASE_H_
+#include "DataBase.h"
+#endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
+#include "Table.h"
 #endif
 class menuOutput {
  private:
@@ -122,12 +130,12 @@ class menuOutput {
   /**
    * @brief 输出系统中存在的DBID数据库中的表
    * @param  TYPE_POWER power 权限
-   * @param  string DBID 数据库名
+   * @param Database& database 数据库
    * @param  bool need 是否需要输出提示符
    * @return
    */
   void static printShowDatabase(TYPE_POWER power,
-                                     std::string DBID,
+                                     DataBase& database,
                                      bool need = true);
   /**
    * @brief 输出系统中存在的数据库
@@ -138,16 +146,14 @@ class menuOutput {
   void static printShowDatabase(TYPE_POWER power, bool need = true);
   /**
    * @brief 输出制定数据库中的表内容
-   * @param  TYPE_POWER power
-   * @param  string DBID
-   * @param string TBID
+   * @param  TYPE_POWER power 权限
+   * @param Table& table 表
    * @param int number 默认输出5行
-   * @param  bool need
+   * @param  bool need 是否需要输出提示符
    * @return
    */
   void static printShowTable(TYPE_POWER power,
-                             std::string DBID,
-                             std::string TBID,
+                             Table& table,
                              int number = 5,
                              bool need = true);
 };
