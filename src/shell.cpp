@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-10 19:01:03
+ * @LastEditTime : 2023-01-10 20:55:25
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -179,7 +179,7 @@ bool shell::check(std::string _str) {
   return check(vectorbuff);
 }
 
-void shell::read() {
+bool shell::read() {
   ++commandCount;
   switch (command[0]) {
     case 选择:
@@ -188,7 +188,7 @@ void shell::read() {
     case 退出:
       exitLogin();
       menuOutput::printExit(ReturnPower(), need);
-      break;
+      return false;
     case 创建:
       if (ReturnPower() < 2) {  // 管理员和超级管理员权限
         toCreate();
@@ -232,20 +232,21 @@ void shell::read() {
       menuOutput::printCommandError(ReturnPower(), need);
       break;
   }
+  return true;
 }
-void shell::read(std::string str) {
+bool shell::read(std::string str) {
   if (!check(str)) {
     menuOutput::printCommandError(ReturnPower(), need);
-    return;
+    return true;
   }
-  read();
+  return read();
 }
-void shell::read(revstring value) {
+bool shell::read(revstring value) {
   if (!check(value)) {
     menuOutput::printCommandError(ReturnPower(), need);
-    return;
+    return true;
   }
-  read();
+  return read();
 }
 void shell::toExecute() {
   _file file("../data/SQL/" + data[0]);

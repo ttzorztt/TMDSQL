@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-10 16:10:19
+ * @LastEditTime : 2023-01-10 20:40:46
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -34,15 +34,15 @@ class shell : public User {
   /**
    * @brief 读入数据
    * @param  string data 数据
-   * @return 符合语法返回True，否则返回False
+   * @return 输入退出则返回False，否则返回True
    */
-  void read(std::string data);
+  bool read(std::string data);
   /**
    * @brief 读入数据
    * @param  revstring data string数组
-   * @return  符合语法返回True，否则返回false
+   * @return  输入退出则返回False，否则返回True
    */
-  void read(revstring data);
+  bool read(revstring data);
  private:
   // 当前工作路径
   vstring pwd;
@@ -63,9 +63,9 @@ class shell : public User {
  bool inputACK();
   /**
    * @brief 执行指令
-   * @return 语法正确与否
+   * @return 输入退出则返回False，否则返回True
    */
-  void read();
+  bool read();
   /**
    * @brief 登录
    * @param  string ID 帐号

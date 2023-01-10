@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-10 10:08:36
+ * @LastEditTime : 2023-01-10 20:35:18
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -20,7 +20,7 @@ _file::_file(std::string Name, type style) : _super(Name) {
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
 }
-_file::_file(std::string TruePath) : _super("pd"){
+_file::_file(std::string TruePath) : _super(_super::dispartDatabaseNameAndTableName(TruePath)[1]){
   this->truePath = TruePath;
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;

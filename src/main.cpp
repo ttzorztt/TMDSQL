@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-10 18:53:07
+ * @LastEditTime : 2023-01-10 21:10:08
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -78,8 +78,17 @@ void init() {
   if (access("../data/PCB", F_OK)) {
     _super::createDir("../data/PCB");
   }
-  if (access("../view", F_OK)) {
-    _super::createDir("../view");
+  if (access("../data/view", F_OK)) {
+    _super::createDir("../data/view");
+  }
+  if (access("../data/SQL", F_OK)) {
+    _super::createDir("../data/SQL");
+  }
+  if (access("../data/User", F_OK)) {
+    _super::createDir("../data/User");
+    _file table("../data/User/pd");
+    table.create();
+    table.write({"root","root","0"},type_mode::WRITEBUFF_MODE_APP);
   }
 }
 int main(int argc, char const* argv[]) {
@@ -88,15 +97,14 @@ int main(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "执行 @SQL";
-  x.read(tmp);
-  // while (1) {
-  //   getline(cin, tmp);
-  //   if (tmp == "") {
-  //     menuOutput::printPower(x.ReturnPower());
-  //   }else  {
-  //     x.read(tmp);
-  //   }
-  // }
+  while (1) {
+    getline(cin, tmp);
+      if(tmp == ""){
+        menuOutput::printPower(x.ReturnPower());      }
+      if(!x.read(tmp)){
+        break;
+      }
+  }
   // vstring v;
   // v.push_back("1");
   // v.push_back("2");
