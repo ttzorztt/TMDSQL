@@ -2,11 +2,15 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-10 13:42:48
+ * @LastEditTime : 2023-01-10 19:02:19
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
 #include "menuOutput.h"
+#endif
+#ifndef _IOMANIP_
+#define _IOMANIP_
+#include <iomanip>
 #endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -207,10 +211,23 @@ void menuOutput::printUserNotExists(TYPE_POWER power, bool need) {
   std::cout << "该用户不存在!" << std::endl;
   printPower(power, need);
 }
-void menuOutput::printInsertNoValue(TYPE_POWER power,bool need){
-  printPower(power,need);
+void menuOutput::printShowFindTable(TYPE_POWER power, vstring data, bool need) {
+  printPower(power, need);
+  if (data.size() != 0) {
+    if (need) {
+      std::cout << std::setw(powerPR[power]);
+    }
+    for (std::string& str : data) {
+      std::cout << str << " ";
+    }
+    std::cout << std::endl;
+  }
+  printPower(power, need);
+}
+void menuOutput::printInsertNoValue(TYPE_POWER power, bool need) {
+  printPower(power, need);
   std::cout << "拒绝执行，指令中缺乏待插入数据!" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
 void menuOutput::printManagerNotExists(TYPE_POWER power, bool need) {
   printPower(power, need);

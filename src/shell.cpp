@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-10 14:02:51
+ * @LastEditTime : 2023-01-10 19:01:03
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -220,8 +220,8 @@ void shell::read() {
       break;
     }
     case 查询:
-      // toFind(vectorbuff);
-      // break;
+      toFind();
+      break;
     case 显示:
       toShow();
       break;
@@ -357,9 +357,11 @@ void shell::toDelete() {
 }
 bool shell::inputACK() {
   std::string tmp;
+  std::cout << "如果您仍然执意删除，请键入 \"确定\" :";
   while (1) {
     std::getline(std::cin, tmp);
     if (tmp == "") {
+      std::cout << "该指令已取消!" << std::endl;
       return false;
     } else {
       return (tmp == "确定");
@@ -377,12 +379,9 @@ void shell::toDeleteTable() {
     return;
   }
   menuOutput::printShowTable(ReturnPower(), table, 5, need);
-  std::cout << "如果您仍然执意删除，请键入 \"确定\" :";
   if (inputACK()) {
     table.remove();
     return;
-  } else {
-    std::cout << "该指令已取消!" << std::endl;
   }
 }
 void shell::toDeleteDatabaseTable() {
@@ -400,12 +399,9 @@ void shell::toDeleteDatabaseTable() {
     return;
   }
   menuOutput::printShowTable(ReturnPower(), table, 5, need);
-  std::cout << "如果您仍然执意删除，请键入 \"确定\" :";
   if (inputACK()) {
     table.remove();
     return;
-  } else {
-    std::cout << "该指令已取消!" << std::endl;
   }
 }
 void shell::toDeleteDatabase() {
@@ -424,12 +420,8 @@ void shell::toDeleteDatabase() {
     std::cout << "该数据库并不为空，以下为当前存在的表项" << std::endl;
   }
   menuOutput::printShowDatabase(ReturnPower(), database, false);
-  std::cout << "如果您仍然执意删除，请键入 \"确认\" :";
   if (inputACK()) {
     database.forceremove();
-    return;
-  } else {
-    std::cout << "该指令已取消!" << std::endl;
     return;
   }
 }
@@ -486,29 +478,67 @@ void shell::toInsert() {
       break;
   }
 }
-void shell::toInsertDatabaseTable(){
+void shell::toInsertDatabaseTable() {
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  vstring tmp(data.begin() + 2, data.end());
+  table.append(tmp);
+}
+void shell::toInsertTable() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    return;
+  }
+  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  vstring tmp(data.begin() + 1, data.end());
+  table.append(tmp);
+}
+void shell::toFind() {
+  switch (command.size()) {
+    case 2:
+      if (command[1] == 表 && data.size() == 2) {
+        toFindTable();
+        return;
+      }
+      break;
+    case 3:
+      if (command[1] == 数据库 && command[2] == 表 && data.size() == 3) {
+        toFindDatabaseTable();
+        return;
+      }
+      break;
+    default:
+      break;
+  }
+  menuOutput::printCommandError(ReturnPower(), need);
+}
+void shell::toFindTable() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    return;
+  }
+  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  menuOutput::printShowFindTable(ReturnPower(), table.find(data[1]), need);
+}
+void shell::toFindDatabaseTable() {
   Table table(data[0] + "/" + data[1],type::_TYPE_TABLE);
   if(!table.isExist()){
     menuOutput::printNotExistsTable(ReturnPower(),need);
     return;
   }
-    vstring tmp(data.begin() + 2,data.end());
-  table.append(tmp);
+  menuOutput::printShowFindTable(ReturnPower(),table.find(data[2]),need);
 }
-void shell::toInsertTable(){
-  if(pwd.size() == 1){
-    menuOutput::printNotChooseDatabase(ReturnPower(),need);
-    return;
-  }
-  Table table(pwd[1] + "/" + data[0],type::_TYPE_TABLE);
-  if(!table.isExist()){
-    menuOutput::printNotExistsTable(ReturnPower(),need);
-    return;
-  }
-  vstring tmp(data.begin() + 1,data.end());
-  table.append(tmp);
-}
-void shell::toFind() {}
 void shell::toShow() {
   switch (command.size()) {
     case 1: {

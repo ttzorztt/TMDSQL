@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-10 13:40:57
+ * @LastEditTime : 2023-01-10 18:58:38
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -52,6 +52,15 @@ class menuOutput {
      * @return  
      */
     void static printInsertNoValue(TYPE_POWER power,bool need = true);
+
+    /**
+     * @brief 显示查询到的内容。
+     * @param  TYPE_POWER power 权限
+     * @param  vstring data 待输出的内容 
+     * @param  bool need 是否需要提示符
+     * @return  
+     */
+    void static printShowFindTable(TYPE_POWER power,vstring data,bool need = true);
   /**
    * @brief 输出权限不足
    * @param TYPE_POWER power 权限

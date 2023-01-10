@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-10 10:32:20
+ * @LastEditTime : 2023-01-10 18:52:25
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -65,11 +65,10 @@ enum TYPE_POWER {
   NONE      //未登录
 };
 
-
-static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 11},
-                                                   {TYPE_POWER::Manager, 12},
-                                                   {TYPE_POWER::ROOT, 16},
-                                                   {TYPE_POWER::NONE, 13}};
+static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
+                                                   {TYPE_POWER::Manager, 16},
+                                                   {TYPE_POWER::ROOT, 20},
+                                                   {TYPE_POWER::NONE, 16}};
 static std::unordered_set<char> checkErrorName{
     '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
     ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-09 15:08:23
+ * @LastEditTime : 2023-01-10 16:10:19
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -85,7 +85,7 @@ class shell : public User {
    * @return 指令的语法检查
    */
   bool check(revstring value);
-  /**
+  /** 
    * @brief 语法检查是否含有'/'，'!'等违规字符
    * @param  string _str 待检查字符
    * @return 没有问题的话，返回true，否则返回false;
@@ -137,6 +137,16 @@ class shell : public User {
    * @return
    */
   void toFind();
+  /**
+   * @brief 输入查询表后的操作
+   * @return  
+   */
+  void toFindTable();
+  /**
+   * @brief 输入查询数据库表后的操作
+   * @return  
+   */
+  void toFindDatabaseTable();
   /**
    * @brief 输入显示后的操作
    * @return
