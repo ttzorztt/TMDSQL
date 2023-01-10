@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-04 16:36:44
+ * @LastEditTime : 2023-01-10 14:05:39
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -94,7 +94,6 @@ bool Table::append(vstring value) {
   if (value.size() <= 0) {
     return false;
   }
-  std::cout << "fileIndex first: " << fileIndex << std::endl;
   this->write(value, type_mode::WRITEBUFF_MODE_APP);
   if (fileIndex == 0) {
       this->appInsertIndex(value[0], 0);

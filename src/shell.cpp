@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-10 10:18:33
+ * @LastEditTime : 2023-01-10 14:02:51
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -29,10 +29,10 @@
 #include <iostream>
 #endif
 std::unordered_map<std::string, TYPE_CID> shell::HashMapCID = {
-    {"退出", 退出},     {"创建", 创建},     {"数据库", 数据库}, {"删除", 删除},
-    {"选择", 选择},     {"重命名", 重命名}, {"登录", 登录},     {"显示", 显示},
-    {"插入", 插入},     {"查询", 查询},     {"表", 表},         {"用户", 用户},
-    {"管理员", 管理员}, {"执行", 执行}};
+    {"退出", 退出}, {"创建", 创建}, {"数据库", 数据库}, {"删除", 删除},
+    {"选择", 选择}, {"登录", 登录}, {"显示", 显示},     {"插入", 插入},
+    {"查询", 查询}, {"表", 表},     {"用户", 用户},     {"管理员", 管理员},
+    {"执行", 执行}};
 shell::shell() : User(), commandCount(0), need(true) {
   menuOutput::printPower();
 }
@@ -204,38 +204,21 @@ void shell::read() {
         menuOutput::printPowerNoEnough(ReturnPower(), need);
       }
       break;
-    case 重命名:
-      // if (ReturnPower() < 2) {
-      //   toRename(vectorbuff);
-      // } else {
-      //   menuOutput::printPowerNoEnough(ReturnPower());
-      // }
-      // break;
     case 登录: {
-      bool Login = false;
       if (data.size() == 2) {
-        Login = this->login(data[0], data[1]);
+        this->login(data[0], data[1]);
         if (pwd.size() == 0) {
           pwd.push_back("/");
         }
       }
-      menuOutput::printLoginOrNot(Login, ReturnPower(), ReturnUserName(), need);
+      menuOutput::printLoginOrNot(this->ReturnLoginStatus(), ReturnPower(),
+                                  ReturnUserName(), need);
       break;
     }
-      // if (vectorbuff.size() != 3) {
-      //   menuOutput::printCommandError(ReturnPower());
-      // } else {
-      //   bool Login = this->login(vectorbuff[1], vectorbuff[2]);
-      //   menuOutput::printLoginOrNot(Login);
-      // }
-      // break;
-    case 插入:
-      // if (ReturnLoginStatus() < 2) {
-      //   toInsert(vectorbuff);
-      // } else {
-      //   menuOutput::printPowerNoEnough(ReturnPower());
-      // }
-      // break;
+    case 插入: {
+      toInsert();
+      break;
+    }
     case 查询:
       // toFind(vectorbuff);
       // break;
@@ -246,7 +229,7 @@ void shell::read() {
       toExecute();
       break;
     default:
-      // menuOutput::printCommandError(ReturnPower());
+      menuOutput::printCommandError(ReturnPower(), need);
       break;
   }
 }
@@ -459,8 +442,8 @@ void shell::toDeleteManager() {
     menuOutput::printPowerNoEnough(ReturnPower(), need);
     return;
   }
-  if(!deleteUser(data[0])){
-    menuOutput::printManagerNotExists(ReturnPower(),need);
+  if (!deleteUser(data[0])) {
+    menuOutput::printManagerNotExists(ReturnPower(), need);
   }
 }
 void shell::toDeleteUser() {
@@ -468,14 +451,63 @@ void shell::toDeleteUser() {
     menuOutput::printCommandError(ReturnPower(), need);
     return;
   }
-  if(!deleteUser(data[0])){
-    menuOutput::printUserNotExists(ReturnPower(),need);
+  if (!deleteUser(data[0])) {
+    menuOutput::printUserNotExists(ReturnPower(), need);
   }
 }
-void shell::toRename() {}
-void shell::toRenameTable() {}
-void shell::toRenameDatabase() {}
-void shell::toInsert() {}
+void shell::toInsert() {
+  switch (command.size()) {
+    case 2: {
+      if (command[1] != 表 || data.size() == 0) {
+        menuOutput::printCommandError(ReturnPower(), need);
+        return;
+      }
+      if (data.size() == 1) {
+        menuOutput::printInsertNoValue(ReturnPower(), need);
+        return;
+      }
+      toInsertTable();
+      break;
+    }
+    case 3: {
+      if (command[1] != 数据库 || command[2] != 表 || data.size() < 2) {
+        menuOutput::printCommandError(ReturnPower(), need);
+        return;
+      }
+      if (data.size() == 2) {
+        menuOutput::printInsertNoValue(ReturnPower(), need);
+        return;
+      }
+      toInsertDatabaseTable();
+      break;
+    }
+    default:
+      menuOutput::printCommandError(ReturnPower(), need);
+      break;
+  }
+}
+void shell::toInsertDatabaseTable(){
+  Table table(data[0] + "/" + data[1],type::_TYPE_TABLE);
+  if(!table.isExist()){
+    menuOutput::printNotExistsTable(ReturnPower(),need);
+    return;
+  }
+    vstring tmp(data.begin() + 2,data.end());
+  table.append(tmp);
+}
+void shell::toInsertTable(){
+  if(pwd.size() == 1){
+    menuOutput::printNotChooseDatabase(ReturnPower(),need);
+    return;
+  }
+  Table table(pwd[1] + "/" + data[0],type::_TYPE_TABLE);
+  if(!table.isExist()){
+    menuOutput::printNotExistsTable(ReturnPower(),need);
+    return;
+  }
+  vstring tmp(data.begin() + 1,data.end());
+  table.append(tmp);
+}
 void shell::toFind() {}
 void shell::toShow() {
   switch (command.size()) {

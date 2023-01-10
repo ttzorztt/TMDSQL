@@ -122,6 +122,17 @@ class shell : public User {
    */
   void toInsert();
   /**
+   * @brief 输入插入表后的操作
+   * @return  
+   */
+  void toInsertTable();
+  /**
+   * @brief 输入插入数据库表后的操作
+   * @return  
+   */
+  void toInsertDatabaseTable();
+
+  /**
    * @brief 输入查询后的操作
    * @return
    */
@@ -191,20 +202,5 @@ class shell : public User {
    * @return  
    */
   void toDeleteManager();
-  /**
-   * @brief 输入重命名后的操作
-   * @return
-   */
-  void toRename();
-  /**
-   * @brief 输出重命名表后的操作
-   * @return
-   */
-  void toRenameTable();
-  /**
-   * @brief 输入重命名数据库后的操作
-   * @return
-   */
-  void toRenameDatabase();
 };
 #endif

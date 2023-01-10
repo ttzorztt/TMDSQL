@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-10 10:16:14
+ * @LastEditTime : 2023-01-10 13:40:57
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -45,7 +45,13 @@ class menuOutput {
    * @param bool need 是否需要提示符
    */
   void static printExit(TYPE_POWER power, bool need = true);
-
+    /**
+     * @brief 输出插入指令中没有待插入的数据
+     * @param  TYPE_POWER power 权限
+     * @param  bool need 是否需要提示符
+     * @return  
+     */
+    void static printInsertNoValue(TYPE_POWER power,bool need = true);
   /**
    * @brief 输出权限不足
    * @param TYPE_POWER power 权限

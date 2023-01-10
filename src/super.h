@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-06 10:09:57
+ * @LastEditTime : 2023-01-10 10:32:20
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -80,7 +80,6 @@ enum TYPE_CID {
   数据库,
   删除,
   选择,
-  重命名,
   登录,
   显示,
   插入,

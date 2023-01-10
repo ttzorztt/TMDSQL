@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-10 10:17:19
+ * @LastEditTime : 2023-01-10 13:42:48
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -207,7 +207,11 @@ void menuOutput::printUserNotExists(TYPE_POWER power, bool need) {
   std::cout << "该用户不存在!" << std::endl;
   printPower(power, need);
 }
-
+void menuOutput::printInsertNoValue(TYPE_POWER power,bool need){
+  printPower(power,need);
+  std::cout << "拒绝执行，指令中缺乏待插入数据!" << std::endl;
+  printPower(power,need);
+}
 void menuOutput::printManagerNotExists(TYPE_POWER power, bool need) {
   printPower(power, need);
   std::cout << "该管理员不存在!" << std::endl;
