@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-09 16:11:31
+ * @LastEditTime : 2023-01-10 10:17:19
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -62,7 +62,6 @@ void menuOutput::printShowDatabase(TYPE_POWER power, bool need) {
 void menuOutput::printShowDatabase(TYPE_POWER power,
                                    DataBase& database,
                                    bool need) {
-  
   if (!database.isExist()) {
     std::cout << "数据库不存在!" << std::endl;
     return;
@@ -203,7 +202,17 @@ void menuOutput::printLoginOrNot(bool Login,
   }
   printPower(power, need);
 }
+void menuOutput::printUserNotExists(TYPE_POWER power, bool need) {
+  printPower(power, need);
+  std::cout << "该用户不存在!" << std::endl;
+  printPower(power, need);
+}
 
+void menuOutput::printManagerNotExists(TYPE_POWER power, bool need) {
+  printPower(power, need);
+  std::cout << "该管理员不存在!" << std::endl;
+  printPower(power, need);
+}
 void menuOutput::printShowTable(TYPE_POWER power,
                                 Table& table,
                                 int number,

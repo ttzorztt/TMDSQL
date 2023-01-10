@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-10 08:40:21
+ * @LastEditTime : 2023-01-10 10:18:33
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -324,19 +324,6 @@ void shell::toCreate() {
       menuOutput::printCommandError(ReturnPower(), need);
       break;
   }
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
-  //   switch (HashMapCID[value[1]]) {
-  //     case 表:
-  //       toCreateTable(value);
-  //       break;
-  //     case 数据库:
-  //       toCreateDatabase(value);
-  //       break;
-  //     default:
-  //
-  //   }
 }
 void shell::toCreateTable() {
   if (!DataBase(pwd[1]).isExist()) {
@@ -365,10 +352,10 @@ void shell::toDelete() {
   }
   switch (command[1]) {
     case 数据库:
-    if(command.size() == 3 && command[2] == 表){
-      toDeleteDatabaseTable();
-      return;
-    }
+      if (command.size() == 3 && command[2] == 表) {
+        toDeleteDatabaseTable();
+        return;
+      }
       toDeleteDatabase();
       return;
     case 表:
@@ -384,27 +371,14 @@ void shell::toDelete() {
       menuOutput::printCommandError(ReturnPower(), need);
       break;
   }
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
-  //   switch (HashMapCID[value[1]]) {
-  //     case 表:
-  //       toDeleteTable(value);
-  //       break;
-  //     case 数据库:
-  //       toDeleteDatabase(value);
-  //       break;
-  //     default:
-  //       menuOutput::printCommandError(ReturnPower());
-  //   }
 }
 bool shell::inputACK() {
   std::string tmp;
-  while(1){
-    std::getline(std::cin,tmp);
-    if(tmp == ""){
-      return false;   
-    }else{
+  while (1) {
+    std::getline(std::cin, tmp);
+    if (tmp == "") {
+      return false;
+    } else {
       return (tmp == "确定");
     }
   }
@@ -428,8 +402,28 @@ void shell::toDeleteTable() {
     std::cout << "该指令已取消!" << std::endl;
   }
 }
-void shell::toDeleteDatabaseTable(){
-    
+void shell::toDeleteDatabaseTable() {
+  if (data.size() != 2) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    return;
+  }
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  menuOutput::printShowTable(ReturnPower(), table, 5, need);
+  std::cout << "如果您仍然执意删除，请键入 \"确定\" :";
+  if (inputACK()) {
+    table.remove();
+    return;
+  } else {
+    std::cout << "该指令已取消!" << std::endl;
+  }
 }
 void shell::toDeleteDatabase() {
   if (data.size() != 1) {
@@ -456,40 +450,33 @@ void shell::toDeleteDatabase() {
     return;
   }
 }
-void shell::toDeleteManager(){
-
+void shell::toDeleteManager() {
+  if (data.size() != 1) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
+  if (ReturnPower() != ROOT) {
+    menuOutput::printPowerNoEnough(ReturnPower(), need);
+    return;
+  }
+  if(!deleteUser(data[0])){
+    menuOutput::printManagerNotExists(ReturnPower(),need);
+  }
 }
-void shell::toDeleteUser(){
-
+void shell::toDeleteUser() {
+  if (data.size() != 1) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    return;
+  }
+  if(!deleteUser(data[0])){
+    menuOutput::printUserNotExists(ReturnPower(),need);
+  }
 }
-void shell::toRename() {
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
-  //   switch (HashMapCID[value[1]]) {
-  //     case 数据库:
-  //       toRenameTable(value);
-  //       break;
-  //     case 表:
-  //       toRenameDatabase(value);
-  //       break;
-  //     default:
-  //       menuOutput::printCommandError(ReturnPower());
-  //       break;
-  //   }
-}
+void shell::toRename() {}
 void shell::toRenameTable() {}
 void shell::toRenameDatabase() {}
-void shell::toInsert() {
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
-}
-void shell::toFind() {
-  //   if (!HashMapCID.count(value[1])) {
-  //     menuOutput::printCommandError(ReturnPower());
-  //   }
-}
+void shell::toInsert() {}
+void shell::toFind() {}
 void shell::toShow() {
   switch (command.size()) {
     case 1: {

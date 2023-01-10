@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-04 17:17:34
+ * @LastEditTime : 2023-01-10 10:08:36
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -41,15 +41,15 @@ _file::~_file() {
   }
   --_file::count;
 }
-void _file::deleteLine(std::string index){
+bool _file::deleteLine(std::string index){
   std::string oldTruePath = this->truePath;
+  bool command = false;
  vstring vectorbuff;
-  std::cout << "delete is" << _file::create(oldTruePath + "tmp") << std::endl;
   _file tmp(oldTruePath + "tmp");
-  std::cout << tmp.isExist() << std::endl;
   this->setReadSeek(0);
   while(this->readline(vectorbuff)){
     if(vectorbuff[0] == index){
+      command = true;
       continue;
     }else{
       tmp.write(vectorbuff,type_mode::WRITEBUFF_MODE_APP);
@@ -57,6 +57,7 @@ void _file::deleteLine(std::string index){
   }
   this->remove();
   rename((oldTruePath + "tmp").c_str(),oldTruePath.c_str());
+  return command;
 }
 void _file::setOpenBuff(MODE mode) {
   if ((mode == type_mode::WRITEBUFF_MODE_APP && this->nowMode == type_mode::WRITEBUFF_MODE_APP) || (mode == type_mode::READBUFF_MODE && mode == this->nowMode )) {

@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-09 15:17:35
+ * @LastEditTime : 2023-01-10 10:16:14
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -25,6 +25,20 @@ class menuOutput {
  public:
   menuOutput();
   ~menuOutput();
+  /**
+   * @brief 输出用户不存在
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要输出提示符
+   * @return
+   */
+  void static printUserNotExists(TYPE_POWER power, bool need = true);
+   /**
+   * @brief 输出管理员不存在
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要输出提示符
+   * @return
+   */
+  void static printManagerNotExists(TYPE_POWER power, bool need = true);
   /**
    * @brief  shell输入结束
    * @param TYPE_POWER power 权限
@@ -135,8 +149,8 @@ class menuOutput {
    * @return
    */
   void static printShowDatabase(TYPE_POWER power,
-                                     DataBase& database,
-                                     bool need = true);
+                                DataBase& database,
+                                bool need = true);
   /**
    * @brief 输出系统中存在的数据库
    * @param  TYPE_POWER power 权限

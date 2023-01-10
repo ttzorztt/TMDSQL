@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-04 11:47:06
+ * @LastEditTime : 2023-01-10 10:09:47
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -94,6 +94,9 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
 }
 std::string User::ReturnUserName() const {
   return (this->loginStatus) ? this->UserName : "";
+}
+bool User::deleteUser(std::string index){
+  return pd.deleteLine(index);
 }
 bool User::login() {
   pd.setReadSeek(0);
