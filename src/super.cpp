@@ -2,16 +2,16 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2023-01-10 20:34:14
+ * @LastEditTime : 2023-01-11 15:42:47
  */
 
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
 #endif
-bool  _super::createDir(std::string path) {
+bool _super::createDir(std::string path) {
 #ifdef __WIN32__
-  return  mkdir(path.c_str());
+  return mkdir(path.c_str());
 #endif
 #ifdef __linux__
   return mkdir(path.c_str(), 777);
@@ -22,10 +22,24 @@ bool _super::create() {
 }
 void _super::stringToVector(const std::string& _str, revstring vec) {
   vec.clear();
-  int left = 0;
-  int right = 1;
   int size = _str.size();
+  int left = 0;
+  while (left < size) { //去除前导空格
+    if (_str[left] != ' ') {
+      break;
+    }
+    ++left;
+  }
+  if (left == size) {
+    return;
+  }
+  int right = left + 1;
   while (right <= size) {
+    if(_str[right] == ' ' && _str[right - 1] == ' '){
+      ++left;
+      ++right;
+      continue;
+    }
     if (_str[right] != ',' && _str[right] != ' ') {
       ++right;
       continue;
@@ -35,7 +49,9 @@ void _super::stringToVector(const std::string& _str, revstring vec) {
       ++right;
     }
   }
-  vec.push_back(_str.substr(left));
+  if (_str[size - 1] != ' ') {
+    vec.push_back(_str.substr(left));
+  }
 }
 bool _super::remove() {
   return true;
@@ -84,26 +100,12 @@ std::string _super::returnTruePath(std::string Name, type style) {
   vstring vectorbuff;
   switch (style) {
     case type::_TYPE_DATABASE:
-      return _databasePath + Name;
-      break;
-    case type::_TYPE_TABLE_LOCK:
-      vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
-      return _tableLockPath + vectorbuff[0] + "/." + vectorbuff[1];
-      break;
-    case type::_TYPE_DATABASE_LOCK:
-      return _databaseLockPath + "/." + Name;
-      break;
     case type::_TYPE_TABLE:
-      vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
-      return _tablePath + vectorbuff[0] + "/" + vectorbuff[1];
-    case type::_TYPE_INDEX_TABLE:
-      return _indexPath + Name;
+      return _databaseAndTablePath + Name;
       break;
+    case type::_TYPE_INDEX_TABLE:
     case type::_TYPE_CREATE_INDEX_DATABASE:
       return _indexPath + Name;
-      break;
-    case type::_TYPE_CREATE_LOCK_DATABASE:
-      return _databaseLockPath + Name;
       break;
     case type::_TYPE_PCB:
       vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
@@ -116,9 +118,9 @@ std::string _super::returnTruePath(std::string Name, type style) {
   }
   return "";
 }
-int _super::stringToInt(std::string& str){
-  for(char& ch : str){
-    if(ch > '9' || ch < '0'){
+int _super::stringToInt(std::string& str) {
+  for (char& ch : str) {
+    if (ch > '9' || ch < '0') {
       return -1;
     }
   }

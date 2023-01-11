@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-10 14:05:39
+ * @LastEditTime : 2023-01-11 21:17:33
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -104,8 +104,7 @@ bool Table::append(vstring value) {
   for (std::string& str : value) {
     fileIndex += str.size();
   }
-  std::cout << "fileIndex end: " << fileIndex << std::endl;
-  pcb.addLength();
+ pcb.addLength();
   pcb.setEndLineIndex(fileIndex);
   return true;
 }

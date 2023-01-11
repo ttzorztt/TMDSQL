@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2023-01-10 10:09:58
+ * @LastEditTime : 2023-01-11 10:01:28
  */
 
 #ifndef _STRING_
@@ -21,7 +21,7 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-
+// 封装用户类，实现权限划分
 class User {
  private:
   // 用户名
@@ -42,6 +42,8 @@ class User {
   static std::set<std::string> nowLoginId;
   // 修改位
   bool reset;
+  // 无法登录原因,仅在loginStatus=false的时候有意义
+  TYPE_LOGIN_ERROR errorCause;
   /**
    * @brief 读入所有用户名，以供创建用户的时候对比ID，并填充nameBuff
    * @return
@@ -65,6 +67,11 @@ class User {
                TYPE_POWER power);
 
  public:
+ /**
+  * @brief 返回登录失败的原因，仅登录失败的情况下有效
+  * @return  
+  */
+ TYPE_LOGIN_ERROR returnErrorCase() const;
   /**
    * @brief 退出登录
    * @return

@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-10 18:58:38
+ * @LastEditTime : 2023-01-11 20:40:47
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -45,6 +45,27 @@ class menuOutput {
    * @param bool need 是否需要提示符
    */
   void static printExit(TYPE_POWER power, bool need = true);
+  /**
+   * @brief 输出指令取消执行
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printCommandBackout(TYPE_POWER power,bool need = true);
+  /**
+   * @brief 输出表不为空
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printTableNotEmptyAndDeleteTip(TYPE_POWER power,bool need = true);
+    /**
+   * @brief 输出数据库不为空
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power,bool need = true);
     /**
      * @brief 输出插入指令中没有待插入的数据
      * @param  TYPE_POWER power 权限
@@ -103,14 +124,50 @@ class menuOutput {
    */
   void static printDatabaseNotHaveTable(TYPE_POWER power, bool need = true);
   /**
+   * @brief 对创建成功的ACK
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   */
+  void static printCreateACK(TYPE_POWER power,bool need = true);
+  /**
+   * @brief 对删除成功的ACK
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printDeleteACK(TYPE_POWER power,bool need= true);
+  /**
+   * @brief 插入成功的ACK
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符号
+   * @return  
+   */
+  void static printInsertACK(TYPE_POWER power,bool need = true);
+  /**
+   * @brief 用户已存在
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printUserExists(TYPE_POWER power,bool need = true);
+    /**
+   * @brief 管理员已存在
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return  
+   */
+  void static printManagerExists(TYPE_POWER power,bool need = true);
+  /**
    * @brief 输出登录成功，或登录失败
    * @param  bool login 登录成功或失败]
    * @param TYPE_POWER power 权限
+   * @param TYPE_ERROR  typeError 失败类型
    * @param  string ID 帐号
    * @param bool need 是否需要提示符
    * @return
    */
   void static printLoginOrNot(bool login,
+                              TYPE_LOGIN_ERROR tpyeError,
                               TYPE_POWER power = TYPE_POWER::NONE,
                               std::string ID = "",
                               bool need = true);

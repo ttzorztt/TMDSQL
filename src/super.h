@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-10 20:33:23
+ * @LastEditTime : 2023-01-11 20:49:37
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -40,23 +40,16 @@ typedef std::vector<int> vint;
 typedef std::vector<int>& revint;
 typedef int POINTER;
 typedef int MODE;
-#define UserVectorBuff vstring vectorbuff(4);
 //"../data/database/"
-const static std::string _tablePath = "../data/database/";
-//"../data/database/"
-const static std::string _databasePath = "../data/database/";
+const static std::string _databaseAndTablePath = "./data/database/";
 //"../data/index/"
-const static std::string _indexPath = "../data/index/";
-//"../data/lock/"
-const static std::string _tableLockPath = "../data/lock/";
-//"../data/lock/"
-const static std::string _databaseLockPath = "../data/lock/";
+const static std::string _indexPath = "./data/index/";
 //"../data/log/"
-const static std::string _logPath = "../data/log/";
+const static std::string _logPath = "./data/log/";
 //"../data/PCB/"
-const static std::string _PCBPath = "../data/PCB/";
+const static std::string _PCBPath = "./data/PCB/";
 // 封装一些文件或目录类型
-const static std::string _TruePathForUserData = "../data/User/pd";
+const static std::string _TruePathForUserData = "./data/User/";
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员
@@ -64,11 +57,13 @@ enum TYPE_POWER {
   NORMAL,   // 普通用户
   NONE      //未登录
 };
-
-static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
-                                                   {TYPE_POWER::Manager, 16},
-                                                   {TYPE_POWER::ROOT, 20},
-                                                   {TYPE_POWER::NONE, 16}};
+//无法登录原因
+enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在,未登录};
+// 优化输出
+// static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
+//                                                    {TYPE_POWER::Manager, 16},
+//                                                    {TYPE_POWER::ROOT, 20},
+//                                                    {TYPE_POWER::NONE, 16}};
 static std::unordered_set<char> checkErrorName{
     '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
     ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',
@@ -94,12 +89,10 @@ enum type {
   _TYPE_DATABASE,               //目录，即数据库
   _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
   _TYPE_INDEX_TABLE,            // 索引下的表
-  _TYPE_TABLE_LOCK,             // 表锁
-  _TYPE_DATABASE_LOCK,          //数据库锁
   _TYPE_CREATE_LOCK_DATABASE,   //创建lock下的数据库文件夹
   _TYPE_PCB,                    // PCB的地址
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
-  _TYPE_USERDATA,
+  _TYPE_USERDATA,               //用户数据
 };
 enum type_mode {
   READBUFF_MODE,  //每次写入前寻位到流结尾
@@ -125,12 +118,12 @@ class _super {
   virtual bool remove();
   virtual int returnCount();
   virtual bool isExist();
-   /**
- * @brief 不同操作系统下创建文件夹
- * @param  string path 路径
- * @return 
- */
- bool static createDir(std::string path);
+  /**
+   * @brief 不同操作系统下创建文件夹
+   * @param  string path 路径
+   * @return
+   */
+  bool static createDir(std::string path);
   /**
    * @brief 返回类型
    * @return 返回类型

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-10 20:55:25
+ * @LastEditTime : 2023-01-11 21:32:34
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -24,6 +24,11 @@
 #define _TABLE_H_
 #include "Table.h"
 #endif
+#ifndef _TABLEPCB_H_
+#define _TABLEPCB_H_
+#include "TablePCB.h"
+#endif
+
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
@@ -81,8 +86,9 @@ void shell::toChooseDatabase() {
         pwd.clear();
         pwd.push_back("/");
         pwd.push_back(data[0]);
+        menuOutput::printPower(ReturnPower(), need);
       } else {
-        menuOutput::printDatabaseIsExists(ReturnPower(), need);
+        menuOutput::printNotExistsDatabase(ReturnPower(), need);
       }
     }
     default: {
@@ -105,6 +111,7 @@ void shell::toChooseTable() {
     case 3: {
       if (Table(pwd[1] + "/" + data[0], type::_TYPE_TABLE).isExist()) {
         pwd.push_back(data[0]);
+        menuOutput::printPower(ReturnPower(), need);
         return;
       } else {
         menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
@@ -120,14 +127,17 @@ void shell::toChooseTable() {
 void shell::toChooseDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
     menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    return;
   } else if (!Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
-    menuOutput::printNotExistsTable(ReturnPower(), need);
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    return;
   }
   if (Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
     pwd.clear();
     pwd.push_back("/");
     pwd.push_back(data[0]);
     pwd.push_back(data[1]);
+    menuOutput::printPower(ReturnPower(), need);
   } else {
     menuOutput::printCommandError(ReturnPower(), need);
   }
@@ -211,8 +221,8 @@ bool shell::read() {
           pwd.push_back("/");
         }
       }
-      menuOutput::printLoginOrNot(this->ReturnLoginStatus(), ReturnPower(),
-                                  ReturnUserName(), need);
+      menuOutput::printLoginOrNot(this->ReturnLoginStatus(), returnErrorCase(),
+                                  ReturnPower(), ReturnUserName(), need);
       break;
     }
     case 插入: {
@@ -229,9 +239,10 @@ bool shell::read() {
       toExecute();
       break;
     default:
+
       menuOutput::printCommandError(ReturnPower(), need);
       break;
-  }
+  };
   return true;
 }
 bool shell::read(std::string str) {
@@ -291,8 +302,11 @@ void shell::toCreate() {
       break;
     case 用户:
       if (command.size() == 2 && data.size() == 2) {
-        addNormalUser(data[0], data[1]);
-        return;
+        if (!addNormalUser(data[0], data[1])) {
+          menuOutput::printUserExists(ReturnPower(), need);
+        } else {
+          menuOutput::printCreateACK(ReturnPower(), need);
+        }
       }
       break;
     case 管理员:
@@ -300,8 +314,11 @@ void shell::toCreate() {
         menuOutput::printPowerNoEnough(ReturnPower(), need);
       }
       if (command.size() == 2 && data.size() == 2) {
-        addManagerUser(data[0], data[1]);
-        return;
+        if (!addManagerUser(data[0], data[1])) {
+          menuOutput::printManagerExists(ReturnPower(), need);
+        } else {
+          menuOutput::printCreateACK(ReturnPower(), need);
+        }
       }
       break;
     default:
@@ -319,6 +336,7 @@ void shell::toCreateTable() {
     menuOutput::printTableIsExists(ReturnPower(), need);
   } else {
     table.create();
+    menuOutput::printCreateACK(ReturnPower(), need);
   }
 }
 void shell::toCreateDatabase() {
@@ -327,6 +345,7 @@ void shell::toCreateDatabase() {
     menuOutput::printDatabaseIsExists(ReturnPower(), need);
   } else {
     database.create();
+    menuOutput::printCreateACK(ReturnPower(), need);
   }
 }
 void shell::toDelete() {
@@ -362,7 +381,6 @@ bool shell::inputACK() {
   while (1) {
     std::getline(std::cin, tmp);
     if (tmp == "") {
-      std::cout << "该指令已取消!" << std::endl;
       return false;
     } else {
       return (tmp == "确定");
@@ -378,10 +396,19 @@ void shell::toDeleteTable() {
   if (!table.isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
+  } else if (!TablePCB(table).returnEndLineIndex()) {
+    table.remove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
   }
-  menuOutput::printShowTable(ReturnPower(), table, 5, need);
+  menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
+  menuOutput::printShowTable(ReturnPower(), table, 5, false);
   if (inputACK()) {
     table.remove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
+  } else {
+    menuOutput::printCommandBackout(ReturnPower(), need);
     return;
   }
 }
@@ -398,10 +425,19 @@ void shell::toDeleteDatabaseTable() {
   if (!table.isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
+  } else if (!TablePCB(table).returnEndLineIndex()) {
+    table.remove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
   }
-  menuOutput::printShowTable(ReturnPower(), table, 5, need);
+  menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
+  menuOutput::printShowTable(ReturnPower(), table, 5, false);
   if (inputACK()) {
     table.remove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
+  } else {
+    menuOutput::printCommandBackout(ReturnPower(), need);
     return;
   }
 }
@@ -416,13 +452,18 @@ void shell::toDeleteDatabase() {
     return;
   }
   if (database.remove()) {
+    menuOutput::printDeleteACK(ReturnPower(), need);
     return;
   } else {
-    std::cout << "该数据库并不为空，以下为当前存在的表项" << std::endl;
+    menuOutput::printDatabaseNotEmptyAndDeleteTip(ReturnPower(), false);
   }
   menuOutput::printShowDatabase(ReturnPower(), database, false);
   if (inputACK()) {
     database.forceremove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
+  } else {
+    menuOutput::printCommandBackout(ReturnPower(), need);
     return;
   }
 }
@@ -437,7 +478,9 @@ void shell::toDeleteManager() {
   }
   if (!deleteUser(data[0])) {
     menuOutput::printManagerNotExists(ReturnPower(), need);
+    return;
   }
+  menuOutput::printDeleteACK(ReturnPower(), need);
 }
 void shell::toDeleteUser() {
   if (data.size() != 1) {
@@ -446,7 +489,9 @@ void shell::toDeleteUser() {
   }
   if (!deleteUser(data[0])) {
     menuOutput::printUserNotExists(ReturnPower(), need);
+    return;
   }
+  menuOutput::printDeleteACK(ReturnPower(), need);
 }
 void shell::toInsert() {
   switch (command.size()) {
@@ -481,12 +526,17 @@ void shell::toInsert() {
 }
 void shell::toInsertDatabaseTable() {
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    return;
+  }
   if (!table.isExist()) {
-    menuOutput::printNotExistsTable(ReturnPower(), need);
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
     return;
   }
   vstring tmp(data.begin() + 2, data.end());
   table.append(tmp);
+  menuOutput::printInsertACK(ReturnPower(), need);
 }
 void shell::toInsertTable() {
   if (pwd.size() == 1) {
@@ -500,6 +550,7 @@ void shell::toInsertTable() {
   }
   vstring tmp(data.begin() + 1, data.end());
   table.append(tmp);
+  menuOutput::printInsertACK(ReturnPower(), need);
 }
 void shell::toFind() {
   switch (command.size()) {
@@ -533,12 +584,16 @@ void shell::toFindTable() {
   menuOutput::printShowFindTable(ReturnPower(), table.find(data[1]), need);
 }
 void shell::toFindDatabaseTable() {
-  Table table(data[0] + "/" + data[1],type::_TYPE_TABLE);
-  if(!table.isExist()){
-    menuOutput::printNotExistsTable(ReturnPower(),need);
+  if(!DataBase(data[0]).isExist()){
+    menuOutput::printNotExistsDatabase(ReturnPower(),need);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(),table.find(data[2]),need);
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    return;
+  }
+  menuOutput::printShowFindTable(ReturnPower(), table.find(data[2]), need);
 }
 void shell::toShow() {
   switch (command.size()) {
@@ -610,11 +665,11 @@ void shell::toShowTable() {
     menuOutput::printNotChooseDatabase(ReturnPower(), need);
     return;
   }
-  if (!DataBase(pwd[1]).isExist()) {
+  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+  if (!table.isExist()) {
     menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
     return;
   }
-  Table table(pwd[1] + data[0], type::_TYPE_TABLE);
   switch (data.size()) {
     case 1: {
       menuOutput::printShowTable(ReturnPower(), table, 5, need);
@@ -638,7 +693,7 @@ void shell::toShowDatabaseTable() {
   }
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
   if (!table.isExist()) {
-    menuOutput::printNotExistsTable(ReturnPower(), need);
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
     return;
   }
   switch (data.size()) {

@@ -2,3 +2,4 @@ src/*.o
 .vscode/
 src/TMSQL
 src/TMSQL.exe
+src/data/

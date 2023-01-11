@@ -1,8 +1,8 @@
-TMDSQL: mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Lockl.o Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o 
-	g++ -static mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Lockl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o -o TMDSQL
+TMDSQL: mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o 
+	g++ -static mainl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o -o TMDSQL
 	./TMDSQL
-TMDSQL.exe: mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Lockw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o
-	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Lockw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o -o TMDSQL.exe
+TMDSQL.exe: mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o
+	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o -o TMDSQL.exe
 	# wine TMDSQL.exe
 menuOutputl.o: menuOutput.cpp
 	g++ -static -c menuOutput.cpp -o menuOutputl.o
@@ -20,10 +20,6 @@ Indexl.o: Index.cpp
 	g++ -static -c Index.cpp -o Indexl.o
 Indexw.o: Index.cpp
 	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK -c Index.cpp -o Indexw.o
-Lockl.o: Lock.cpp
-	g++ -static -c Lock.cpp -o Lockl.o
-Lockw.o: Lock.cpp
-	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK -c Lock.cpp -o Lockw.o
 superl.o: super.cpp
 	g++ -static -c super.cpp -o superl.o
 superw.o: super.cpp
