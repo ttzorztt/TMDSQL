@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-10 20:40:46
+ * @LastEditTime : 2023-01-12 10:36:35
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -121,6 +121,11 @@ class shell : public User {
    * @return
    */
   void toInsert();
+  /**
+   * @brief 输入插入默认表后的操作
+   * @return  
+   */
+  void toInsertDefaultTable();
   /**
    * @brief 输入插入表后的操作
    * @return  

@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-11 20:40:47
+ * @LastEditTime : 2023-01-12 10:38:16
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -101,6 +101,13 @@ class menuOutput {
    * @return
    */
   void static printNotChooseDatabase(TYPE_POWER power, bool need = true);
+    /**
+   * @brief 输出没有选择表
+   * @param  TYPE_POWER power 权限
+   * @param bool need 是否需要提示符
+   * @return
+   */
+  void static printNotChooseTable(TYPE_POWER power, bool need = true);
   /**
    * @brief 输出指令错误
    * @param  TYPE_POWER power 权限

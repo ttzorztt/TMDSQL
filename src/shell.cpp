@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-11 21:32:34
+ * @LastEditTime : 2023-01-12 10:40:11
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -495,6 +495,14 @@ void shell::toDeleteUser() {
 }
 void shell::toInsert() {
   switch (command.size()) {
+    case 1: {
+      if (data.size() == 0) {
+        menuOutput::printCommandError(ReturnPower(), need);
+        return;
+      }
+      toInsertDefaultTable();
+      break;
+    }
     case 2: {
       if (command[1] != 表 || data.size() == 0) {
         menuOutput::printCommandError(ReturnPower(), need);
@@ -536,6 +544,19 @@ void shell::toInsertDatabaseTable() {
   }
   vstring tmp(data.begin() + 2, data.end());
   table.append(tmp);
+  menuOutput::printInsertACK(ReturnPower(), need);
+}
+void shell::toInsertDefaultTable() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    return;
+  }
+  if (pwd.size() == 2) {
+    menuOutput::printNotChooseTable(ReturnPower(), need);
+    return;
+  }
+  Table table(pwd[1] + "/" + pwd[2],type::_TYPE_TABLE);
+  table.append(data);
   menuOutput::printInsertACK(ReturnPower(), need);
 }
 void shell::toInsertTable() {
@@ -584,8 +605,8 @@ void shell::toFindTable() {
   menuOutput::printShowFindTable(ReturnPower(), table.find(data[1]), need);
 }
 void shell::toFindDatabaseTable() {
-  if(!DataBase(data[0]).isExist()){
-    menuOutput::printNotExistsDatabase(ReturnPower(),need);
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
     return;
   }
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);

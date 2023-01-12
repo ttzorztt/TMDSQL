@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-11 21:28:48
+ * @LastEditTime : 2023-01-12 10:38:34
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -179,6 +179,10 @@ void menuOutput::printNotExistsDatabase(TYPE_POWER power, bool need) {
 }
 void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need) {
   std::cout << "该指令无法执行，没有选择数据库!" << std::endl;
+  printPower(power, need);
+}
+void menuOutput::printNotChooseTable(TYPE_POWER power, bool need) {
+  std::cout << "该指令无法执行，没有选择表!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printPWD(vstring& pwd, TYPE_POWER power, bool need) {
