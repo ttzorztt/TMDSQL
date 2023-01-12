@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-12 11:07:29
+ * @LastEditTime : 2023-01-12 14:27:44
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -96,13 +96,22 @@ enum type {
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
   _TYPE_USERDATA,               //用户数据
 };
+// 模式
 enum type_mode {
   READBUFF_MODE,  //每次写入前寻位到流结尾
   WRITEBUFF_MODE_TRUNC,
   WRITEBUFF_MODE_APP,
   DEFAULT
 };
-
+// 执行错误的原因
+enum TYPE_ERROR_CASE {
+  无,
+  登录帐号错误,
+  登录帐号已存在,
+  登录密码错误,
+  无法选择不存在的数据库,
+  无法选择不存在的表,
+};
 /**
  * @brief 维护一些基础静态函数
  */
