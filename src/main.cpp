@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-11 15:44:26
+ * @LastEditTime : 2023-01-12 11:46:48
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -52,6 +52,10 @@
 #define _MENUOUTPUT_H_
 #include "menuOutput.h"
 #endif
+#ifndef _LOG_H_
+#define _LOG_H_
+#include "Log.h"
+#endif
 using namespace std;
 
 /**
@@ -87,7 +91,7 @@ void init() {
     table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
   }
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
   init();
@@ -112,7 +116,9 @@ int main(int argc, char const* argv[]) {
   return 0;
 }
 
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
+  Log x;
+  return 0;
   init();
   string tablePath = "testdatabase2/TMD";
   Table table(tablePath, type::_TYPE_TABLE);

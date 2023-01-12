@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-11 20:49:37
+ * @LastEditTime : 2023-01-12 11:07:29
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -49,7 +49,9 @@ const static std::string _logPath = "./data/log/";
 //"../data/PCB/"
 const static std::string _PCBPath = "./data/PCB/";
 // 封装一些文件或目录类型
-const static std::string _TruePathForUserData = "./data/User/";
+const static std::string _PathForUserData = "./data/User/";
+// 日志文件的路径
+const static std::string _PathForLog = "./data/Log/";
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员
@@ -58,7 +60,7 @@ enum TYPE_POWER {
   NONE      //未登录
 };
 //无法登录原因
-enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在,未登录};
+enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
 // 优化输出
 // static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
 //                                                    {TYPE_POWER::Manager, 16},
