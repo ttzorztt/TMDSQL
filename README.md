@@ -18,13 +18,13 @@
   sudo apt install mingw-w64*
   ```
 
-进入源码后，使用
+  进入源码后，使用
 
-  ```bash
-  make TMDSQL.exe
-  ```
+    ```bash
+    make TMDSQL.exe
+    ```
 
-即可得到windows版本的TMDSQL.exe
+  即可得到windows版本的TMDSQL.exe
 
 ### 编码
 
