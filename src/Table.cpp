@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-11 21:17:33
+ * @LastEditTime : 2023-01-13 15:39:21
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -17,6 +17,7 @@
 #include <iostream>
 #endif
 int Table::count = 0;
+
 Table::Table(std::string databaseAndTableName, type style)
     : _file(databaseAndTableName, style) {
   this->style = style;
@@ -25,6 +26,10 @@ Table::Table(std::string databaseAndTableName, type style)
 Table::Table(DataBase database, std::string tableName, type style)
     : _file(database.returnName() + "/" + tableName, style) {
   this->style = style;
+  ++Table::count;
+}
+Table::Table(std::string _truePath) : _file(_truePath){
+  this->style = _TYPE_NONE;
   ++Table::count;
 }
 Table::~Table() {
@@ -108,6 +113,7 @@ bool Table::append(vstring value) {
   pcb.setEndLineIndex(fileIndex);
   return true;
 }
+
 Table::Table(Table& table) : _file(table.name, table.style) {
   this->style = table.style;
   ++this->count;

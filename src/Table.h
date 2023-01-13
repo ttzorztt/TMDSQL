@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:12:10
- * @LastEditTime : 2023-01-04 16:31:38
+ * @LastEditTime : 2023-01-13 15:20:46
  */
 #ifndef _TABLE_
 #define _TABLE_
@@ -63,6 +63,12 @@ class Table : public _file{
    * @return
    */
   Table(DataBase database, std::string tableName, type style);
+  /**
+   * @brief 构造函数
+   * @param  string _truePath 真实路径
+   * @return  
+   */
+  Table(std::string _truePath);
   /**
    * @brief app 的方式写入index
    * @param  string index 索引

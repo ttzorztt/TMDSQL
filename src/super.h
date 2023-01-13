@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-12 14:27:44
+ * @LastEditTime : 2023-01-13 16:12:45
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -28,7 +28,7 @@
 #endif
 #ifndef _UNORDERED_MAP_
 #define _UNORDERED_MAP_
-#include "unordered_map"
+#include <unordered_map>
 #endif
 #ifndef _UNORDERED_SET_
 #define _UNORDERED_SET_
@@ -87,6 +87,7 @@ enum TYPE_CID {
 };
 typedef std::vector<TYPE_CID> vCID;
 enum type {
+  _TYPE_NONE, // 默认，留给传入真实路径的type
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
   _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
@@ -105,7 +106,7 @@ enum type_mode {
 };
 // 执行错误的原因
 enum TYPE_ERROR_CASE {
-  无,
+  顺利执行,
   登录帐号错误,
   登录帐号已存在,
   登录密码错误,

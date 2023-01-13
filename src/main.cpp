@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-12 22:37:40
+ * @LastEditTime : 2023-01-13 16:48:32
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -72,9 +72,6 @@ void init() {
   if (access("./data/index", F_OK)) {
     _super::createDir("./data/index");
   }
-  if (access("./data/log", F_OK)) {
-    _super::createDir("./data/log");
-  }
   if (access("./data/PCB", F_OK)) {
     _super::createDir("./data/PCB");
   }
@@ -90,7 +87,13 @@ void init() {
     table.create();
     table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
   }
-}
+    if (access("./data/Log", F_OK)) {
+    _super::createDir("./data/Log");
+    _file table("./data/Log/Log");
+    table.create(); 
+    table.write(vstring{Log::nowTime() + " 系统初始化"}, type_mode::WRITEBUFF_MODE_APP);
+  }
+} 
 int main1(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
@@ -98,6 +101,7 @@ int main1(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "执行 @SL";
+  Log::open();
   while (1) {
     getline(cin, tmp);
     if (tmp == "") {
@@ -108,6 +112,7 @@ int main1(int argc, char const* argv[]) {
       break;
     }
   }
+  Log::close();
   // vstring v;
   // v.push_back("1");
   // v.push_back("2");
@@ -118,7 +123,15 @@ int main1(int argc, char const* argv[]) {
 }
 
 int main(int argc, char const* argv[]) {
-  Log x;
+  init();
+  std::string tmp = "root";
+  TYPE_POWER op = TYPE_POWER::ROOT;
+  std::string DBID = "DB1";
+  std::string TBID = "TB1";
+  Log::open();
+  Log::LogForSelectDatabase(tmp,op,DBID);
+  Log::LogForSelectDatabaseTable(tmp,op,DBID,TBID,登录密码错误);
+  Log::close();
   return 0;
   init();
   string tablePath = "testdatabase2/TMD";

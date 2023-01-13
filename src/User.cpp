@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-11 10:22:36
+ * @LastEditTime : 2023-01-13 16:34:53
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -31,7 +31,7 @@
 std::set<std::string> User::nameBuff;
 std::set<std::string> User::nowLoginId;
 int User::count = 0;
-_file User::pd(_TruePathForUserData + "pd");
+_file User::pd(_PathForUserData + "pd");
 User::User()
     : loginStatus(false),
       errorCause(TYPE_LOGIN_ERROR::未登录),
@@ -133,8 +133,8 @@ void User::resetPassword(std::string Userpassword) {
     return;
   }
   this->UserPassword = Userpassword;
-  rename(_TruePathForUserData.c_str(), ("." + _TruePathForUserData).c_str());
-  _file tmp(_TruePathForUserData);
+  rename(_PathForUserData.c_str(), ("." + _PathForUserData).c_str());
+  _file tmp(_PathForUserData);
   this->reset = true;
 }
 

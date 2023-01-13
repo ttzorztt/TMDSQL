@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-10 20:35:18
+ * @LastEditTime : 2023-01-13 15:25:43
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -24,7 +24,7 @@ _file::_file(std::string TruePath) : _super(_super::dispartDatabaseNameAndTableN
   this->truePath = TruePath;
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
-  this->style = type::_TYPE_USERDATA;
+  this->style = type::_TYPE_NONE;
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();
