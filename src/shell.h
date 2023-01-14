@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-12 10:36:35
+ * @LastEditTime : 2023-01-14 11:26:55
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -46,8 +46,6 @@ class shell : public User {
  private:
   // 当前工作路径
   vstring pwd;
-  // CID
-  static std::unordered_map<std::string, TYPE_CID> HashMapCID;
   // 用户输入指令
   vCID command;
   // 用户输入数据
@@ -66,13 +64,7 @@ class shell : public User {
    * @return 输入退出则返回False，否则返回True
    */
   bool read();
-  /**
-   * @brief 登录
-   * @param  string ID 帐号
-   * @param  string password 密码
-   * @return
-   */
-  bool logn(std::string ID, std::string password);
+
   /**
    * @brief 语法检查以及指令与数据分类存储
    * @param  string _str 待检查字符串

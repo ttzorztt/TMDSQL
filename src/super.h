@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-13 16:12:45
+ * @LastEditTime : 2023-01-14 18:49:19
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -40,18 +40,12 @@ typedef std::vector<int> vint;
 typedef std::vector<int>& revint;
 typedef int POINTER;
 typedef int MODE;
-//"../data/database/"
-const static std::string _databaseAndTablePath = "./data/database/";
-//"../data/index/"
-const static std::string _indexPath = "./data/index/";
-//"../data/log/"
-const static std::string _logPath = "./data/log/";
-//"../data/PCB/"
-const static std::string _PCBPath = "./data/PCB/";
-// 封装一些文件或目录类型
-const static std::string _PathForUserData = "./data/User/";
-// 日志文件的路径
-const static std::string _PathForLog = "./data/Log/";
+#define _databaseAndTablePath "./data/database/"
+#define _indexPath "./data/index/"
+#define _PCBPath "./data/PCB/"
+#define _PathForUserData "./data/User/"
+#define _PathForLog "./data/Log/"
+#define _SQLPath "./data/SQL/"
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员
@@ -59,17 +53,6 @@ enum TYPE_POWER {
   NORMAL,   // 普通用户
   NONE      //未登录
 };
-//无法登录原因
-enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
-// 优化输出
-// static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
-//                                                    {TYPE_POWER::Manager, 16},
-//                                                    {TYPE_POWER::ROOT, 20},
-//                                                    {TYPE_POWER::NONE, 16}};
-static std::unordered_set<char> checkErrorName{
-    '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
-    ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',
-    ':', ';', '\'', '\"', ',', '<', '>', '.', '?', '/'};
 enum TYPE_CID {
   退出,
   创建,
@@ -86,8 +69,20 @@ enum TYPE_CID {
   执行
 };
 typedef std::vector<TYPE_CID> vCID;
+std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {
+    {"退出", 退出}, {"创建", 创建}, {"数据库", 数据库}, {"删除", 删除},
+    {"选择", 选择}, {"登录", 登录}, {"显示", 显示},     {"插入", 插入},
+    {"查询", 查询}, {"表", 表},     {"用户", 用户},     {"管理员", 管理员},
+    {"执行", 执行}};
+std::unordered_map<TYPE_CID, std::string> static HashMapCIDToString = {
+    {退出, "退出"}, {创建, "创建"}, {数据库, "数据库"}, {删除, "删除"},
+    {选择, "选择"}, {登录, "登录"}, {显示, "显示"},     {插入, "插入"},
+    {查询, "查询"}, {表, "表"},     {用户, "用户"},     {管理员, "管理员"},
+    {执行, "执行"}};
+//无法登录原因
+enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
 enum type {
-  _TYPE_NONE, // 默认，留给传入真实路径的type
+  _TYPE_NONE,                   // 默认，留给传入真实路径的type
   _TYPE_TABLE,                  //普通文件，即表
   _TYPE_DATABASE,               //目录，即数据库
   _TYPE_CREATE_INDEX_DATABASE,  // 创建index目录下的数据库文件夹
@@ -96,6 +91,7 @@ enum type {
   _TYPE_PCB,                    // PCB的地址
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
   _TYPE_USERDATA,               //用户数据
+  _TYPE_LOG                     // LOG文件
 };
 // 模式
 enum type_mode {
@@ -107,12 +103,40 @@ enum type_mode {
 // 执行错误的原因
 enum TYPE_ERROR_CASE {
   顺利执行,
+  键入不存在的关键字,
+  键入违规字符,
   登录帐号错误,
   登录帐号已存在,
   登录密码错误,
   无法选择不存在的数据库,
   无法选择不存在的表,
+  未登录拒绝执行,
+  普通用户违规操作,
+  未选择数据库越级选择表,
+  已选择的数据库中不存在目标表,
+  未知指令,
+  未知语义,
+  第一个关键字错误,
+  第二个关键字错误,
+  第三个关键字错误,
+  SQL文件未找到,
+  编译错误,
+  创建已存在的用户,
+  创建已存在的管理员,
+  管理员违规操作,
+  表已存在无法创建,
+  数据库已存在无法创建,
 };
+// 优化输出
+// static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
+//                                                    {TYPE_POWER::Manager, 16},
+//                                                    {TYPE_POWER::ROOT, 20},
+//                                                    {TYPE_POWER::NONE, 16}};
+static std::unordered_set<char> checkErrorName{
+    '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
+    ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',
+    ':', ';', '\'', '\"', ',', '<', '>', '.', '?', '/'};
+
 /**
  * @brief 维护一些基础静态函数
  */

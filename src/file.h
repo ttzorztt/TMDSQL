@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2023-01-10 10:09:19
+ * @LastEditTime : 2023-01-14 18:04:13
  */
 #ifndef _FILE_
 #define _FILE_
@@ -39,24 +39,24 @@
  */
 class _file : public _super {
  public:
-   /**
+  /**
    * @brief 判断是否打开双buff
    * @param MODE mode 文件打开模式
    */
   void setOpenBuff(MODE mode);
-     /**
-    * @brief 输入PCB
-    * @return  
-    */
-   void inputPCBInformation();
-   /**
+  /**
+   * @brief 输入PCB
+   * @return
+   */
+  void inputPCBInformation();
+  /**
    * @brief 以App的方式写入字符串
    * @param vstring array 数据写入数据库
    * @param mode type_mode 模式
    * @return True写入正确,False 写入失败
    */
-  bool write(const vstring array,type_mode mode);
-   /**
+  bool write(vstring array, type_mode mode);
+  /**
    * @brief 真实路径
    * @return {std::string} 返回真实路径
    */
@@ -88,7 +88,7 @@ class _file : public _super {
    * @return 正常删除返回True，否则返回False
    */
   bool static remove(std::string Name, type style);
-  
+
   /**
    * @brief 删除文件
    * @param  string truePath 真实路径
@@ -99,26 +99,26 @@ class _file : public _super {
    * @brief 返回类中默认的writeFileBuff，用来操作
    * @return <const ofstream&> 返回writeFileBuff
    */
-   std::ofstream& returnWriteFileBuff();
+  std::ofstream& returnWriteFileBuff();
   /**
    * @brief 返回类中默认的readFileBuff，用来操作
    * @return <const ifstream&> 返回readFileBuff
    */
-   std::ifstream& returnReadFileBuff();
+  std::ifstream& returnReadFileBuff();
   /**
    * @brief 以App的方式写入字符串
    * @param string& str 写入的字符串
    * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
-  bool write(const std::string str,type_mode mode);
+  bool write(const std::string str, type_mode mode);
   /**
    * @brief 以行的形势读出数据
    * @param revstring ret 保存的方式
    * @return 读完或文件不存在返回False，否则返回True
    */
   bool readline(revstring ret);
-  
+
   /**
    * @brief 构造函数
    * @param string Name 名
@@ -129,7 +129,7 @@ class _file : public _super {
   /**
    * @brief 构造函数
    * @param  string TruePath 真实路径
-   * @return  
+   * @return
    */
   _file(std::string TruePath);
   /**
@@ -155,18 +155,20 @@ class _file : public _super {
    * @param type_mode mode 写入方式
    * @return True写入正确,False 写入失败
    */
-  bool static write(std::string Name, type style,
-                        const vstring array, type_mode mode );
+  bool static write(std::string Name,
+                    type style,
+                    const vstring array,
+                    type_mode mode);
   /**
    * @brief 设置读buff的seek
    * @param  POINTER fileIndex 文件指针
-   * @return 
+   * @return
    */
   void setReadSeek(POINTER fileIndex);
   /**
    * @brief 设置写buff的seel
    * @param  POINTER fileIndex 文件指针
-   * @return  
+   * @return
    */
   void setWriteSeek(POINTER fileIndex);
   /**
@@ -180,13 +182,23 @@ class _file : public _super {
    */
   POINTER returnWriteTell();
   /**
+   * @brief 重新设置指向文件
+   * @param  string Name 文件名
+   * @param  type style 类型
+   * @return  
+   */
+  void resetPath(std::string Name, type style);
+  /**
    * @brief <static> 以App的方式写入字符串
    * @param  string Name 名字
    * @param  string& str 单个字符串
    * @param type_mode mode 写入方式
    * @return  True写入正常，False写入失败
    */
-  bool static write(std::string Name, type style, const std::string& str,type_mode mode);
+  bool static write(std::string Name,
+                    type style,
+                    const std::string& str,
+                    type_mode mode);
   /**
    * @brief <static> 创建
    * @param string Name 需要创建的名字

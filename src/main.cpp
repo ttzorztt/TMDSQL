@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-13 16:48:32
+ * @LastEditTime : 2023-01-14 16:43:38
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -87,20 +87,22 @@ void init() {
     table.create();
     table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
   }
-    if (access("./data/Log", F_OK)) {
+  if (access("./data/Log", F_OK)) {
     _super::createDir("./data/Log");
-    _file table("./data/Log/Log");
-    table.create(); 
-    table.write(vstring{Log::nowTime() + " 系统初始化"}, type_mode::WRITEBUFF_MODE_APP);
   }
-} 
-int main1(int argc, char const* argv[]) {
+}
+int main(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
-  
-  init();
+  //  init();
+
+
   shell x;
-  string tmp = "执行 @SL";
+  // Log::open();
+  string tmp = "执行 @SQL";
+  x.read(tmp);
+  // Log::close();
+  return 0;
   Log::open();
   while (1) {
     getline(cin, tmp);
@@ -122,15 +124,19 @@ int main1(int argc, char const* argv[]) {
   return 0;
 }
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
+  // std::cout << _PathForLog << std::endl;
+  std::cout << "m" << _super::returnTruePath("Log", type::_TYPE_LOG)
+            << std::endl;
+
   init();
   std::string tmp = "root";
   TYPE_POWER op = TYPE_POWER::ROOT;
   std::string DBID = "DB1";
   std::string TBID = "TB1";
   Log::open();
-  Log::LogForSelectDatabase(tmp,op,DBID);
-  Log::LogForSelectDatabaseTable(tmp,op,DBID,TBID,登录密码错误);
+  Log::LogForSelectDatabase(tmp, op, DBID);
+  Log::LogForSelectDatabaseTable(tmp, op, DBID, TBID, 登录密码错误);
   Log::close();
   return 0;
   init();

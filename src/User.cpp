@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-13 16:34:53
+ * @LastEditTime : 2023-01-14 15:57:29
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -31,21 +31,21 @@
 std::set<std::string> User::nameBuff;
 std::set<std::string> User::nowLoginId;
 int User::count = 0;
-_file User::pd(_PathForUserData + "pd");
+_file User::pd(_PathForUserData + std::string("pd"));
 User::User()
     : loginStatus(false),
       errorCause(TYPE_LOGIN_ERROR::未登录),
       reset(false),
       power(TYPE_POWER::NONE),
-      UserName(""),
+      UserName("未登录"),
       UserPassword("") {
   if (nameBuff.size() == 0) {
     this->readAllNameDate();
   }
 }
 User::User(std::string UserName, std::string UserPassword)
-    : UserName(UserName),
-      UserPassword(UserPassword),
+    : UserName("未登录"),
+      UserPassword(""),
       loginStatus(false),
       reset(false),
       errorCause(未登录),
@@ -96,7 +96,7 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
   return true;
 }
 std::string User::ReturnUserName() const {
-  return (this->loginStatus) ? this->UserName : "";
+  return (this->loginStatus) ? this->UserName : "未登录";
 }
 bool User::deleteUser(std::string index) {
   return pd.deleteLine(index);
@@ -109,6 +109,7 @@ bool User::login() {
       if (vectorbuff[1] == this->UserPassword) {
         this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
         ++this->count;
+        this->loginStatus = true;
         return true;
       } else {
         this->errorCause = 密码错误;
@@ -120,22 +121,38 @@ bool User::login() {
   return false;
 }
 bool User::login(std::string UserName, std::string UserPassword) {
-  this->UserName = UserName;
-  this->UserPassword = UserPassword;
-  this->loginStatus = this->login();
-  return this->loginStatus;
+    pd.setReadSeek(0);
+  vstring vectorbuff;
+  while (pd.readline(vectorbuff)) {
+    if (vectorbuff[0] == UserName) {
+      if (vectorbuff[1] == UserPassword) {
+        this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
+        this->UserName = UserName;
+        this->UserPassword = UserPassword;
+        this->loginStatus = true;
+        ++this->count;
+        return true;
+      } else {
+        this->errorCause = 密码错误;
+        return false;
+      }
+      break;
+    }
+  }
+  this->errorCause = 帐号不存在;
+  return false;
 }
 bool User::ReturnLoginStatus() const {
   return this->loginStatus;
 }
 void User::resetPassword(std::string Userpassword) {
-  if (!this->loginStatus) {
-    return;
-  }
-  this->UserPassword = Userpassword;
-  rename(_PathForUserData.c_str(), ("." + _PathForUserData).c_str());
-  _file tmp(_PathForUserData);
-  this->reset = true;
+  // if (!this->loginStatus) {
+  //   return;
+  // }
+  // this->UserPassword = Userpassword;
+  // rename(_PathForUserData, ("." + _PathForUserData).c_str());
+  // _file tmp(_PathForUserData);
+  // this->reset = true;
 }
 
 TYPE_POWER User::ReturnPower() const {

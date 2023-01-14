@@ -2,7 +2,7 @@
  * @Description  : 日志管理类的实现
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:15
- * @LastEditTime : 2023-01-13 17:41:22
+ * @LastEditTime : 2023-01-14 18:54:28
  */
 #ifndef _LOG_H_
 #define _LOG_H_
@@ -16,41 +16,112 @@
 #define _STRING_
 #include <string>
 #endif
+#ifndef _SHELL_H_
+#define _SHELL_H_
+#include "shell.h"
+#endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
 #endif
-_file Log::file(_PathForLog + "Log");
 std::unordered_map<TYPE_ERROR_CASE, std::string> Log::EC = {
     {顺利执行, "顺利执行"},
+    {键入不存在的关键字, "键入不存在的关键字"},
+    {键入违规字符, "键入违规字符"},
     {登录帐号错误, "登录帐号错误"},
     {登录帐号已存在, "登录帐号已存在"},
     {登录密码错误, "登录密码错误"},
     {无法选择不存在的数据库, "无法选择不存在的数据库"},
-    {无法选择不存在的表, "无法选择不存在的表"}};
+    {无法选择不存在的表, "无法选择不存在的表"},
+    {未登录拒绝执行, "未登录拒绝执行"},
+    {未选择数据库越级选择表, "未选择数据库越级选择表"},
+    {已选择的数据库中不存在目标表, "已选择的数据库中不存在目标表"},
+    {普通用户违规操作, "普通用户违规操作"},
+    {未知指令, "未知指令"},
+    {未知语义, "未知语义"},
+    {第一个关键字错误, "第一个关键字错误"},
+    {第二个关键字错误, "第二个关键字错误"},
+    {第三个关键字错误, "第三个关键字错误"},
+    {SQL文件未找到, "SQL文件未找到"},
+    {编译错误, "编译错误"},
+    {创建已存在的用户, "创建已存在的用户"},
+    {管理员违规操作, "管理员违规操作"},
+    {创建已存在的管理员, "创建已存在的管理员"},
+    {表已存在无法创建, "表已存在无法创建"},
+    {数据库已存在无法创建, "数据库已存在无法创建"}};
 std::unordered_map<TYPE_POWER, std::string> Log::TP = {{NONE, "未登录"},
                                                        {NORMAL, "普通用户"},
                                                        {ROOT, "超级管理员"},
                                                        {Manager, "管理员"}};
+_file Log::file(nowData(), type::_TYPE_LOG);
+void Log::LogForCompileError(std::string UserName,
+                             TYPE_POWER op,
+                             std::string _data,
+                             TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(_data, type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForError(std::string UserName,
+                      TYPE_POWER op,
+                      vCID command,
+                      revstring data,
+                      TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  std::string tmp;
+  if (command.size() != 0) {
+    for (auto& CI : command) {
+      tmp += HashMapCIDToString[CI] + " ";
+    }
+    for (std::string& str : data) {
+      tmp += str + " ";
+    }
+  }
+  file.write(tmp, type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForCompileError(std::string UserName,
+                             TYPE_POWER op,
+                             revstring commandAndData,
+                             TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  std::string tmp;
+  for (std::string& str : commandAndData) {
+    tmp += str + " ";
+  }
+  file.write(tmp, type_mode::WRITEBUFF_MODE_APP);
+}
+
 Log::Log() {}
 Log::~Log() {}
-std::string Log::nowTime() {
+std::string Log::nowData() {
   time_t now = time(NULL);
   struct tm* t = localtime(&now);
-  return "[" + std::to_string(t->tm_year + 1900) + "." +
-         std::to_string(t->tm_mon + 1) + "." + std::to_string(t->tm_mday) +
-         "] (" + std::to_string(t->tm_hour) + ":" + std::to_string(t->tm_min) +
-         ":" + std::to_string(t->tm_sec) + ")";
+  return (std::to_string(t->tm_year + 1900) + "." +
+          std::to_string(t->tm_mon + 1) + "." + std::to_string(t->tm_mday));
+}
+std::string Log::nowDataTime() {
+  time_t now = time(NULL);
+  struct tm* t = localtime(&now);
+  std::string FileName = nowData();
+  _file nowfile(FileName, type::_TYPE_LOG);
+  if (!nowfile.isExist() || nowfile.truePath != file.truePath) {
+    //   delete file;
+    file.resetPath(FileName, type::_TYPE_LOG);
+    //   file = new _file(FileName, type::_TYPE_LOG);
+    // file.create();
+  }
+  return "[" + FileName + "] (" + std::to_string(t->tm_hour) + ":" +
+         std::to_string(t->tm_min) + ":" + std::to_string(t->tm_sec) + ")";
 }
 void Log::open() {
-  file.write(nowTime() + " 登录系统", type_mode::WRITEBUFF_MODE_APP);
+  file.write(nowDataTime() + " 登录系统", type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::close() {
   file.write("", type_mode::WRITEBUFF_MODE_APP);
-  file.write(nowTime() + " 登出系统", type_mode::WRITEBUFF_MODE_APP);
+  file.write(nowDataTime() + " 登出系统", type_mode::WRITEBUFF_MODE_APP);
   file.write("", type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::inputNowTime(TYPE_ERROR_CASE& errorCase) {
+  std::string DataTime = nowDataTime();
   time_t now = time(NULL);
   struct tm* t = localtime(&now);
   std::string tmp;
@@ -60,101 +131,179 @@ void Log::inputNowTime(TYPE_ERROR_CASE& errorCase) {
     tmp = "< X >";
   }
   file.write("", type_mode::WRITEBUFF_MODE_APP);
-  file.write(tmp + " " + nowTime(), type_mode::WRITEBUFF_MODE_APP);
+  file.write(tmp + " " + DataTime, type_mode::WRITEBUFF_MODE_APP);
   file.write(EC[errorCase], type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForSelectDatabase(std::string& UserName,
-                               TYPE_POWER& op,
-                               std::string& DBID,
+void Log::LogForSelectDatabase(std::string UserName,
+                               TYPE_POWER op,
+                               std::string DBID,
                                TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "}" + " => 选择 数据库\"" + DBID + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForSelectDatabaseTable(std::string& UserName,
-                                    TYPE_POWER& op,
-                                    std::string& DBID,
-                                    std::string& TBID,
+void Log::LogForExecuteSQL(std::string UserName,
+                           TYPE_POWER op,
+                           std::string SQLPath,
+                           TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "}" + " => 执行 \"" + SQLPath + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForSelectDatabaseTable(std::string UserName,
+                                    TYPE_POWER op,
+                                    std::string DBID,
+                                    std::string TBID,
                                     TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 选择 数据库\"" + DBID + "\" 表\"" +
                  TBID + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForShow(std::string& UserName,
-                     TYPE_POWER& op,
+void Log::LogForShow(std::string UserName,
+                     TYPE_POWER op,
                      TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 显示",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForShowAllDatabase(std::string& UserName,
-                                TYPE_POWER& op,
+void Log::LogForShowAllDatabase(std::string UserName,
+                                TYPE_POWER op,
                                 TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 显示 数据库",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForShowDatabase(std::string& UserName,
-                             TYPE_POWER& op,
-                             std::string& DBID,
+void Log::LogForShowDatabase(std::string UserName,
+                             TYPE_POWER op,
+                             std::string DBID,
                              TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 显示 数据库\"" + DBID + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForShowDatabaseTable(std::string& UserName,
-                                  TYPE_POWER& op,
-                                  std::string& DBID,
-                                  std::string& TBID,
+void Log::LogForShowDatabaseTable(std::string UserName,
+                                  TYPE_POWER op,
+                                  std::string DBID,
+                                  std::string TBID,
                                   TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 显示 数据库\"" + DBID + "\" 表\"" +
                  TBID + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForExit(std::string& UserName,
-                     TYPE_POWER& op,
+void Log::LogForExit(std::string UserName,
+                     TYPE_POWER op,
                      TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 退出",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForLogin(std::string& UserName,
-                      TYPE_POWER& op,
-                      std::string& LoginID,
-                      std::string& LoginPassword,
+void Log::LogForLogin(std::string UserName,
+                      TYPE_POWER op,
+                      std::string LoginID,
+                      std::string LoginPassword,
                       TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 登录 用户\"" + LoginID +
                  "\" 密码\"" + LoginPassword + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForCreateUser(std::string& UserName,
-                           TYPE_POWER& op,
-                           std::string& ID,
-                           std::string& Pd,
+void Log::LogForCreateUser(std::string UserName,
+                           TYPE_POWER op,
+                           std::string ID,
+                           std::string Pd,
                            TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 创建 普通用户\"" + ID +
                  "\" 密码\"" + Pd + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForCreateManager(std::string& UserName,
-                              TYPE_POWER& op,
-                              std::string& ID,
-                              std::string& Pd,
+void Log::LogForCreateManager(std::string UserName,
+                              TYPE_POWER op,
+                              std::string ID,
+                              std::string Pd,
                               TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 创建 管理员\"" + ID + "\" 密码\"" +
                  Pd + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
-void Log::LogForCreateDatabase(std::string& UserName,
-                               TYPE_POWER& op,
-                               std::string& DBID,
+void Log::LogForCreateDatabase(std::string UserName,
+                               TYPE_POWER op,
+                               std::string DBID,
                                TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 创建 数据库\"" + DBID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForCreateDatabaseTable(std::string UserName,
+                                    TYPE_POWER op,
+                                    std::string DBID,
+                                    std::string TBID,
+                                    TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 创建 数据库\"" + DBID + "\" 表\"" +
+                 TBID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForDeleteDatabase(std::string UserName,
+                               TYPE_POWER op,
+                               std::string DBID,
+                               TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 删除 数据库\"" + DBID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForDeleteDatabaseTable(std::string UserName,
+                                    TYPE_POWER op,
+                                    std::string DBID,
+                                    std::string TBID,
+                                    TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 删除 数据库\"" + DBID + "表\"" +
+                 TBID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForDeleteUser(std::string UserName,
+                           TYPE_POWER op,
+                           std::string UID,
+                           TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 删除 普通用户\"" + UID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForDeleteManager(std::string UserName,
+                              TYPE_POWER op,
+                              std::string MID,
+                              TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 删除 管理员\"" + MID + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForInsertDatabaseTable(std::string UserName,
+                                    TYPE_POWER op,
+                                    std::string DBID,
+                                    std::string TBID,
+                                    revstring data,
+                                    TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  std::string tmp;
+  for (std::string str : data) {
+    tmp += " " + str;
+  }
+  file.write(TP[op] + "{" + UserName + "} => 插入 数据库\"" + DBID + "\" 表\"" +
+                 TBID + "\"" + tmp,
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForFindDatabaseTable(std::string UserName,
+                                  TYPE_POWER op,
+                                  std::string DBID,
+                                  std::string TBID,
+                                  std::string Index,
+                                  TYPE_ERROR_CASE errorCase) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 查询 数据库\"" + DBID + "\" 表\"" +
+                 TBID + "\" " + Index,
              type_mode::WRITEBUFF_MODE_APP);
 }

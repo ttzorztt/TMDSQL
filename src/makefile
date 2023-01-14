@@ -1,11 +1,9 @@
-TMDSQL: mainl.o Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o 
+TMDSQL: superl.o mainl.o filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o Logl.o
 	g++ -static mainl.o Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o -o TMDSQL
 	./TMDSQL
 TMDSQL.exe: mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o
 	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK mainw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o -o TMDSQL.exe
 	# wine TMDSQL.exe
-Logl.o : Log.cpp
-	g++ -static -c Log.cpp -o Logl.o
 menuOutputl.o: menuOutput.cpp
 	g++ -static -c menuOutput.cpp -o menuOutputl.o
 menuOutputw.o: menuOutput.cpp
@@ -50,5 +48,7 @@ shelll.o: shell.cpp
 	g++ -static -c shell.cpp -o shelll.o
 shellw.o: shell.cpp
 	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK -c shell.cpp -o shellw.o
+Logl.o : Log.cpp
+	g++ -static -c Log.cpp -o Logl.o
 clean:
 	@mv *.o /tmp

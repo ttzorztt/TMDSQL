@@ -2,13 +2,14 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2023-01-11 15:42:47
+ * @LastEditTime : 2023-01-14 10:54:14
  */
 
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
 #endif
+#include <iostream>
 bool _super::createDir(std::string path) {
 #ifdef __WIN32__
   return mkdir(path.c_str());
@@ -95,24 +96,23 @@ bool _super::isExist(std::string name, type style) {
 bool _super::isExist(std::string truePath) {
   return access(truePath.c_str(), F_OK) != -1;
 }
-
+    
 std::string _super::returnTruePath(std::string Name, type style) {
   vstring vectorbuff;
   switch (style) {
     case type::_TYPE_DATABASE:
     case type::_TYPE_TABLE:
       return _databaseAndTablePath + Name;
-      break;
     case type::_TYPE_INDEX_TABLE:
     case type::_TYPE_CREATE_INDEX_DATABASE:
       return _indexPath + Name;
-      break;
     case type::_TYPE_PCB:
       vectorbuff = _super::dispartDatabaseNameAndTableName(Name);
       return _PCBPath + vectorbuff[0] + "/" + vectorbuff[1];
-      break;
     case type::_TYPE_CREATE_PCB_DATABASE:
       return _PCBPath + Name;
+    case type::_TYPE_LOG: 
+      return _PathForLog + Name;
     default:
       break;
   }

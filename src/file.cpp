@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-13 15:25:43
+ * @LastEditTime : 2023-01-14 18:06:06
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -20,7 +20,8 @@ _file::_file(std::string Name, type style) : _super(Name) {
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
 }
-_file::_file(std::string TruePath) : _super(_super::dispartDatabaseNameAndTableName(TruePath)[1]){
+_file::_file(std::string TruePath)
+    : _super(_super::dispartDatabaseNameAndTableName(TruePath)[1]) {
   this->truePath = TruePath;
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
@@ -41,26 +42,28 @@ _file::~_file() {
   }
   --_file::count;
 }
-bool _file::deleteLine(std::string index){
+bool _file::deleteLine(std::string index) {
   std::string oldTruePath = this->truePath;
   bool command = false;
- vstring vectorbuff;
+  vstring vectorbuff;
   _file tmp(oldTruePath + "tmp");
   this->setReadSeek(0);
-  while(this->readline(vectorbuff)){
-    if(vectorbuff[0] == index){
+  while (this->readline(vectorbuff)) {
+    if (vectorbuff[0] == index) {
       command = true;
       continue;
-    }else{
-      tmp.write(vectorbuff,type_mode::WRITEBUFF_MODE_APP);
+    } else {
+      tmp.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
     }
   }
   this->remove();
-  rename((oldTruePath + "tmp").c_str(),oldTruePath.c_str());
+  rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str());
   return command;
 }
 void _file::setOpenBuff(MODE mode) {
-  if ((mode == type_mode::WRITEBUFF_MODE_APP && this->nowMode == type_mode::WRITEBUFF_MODE_APP) || (mode == type_mode::READBUFF_MODE && mode == this->nowMode )) {
+  if ((mode == type_mode::WRITEBUFF_MODE_APP &&
+       this->nowMode == type_mode::WRITEBUFF_MODE_APP) ||
+      (mode == type_mode::READBUFF_MODE && mode == this->nowMode)) {
     return;
   }
   switch (mode) {
@@ -94,7 +97,7 @@ void _file::setOpenBuff(MODE mode) {
 }
 
 void _file::setReadSeek(POINTER fileIndex) {
-  if(this->readFileBuff.eof()){
+  if (this->readFileBuff.eof()) {
     this->readFileBuff.close();
     this->readFileBuff.open(this->truePath);
   }
@@ -109,7 +112,7 @@ POINTER _file::returnReadTell() {
 POINTER _file::returnWriteTell() {
   return writeFileBuff.tellp();
 }
-bool _file::write(const std::string str, type_mode mode) {
+bool _file::write(std::string str, type_mode mode) {
   switch (mode) {
     case type_mode::WRITEBUFF_MODE_APP: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
@@ -123,6 +126,13 @@ bool _file::write(const std::string str, type_mode mode) {
     }
   }
   return true;
+}
+
+void _file::resetPath(std::string Name, type style) {
+  this->name = Name;
+  this->nowMode = type_mode::DEFAULT;
+  this->style  =style;
+  this->truePath = _super::returnTruePath(Name,style);
 }
 bool _file::write(const vstring array, type_mode mode) {
   switch (mode) {
@@ -178,22 +188,22 @@ bool _file::readline(revstring ret) {
   ret.clear();
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
-  
+
   if (this->returnReadFileBuff().eof()) {
     return false;
   }
   getline(readFileBuff, _str);
-  if(_str == ""){
+  if (_str == "") {
     return false;
   }
-  _super::stringToVector(_str,ret);
+  _super::stringToVector(_str, ret);
   return true;
 }
 
 type _file::returnType() {
   return this->style;
 }
-bool _file::create(std::string TruePath){
+bool _file::create(std::string TruePath) {
   if (_super::isExist(TruePath)) {
     return false;
   }
@@ -204,7 +214,7 @@ bool _file::create(std::string TruePath){
   }
   filewritebuff.close();
 
-  if (TruePath.substr(8,3) == "../data/PCB") {
+  if (TruePath.substr(8, 3) == "./data/PCB") {
     _file(TruePath).inputPCBInformation();
   }
   return true;

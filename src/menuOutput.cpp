@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-12 10:38:34
+ * @LastEditTime : 2023-01-14 14:43:26
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -23,6 +23,10 @@
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
+#endif
+#ifndef _LOG_H_
+#define _LOG_H_
+#include "Log.h"
 #endif
 menuOutput::menuOutput() {}
 menuOutput::~menuOutput() {}
