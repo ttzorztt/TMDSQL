@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-14 20:00:11
+ * @LastEditTime : 2023-01-15 18:31:56
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -72,11 +72,6 @@ void shell::toChoose() {
 }
 void shell::toChooseDatabase() {
   switch (pwd.size()) {
-    case 0: {
-      menuOutput::printNotLogin(need);
-      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                       未登录拒绝执行);
-    }
     case 1:
     case 2:
     case 3: {
@@ -97,12 +92,6 @@ void shell::toChooseDatabase() {
 }
 void shell::toChooseTable() {
   switch (pwd.size()) {
-    case 0: {
-      menuOutput::printNotLogin(need);
-      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                       未登录拒绝执行);
-      return;
-    }
     case 1: {
       menuOutput::printNotChooseDatabase(ReturnPower(), need);
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -202,15 +191,41 @@ bool shell::check(std::string _str) {
 
 bool shell::read() {
   ++commandCount;
+  if (command.size() == 0) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+  }
+  if (!ReturnLoginStatus()) {
+    if (command[0] != 退出 && command[0] != 登录 && command[0] != 执行) {
+      menuOutput::printNotLogin(need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       未登录拒绝执行);
+      return true;
+    }
+  }
   switch (command[0]) {
     case 选择:
-      toChoose();
+      if ((command.size() == 2 || command.size() == 3) &&
+          (data.size() == 1 || data.size() == 2)) {
+        toChoose();
+      } else {
+        menuOutput::printCommandError(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
+      }
       break;
     case 退出:
-      exitLogin();
-      menuOutput::printExit(ReturnPower(), need);
-      Log::LogForExit(ReturnUserName(), ReturnPower());
-      return false;
+      if (command.size() == 1 && data.size() == 0) {
+        exitLogin();
+        menuOutput::printExit(ReturnPower(), need);
+        Log::LogForExit(ReturnUserName(), ReturnPower());
+        return false;
+      } else {
+        menuOutput::printCommandError(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
+      }
+      break;
     case 创建:
       if (ReturnPower() < 2) {  // 管理员和超级管理员权限
         toCreate();
@@ -234,11 +249,12 @@ bool shell::read() {
       if (command.size() != 1) {
         menuOutput::printCommandError(ReturnPower(), need);
         Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         未知指令);
+                         编译错误);
+        break;
       }
-      std::string oldUserName = ReturnUserName();
-      TYPE_POWER oldUserPower = ReturnPower();
       if (data.size() == 2) {
+        std::string oldUserName = ReturnUserName();
+        TYPE_POWER oldUserPower = ReturnPower();
         if (this->login(data[0], data[1])) {
           if (pwd.size() == 0) {
             pwd.push_back("/");
@@ -261,7 +277,8 @@ bool shell::read() {
                                     ReturnUserName(), need);
       } else {
         Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         未知指令);
+                         编译错误);
+        menuOutput::printCommandError(ReturnPower(), need);
       }
       break;
     }
@@ -276,7 +293,13 @@ bool shell::read() {
       toShow();
       break;
     case 执行:
-      toExecute();
+      if (data.size() == 1 && command.size() == 1) {
+        toExecute();
+      } else {
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
+        menuOutput::printCommandError(ReturnPower(), need);
+      }
       break;
     default:
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -314,6 +337,7 @@ void shell::toExecute() {
   command.clear();
   data.clear();
   this->need = false;
+  Log::LogForExecuteSQL(ReturnUserName(), ReturnPower(), data[0]);
   while (file.readline(tmp)) {
     if (!tmp.size()) {
       return;
@@ -324,7 +348,7 @@ void shell::toExecute() {
   menuOutput::printPower(ReturnPower());
 }
 void shell::toCreate() {
-  if (command.size() > 2 || data.size() == 0 || data.size() > 2) {
+  if (command.size() > 3 || data.size() == 0 || data.size() > 2) {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
     menuOutput::printCommandError(ReturnPower(), need);
     return;
@@ -707,15 +731,21 @@ void shell::toInsertTable() {
 void shell::toFind() {
   switch (command.size()) {
     case 2:
-      if (command[1] == 表 && data.size() == 2) {
-        toFindTable();
-        return;
-      } else {
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         编译错误);
-        menuOutput::printCommandError(ReturnPower(), need);
-        return;
+      if (command[1] == 表) {
+        if (data.size() == 1) {
+          toFindDefalutTable();
+          return;
+        }
+        if (data.size() == 2) {
+          toFindTable();
+          return;
+        }
       }
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       编译错误);
+      menuOutput::printCommandError(ReturnPower(), need);
+      return;
+
     case 3:
       if (command[1] == 数据库 && command[2] == 表 && data.size() == 3) {
         toFindDatabaseTable();
@@ -750,6 +780,29 @@ void shell::toFindTable() {
   menuOutput::printShowFindTable(ReturnPower(), table.find(data[1]), need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
+}
+void shell::toFindDefalutTable() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     未选择数据库越级选择表);
+    return;
+  }
+  if (pwd.size() == 2) {
+    menuOutput::printNotChooseTable(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     未选择表);
+  }
+  Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                 pwd[2], data[0], 表不存在无法查找数据);
+    return;
+  }
+  menuOutput::printShowFindTable(ReturnPower(), table.find(data[0]), need);
+  Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
+                               data[0]);
 }
 void shell::toFindDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
@@ -810,7 +863,7 @@ void shell::toShow() {
       break;
     }
     case 3: {
-      if (data.size() == 2) {
+      if (data.size() == 3) {
         toShowDatabaseTable();
       } else {
         menuOutput::printCommandError(ReturnPower(), need);
@@ -846,21 +899,39 @@ void shell::toShowTable() {
                      未选择数据库越级选择表);
     return;
   }
-  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
-  if (!table.isExist()) {
-    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     表不存在无法显示数据);
-    return;
-  }
   switch (data.size()) {
     case 1: {
-      menuOutput::printShowTable(ReturnPower(), table, 5, need);
+      if (pwd.size() == 2) {
+        menuOutput::printNotChooseTable(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         未选择表);
+        return;
+      }
+      Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+      if (!table.isExist()) {
+        menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+        Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                     pwd[2], 表不存在无法显示数据);
+        return;
+      }
+      menuOutput::printShowTable(ReturnPower(), table,
+                                 _super::stringToInt(data[0]), need);
+      Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                   pwd[2]);
       return;
-    } break;
+    }
     case 2: {
+      Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+      if (!table.isExist()) {
+        menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+        Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                     data[0], 表不存在无法显示数据);
+        return;
+      }
       menuOutput::printShowTable(ReturnPower(), table,
                                  _super::stringToInt(data[1]), need);
+      Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                   data[0]);
       return;
     }
   }
@@ -868,23 +939,19 @@ void shell::toShowTable() {
 void shell::toShowDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
     menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    // Log::LogForShowDatabaseTable()
+    Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                 data[1], 数据库不存在无法显示数据);
     return;
   }
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
   if (!table.isExist()) {
     menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                 data[1], 表不存在无法显示数据);
     return;
   }
-  switch (data.size()) {
-    case 2:
-      menuOutput::printShowTable(ReturnPower(), table, 5, need);
-      return;
-    case 3:
-      menuOutput::printShowTable(ReturnPower(), table,
-                                 _super::stringToInt(data[2]), need);
-      return;
-    default:
-      break;
-  }
+  menuOutput::printShowTable(ReturnPower(), table, _super::stringToInt(data[2]),
+                             need);
+  Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                               data[1]);
 }

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-14 11:26:55
+ * @LastEditTime : 2023-01-15 15:55:35
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -139,6 +139,11 @@ class shell : public User {
    * @return  
    */
   void toFindTable();
+  /**
+   * @brief 输入查询默认表的操作
+   * @return  
+   */
+  void toFindDefalutTable();
   /**
    * @brief 输入查询数据库表后的操作
    * @return  

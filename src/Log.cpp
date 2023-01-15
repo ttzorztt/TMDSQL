@@ -2,7 +2,7 @@
  * @Description  : 日志管理类的实现
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:15
- * @LastEditTime : 2023-01-14 19:55:14
+ * @LastEditTime : 2023-01-15 16:05:16
  */
 #ifndef _LOG_H_
 #define _LOG_H_
@@ -29,16 +29,12 @@ std::unordered_map<TYPE_ERROR_CASE, std::string> Log::EC = {
     {键入不存在的关键字, "键入不存在的关键字"},
     {键入违规字符, "键入违规字符"},
     {登录帐号错误, "登录帐号错误"},
-    {登录帐号已存在, "登录帐号已存在"},
     {登录密码错误, "登录密码错误"},
     {无法选择不存在的数据库, "无法选择不存在的数据库"},
-    {无法选择不存在的表, "无法选择不存在的表"},
     {未登录拒绝执行, "未登录拒绝执行"},
     {未选择数据库越级选择表, "未选择数据库越级选择表"},
     {已选择的数据库中不存在目标表, "已选择的数据库中不存在目标表"},
     {普通用户违规操作, "普通用户违规操作"},
-    {未知指令, "未知指令"},
-    {未知语义, "未知语义"},
     {第一个关键字错误, "第一个关键字错误"},
     {第二个关键字错误, "第二个关键字错误"},
     {SQL文件未找到, "SQL文件未找到"},
@@ -57,7 +53,8 @@ std::unordered_map<TYPE_ERROR_CASE, std::string> Log::EC = {
     {表不存在无法插入数据, "表不存在无法插入数据"},
     {数据库不存在无法查找数据, "数据库不存在无法查找数据"},
     {表不存在无法显示数据, "表不存在无法显示数据"},
-    {数据库不存在无法显示数据, "数据库不存在无法显示数据"}};
+    {数据库不存在无法显示数据, "数据库不存在无法显示数据"},
+    {未选择表, "未选择表"}};
 std::unordered_map<TYPE_POWER, std::string> Log::TP = {{NONE, "未登录"},
                                                        {NORMAL, "普通用户"},
                                                        {ROOT, "超级管理员"},
@@ -68,7 +65,8 @@ void Log::LogForCompileError(std::string UserName,
                              std::string _data,
                              TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
-  file.write(_data, type_mode::WRITEBUFF_MODE_APP);
+  file.write(TP[op] + "{" + UserName + "}" + " => " + _data,
+             type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::LogForError(std::string UserName,
                       TYPE_POWER op,
@@ -85,7 +83,8 @@ void Log::LogForError(std::string UserName,
       tmp += str + " ";
     }
   }
-  file.write(tmp, type_mode::WRITEBUFF_MODE_APP);
+  file.write(TP[op] + "{" + UserName + "}" + " => " + tmp,
+             type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::LogForCompileError(std::string UserName,
                              TYPE_POWER op,
@@ -96,7 +95,8 @@ void Log::LogForCompileError(std::string UserName,
   for (std::string& str : commandAndData) {
     tmp += str + " ";
   }
-  file.write(tmp, type_mode::WRITEBUFF_MODE_APP);
+  file.write(TP[op] + "{" + UserName + "}" + " => " + tmp,
+             type_mode::WRITEBUFF_MODE_APP);
 }
 
 Log::Log() {}
@@ -113,10 +113,7 @@ std::string Log::nowDataTime() {
   std::string FileName = nowData();
   _file nowfile(FileName, type::_TYPE_LOG);
   if (!nowfile.isExist() || nowfile.truePath != file.truePath) {
-    //   delete file;
     file.resetPath(FileName, type::_TYPE_LOG);
-    //   file = new _file(FileName, type::_TYPE_LOG);
-    // file.create();
   }
   return "[" + FileName + "] (" + std::to_string(t->tm_hour) + ":" +
          std::to_string(t->tm_min) + ":" + std::to_string(t->tm_sec) + ")";

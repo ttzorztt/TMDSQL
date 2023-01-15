@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-14 19:54:55
+ * @LastEditTime : 2023-01-15 16:04:58
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -106,16 +106,12 @@ enum TYPE_ERROR_CASE {
   键入不存在的关键字,
   键入违规字符,
   登录帐号错误,
-  登录帐号已存在,
   登录密码错误,
   无法选择不存在的数据库,
-  无法选择不存在的表,
   未登录拒绝执行,
   普通用户违规操作,
   未选择数据库越级选择表,
   已选择的数据库中不存在目标表,
-  未知指令,
-  未知语义,
   第一个关键字错误,
   第二个关键字错误,
   SQL文件未找到,
@@ -136,6 +132,7 @@ enum TYPE_ERROR_CASE {
   数据库不存在无法查找数据,
   表不存在无法显示数据,
   数据库不存在无法显示数据,
+  未选择表,
 };
 // 优化输出
 // static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
