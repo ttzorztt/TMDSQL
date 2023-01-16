@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2023-01-09 15:57:05
+ * @LastEditTime : 2023-01-16 08:18:15
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -59,8 +59,6 @@ DataBase::~DataBase() {
   --DataBase::count;
 }
 bool DataBase::insertTable(std::string tableName) {
-  // std::string Path = _super::returnTruePath(this->returnName() + "/" +
-  // tableName,type::_TYPE_TABLE);
   bool tmp =
       _file::create(this->returnName() + "/" + tableName, type::_TYPE_TABLE);
   if (tmp) {
@@ -120,11 +118,11 @@ void DataBase::showDataBaseTable() {
   }
   std::cout << std::endl;
 }
-void DataBase::forceremove(){
-   vstring vectorbuff;
-   this->openDirReturnFileName(vectorbuff);
+void DataBase::forceremove() {
+  vstring vectorbuff;
+  this->openDirReturnFileName(vectorbuff);
   for (std::string& str : vectorbuff) {
-    Table(name+"/"+str,type::_TYPE_TABLE).remove();
+    Table(name + "/" + str, type::_TYPE_TABLE).remove();
   }
   this->remove();
 }
