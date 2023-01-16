@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-15 11:23:42
+ * @LastEditTime : 2023-01-16 09:11:17
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -94,15 +94,10 @@ void init() {
 int main(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
-  //  init();
-
+  init();
 
   shell x;
-  Log::open();
   string tmp = "执行 @SQL";
-  x.read(tmp);
-  Log::close();
-  return 0;
   Log::open();
   while (1) {
     getline(cin, tmp);
