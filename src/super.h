@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-15 16:04:58
+ * @LastEditTime : 2023-01-18 17:38:40
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -46,6 +46,7 @@ typedef int MODE;
 #define _PathForUserData "./data/User/"
 #define _PathForLog "./data/Log/"
 #define _SQLPath "./data/SQL/"
+#define _ViewPath "./data/view/"
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员
@@ -91,7 +92,8 @@ enum type {
   _TYPE_PCB,                    // PCB的地址
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
   _TYPE_USERDATA,               //用户数据
-  _TYPE_LOG                     // LOG文件
+  _TYPE_LOG,                    // LOG文件
+  _TYPE_VIEW                    //视图文件
 };
 // 模式
 enum type_mode {

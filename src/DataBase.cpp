@@ -2,7 +2,7 @@
  * @Description  : 实现DataBase类中的一些操作
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2023-01-16 08:18:15
+ * @LastEditTime : 2023-01-18 17:42:48
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -45,6 +45,7 @@ bool DataBase::create(std::string name) {
   return _dir::create(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
          _dir::create(
              _super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+         _dir::create(_super::returnTruePath(name, type::_TYPE_VIEW)) &&
          _dir::create(
              _super::returnTruePath(name, type::_TYPE_CREATE_PCB_DATABASE));
 }
@@ -52,6 +53,7 @@ bool DataBase::remove(std::string name) {
   return _dir::remove(_super::returnTruePath(name, type::_TYPE_DATABASE)) &&
          _dir::remove(
              _super::returnTruePath(name, type::_TYPE_CREATE_INDEX_DATABASE)) &&
+         _dir::remove(_super::returnTruePath(name, type::_TYPE_VIEW)) &&
          _dir::remove(
              _super::returnTruePath(name, type::_TYPE_CREATE_PCB_DATABASE));
 }
@@ -75,49 +77,6 @@ bool DataBase::insertTable(std::string tableName, const revstring tableItem) {
 int DataBase::returnCount() {
   return DataBase::count;
 }
-
-void DataBase::showDataBaseTable() {
-  std::string tmpPath =
-      _super::returnTruePath(this->name, type::_TYPE_DATABASE);
-  if (!_super::isExist(tmpPath)) {
-    std::cout << "数据库不存在!" << std::endl;
-    return;
-  }
-  vstring ans;
-  _dir::openDirReturnFileName(
-      _super::returnTruePath(this->name, type::_TYPE_DATABASE), ans);
-  int maxtablename = 0;
-  if (ans.size() == 0) {
-    std::cout << "这个数据库是空的!" << std::endl;
-    return;
-  }
-  for (std::string& str : ans) {
-    maxtablename = std::max(maxtablename, (int)str.size() + 2);
-  }
-  maxtablename += 2;
-  for (int a = 0; a < maxtablename; ++a) {
-    std::cout << "*";
-  }
-  std::cout << std::endl;
-  for (std::string& str : ans) {
-    int strnamesize = str.size();
-    int left = (maxtablename - strnamesize) / 2;
-    std::cout << "|";
-    for (int a = 1; a < left; ++a) {
-      std::cout << " ";
-    }
-    std::cout << str;
-    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
-      std::cout << " ";
-    }
-    std::cout << "|";
-    std::cout << std::endl;
-  }
-  for (int a = 0; a < maxtablename; ++a) {
-    std::cout << "*";
-  }
-  std::cout << std::endl;
-}
 void DataBase::forceremove() {
   vstring vectorbuff;
   this->openDirReturnFileName(vectorbuff);
@@ -125,41 +84,6 @@ void DataBase::forceremove() {
     Table(name + "/" + str, type::_TYPE_TABLE).remove();
   }
   this->remove();
-}
-void DataBase::showDataBase() {
-  vstring ans;
-  _dir::openDirReturnFileName("../data/database/", ans);
-  int maxtablename = 0;
-  if (ans.size() == 0) {
-    std::cout << "暂时还没有建立数据库" << std::endl;
-    return;
-  }
-  for (std::string& str : ans) {
-    maxtablename = std::max(maxtablename, (int)str.size() + 2);
-  }
-  maxtablename += 2;
-  for (int a = 0; a < maxtablename; ++a) {
-    std::cout << "#";
-  }
-  std::cout << std::endl;
-  for (std::string& str : ans) {
-    int strnamesize = str.size();
-    int left = (maxtablename - strnamesize) / 2;
-    std::cout << "?";
-    for (int a = 1; a < left; ++a) {
-      std::cout << " ";
-    }
-    std::cout << str;
-    for (int a = maxtablename - strnamesize - left - 1; a > 0; --a) {
-      std::cout << " ";
-    }
-    std::cout << "?";
-    std::cout << std::endl;
-  }
-  for (int a = 0; a < maxtablename; ++a) {
-    std::cout << "#";
-  }
-  std::cout << std::endl;
 }
 bool DataBase::isExist() {
   return access(
@@ -187,9 +111,6 @@ bool DataBase::isExistsTable(std::string DataBaseName, std::string tableName) {
     }
   }
   return false;
-}
-bool DataBase::removeDataBase(std::string DataBaseName) {
-  return _dir::remove("../data/database/" + DataBaseName);
 }
 
 bool DataBase::remove() {

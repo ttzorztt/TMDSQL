@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2023-01-14 10:54:14
+ * @LastEditTime : 2023-01-18 17:39:54
  */
 
 #ifndef _SUPER_H_
@@ -113,6 +113,8 @@ std::string _super::returnTruePath(std::string Name, type style) {
       return _PCBPath + Name;
     case type::_TYPE_LOG: 
       return _PathForLog + Name;
+    case type::_TYPE_VIEW:
+      return _ViewPath + Name;
     default:
       break;
   }

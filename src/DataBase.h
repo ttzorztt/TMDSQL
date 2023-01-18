@@ -2,7 +2,7 @@
  * @Description  : DataBase类中的一些声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2023-01-09 15:47:52
+ * @LastEditTime : 2023-01-18 17:43:00
  */
 #ifndef _DATABSE_
 #define _DATABSE_
@@ -85,22 +85,11 @@ class DataBase : public _dir {
    */
   bool static remove(std::string name);
   /**
-   * @brief 显示数据库内表项
-   * @return
-   */
-  void showDataBaseTable();
-  /**
    * @brief 创建数据库
    * @param  string name 数据库名
    * @return 创建正常则返回True,否则返回False
    */
   bool static create(std::string name);
-
-  /**
-   * @brief 显示所有数据库
-   * @return
-   */
-  void static showDataBase();
     /**
    * @brief 判断指定数据库是否存在
    * @param  string DataBaseName 数据库名字
@@ -135,12 +124,6 @@ class DataBase : public _dir {
    * @return  存在返回true，不存在返回false
    */
   bool static isExistsTable(std::string DataBaseName,std::string tableName);
-  /**
-   * @brief <static>删除指定数据库
-   * @param string DataBaseName
-   * @return 删除正常则返回True，否则返回False
-   */
-  bool static removeDataBase(std::string DataBaseName);
   // 打开的数据库的个数
   int static count;
 };

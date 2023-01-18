@@ -2,7 +2,7 @@
  * @Description  : 用户数据类
  * @Autor        : TMD
  * @Date         : 2022-12-17 11:00:49
- * @LastEditTime : 2023-01-11 10:01:28
+ * @LastEditTime : 2023-01-18 17:15:09
  */
 
 #ifndef _STRING_
@@ -65,8 +65,13 @@ class User {
   void addUser(std::string UserName,
                std::string UserPassword,
                TYPE_POWER power);
-
  public:
+  /**
+   * @brief 返回给定用户的权限
+   * @param  string UserName 用户名
+   * @return  权限
+   */
+  TYPE_POWER static returnInputUserPower(std::string UserName);
  /**
   * @brief 返回登录失败的原因，仅登录失败的情况下有效
   * @return  

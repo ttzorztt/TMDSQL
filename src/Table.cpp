@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-13 15:39:21
+ * @LastEditTime : 2023-01-18 17:46:41
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -28,7 +28,7 @@ Table::Table(DataBase database, std::string tableName, type style)
   this->style = style;
   ++Table::count;
 }
-Table::Table(std::string _truePath) : _file(_truePath){
+Table::Table(std::string _truePath) : _file(_truePath) {
   this->style = _TYPE_NONE;
   ++Table::count;
 }
@@ -47,8 +47,11 @@ bool Table::create() {
     case type::_TYPE_TABLE:
       return _file::create(this->returnName(), type::_TYPE_TABLE) &&
              _file::create(this->returnName(), type::_TYPE_INDEX_TABLE) &&
-             _file::create(this->returnName(), type::_TYPE_PCB);
+             _file::create(this->returnName(), type::_TYPE_PCB) &&
+             _file::create(this->returnName(), type::_TYPE_VIEW);
       break;
+    case type::_TYPE_VIEW:
+      return _file::create(this->returnName(), type::_TYPE_VIEW);
     default:
       break;
   }
@@ -58,15 +61,15 @@ bool Table::remove() {
   switch (style) {
     case type::_TYPE_PCB:
       return _file::remove(this->returnName(), type::_TYPE_PCB);
-      break;
+    case type::_TYPE_VIEW:
+      return _file::remove(this->returnName(), type::_TYPE_VIEW);
     case type::_TYPE_INDEX_TABLE:
       return _file::remove(this->returnName(), type::_TYPE_INDEX_TABLE);
-      break;
     case type::_TYPE_TABLE:
       return _file::remove(this->returnName(), type::_TYPE_INDEX_TABLE) &&
              _file::remove(this->returnName(), type::_TYPE_TABLE) &&
-             _file::remove(this->returnName(), type::_TYPE_PCB);
-      break;
+             _file::remove(this->returnName(), type::_TYPE_PCB) &&
+             _file::remove(this->returnName(), type::_TYPE_VIEW);
     default:
       break;
   }
@@ -101,7 +104,7 @@ bool Table::append(vstring value) {
   }
   this->write(value, type_mode::WRITEBUFF_MODE_APP);
   if (fileIndex == 0) {
-      this->appInsertIndex(value[0], 0);
+    this->appInsertIndex(value[0], 0);
   } else {
     this->appInsertIndex(value[0], fileIndex);
   }
@@ -109,7 +112,7 @@ bool Table::append(vstring value) {
   for (std::string& str : value) {
     fileIndex += str.size();
   }
- pcb.addLength();
+  pcb.addLength();
   pcb.setEndLineIndex(fileIndex);
   return true;
 }
@@ -149,8 +152,7 @@ vstring Table::indexReadline(POINTER fileIndex) {
   return value;
 }
 
-vstring Table::indexReadline(std::string tableName,
-                                              POINTER fileIndex) {
+vstring Table::indexReadline(std::string tableName, POINTER fileIndex) {
   Table _table(tableName, type::_TYPE_TABLE);
   return _table.indexReadline(fileIndex);
 }

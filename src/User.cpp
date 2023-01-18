@@ -2,7 +2,7 @@
  * @Description  : 用户数据操作类封装
  * @Auto         : TMD
  * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-14 15:57:29
+ * @LastEditTime : 2023-01-18 17:23:05
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -120,8 +120,18 @@ bool User::login() {
   this->errorCause = 帐号不存在;
   return false;
 }
+TYPE_POWER User::returnInputUserPower(std::string UserName) {
+  pd.setReadSeek(0);
+  vstring vectorbuff;
+  while (pd.readline(vectorbuff)) {
+    if (vectorbuff[0] == UserName) {
+      return (TYPE_POWER)atoi(vectorbuff[2].c_str());
+    }
+  }
+  return TYPE_POWER::NONE;
+}
 bool User::login(std::string UserName, std::string UserPassword) {
-    pd.setReadSeek(0);
+  pd.setReadSeek(0);
   vstring vectorbuff;
   while (pd.readline(vectorbuff)) {
     if (vectorbuff[0] == UserName) {
@@ -158,7 +168,7 @@ void User::resetPassword(std::string Userpassword) {
 TYPE_POWER User::ReturnPower() const {
   return this->power;
 }
-TYPE_LOGIN_ERROR User::returnErrorCase() const{
+TYPE_LOGIN_ERROR User::returnErrorCase() const {
   return this->errorCause;
 }
 User::~User() {
