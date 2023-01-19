@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-18 17:38:40
+ * @LastEditTime : 2023-01-19 15:36:57
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -67,19 +67,22 @@ enum TYPE_CID {
   表,
   用户,
   管理员,
-  执行
+  执行,
+  设置,
+  索引,
+  视图,
 };
 typedef std::vector<TYPE_CID> vCID;
 std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {
     {"退出", 退出}, {"创建", 创建}, {"数据库", 数据库}, {"删除", 删除},
     {"选择", 选择}, {"登录", 登录}, {"显示", 显示},     {"插入", 插入},
     {"查询", 查询}, {"表", 表},     {"用户", 用户},     {"管理员", 管理员},
-    {"执行", 执行}};
+    {"执行", 执行}, {"设置", 设置}, {"索引", 索引},     {"视图", 视图}};
 std::unordered_map<TYPE_CID, std::string> static HashMapCIDToString = {
     {退出, "退出"}, {创建, "创建"}, {数据库, "数据库"}, {删除, "删除"},
     {选择, "选择"}, {登录, "登录"}, {显示, "显示"},     {插入, "插入"},
     {查询, "查询"}, {表, "表"},     {用户, "用户"},     {管理员, "管理员"},
-    {执行, "执行"}};
+    {执行, "执行"}, {设置, "设置"}, {索引, "索引"},     {视图, "视图"}};
 //无法登录原因
 enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
 enum type {

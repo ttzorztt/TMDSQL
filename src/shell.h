@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-15 15:55:35
+ * @LastEditTime : 2023-01-19 15:34:23
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -149,6 +149,51 @@ class shell : public User {
    * @return  
    */
   void toFindDatabaseTable();
+  /**
+   * @brief 输入设置后的操作
+   * @return  
+   */
+  void toSet();
+  /**
+   * @brief 输入设置视图后的操作
+   * @return  
+   */
+  void toSetView();
+  /**
+   * @brief 输入设置视图数据库表后的操作
+   * @return  
+   */
+  void toSetViewDatabaseTable();
+  /**
+   * @brief 输入设置视图表后的操作
+   * @return  
+   */
+  void toSetViewTable();
+  /**
+   * @brief 输入设置视图后的操作(默认表)
+   * @return  
+   */
+  void toSetViewDefault();
+  /**
+   * @brief 输入设置索引后的操作
+   * @return  
+   */
+  void toSetIndex();
+  /**
+   * @brief 输入设置索引(默认表)后的操作
+   * @return  
+   */
+  void toSetIndexDefault();
+  /**
+   * @brief 输入设置索引数据库表后的操作
+   * @return  
+   */
+  void toSetIndexDatabaseTable();
+  /**
+   * @brief 输入设置索引表后的操作
+   * @return  
+   */
+  void toSetIndexTable();
   /**
    * @brief 输入显示后的操作
    * @return

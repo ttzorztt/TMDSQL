@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2023-01-14 18:04:13
+ * @LastEditTime : 2023-01-19 08:34:53
  */
 #ifndef _FILE_
 #define _FILE_
@@ -148,6 +148,7 @@ class _file : public _super {
    * @return bool 是否删除
    */
   bool deleteLine(std::string index);
+
   /**
    * @brief <static> 以App的方式写入字符串
    * @param string Name 名字

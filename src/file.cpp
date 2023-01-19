@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-14 18:06:06
+ * @LastEditTime : 2023-01-19 08:35:00
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -125,6 +125,7 @@ bool _file::write(std::string str, type_mode mode) {
       break;
     }
   }
+  this->writeFileBuff.flush();
   return true;
 }
 
@@ -154,6 +155,7 @@ bool _file::write(const vstring array, type_mode mode) {
     writeFileBuff << "," << array[index];
   }
   writeFileBuff << std::endl;
+  this->writeFileBuff.flush();
   return true;
 }
 bool _file::remove(std::string Name, type style) {
@@ -244,7 +246,6 @@ void _file::inputPCBInformation() {
 bool _file::create() {
   return _file::create(this->name, this->style);
 }
-
 std::string _file::returnTruePath() {
   return truePath;
 }

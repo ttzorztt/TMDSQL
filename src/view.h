@@ -2,7 +2,7 @@
  * @Description  : 视图层的实现
  * @Autor        : TMD
  * @Date         : 2023-01-18 17:00:33
- * @LastEditTime : 2023-01-18 17:37:27
+ * @LastEditTime : 2023-01-19 08:14:23
  */
 #ifndef _VIEW_
 #define _VIEW
@@ -33,25 +33,23 @@ class View {
   /**
    * @brief 设置视图
    * @param  string UserName 操作对象
-   * @param  vector<int> allowColumn 允许的列
+   * @param  vector<std::string> allowColumn 允许的列
    * @param  Table& table 目标表
-   * @return 是否操作成功
    */
-  bool static setAllowShowColumn(std::string UserName,
-                                 std::vector<int> allowColumn,
+  void static setAllowShowColumn(std::string UserName,
+                                 std::vector<std::string> allowColumn,
                                  Table& table);
   /**
    * @brief 设置视图
    * @param  string UserName 操作对象
-   * @param  vector<int> allowColumn 允许的列
+   * @param  vector<std::string> allowColumn 允许的列
    * @param  string DBID 数据库名
    * @param  string TBID 表名
-   * @return  是否操作成功
    */
-  bool static setAllowShowColumn(std::string UserName,
-                                 std::vector<int> allowColumn,
+void static setAllowShowColumn(std::string UserName,
+                                 std::vector<std::string> allowColumn,
                                  std::string DBID,
-                                 std::string TBID);
+                                 std::string TBID);  
   /**
    * @brief 返回对用户的视图
    * @param  string UserName 用户名

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-15 18:31:56
+ * @LastEditTime : 2023-01-19 19:55:36
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -300,6 +300,14 @@ bool shell::read() {
                          编译错误);
         menuOutput::printCommandError(ReturnPower(), need);
       }
+      break;
+    case 设置:
+      if (ReturnPower() >= 2) {
+        menuOutput::printPowerNoEnough(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         普通用户违规操作);
+      }
+      toSet();
       break;
     default:
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -790,8 +798,7 @@ void shell::toFindDefalutTable() {
   }
   if (pwd.size() == 2) {
     menuOutput::printNotChooseTable(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     未选择表);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 未选择表);
   }
   Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
   if (!table.isExist()) {
@@ -955,3 +962,56 @@ void shell::toShowDatabaseTable() {
   Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                data[1]);
 }
+void shell::toSet() {
+  if (command.size() < 2 || data.size() == 0) {
+    menuOutput::printCommandError(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+  }
+  switch (command[1]) {
+    case 索引:
+      toSetIndex();
+      return;
+    case 视图: {
+      toSetView();
+      return;
+    }
+    default: {
+      menuOutput::printCommandError(ReturnPower(), need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       第二个关键字错误);
+      break;
+    }
+  }
+}
+void shell::toSetIndex() {
+  if (command.size() == 2 && data.size() == 1) {
+    toSetIndexDefault();
+    return;
+  } else if (command.size() > 2) {
+    switch (command[2]) {
+      case 数据库:
+        if (command.size() == 4 && data.size() > 2) {
+          toSetIndexDatabaseTable();
+          return;
+        }
+        break;
+      case 表:
+        if (command.size() == 3 && data.size() > 2) {
+          toSetIndexTable();
+          return;
+        }
+        break;
+      default:
+        break;
+    }
+    menuOutput::printCommandError(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+  }
+}
+void shell::toSetIndexDatabaseTable() {}
+void shell::toSetIndexTable() {}
+void shell::toSetIndexDefault() {}
+void shell::toSetView() {}
+void shell::toSetViewDatabaseTable() {}
+void shell::toSetViewDefault() {}
+void shell::toSetViewTable() {}
