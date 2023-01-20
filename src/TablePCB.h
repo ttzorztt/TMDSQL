@@ -2,7 +2,7 @@
  * @Description  : 表的PCB申明
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2023-01-08 11:41:33
+ * @LastEditTime : 2023-01-20 11:09:27
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -31,8 +31,8 @@ class TablePCB {
   POINTER endLineIndex;
   //行数
   int length;
-  //每一列的最大字符数
-  vstring maxSize;
+  //索引
+  int index;
   /**
    * @brief 从文件中读取
    * @return  
@@ -85,6 +85,11 @@ class TablePCB {
    * @return  文件大小的值
    */
   std::string returnFileSize();
+  /**
+   * @brief 返回索引
+   * @return  索引
+   */
+  int returnIndex();
   /**
    * @brief 构造函数
    * @param  string DBID 数据库名

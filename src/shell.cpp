@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-19 19:55:36
+ * @LastEditTime : 2023-01-20 11:05:06
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -1008,7 +1008,21 @@ void shell::toSetIndex() {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
   }
 }
-void shell::toSetIndexDatabaseTable() {}
+void shell::toSetIndexDatabaseTable() {
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     无法选择不存在的数据库);
+    return;
+  }
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     已选择的数据库中不存在目标表);
+    return;
+  }
+}
 void shell::toSetIndexTable() {}
 void shell::toSetIndexDefault() {}
 void shell::toSetView() {}
