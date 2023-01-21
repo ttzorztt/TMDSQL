@@ -2,11 +2,15 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-20 11:05:06
+ * @LastEditTime : 2023-01-21 21:17:17
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
 #include "shell.h"
+#endif
+#ifndef _VIEW_H_
+#define _VIEW_H_
+#include "view.h"
 #endif
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -1002,6 +1006,9 @@ void shell::toSetIndex() {
         }
         break;
       default:
+        menuOutput::printCommandError(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
         break;
     }
     menuOutput::printCommandError(ReturnPower(), need);
@@ -1011,21 +1018,58 @@ void shell::toSetIndex() {
 void shell::toSetIndexDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
     menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     无法选择不存在的数据库);
+    Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                     data[1], data[2], 无法选择不存在的数据库);
     return;
   }
-  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
-  if (!table.isExist()) {
+  if (!Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     已选择的数据库中不存在目标表);
+    Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                     data[1], data[2],
+                                     已选择的数据库中不存在目标表);
     return;
+  }
+  TablePCB::setIndex(data[0] + "/" + data[1], INDEX(atoi(data[0].c_str())));
+  Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                   data[1], data[2]);
+}
+void shell::toSetIndexTable() {
+  if (!Table(pwd[1] + "/" + data[0], type::_TYPE_TABLE).isExist()) {
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                     data[0], data[1],
+                                     已选择的数据库中不存在目标表);
+    return;
+  }
+  TablePCB::setIndex(pwd[1] + "/" + data[0], INDEX(atoi(data[1].c_str())));
+  Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                   data[0], data[1]);
+}
+void shell::toSetIndexDefault() {
+  TablePCB::setIndex(pwd[1] + "/" + pwd[2], INDEX(atoi(data[0].c_str())));
+  Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                   pwd[2], data[0]);
+}
+void shell::toSetView() {
+  if (command.size() == 2 && data.size() == 2) {
+    toSetViewDefault();
+    return;
+  } else if(command.size() < 2) {
+    switch (command.size()) {
+      case 3:
+          
+        break;
+      case 4:
+
+        break;
+      default:
+       menuOutput::printCommandError(ReturnPower(), need);
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
+        break;
+    }
   }
 }
-void shell::toSetIndexTable() {}
-void shell::toSetIndexDefault() {}
-void shell::toSetView() {}
 void shell::toSetViewDatabaseTable() {}
 void shell::toSetViewDefault() {}
 void shell::toSetViewTable() {}

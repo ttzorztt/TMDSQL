@@ -2,12 +2,13 @@
  * @Description  : 视图层的实现
  * @Autor        : TMD
  * @Date         : 2023-01-18 17:00:47
- * @LastEditTime : 2023-01-19 08:23:16
+ * @LastEditTime : 2023-01-21 20:05:16
  */
 #ifndef _VIEW_H_
 #define _VIEW_H_
 #include "view.h"
 #endif
+
 void View::setAllowShowColumn(std::string UserName,
                               std::vector<std::string> allowColumn,
                               Table& table) {

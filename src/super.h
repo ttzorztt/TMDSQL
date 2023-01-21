@@ -2,7 +2,7 @@
  * @Description  : 维护一些公共静态函数和变量
  * @Autor        : TMD
  * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-19 15:36:57
+ * @LastEditTime : 2023-01-21 20:48:48
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -40,6 +40,7 @@ typedef std::vector<int> vint;
 typedef std::vector<int>& revint;
 typedef int POINTER;
 typedef int MODE;
+typedef int INDEX;
 #define _databaseAndTablePath "./data/database/"
 #define _indexPath "./data/index/"
 #define _PCBPath "./data/PCB/"

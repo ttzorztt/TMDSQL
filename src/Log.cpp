@@ -2,7 +2,7 @@
  * @Description  : 日志管理类的实现
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:15
- * @LastEditTime : 2023-01-19 08:31:26
+ * @LastEditTime : 2023-01-21 21:03:36
  */
 #ifndef _LOG_H_
 #define _LOG_H_
@@ -311,5 +311,16 @@ void Log::LogForFindDatabaseTable(std::string UserName,
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 查询 数据库\"" + DBID + "\" 表\"" +
                  TBID + "\" " + Index,
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForSetIndexDatabaseTable(std::string UserName,
+                                      TYPE_POWER op,
+                                      std::string DBID,
+                                      std::string TBID,
+                                      std::string index,
+                                      TYPE_ERROR_CASE errorCase = 顺利执行) {
+  inputNowTime(errorCase);
+  file.write(TP[op] + "{" + UserName + "} => 设置 索引 数据库\"" + DBID +
+                 "\" 表\"" + TBID + "\" 索引\"" + index + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }

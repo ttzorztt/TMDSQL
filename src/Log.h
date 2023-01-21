@@ -2,7 +2,7 @@
  * @Description  : 日志管理
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:01
- * @LastEditTime : 2023-01-14 18:41:56
+ * @LastEditTime : 2023-01-21 21:03:29
  */
 #ifndef _LOG_
 #define _LOG_
@@ -255,10 +255,10 @@ class Log {
    * @return
    */
   void static LogForCreateDatabaseTable(std::string UserName,
-                                TYPE_POWER op,
-                                std::string DBID,
-                                std::string TBID,
-                                TYPE_ERROR_CASE errorCase = 顺利执行);
+                                        TYPE_POWER op,
+                                        std::string DBID,
+                                        std::string TBID,
+                                        TYPE_ERROR_CASE errorCase = 顺利执行);
   /**
    * @brief 删除_数据库
    * @param  string UserName 用户名
@@ -341,5 +341,22 @@ class Log {
                                       std::string TBID,
                                       std::string Index,
                                       TYPE_ERROR_CASE errorCase = 顺利执行);
+  /**
+   * @brief 设置_索引_数据库_表
+   * @param  string UserName 使用者
+   * @param  TYPE_POWER op 权限
+   * @param  string DBID 数据库
+   * @param  string TBID 表
+   * @param  std::string index 索引
+   * @param  TYPE_ERROR_CASE errorCase 错误原因
+   * @return
+   */
+  void static LogForSetIndexDatabaseTable(std::string UserName,
+                                          TYPE_POWER op,
+                                          std::string DBID,
+                                          std::string TBID,
+                                          std::string index,
+                                          TYPE_ERROR_CASE errorCase = 顺利执行);
 };
+
 #endif

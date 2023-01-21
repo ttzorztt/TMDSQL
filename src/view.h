@@ -2,7 +2,7 @@
  * @Description  : 视图层的实现
  * @Autor        : TMD
  * @Date         : 2023-01-18 17:00:33
- * @LastEditTime : 2023-01-19 08:14:23
+ * @LastEditTime : 2023-01-21 20:04:51
  */
 #ifndef _VIEW_
 #define _VIEW
@@ -29,6 +29,7 @@
 class View {
  public:
   View();
+  View(const View& copy) = delete;
   ~View();
   /**
    * @brief 设置视图

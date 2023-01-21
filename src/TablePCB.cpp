@@ -2,7 +2,7 @@
  * @Description  : 表的PCB实现
  * @Autor        : TMD
  * @Date         : 2022-11-20 23:12:57
- * @LastEditTime : 2023-01-20 11:10:43
+ * @LastEditTime : 2023-01-21 20:52:48
  */
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_
@@ -64,7 +64,7 @@ void TablePCB::writeData() {
 int TablePCB::returnEndLineIndex() {
   return this->endLineIndex;
 }
-int TablePCB::returnEndLineIndex() {
+int TablePCB::returnIndex() {
   return this->index;
 }
 std::string TablePCB::returnName() {
@@ -73,11 +73,17 @@ std::string TablePCB::returnName() {
 void TablePCB::setEndLineIndex(int value) {
   this->endLineIndex = value;
 }
+void TablePCB::setIndex(INDEX index) {
+  this->index = index;
+}
+INDEX TablePCB::returnIndex() {
+  return index;
+}
 void TablePCB::setEndLineIndex(Table table, POINTER fileIndex) {
   TablePCB pcb(table);
   pcb.setEndLineIndex(fileIndex);
 }
-void TablePCB::setEndLineIndex(std::string tableName, POINTER fileIndex) {
+void TablePCB::setIndex(std::string tableName, INDEX fileIndex) {
   TablePCB pcb(tableName);
-  pcb.setEndLineIndex(fileIndex);
+  pcb.setIndex(fileIndex);
 }
