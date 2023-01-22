@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语言的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 09:02:00
- * @LastEditTime : 2023-01-19 15:34:23
+ * @LastEditTime : 2023-01-22 16:31:11
  */
 #ifndef _SHELL_
 #define _SHELL_
@@ -43,6 +43,7 @@ class shell : public User {
    * @return  输入退出则返回False，否则返回True
    */
   bool read(revstring data);
+
  private:
   // 当前工作路径
   vstring pwd;
@@ -54,11 +55,11 @@ class shell : public User {
   int commandCount;
   // 是否需要显示提示符
   bool need;
-   /**
-  * @brief 判断是否输入"确认"
-  * @return  如果输入返回True，否则返回False
-  */
- bool inputACK();
+  /**
+   * @brief 判断是否输入"确认"
+   * @return  如果输入返回True，否则返回False
+   */
+  bool inputACK();
   /**
    * @brief 执行指令
    * @return 输入退出则返回False，否则返回True
@@ -77,7 +78,7 @@ class shell : public User {
    * @return 指令的语法检查
    */
   bool check(revstring value);
-  /** 
+  /**
    * @brief 语法检查是否含有'/'，'!'等违规字符
    * @param  string _str 待检查字符
    * @return 没有问题的话，返回true，否则返回false;
@@ -115,17 +116,17 @@ class shell : public User {
   void toInsert();
   /**
    * @brief 输入插入默认表后的操作
-   * @return  
+   * @return
    */
   void toInsertDefaultTable();
   /**
    * @brief 输入插入表后的操作
-   * @return  
+   * @return
    */
   void toInsertTable();
   /**
    * @brief 输入插入数据库表后的操作
-   * @return  
+   * @return
    */
   void toInsertDatabaseTable();
 
@@ -136,62 +137,62 @@ class shell : public User {
   void toFind();
   /**
    * @brief 输入查询表后的操作
-   * @return  
+   * @return
    */
   void toFindTable();
   /**
    * @brief 输入查询默认表的操作
-   * @return  
+   * @return
    */
   void toFindDefalutTable();
   /**
    * @brief 输入查询数据库表后的操作
-   * @return  
+   * @return
    */
   void toFindDatabaseTable();
   /**
    * @brief 输入设置后的操作
-   * @return  
+   * @return
    */
   void toSet();
   /**
    * @brief 输入设置视图后的操作
-   * @return  
+   * @return
    */
   void toSetView();
   /**
    * @brief 输入设置视图数据库表后的操作
-   * @return  
+   * @return
    */
   void toSetViewDatabaseTable();
   /**
    * @brief 输入设置视图表后的操作
-   * @return  
+   * @return
    */
   void toSetViewTable();
   /**
    * @brief 输入设置视图后的操作(默认表)
-   * @return  
+   * @return
    */
   void toSetViewDefault();
   /**
    * @brief 输入设置索引后的操作
-   * @return  
+   * @return
    */
   void toSetIndex();
   /**
    * @brief 输入设置索引(默认表)后的操作
-   * @return  
+   * @return
    */
   void toSetIndexDefault();
   /**
    * @brief 输入设置索引数据库表后的操作
-   * @return  
+   * @return
    */
   void toSetIndexDatabaseTable();
   /**
    * @brief 输入设置索引表后的操作
-   * @return  
+   * @return
    */
   void toSetIndexTable();
   /**
@@ -201,17 +202,17 @@ class shell : public User {
   void toShow();
   /**
    * @brief 输入显示数据库后的操作
-   * @return  
+   * @return
    */
   void toShowDatabase();
   /**
    * @brief 输入显示数据库表后的操作
-   * @return  
+   * @return
    */
   void toShowDatabaseTable();
   /**
    * @brief 输入显示表后的操作
-   * @return  
+   * @return
    */
   void toShowTable();
   /**
@@ -230,6 +231,11 @@ class shell : public User {
    */
   void toCreateDatabase();
   /**
+   * @brief 输入创建 数据库 表后的操作
+   * @return
+   */
+  void toCreateDatabaseTable();
+  /**
    * @brief 输入删除后的操作
    * @return
    */
@@ -246,17 +252,17 @@ class shell : public User {
   void toDeleteDatabase();
   /**
    * @brief 输入删除数据库表后的操作
-   * @return  
+   * @return
    */
   void toDeleteDatabaseTable();
   /**
    * @brief 输入删除用户后的操作
-   * @return  
+   * @return
    */
   void toDeleteUser();
   /**
    * @brief 输入删除用户后的操作
-   * @return  
+   * @return
    */
   void toDeleteManager();
 };

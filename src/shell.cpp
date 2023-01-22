@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-21 21:17:17
+ * @LastEditTime : 2023-01-22 20:51:42
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -371,6 +371,10 @@ void shell::toCreate() {
         toCreateDatabase();
         return;
       }
+      if (command.size() == 3 && data.size() == 2 && command[2] == 表) {
+        toCreateDatabaseTable();
+        return;
+      }
       break;
     case 表:
       if (command.size() != 2 || data.size() != 1) {
@@ -435,12 +439,6 @@ void shell::toCreate() {
   }
 }
 void shell::toCreateTable() {
-  if (!DataBase(pwd[1]).isExist()) {
-    menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                   data[0], 无法选择不存在的数据库);
-    return;
-  }
   Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
   if (table.isExist()) {
     menuOutput::printTableIsExists(ReturnPower(), need);
@@ -463,6 +461,26 @@ void shell::toCreateDatabase() {
     database.create();
     menuOutput::printCreateACK(ReturnPower(), need);
     Log::LogForCreateDatabase(ReturnUserName(), ReturnPower(), data[0]);
+  }
+}
+void shell::toCreateDatabaseTable() {
+  DataBase database(data[0]);
+  if (!database.isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    Log::LogForCreateDatabase(ReturnUserName(), ReturnPower(), data[0],
+                              无法选择不存在的数据库);
+    return;
+  }
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (table.isExist()) {
+    menuOutput::printTableIsExists(ReturnPower(), need);
+    Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                   data[1], 表已存在无法创建);
+  } else {
+    table.create();
+    menuOutput::printCreateACK(ReturnPower(), need);
+    Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                   data[1]);
   }
 }
 void shell::toDelete() {
@@ -548,7 +566,7 @@ void shell::toDeleteTable() {
     return;
   }
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-  menuOutput::printShowTable(ReturnPower(), table, 5, false);
+  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -584,7 +602,7 @@ void shell::toDeleteDatabaseTable() {
     return;
   }
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-  menuOutput::printShowTable(ReturnPower(), table, 5, false);
+  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
     table.remove();
     menuOutput::printDeleteACK(ReturnPower(), need);
@@ -742,38 +760,34 @@ void shell::toInsertTable() {
 }
 void shell::toFind() {
   switch (command.size()) {
-    case 2:
-      if (command[1] == 表) {
-        if (data.size() == 1) {
-          toFindDefalutTable();
-          return;
-        }
-        if (data.size() == 2) {
-          toFindTable();
-          return;
-        }
+    case 1:
+      if (data.size() == 1) {
+        toFindDefalutTable();
+        return;
       }
-      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                       编译错误);
-      menuOutput::printCommandError(ReturnPower(), need);
-      return;
+    case 2:
+      if (command[1] == 表 && data.size() == 2) {
+        toFindTable();
+        return;
+      }
+      break;
 
     case 3:
       if (command[1] == 数据库 && command[2] == 表 && data.size() == 3) {
         toFindDatabaseTable();
         return;
-      } else {
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         编译错误);
-        menuOutput::printCommandError(ReturnPower(), need);
-        return;
       }
+      break;
     default:
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
                        第二个关键字错误);
       menuOutput::printCommandError(ReturnPower(), need);
-      break;
+      return;
   }
+
+  Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+  menuOutput::printCommandError(ReturnPower(), need);
+  return;
 }
 void shell::toFindTable() {
   if (pwd.size() == 1) {
@@ -789,7 +803,7 @@ void shell::toFindTable() {
                                  data[0], data[1], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(), table.find(data[1]), need);
+  menuOutput::printShowFindTable(ReturnPower(),ReturnUserName(),table,data[1], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
 }
@@ -811,7 +825,7 @@ void shell::toFindDefalutTable() {
                                  pwd[2], data[0], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(), table.find(data[0]), need);
+  menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(),table,data[0], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
                                data[0]);
 }
@@ -829,7 +843,7 @@ void shell::toFindDatabaseTable() {
                                  data[0], data[1], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(), table.find(data[2]), need);
+  menuOutput::printShowFindTable(ReturnPower(),ReturnUserName(), table,data[2], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
 }
@@ -874,7 +888,7 @@ void shell::toShow() {
       break;
     }
     case 3: {
-      if (data.size() == 3) {
+      if (data.size() == 3 && command[1] == 数据库 && command[2] == 表) {
         toShowDatabaseTable();
       } else {
         menuOutput::printCommandError(ReturnPower(), need);
@@ -925,7 +939,7 @@ void shell::toShowTable() {
                                      pwd[2], 表不存在无法显示数据);
         return;
       }
-      menuOutput::printShowTable(ReturnPower(), table,
+      menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
                                  _super::stringToInt(data[0]), need);
       Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    pwd[2]);
@@ -939,7 +953,7 @@ void shell::toShowTable() {
                                      data[0], 表不存在无法显示数据);
         return;
       }
-      menuOutput::printShowTable(ReturnPower(), table,
+      menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
                                  _super::stringToInt(data[1]), need);
       Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0]);
@@ -961,8 +975,8 @@ void shell::toShowDatabaseTable() {
                                  data[1], 表不存在无法显示数据);
     return;
   }
-  menuOutput::printShowTable(ReturnPower(), table, _super::stringToInt(data[2]),
-                             need);
+  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
+                             _super::stringToInt(data[2]), need);
   Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                data[1]);
 }
@@ -994,21 +1008,18 @@ void shell::toSetIndex() {
   } else if (command.size() > 2) {
     switch (command[2]) {
       case 数据库:
-        if (command.size() == 4 && data.size() > 2) {
+        if (command.size() == 4 && data.size() == 3 && command[3] == 表) {
           toSetIndexDatabaseTable();
           return;
         }
         break;
       case 表:
-        if (command.size() == 3 && data.size() > 2) {
+        if (command.size() == 3 && data.size() == 2) {
           toSetIndexTable();
           return;
         }
         break;
       default:
-        menuOutput::printCommandError(ReturnPower(), need);
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         编译错误);
         break;
     }
     menuOutput::printCommandError(ReturnPower(), need);
@@ -1029,9 +1040,10 @@ void shell::toSetIndexDatabaseTable() {
                                      已选择的数据库中不存在目标表);
     return;
   }
-  TablePCB::setIndex(data[0] + "/" + data[1], INDEX(atoi(data[0].c_str())));
+  TablePCB::setIndex(data[0] + "/" + data[1], INDEX(atoi(data[2].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                    data[1], data[2]);
+  menuOutput::printSetACK(ReturnPower(), need);
 }
 void shell::toSetIndexTable() {
   if (!Table(pwd[1] + "/" + data[0], type::_TYPE_TABLE).isExist()) {
@@ -1044,32 +1056,81 @@ void shell::toSetIndexTable() {
   TablePCB::setIndex(pwd[1] + "/" + data[0], INDEX(atoi(data[1].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0], data[1]);
+  menuOutput::printSetACK(ReturnPower(), need);
 }
 void shell::toSetIndexDefault() {
   TablePCB::setIndex(pwd[1] + "/" + pwd[2], INDEX(atoi(data[0].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    pwd[2], data[0]);
+  menuOutput::printSetACK(ReturnPower(), need);
 }
 void shell::toSetView() {
-  if (command.size() == 2 && data.size() == 2) {
+  if (command.size() == 2 && data.size() >= 1) {
     toSetViewDefault();
     return;
-  } else if(command.size() < 2) {
-    switch (command.size()) {
-      case 3:
-          
+  } else if (command.size() > 2 && data.size() >= 3) {
+    switch (command[2]) {
+      case 数据库:
+        if (data.size() >= 4 && command.size() == 4 && command[3] == 表) {
+          toSetViewDatabaseTable();
+          return;
+        }
         break;
-      case 4:
-
+      case 表:
+        if (data.size() >= 3 && command.size() == 3) {
+          toSetViewTable();
+          return;
+        }
         break;
       default:
-       menuOutput::printCommandError(ReturnPower(), need);
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         编译错误);
         break;
     }
   }
+  menuOutput::printCommandError(ReturnPower(), need);
+  Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
 }
-void shell::toSetViewDatabaseTable() {}
-void shell::toSetViewDefault() {}
-void shell::toSetViewTable() {}
+void shell::toSetViewDatabaseTable() {
+  vstring allowCol(data.begin() + 3, data.end());
+  if (!DataBase(data[0]).isExist()) {
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
+    Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                    data[1], data[2], allowCol,
+                                    无法选择不存在的数据库);
+    return;
+  }
+  Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                    data[1], data[2], allowCol,
+                                    已选择的数据库中不存在目标表);
+    return;
+  }
+  View::setAllowShowColumn(data[2], allowCol, data[0], data[1]);
+  Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                  data[1], data[2], allowCol);
+  menuOutput::printSetACK(ReturnPower(), need);
+}
+void shell::toSetViewTable() {
+  vstring allowCol(data.begin() + 2, data.end());
+  Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+  if (!table.isExist()) {
+    menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
+    Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                    data[0], data[1], allowCol,
+                                    已选择的数据库中不存在目标表);
+    return;
+  }
+  View::setAllowShowColumn(data[1], allowCol, pwd[1], data[0]);
+  Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                  data[0], data[1], allowCol);
+  menuOutput::printSetACK(ReturnPower(), need);
+}
+void shell::toSetViewDefault() {
+  vstring allowCol(data.begin() + 1, data.end());
+  Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+  View::setAllowShowColumn(data[0], allowCol, pwd[1], pwd[2]);
+  Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                  pwd[2], data[0], allowCol);
+  menuOutput::printSetACK(ReturnPower(), need);
+}

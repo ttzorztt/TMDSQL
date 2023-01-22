@@ -2,7 +2,7 @@
  * @Description  : 日志管理
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:01
- * @LastEditTime : 2023-01-21 21:03:29
+ * @LastEditTime : 2023-01-22 09:32:11
  */
 #ifndef _LOG_
 #define _LOG_
@@ -357,6 +357,23 @@ class Log {
                                           std::string TBID,
                                           std::string index,
                                           TYPE_ERROR_CASE errorCase = 顺利执行);
+  /**
+   * @brief 设置_视图_数据库_表_
+   * @param  string UserName 用户名
+   * @param  TYPE_POWER op 权限
+   * @param  string DBID 数据库
+   * @param  string TBID 表
+   * @param  string operatorUserName 操作用户
+   * @param  vstring viewData 视图
+   * @param  TYPE_ERROR_CASE errorCase 报错类型
+   * @return
+   */
+  void static LogForSetViewDatabaseTable(std::string UserName,
+                                         TYPE_POWER op,
+                                         std::string DBID,
+                                         std::string TBID,
+                                         std::string operatorUserName,
+                                         vstring viewData,
+                                         TYPE_ERROR_CASE errorCase = 顺利执行);
 };
-
 #endif

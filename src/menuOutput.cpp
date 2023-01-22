@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-14 14:43:26
+ * @LastEditTime : 2023-01-22 20:58:33
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -28,10 +28,18 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
+#ifndef _VIEW_H_
+#define _VIEW_H_
+#include "view.h"
+#endif
 menuOutput::menuOutput() {}
 menuOutput::~menuOutput() {}
 void menuOutput::printCreateACK(TYPE_POWER power, bool need) {
   std::cout << "创建成功!" << std::endl;
+  printPower(power, need);
+}
+void menuOutput::printSetACK(TYPE_POWER power, bool need) {
+  std::cout << "设置成功!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printDeleteACK(TYPE_POWER power, bool need) {
@@ -236,13 +244,23 @@ void menuOutput::printUserNotExists(TYPE_POWER power, bool need) {
   std::cout << "该用户不存在!" << std::endl;
   printPower(power, need);
 }
-void menuOutput::printShowFindTable(TYPE_POWER power, vstring data, bool need) {
+void menuOutput::printShowFindTable(TYPE_POWER power,
+                                    std::string UserName,
+                                    Table& table,
+                                    std::string index,
+                                    bool need) {
+  vstring data = table.find(index);
+  std::set<int> allowCol = View::returnAllowColumn(UserName, table);
   if (data.size() != 0) {
-    for (std::string& str : data) {
-      std::cout << str << " ";
+    int size = data.size();
+    for (int a = 0; a < size; ++a) {
+      if (!allowCol.count(a)) {
+        continue;
+      }
+      std::cout << data[a] << " ";
     }
     std::cout << std::endl;
-  }else{
+  } else {
     std::cout << "搜索结束，没有搜到目标值!" << std::endl;
   }
   printPower(power, need);
@@ -251,23 +269,25 @@ void menuOutput::printInsertNoValue(TYPE_POWER power, bool need) {
   std::cout << "拒绝执行，指令中缺乏待插入数据!" << std::endl;
   printPower(power, need);
 }
-void menuOutput::printTableNotEmptyAndDeleteTip(TYPE_POWER power, bool need){
+void menuOutput::printTableNotEmptyAndDeleteTip(TYPE_POWER power, bool need) {
   std::cout << "表不为空，以下是该表的一部分内容:" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
-void menuOutput::printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power, bool need){
+void menuOutput::printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power,
+                                                   bool need) {
   std::cout << "数据库并不为空，以下为当前存在的表项:" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
-void menuOutput::printCommandBackout(TYPE_POWER power,bool need){
+void menuOutput::printCommandBackout(TYPE_POWER power, bool need) {
   std::cout << "该指令已取消!" << std::endl;
-  printPower(power,need);
+  printPower(power, need);
 }
 void menuOutput::printManagerNotExists(TYPE_POWER power, bool need) {
   std::cout << "该管理员不存在!" << std::endl;
   printPower(power, need);
 }
 void menuOutput::printShowTable(TYPE_POWER power,
+                                std::string User,
                                 Table& table,
                                 int number,
                                 bool need) {
@@ -275,10 +295,15 @@ void menuOutput::printShowTable(TYPE_POWER power,
     menuOutput::printCommandError(power, need);
     return;
   } else if (number > 0) {
+    std::set<int> allowColumn = View::returnAllowColumn(User, table);
     vstring tmp;
     while (table.readline(tmp) && number) {
-      for (std::string& str : tmp) {
-        std::cout << str << " ";
+      int size = tmp.size();
+      for (int a = 0; a < size; ++a) {
+        if (!allowColumn.count(a)) {
+          continue;
+        }
+        std::cout << tmp[a] << " ";
       }
       std::cout << std::endl;
       --number;

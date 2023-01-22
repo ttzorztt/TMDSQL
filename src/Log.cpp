@@ -2,7 +2,7 @@
  * @Description  : 日志管理类的实现
  * @Autor        : TMD
  * @Date         : 2023-01-12 11:00:15
- * @LastEditTime : 2023-01-21 21:03:36
+ * @LastEditTime : 2023-01-22 16:01:33
  */
 #ifndef _LOG_H_
 #define _LOG_H_
@@ -294,12 +294,13 @@ void Log::LogForInsertDatabaseTable(std::string UserName,
                                     revstring data,
                                     TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
-  std::string tmp;
-  for (std::string str : data) {
-    tmp += " " + str;
+  std::string tmp = data[0];
+  int size = data.size();
+  for (int a = 1; a < size; ++a) {
+    tmp += " " + data[a];
   }
   file.write(TP[op] + "{" + UserName + "} => 插入 数据库\"" + DBID + "\" 表\"" +
-                 TBID + "\"" + tmp,
+                 TBID + "\"" + tmp + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::LogForFindDatabaseTable(std::string UserName,
@@ -318,9 +319,27 @@ void Log::LogForSetIndexDatabaseTable(std::string UserName,
                                       std::string DBID,
                                       std::string TBID,
                                       std::string index,
-                                      TYPE_ERROR_CASE errorCase = 顺利执行) {
+                                      TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
   file.write(TP[op] + "{" + UserName + "} => 设置 索引 数据库\"" + DBID +
                  "\" 表\"" + TBID + "\" 索引\"" + index + "\"",
+             type_mode::WRITEBUFF_MODE_APP);
+}
+void Log::LogForSetViewDatabaseTable(std::string UserName,
+                                     TYPE_POWER op,
+                                     std::string DBID,
+                                     std::string TBID,
+                                     std::string operatorUserName,
+                                     vstring viewData,
+                                     TYPE_ERROR_CASE errorCase  ) {
+  inputNowTime(errorCase);
+  std::string tmp = viewData[0];
+  int size = viewData.size();
+  for (int a = 1; a < size; ++a) {
+    tmp += " " + viewData[a];
+  }
+  file.write(TP[op] + "{" + UserName + "} => 设置 视图 数据库\"" + DBID +
+                 "\" 表\"" + TBID + "\" 用户\"" + operatorUserName +
+                 "\" 视图列: \"" + tmp + "\"",
              type_mode::WRITEBUFF_MODE_APP);
 }

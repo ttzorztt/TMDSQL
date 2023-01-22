@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-16 09:11:17
+ * @LastEditTime : 2023-01-22 17:23:30
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -91,11 +91,10 @@ void init() {
     _super::createDir("./data/Log");
   }
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
   init();
-
   shell x;
   string tmp = "执行 @SQL";
   Log::open();
@@ -110,96 +109,34 @@ int main(int argc, char const* argv[]) {
     }
   }
   Log::close();
-  // vstring v;
-  // v.push_back("1");
-  // v.push_back("2");
-  // cout << v.size() << endl;
-  // v.clear();
-  // cout << v.size() << endl;
   return 0;
 }
 
-int main1(int argc, char const* argv[]) {
-  // std::cout << _PathForLog << std::endl;
-  std::cout << "m" << _super::returnTruePath("Log", type::_TYPE_LOG)
-            << std::endl;
-
+int main(int argc, char const* argv[]) {
   init();
-  std::string tmp = "root";
-  TYPE_POWER op = TYPE_POWER::ROOT;
-  std::string DBID = "DB1";
-  std::string TBID = "TB1";
-  Log::open();
-  Log::LogForSelectDatabase(tmp, op, DBID);
-  Log::LogForSelectDatabaseTable(tmp, op, DBID, TBID, 登录密码错误);
-  Log::close();
-  return 0;
-  init();
-  string tablePath = "testdatabase2/TMD";
-  Table table(tablePath, type::_TYPE_TABLE);
-  DataBase database("testdatabase2");
-  _file(tablePath, type::_TYPE_TABLE).remove();
-  _file(tablePath, type::_TYPE_INDEX_TABLE).remove();
-  _file(tablePath, type::_TYPE_PCB).remove();
-  if (database.isExist()) {
-    cout << "存在" << endl;
-  } else {
-    database.create();
-  }
-  if (table.isExist()) {
-    table.remove();
-  }
-  if (!table.isExist()) {
-    table.create();
-  }
-  vstring ve;
-  vstring value;
-  value.push_back("姓名");
-  value.push_back("年龄");
-  value.push_back("性别");
-  value.push_back("爱好");
-  database.insertTable("TMD", value);
-  value.clear();
-  value.push_back("张三");
-  value.push_back("14");
-  value.push_back("男");
-  value.push_back("打球");
-  database.insertTable("TMD", value);
-  value.clear();
-  value.push_back("王五");
-  value.push_back("17");
-  value.push_back("女");
-  value.push_back("打乒乓球");
-  database.insertTable("TMD", value);
-  ve.clear();
-  ve = table.find("张三");
-  std::cout << ve.size();
-  cout << ve[0] << ve[1] << ve[2] << ve[3] << endl;
-  ve.clear();
-  ve = table.find("张三");
-  std::cout << ve.size();
-  cout << ve[0] << endl;
-  // ve.clear();
-  //   Index::update(table);
-  // database.remove();
-  //   vstring value;
-  //   value.push_back("姓名");
-  //   value.push_back("年龄");
-  //   value.push_back("性别");
+  shell x;
+  string tmp = "登录 @root root";
+  x.read(tmp);
 
-  //   database.insertTable("TMD",value);
-  //   // table.append(value);
-  //   value.clear();
-  //   value.push_back("张三");
-  //   value.push_back("14");
-  //   value.push_back("男");
-  // database.insertTable("TMD",value);
-  // //   // table.append(value);
-  //   value.clear();
-  //   value.push_back("王五");
-  //   value.push_back("17");
-  //   value.push_back("女");
-  // //   // table.append(value);
-  //   database.insertTable("TMD",value);
+  tmp = "创建 数据库 @DB1";
+  x.read(tmp);
+
+  tmp = "创建 数据库 表 @DB1 TB1";
+  x.read(tmp);
+
+  tmp = "设置 视图 数据库 表 @DB1 TB1 root 1 2 4";
+  x.read(tmp);
+
+  tmp = "选择 数据库 @DB1";
+  x.read(tmp);
+  int q;
+  cin >> q;
+  tmp = "设置 视图 表 @TB1 root 0 1 2";
+  x.read(tmp);
+  cin >> q;
+    tmp = "选择 表 @TB1";
+  x.read(tmp);
+    tmp = "设置 视图 @root 3";
+  x.read(tmp);
   return 0;
 }
