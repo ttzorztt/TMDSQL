@@ -2,7 +2,7 @@
  * @Description  : 封装表操作
  * @Autor        : TMD
  * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-18 17:46:41
+ * @LastEditTime : 2023-01-22 21:11:35
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_
@@ -86,9 +86,10 @@ void Table::updateIndex() {}
 
 vstring Table::find(std::string index) {
   vstring value;
+  INDEX indexcol = TablePCB(this->returnName()).returnIndex();
   Table indexFile(this->returnName(), type::_TYPE_INDEX_TABLE);
   while (indexFile.readline(value)) {
-    if (value[0] == index) {
+    if (value[indexcol] == index) {
       int x = atoi(value[1].c_str());
       return this->indexReadline(x);
     }
@@ -99,14 +100,15 @@ vstring Table::find(std::string index) {
 bool Table::append(vstring value) {
   TablePCB pcb(this->returnName());
   int fileIndex = pcb.returnEndLineIndex();
+  int index = pcb.returnIndex();
   if (value.size() <= 0) {
     return false;
   }
   this->write(value, type_mode::WRITEBUFF_MODE_APP);
   if (fileIndex == 0) {
-    this->appInsertIndex(value[0], 0);
+    this->appInsertIndex(value[index], 0);
   } else {
-    this->appInsertIndex(value[0], fileIndex);
+    this->appInsertIndex(value[index], fileIndex);
   }
   fileIndex += value.size();
   for (std::string& str : value) {

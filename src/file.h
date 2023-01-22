@@ -2,7 +2,7 @@
  * @Description  : 文件操作类_file的声明
  * @Autor        : TMD
  * @Date         : 2022-11-01 17:03:15
- * @LastEditTime : 2023-01-19 08:34:53
+ * @LastEditTime : 2023-01-22 21:15:11
  */
 #ifndef _FILE_
 #define _FILE_
@@ -88,7 +88,6 @@ class _file : public _super {
    * @return 正常删除返回True，否则返回False
    */
   bool static remove(std::string Name, type style);
-
   /**
    * @brief 删除文件
    * @param  string truePath 真实路径
@@ -118,14 +117,12 @@ class _file : public _super {
    * @return 读完或文件不存在返回False，否则返回True
    */
   bool readline(revstring ret);
-
   /**
    * @brief 构造函数
    * @param string Name 名
    * @param type style 类型
    */
   _file(std::string Name, type style);
-
   /**
    * @brief 构造函数
    * @param  string TruePath 真实路径
@@ -207,7 +204,6 @@ class _file : public _super {
    * @return True表示文件创造成功，False表示文件创造失败
    */
   bool static create(std::string Name, type style);
-
   /**
    * @brief 创建文件
    * @param  string TruePath 真实路径

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-22 20:51:42
+ * @LastEditTime : 2023-01-22 21:00:59
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -40,12 +40,10 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
-
 shell::shell() : User(), commandCount(0), need(true) {
   menuOutput::printPower();
 }
 shell::~shell() {}
-
 void shell::toChoose() {
   if (command.size() > 1 && data.size() > 0) {
     switch (command[1]) {
@@ -803,7 +801,8 @@ void shell::toFindTable() {
                                  data[0], data[1], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(),ReturnUserName(),table,data[1], need);
+  menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
+                                 data[1], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
 }
@@ -825,7 +824,8 @@ void shell::toFindDefalutTable() {
                                  pwd[2], data[0], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(),table,data[0], need);
+  menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
+                                 data[0], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
                                data[0]);
 }
@@ -843,7 +843,8 @@ void shell::toFindDatabaseTable() {
                                  data[0], data[1], 表不存在无法查找数据);
     return;
   }
-  menuOutput::printShowFindTable(ReturnPower(),ReturnUserName(), table,data[2], need);
+  menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
+                                 data[2], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
 }
