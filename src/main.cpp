@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-22 17:23:30
+ * @LastEditTime : 2023-01-23 17:10:57
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -123,20 +123,29 @@ int main(int argc, char const* argv[]) {
 
   tmp = "创建 数据库 表 @DB1 TB1";
   x.read(tmp);
-
-  tmp = "设置 视图 数据库 表 @DB1 TB1 root 1 2 4";
-  x.read(tmp);
-
   tmp = "选择 数据库 @DB1";
   x.read(tmp);
-  int q;
-  cin >> q;
-  tmp = "设置 视图 表 @TB1 root 0 1 2";
+
+  tmp = "插入 表 @TB1 姓名 性别 年龄";
   x.read(tmp);
-  cin >> q;
-    tmp = "选择 表 @TB1";
+
+  tmp = "插入 表 @TB1 张三 男 11";
   x.read(tmp);
-    tmp = "设置 视图 @root 3";
+
+  tmp = "插入 表 @TB1 王五 男 10";
+  x.read(tmp);
+  tmp = "插入 表 @TB1 李四 女 100";
+
+  x.read(tmp);
+
+  tmp = "显示 表 @TB1 3";
+
+  x.read(tmp);
+  tmp = "设置 视图 表 @TB1 root 0 2";
+
+  x.read(tmp);
+  tmp = "显示 表 @TB1 3";
+
   x.read(tmp);
   return 0;
 }

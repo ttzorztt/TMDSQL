@@ -2,7 +2,7 @@
  * @Description  : 视图层的实现
  * @Autor        : TMD
  * @Date         : 2023-01-18 17:00:33
- * @LastEditTime : 2023-01-22 16:58:23
+ * @LastEditTime : 2023-01-23 17:22:12
  */
 #ifndef _VIEW_
 #define _VIEW
@@ -27,6 +27,15 @@
 #include "Table.h"
 #endif
 class View {
+ private:
+  /**
+   * @brief 辅助辅助返回视图
+   * @param  string& UserName 用户名
+   * @param  _file& file 视图文件
+   * @return  用户视图
+   */
+  std::set<int> static returnAllowColumn(std::string& UserName, _file& file);
+
  public:
   View();
   View(const View& copy) = delete;
@@ -38,17 +47,10 @@ class View {
    * @param  string DBID 数据库名
    * @param  string TBID 表名
    */
-void static setAllowShowColumn(std::string UserName,
+  void static setAllowShowColumn(std::string UserName,
                                  std::vector<std::string> allowColumn,
                                  std::string DBID,
-                                 std::string TBID);  
-  /**
-   * @brief 返回对用户的视图
-   * @param  string UserName 用户名
-   * @param  Table& table 表
-   * @return 用户的视图(Set)
-   */
-  std::set<int> static returnAllowColumn(std::string UserName, Table& table);
+                                 std::string TBID);
   /**
    * @brief  返回用户的视图
    * @param  string UserName 用户名
@@ -59,5 +61,13 @@ void static setAllowShowColumn(std::string UserName,
   std::set<int> static returnAllowColumn(std::string UserName,
                                          std::string DBID,
                                          std::string TBID);
+  /**
+   * @brief 返回用户的视图
+   * @param  string UserName 用户名
+   * @param  string DatabaseAndTableName 数据库名 + "/" + 表名
+   * @return 用户的视图(Set)
+   */
+  std::set<int> static returnAllowColumn(std::string UserName,
+                                         std::string DatabaseAndTableName);
 };
 #endif

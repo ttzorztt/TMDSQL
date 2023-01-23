@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-22 20:58:33
+ * @LastEditTime : 2023-01-23 17:25:25
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -250,7 +250,7 @@ void menuOutput::printShowFindTable(TYPE_POWER power,
                                     std::string index,
                                     bool need) {
   vstring data = table.find(index);
-  std::set<int> allowCol = View::returnAllowColumn(UserName, table);
+  std::set<int> allowCol = View::returnAllowColumn(UserName, table.returnName());
   if (data.size() != 0) {
     int size = data.size();
     for (int a = 0; a < size; ++a) {
@@ -295,7 +295,7 @@ void menuOutput::printShowTable(TYPE_POWER power,
     menuOutput::printCommandError(power, need);
     return;
   } else if (number > 0) {
-    std::set<int> allowColumn = View::returnAllowColumn(User, table);
+    std::set<int> allowColumn = View::returnAllowColumn(User, table.returnName());
     vstring tmp;
     while (table.readline(tmp) && number) {
       int size = tmp.size();

@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-22 21:00:59
+ * @LastEditTime : 2023-01-23 17:05:40
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -15,6 +15,10 @@
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
+#endif
+#ifndef _INDEX_H_
+#define _INDEX_H_
+#include "Index.h"
 #endif
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -1045,6 +1049,7 @@ void shell::toSetIndexDatabaseTable() {
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                    data[1], data[2]);
   menuOutput::printSetACK(ReturnPower(), need);
+  Index::update(data[0] + "/" + data[1]);
 }
 void shell::toSetIndexTable() {
   if (!Table(pwd[1] + "/" + data[0], type::_TYPE_TABLE).isExist()) {
@@ -1058,12 +1063,14 @@ void shell::toSetIndexTable() {
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0], data[1]);
   menuOutput::printSetACK(ReturnPower(), need);
+  Index::update(pwd[1] + "/" + data[0]);
 }
 void shell::toSetIndexDefault() {
   TablePCB::setIndex(pwd[1] + "/" + pwd[2], INDEX(atoi(data[0].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    pwd[2], data[0]);
   menuOutput::printSetACK(ReturnPower(), need);
+  Index::update(pwd[1] + "/" + pwd[2]);
 }
 void shell::toSetView() {
   if (command.size() == 2 && data.size() >= 1) {
