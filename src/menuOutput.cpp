@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-24 12:47:07
+ * @LastEditTime : 2023-01-24 13:04:06
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -301,28 +301,46 @@ void menuOutput::printShowTable(TYPE_POWER power,
                                 Table& table,
                                 int number,
                                 bool need) {
+  std::cout << std::endl;
   if (number < 0) {
     menuOutput::printCommandError(power, need);
     return;
   } else if (number > 0) {
-    std::set<int> allowColumn =
-        View::returnAllowColumn(User, table.returnName());
-    if (TablePCB(table).returnEndLineIndex() == 0 || allowColumn.size() == 0) {
+    if (TablePCB(table).returnEndLineIndex() == 0) {
       std::cout << "表为空!" << std::endl;
       printPower(power, need);
       return;
     }
-    vstring tmp;
-    while (table.readline(tmp) && number) {
-      int size = tmp.size();
-      for (int a = 0; a < size; ++a) {
-        if (!allowColumn.count(a)) {
-          continue;
-        }
-        std::cout << tmp[a] << " ";
+    if (power == 2) {
+      std::set<int> allowColumn =
+          View::returnAllowColumn(User, table.returnName());
+      if (allowColumn.size() == 0) {
+        std::cout << "表为空!" << std::endl;
+        printPower(power, need);
+        return;
       }
-      std::cout << std::endl;
-      --number;
+      vstring tmp;
+      while (table.readline(tmp) && number) {
+        int size = tmp.size();
+        for (int a = 0; a < size; ++a) {
+          if (!allowColumn.count(a)) {
+            continue;
+          }
+          std::cout << tmp[a] << " ";
+        }
+        std::cout << std::endl;
+        --number;
+      }
+    } else {
+      vstring tmp;
+      while (table.readline(tmp)) {
+        int size = tmp.size();
+        for (int a = 0; a < size; ++a) {
+          std::cout << tmp[a] << " ";
+        }
+        std::cout << std::endl;
+        --number;
+      }
     }
     printPower(power, need);
   }
