@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-23 17:05:40
+ * @LastEditTime : 2023-01-24 12:35:39
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -85,7 +85,7 @@ void shell::toChooseDatabase() {
         pwd.clear();
         pwd.push_back("/");
         pwd.push_back(data[0]);
-        menuOutput::printPower(ReturnPower(), need);
+        menuOutput::printChooseACK(ReturnPower(), need);
         Log::LogForSelectDatabase(ReturnUserName(), ReturnPower(), data[0]);
       } else {
         Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -110,7 +110,7 @@ void shell::toChooseTable() {
         pwd.push_back(data[0]);
         Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                        data[0]);
-        menuOutput::printPower(ReturnPower(), need);
+        menuOutput::printChooseACK(ReturnPower(), need);
         return;
       } else {
         Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -140,7 +140,7 @@ void shell::toChooseDatabaseTable() {
   pwd.push_back(data[1]);
   Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                  data[1]);
-  menuOutput::printPower(ReturnPower(), need);
+  menuOutput::printChooseACK(ReturnPower(), need);
   return;
 }
 bool shell::aidCheckData(std::string _str) {

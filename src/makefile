@@ -1,6 +1,7 @@
 TMDSQL: superl.o mainl.o filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o Logl.o viewl.o
 	g++ -static mainl.o Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o viewl.o -o TMDSQL
 	./TMDSQL
+	mv -f ./data ./tmp
 TMDSQL.exe: mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o
 	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o -o TMDSQL.exe
 	# wine TMDSQL.exe

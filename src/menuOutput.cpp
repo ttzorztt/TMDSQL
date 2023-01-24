@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-23 17:25:25
+ * @LastEditTime : 2023-01-24 12:47:07
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -32,8 +32,17 @@
 #define _VIEW_H_
 #include "view.h"
 #endif
+#ifndef _TABLEPCB_H_
+#define _TABLEPCB_H_
+#include "TablePCB.h"
+#endif
 menuOutput::menuOutput() {}
 menuOutput::~menuOutput() {}
+
+void menuOutput::printChooseACK(TYPE_POWER power, bool need) {
+  std::cout << "选择成功!" << std::endl;
+  printPower(power, need);
+}
 void menuOutput::printCreateACK(TYPE_POWER power, bool need) {
   std::cout << "创建成功!" << std::endl;
   printPower(power, need);
@@ -250,7 +259,8 @@ void menuOutput::printShowFindTable(TYPE_POWER power,
                                     std::string index,
                                     bool need) {
   vstring data = table.find(index);
-  std::set<int> allowCol = View::returnAllowColumn(UserName, table.returnName());
+  std::set<int> allowCol =
+      View::returnAllowColumn(UserName, table.returnName());
   if (data.size() != 0) {
     int size = data.size();
     for (int a = 0; a < size; ++a) {
@@ -295,7 +305,13 @@ void menuOutput::printShowTable(TYPE_POWER power,
     menuOutput::printCommandError(power, need);
     return;
   } else if (number > 0) {
-    std::set<int> allowColumn = View::returnAllowColumn(User, table.returnName());
+    std::set<int> allowColumn =
+        View::returnAllowColumn(User, table.returnName());
+    if (TablePCB(table).returnEndLineIndex() == 0 || allowColumn.size() == 0) {
+      std::cout << "表为空!" << std::endl;
+      printPower(power, need);
+      return;
+    }
     vstring tmp;
     while (table.readline(tmp) && number) {
       int size = tmp.size();

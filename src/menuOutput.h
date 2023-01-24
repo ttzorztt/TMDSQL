@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:01
- * @LastEditTime : 2023-01-22 20:45:29
+ * @LastEditTime : 2023-01-24 12:28:49
  */
 #ifndef _SUPER_H_
 #define _SUPER_H_
@@ -165,6 +165,13 @@ class menuOutput {
    * @return
    */
   void static printSetACK(TYPE_POWER power, bool need = true);
+  /**
+   * @brief 设置选择成功的ACK
+   * @param  TYPE_POWER power 权限
+   * @param  bool need 是否需要提示符
+   * @return
+   */
+  void static printChooseACK(TYPE_POWER power, bool need = true);
   /**
    * @brief 用户已存在
    * @param  TYPE_POWER power 权限
