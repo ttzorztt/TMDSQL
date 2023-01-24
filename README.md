@@ -1,6 +1,11 @@
 
 # TMDSQL_1.2(ing)
 
+- gitee(旧发行版)
+<https://gitee.com/ttz_ztt/tmdsql>
+- github
+<https://github.com/ttzorztt/TMDSQL>
+
 ## 版本更替
 
 - V(1.0)
