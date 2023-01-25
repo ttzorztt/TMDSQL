@@ -2,7 +2,7 @@
  * @Description  : TMDSQL语句的设计与实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-24 12:35:39
+ * @LastEditTime : 2023-01-25 21:46:22
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
@@ -222,9 +222,9 @@ bool shell::read() {
       break;
     case 退出:
       if (command.size() == 1 && data.size() == 0) {
-        exitLogin();
         menuOutput::printExit(ReturnPower(), need);
         Log::LogForExit(ReturnUserName(), ReturnPower());
+        exitLogin();
         return false;
       } else {
         menuOutput::printCommandError(ReturnPower(), need);

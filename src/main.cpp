@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-24 12:36:57
+ * @LastEditTime : 2023-01-25 21:40:15
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -91,7 +91,7 @@ void init() {
     _super::createDir("./data/Log");
   }
 }
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
   init();
@@ -112,7 +112,7 @@ int main1(int argc, char const* argv[]) {
   return 0;
 }
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "登录 @root root";

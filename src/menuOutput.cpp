@@ -2,7 +2,7 @@
  * @Description  : 菜单输出类
  * @Autor        : TMD
  * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-24 13:04:06
+ * @LastEditTime : 2023-01-25 21:49:00
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_
@@ -301,7 +301,6 @@ void menuOutput::printShowTable(TYPE_POWER power,
                                 Table& table,
                                 int number,
                                 bool need) {
-  std::cout << std::endl;
   if (number < 0) {
     menuOutput::printCommandError(power, need);
     return;
