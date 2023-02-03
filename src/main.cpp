@@ -2,7 +2,7 @@
  * @Description  : 主函数的实现
  * @Autor        : TMD
  * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-01-25 21:40:15
+ * @LastEditTime : 2023-02-02 22:51:42
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -56,6 +56,10 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
+#ifndef _LOCK_H_
+#define _LOCK_H_
+#include "Lock.h"
+#endif
 using namespace std;
 
 /**
@@ -91,7 +95,7 @@ void init() {
     _super::createDir("./data/Log");
   }
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
   init();
@@ -112,7 +116,7 @@ int main(int argc, char const* argv[]) {
   return 0;
 }
 
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "登录 @root root";
@@ -123,7 +127,9 @@ int main1(int argc, char const* argv[]) {
 
   tmp = "创建 数据库 表 @DB1 TB1";
   x.read(tmp);
-  tmp = "选择 数据库 @DB1";
+	Lock::addLock("DB1","TB1");
+	return 0;
+	tmp = "选择 数据库 @DB1";
   x.read(tmp);
 
   tmp = "插入 表 @TB1 姓名 性别 年龄";

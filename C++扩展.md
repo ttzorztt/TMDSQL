@@ -1,10 +1,13 @@
 # 单例模式
+
 - 私有静态类对象
 - 将构造函数设置为非公有访问方式
 - 删除赋值和拷贝构造等函数等函数
 - 静态公有方法返回静态类对象
 - 类外初始化
+
 ## 设计方式之饥汉模式--直接构建
+
 ```c++
   #include <iostream>
   #include <mutex>
@@ -40,7 +43,9 @@
     thb.join();
   }
 ```
+
 ## 设计方式之懒汉模式--需要时构建
+
 ```c++
   #include <mutex>
   #include <condition_variable> // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
@@ -71,14 +76,18 @@
   }
 ```
 
-
 # 多线程
+
 ## 编译方式
+
 > 在linux中，需要添加参数 -lpthread, 即最终编译方式为:
+
 ```bash
 g++ test.cpp -lpthread -o test
- ```
+```
+
 ## `<thread>`
+
 ```C++
   #include <thread>
   void funa() {
@@ -106,13 +115,17 @@ g++ test.cpp -lpthread -o test
       return 0;
   }
 ```
-  - 构造函数
+
+- 构造函数
   > 需要注意的是： 当线程函数的参数是以引用的方式，需要用 std::ref()进行声明
   - join()
   > join函数的功能是等待线程结束。
 > 输出紊乱，由于进程宏观上是同时运行的。所以输出会紊乱
+
 ## `<atomic>`
+
 > 原子变量，可以达到互斥访问的效果
+
 ```C++
   #include <atomic>
   #include <thread>
@@ -121,6 +134,7 @@ g++ test.cpp -lpthread -o test
 ```
 
 ## `<mutex>`
+
 ```C++
   #include<mutex>
   std::mutex y; // 普通锁
@@ -128,6 +142,7 @@ g++ test.cpp -lpthread -o test
   std::lock_guard<std::mutex> xx(y); //基于作用域的互斥所有权包装器，当对象申请成功，则说明加锁成功，释放锁在作用域结束之后释放锁， 提供互斥包装器
   std::unique_lock<std::mutex> x1(y); // 可移动的互斥所有权包装器
 ```
+
 - 基本函数
   - lock() 
   > 加锁
@@ -140,6 +155,7 @@ g++ test.cpp -lpthread -o test
 
 - wait函数
 > wait函数的主要功能就是先将该进程阻塞，然后在释放锁
+
 ```C++
   #include <iostream>
   #include <thread>
@@ -202,15 +218,18 @@ g++ test.cpp -lpthread -o test
     return 0;
   }
 ```
+
 > 十次循环打印ABC，达到线程通信。
->
 
 ## 死锁
+
 - 互斥
 - 占有等待
 - 不可抢占
 - 循环等待
+
 ### 避免死锁
+
 ```C++
   // 同时获取xy才会加锁
   std::mutex x;
@@ -272,7 +291,9 @@ g++ test.cpp -lpthread -o test
     thb.join();
   }
 ```
+
 - 生产者消费者
+
 ```C++
   #include <condition_variable>  // 同步原语，用于阻塞进程，直到另一线程修改共享变量(条件)
   #include <iostream>
@@ -334,6 +355,7 @@ g++ test.cpp -lpthread -o test
 ```
 
 # 线程池
+
 > 线程池技术通过在系统中预先创建一定数量的线程，当任务请求到来时从线程池中分配一个预先创建的线程去处理任务，线程在处理完任务之后还可以重用，不会销毁，而是等待下一个任务的到来。
 - 一个好处是：对于多核处理器，由于线程会被分配到多个CPU，会提高并行处理的效率
 - 另一个好处是：每个线程独立堵塞，可以防止主线程被阻塞而使主线程被阻塞，导致其他的请求得不到响应的问题。
