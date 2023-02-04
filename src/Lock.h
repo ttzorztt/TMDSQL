@@ -12,6 +12,24 @@ class Lock {
 		private:
 		public:
 				/**
+				 * @brief 加日志锁
+				 */
+				bool static addLog();
+				/**
+				 * @brief 解日志锁
+				 */
+				void static removeLog();
+				/**
+				 * @brief 加pd锁
+				 */
+				void static addPd();
+				/**
+				 * @brief 解pd锁
+				 */
+				void static removePd();
+				void static addUser(std::string UserName);
+				void static removeUser(std::string UserName);
+				/**
 				 * @brief 表锁
 				 *
 				 * @Param truePath 绝对路径
