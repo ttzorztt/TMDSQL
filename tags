@@ -1,0 +1,610 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+**`创建`**	README.md	/^### **`创建`**$/;"	S	section:shell语言解释器""支持语句
+**`删除`**	README.md	/^### **`删除`**$/;"	S	section:shell语言解释器""支持语句
+**`执行`**	README.md	/^### **`执行`**$/;"	S	section:shell语言解释器""支持语句
+**`插入`**(3)	README.md	/^### **`插入`**(3)$/;"	S	section:shell语言解释器""支持语句
+**`显示`**	README.md	/^### **`显示`**$/;"	S	section:shell语言解释器""支持语句
+**`查询`**(3)	README.md	/^### **`查询`**(3)$/;"	S	section:shell语言解释器""支持语句
+**`登录`**	README.md	/^### **`登录`**$/;"	S	section:shell语言解释器""支持语句
+**`设置`**(6)	README.md	/^### **`设置`**(6)$/;"	S	section:shell语言解释器""支持语句
+**`退出`**	README.md	/^### **`退出`**$/;"	S	section:shell语言解释器""支持语句
+**`选择`**	README.md	/^### **`选择`**$/;"	S	section:shell语言解释器""支持语句
+BUG记录	README.md	/^## BUG记录$/;"	s	chapter:shell语言解释器
+DEFAULT	src/super.h	/^  DEFAULT$/;"	e	enum:type_mode
+DataBase	src/DataBase.cpp	/^DataBase::DataBase(DataBase& databse)$/;"	f	class:DataBase
+DataBase	src/DataBase.cpp	/^DataBase::DataBase(std::string name) : _dir(name, type::_TYPE_DATABASE) {$/;"	f	class:DataBase
+DataBase	src/DataBase.h	/^class DataBase : public _dir {$/;"	c
+DataBasel.o	src/makefile	/^DataBasel.o: DataBase.cpp$/;"	t
+DataBasew.o	src/makefile	/^DataBasew.o: DataBase.cpp$/;"	t
+EC	src/Log.cpp	/^std::unordered_map<TYPE_ERROR_CASE, std::string> Log::EC = {$/;"	m	class:Log	typeref:typename:std::unordered_map<TYPE_ERROR_CASE,std::string>
+EC	src/Log.h	/^  std::unordered_map<TYPE_ERROR_CASE, std::string> static EC;$/;"	m	class:Log	typeref:typename:std::unordered_map<TYPE_ERROR_CASE,std::string>
+HashMapCIDToString	src/super.h	/^std::unordered_map<TYPE_CID, std::string> static HashMapCIDToString = {$/;"	v	typeref:typename:std::unordered_map<TYPE_CID,std::string>
+HashMapStringToCID	src/super.h	/^std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {$/;"	v	typeref:typename:std::unordered_map<std::string,TYPE_CID>
+INDEX	src/super.h	/^typedef int INDEX;$/;"	t	typeref:typename:int
+Index	src/Index.cpp	/^Index::Index() {}$/;"	f	class:Index
+Index	src/Index.h	/^class Index {$/;"	c
+Indexl.o	src/makefile	/^Indexl.o: Index.cpp$/;"	t
+Indexw.o	src/makefile	/^Indexw.o: Index.cpp$/;"	t
+Linux版本(Debain 11)	README.md	/^#### Linux版本(Debain 11)$/;"	t	subsection:TMDSQL_1.3(ing)""运行须知""编码
+Lock	src/Lock.cpp	/^Lock::Lock(){}$/;"	f	class:Lock
+Lock	src/Lock.h	/^class Lock {$/;"	c
+Lockl.o	src/makefile	/^Lockl.o: Lock.cpp$/;"	t
+Lockw.o	src/makefile	/^Lockw.o: Lock.cpp$/;"	t
+Log	README.md	/^### Log$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+Log	src/Log.cpp	/^Log::Log() {}$/;"	f	class:Log
+Log	src/Log.h	/^class Log {$/;"	c
+LogForCompileError	src/Log.cpp	/^void Log::LogForCompileError(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForCreateDatabase	src/Log.cpp	/^void Log::LogForCreateDatabase(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForCreateDatabaseTable	src/Log.cpp	/^void Log::LogForCreateDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForCreateManager	src/Log.cpp	/^void Log::LogForCreateManager(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForCreateUser	src/Log.cpp	/^void Log::LogForCreateUser(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForDeleteDatabase	src/Log.cpp	/^void Log::LogForDeleteDatabase(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForDeleteDatabaseTable	src/Log.cpp	/^void Log::LogForDeleteDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForDeleteManager	src/Log.cpp	/^void Log::LogForDeleteManager(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForDeleteUser	src/Log.cpp	/^void Log::LogForDeleteUser(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForError	src/Log.cpp	/^void Log::LogForError(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForExecuteSQL	src/Log.cpp	/^void Log::LogForExecuteSQL(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForExit	src/Log.cpp	/^void Log::LogForExit(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForFindDatabaseTable	src/Log.cpp	/^void Log::LogForFindDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForInsertDatabaseTable	src/Log.cpp	/^void Log::LogForInsertDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForLogin	src/Log.cpp	/^void Log::LogForLogin(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForSelectDatabase	src/Log.cpp	/^void Log::LogForSelectDatabase(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForSelectDatabaseTable	src/Log.cpp	/^void Log::LogForSelectDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForSetIndexDatabaseTable	src/Log.cpp	/^void Log::LogForSetIndexDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForSetViewDatabaseTable	src/Log.cpp	/^void Log::LogForSetViewDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForShow	src/Log.cpp	/^void Log::LogForShow(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForShowAllDatabase	src/Log.cpp	/^void Log::LogForShowAllDatabase(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForShowDatabase	src/Log.cpp	/^void Log::LogForShowDatabase(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+LogForShowDatabaseTable	src/Log.cpp	/^void Log::LogForShowDatabaseTable(std::string UserName,$/;"	f	class:Log	typeref:typename:void
+Logl.o	src/makefile	/^Logl.o : Log.cpp$/;"	t
+Logw.o	src/makefile	/^Logw.o : Log.cpp$/;"	t
+MODE	src/super.h	/^typedef int MODE;$/;"	t	typeref:typename:int
+Manager	src/super.h	/^  Manager,  \/\/ 管理员$/;"	e	enum:TYPE_POWER
+NONE	src/super.h	/^  NONE      \/\/未登录$/;"	e	enum:TYPE_POWER
+NORMAL	src/super.h	/^  NORMAL,   \/\/ 普通用户$/;"	e	enum:TYPE_POWER
+PCB	README.md	/^### PCB$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+POINTER	src/Table.h	/^#define POINTER /;"	d
+POINTER	src/TablePCB.h	/^#define POINTER /;"	d
+POINTER	src/super.h	/^typedef int POINTER;$/;"	t	typeref:typename:int
+PWD	README.md	/^## PWD$/;"	s	chapter:shell语言解释器
+READBUFF_MODE	src/super.h	/^  READBUFF_MODE,  \/\/每次写入前寻位到流结尾$/;"	e	enum:type_mode
+ROOT	src/super.h	/^  ROOT,     \/\/ 超级管理员$/;"	e	enum:TYPE_POWER
+ReturnLoginStatus	src/User.cpp	/^bool User::ReturnLoginStatus() const {$/;"	f	class:User	typeref:typename:bool
+ReturnPower	src/User.cpp	/^TYPE_POWER User::ReturnPower() const {$/;"	f	class:User	typeref:typename:TYPE_POWER
+ReturnUserName	src/User.cpp	/^std::string User::ReturnUserName() const {$/;"	f	class:User	typeref:typename:std::string
+SQL	README.md	/^### SQL$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+SQL	src/super.h	/^  SQL文件未找到,$/;"	e	enum:TYPE_ERROR_CASE
+SetOfTable	src/DataBase.h	/^  std::unordered_set<std::string> SetOfTable;$/;"	m	class:DataBase	typeref:typename:std::unordered_set<std::string>
+TABLEPCB_H_	src/Index.cpp	/^#define TABLEPCB_H_$/;"	d	file:
+TMDSQL	src/makefile	/^TMDSQL: superl.o mainl.o filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o User/;"	t
+TMDSQL.exe	src/makefile	/^TMDSQL.exe: mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o sh/;"	t
+TMDSQL_1.3(ing)	README.md	/^# TMDSQL_1.3(ing)$/;"	c
+TP	src/Log.cpp	/^std::unordered_map<TYPE_POWER, std::string> Log::TP = {{NONE, "未登录"},$/;"	m	class:Log	typeref:typename:std::unordered_map<TYPE_POWER,std::string>
+TP	src/Log.h	/^  std::unordered_map<TYPE_POWER, std::string> static TP;$/;"	m	class:Log	typeref:typename:std::unordered_map<TYPE_POWER,std::string>
+TYPE_CID	src/super.h	/^enum TYPE_CID {$/;"	g
+TYPE_ERROR_CASE	src/super.h	/^enum TYPE_ERROR_CASE {$/;"	g
+TYPE_LOGIN_ERROR	src/super.h	/^enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };$/;"	g
+TYPE_POWER	src/super.h	/^enum TYPE_POWER {$/;"	g
+Table	src/Table.cpp	/^Table::Table(DataBase database, std::string tableName, type style)$/;"	f	class:Table
+Table	src/Table.cpp	/^Table::Table(Table& table) : _file(table.name, table.style) {$/;"	f	class:Table
+Table	src/Table.cpp	/^Table::Table(std::string _truePath) : _file(_truePath) {$/;"	f	class:Table
+Table	src/Table.cpp	/^Table::Table(std::string databaseAndTableName, type style)$/;"	f	class:Table
+Table	src/Table.h	/^class Table : public _file{$/;"	c
+TablePCB	src/TablePCB.cpp	/^TablePCB::TablePCB(Table& table) : file(table.returnName(), type::_TYPE_PCB) {$/;"	f	class:TablePCB
+TablePCB	src/TablePCB.cpp	/^TablePCB::TablePCB(std::string DBID, std::string TBID)$/;"	f	class:TablePCB
+TablePCB	src/TablePCB.cpp	/^TablePCB::TablePCB(std::string DBIDAndTBID)$/;"	f	class:TablePCB
+TablePCB	src/TablePCB.h	/^class TablePCB {$/;"	c
+TablePCBl.o	src/makefile	/^TablePCBl.o: TablePCB.cpp$/;"	t
+TablePCBw.o	src/makefile	/^TablePCBw.o: TablePCB.cpp$/;"	t
+Tablel.o	src/makefile	/^Tablel.o: Table.cpp$/;"	t
+Tablew.o	src/makefile	/^Tablew.o: Table.cpp$/;"	t
+User	README.md	/^### User$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+User	src/User.cpp	/^User::User()$/;"	f	class:User
+User	src/User.cpp	/^User::User(std::string UserName, std::string UserPassword)$/;"	f	class:User
+User	src/User.h	/^class User {$/;"	c
+UserName	src/User.h	/^  std::string UserName;$/;"	m	class:User	typeref:typename:std::string
+UserPassword	src/User.h	/^  std::string UserPassword;$/;"	m	class:User	typeref:typename:std::string
+Userl.o	src/makefile	/^Userl.o: User.cpp$/;"	t
+Userw.o	src/makefile	/^Userw.o: User.cpp$/;"	t
+View	README.md	/^### View$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+View	src/view.h	/^class View {$/;"	c
+WRITEBUFF_MODE_APP	src/super.h	/^  WRITEBUFF_MODE_APP,$/;"	e	enum:type_mode
+WRITEBUFF_MODE_TRUNC	src/super.h	/^  WRITEBUFF_MODE_TRUNC,$/;"	e	enum:type_mode
+Windows版本(Windows 10专业版)	README.md	/^#### Windows版本(Windows 10专业版)$/;"	t	subsection:TMDSQL_1.3(ing)""运行须知""编码
+_DATABASE_H_	src/DataBase.cpp	/^#define _DATABASE_H_$/;"	d	file:
+_DATABASE_H_	src/Table.h	/^#define _DATABASE_H_$/;"	d
+_DATABASE_H_	src/User.cpp	/^#define _DATABASE_H_$/;"	d	file:
+_DATABASE_H_	src/menuOutput.h	/^#define _DATABASE_H_$/;"	d
+_DATABASE_H_	src/shell.cpp	/^#define _DATABASE_H_$/;"	d	file:
+_DATABSE_	src/DataBase.h	/^#define _DATABSE_$/;"	d
+_DATEBASE_H_	src/main.cpp	/^#define _DATEBASE_H_$/;"	d	file:
+_DIRENT_H_	src/dir.h	/^#define _DIRENT_H_$/;"	d
+_DIRENT_H_	src/file.h	/^#define _DIRENT_H_$/;"	d
+_DIRENT_H_	src/super.h	/^#define _DIRENT_H_$/;"	d
+_DIR_	src/dir.h	/^#define _DIR_$/;"	d
+_DIR_H_	src/DataBase.h	/^#define _DIR_H_$/;"	d
+_DIR_H_	src/dir.cpp	/^#define _DIR_H_$/;"	d	file:
+_DIR_H_	src/main.cpp	/^#define _DIR_H_$/;"	d	file:
+_DIR_H_	src/menuOutput.cpp	/^#define _DIR_H_$/;"	d	file:
+_FILE_	src/file.h	/^#define _FILE_$/;"	d
+_FILE_H_	src/DataBase.h	/^#define _FILE_H_$/;"	d
+_FILE_H_	src/Index.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/Lock.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/Log.h	/^#define _FILE_H_$/;"	d
+_FILE_H_	src/Table.h	/^#define _FILE_H_$/;"	d
+_FILE_H_	src/User.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/User.h	/^#define _FILE_H_$/;"	d
+_FILE_H_	src/dir.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/file.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/main.cpp	/^#define _FILE_H_$/;"	d	file:
+_FILE_H_	src/view.h	/^#define _FILE_H_$/;"	d
+_FSTREAM_	src/file.h	/^#define _FSTREAM_$/;"	d
+_INDEX_	src/Index.h	/^#define _INDEX_$/;"	d
+_INDEX_H_	src/Index.cpp	/^#define _INDEX_H_$/;"	d	file:
+_INDEX_H_	src/main.cpp	/^#define _INDEX_H_$/;"	d	file:
+_INDEX_H_	src/shell.cpp	/^#define _INDEX_H_$/;"	d	file:
+_IOMANIP_	src/menuOutput.cpp	/^#define _IOMANIP_$/;"	d	file:
+_IOSTREAM_	src/DataBase.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/Log.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/Table.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/TablePCB.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/User.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/file.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/main.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/menuOutput.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/shell.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IOSTREAM_	src/view.cpp	/^#define _IOSTREAM_$/;"	d	file:
+_IO_	src/dir.h	/^#define _IO_$/;"	d
+_LOCK_	src/Lock.h	/^#define _LOCK_$/;"	d
+_LOCK_H_	src/Lock.cpp	/^#define _LOCK_H_$/;"	d	file:
+_LOCK_H_	src/main.cpp	/^#define _LOCK_H_$/;"	d	file:
+_LOG_	src/Log.h	/^#define _LOG_$/;"	d
+_LOG_H_	src/Log.cpp	/^#define _LOG_H_$/;"	d	file:
+_LOG_H_	src/main.cpp	/^#define _LOG_H_$/;"	d	file:
+_LOG_H_	src/menuOutput.cpp	/^#define _LOG_H_$/;"	d	file:
+_LOG_H_	src/shell.cpp	/^#define _LOG_H_$/;"	d	file:
+_MENUOUTPUT_H_	src/main.cpp	/^#define _MENUOUTPUT_H_$/;"	d	file:
+_MENUOUTPUT_H_	src/menuOutput.cpp	/^#define _MENUOUTPUT_H_$/;"	d	file:
+_MENUOUTPUT_H_	src/shell.cpp	/^#define _MENUOUTPUT_H_$/;"	d	file:
+_PCBPath	src/super.h	/^#define _PCBPath /;"	d
+_PathForLog	src/super.h	/^#define _PathForLog /;"	d
+_PathForUserData	src/super.h	/^#define _PathForUserData /;"	d
+_SET_	src/User.h	/^#define _SET_$/;"	d
+_SET_	src/shell.h	/^#define _SET_$/;"	d
+_SET_	src/view.h	/^#define _SET_$/;"	d
+_SHELL_	src/shell.h	/^#define _SHELL_$/;"	d
+_SHELL_H_	src/Log.cpp	/^#define _SHELL_H_$/;"	d	file:
+_SHELL_H_	src/main.cpp	/^#define _SHELL_H_$/;"	d	file:
+_SHELL_H_	src/shell.cpp	/^#define _SHELL_H_$/;"	d	file:
+_SQLPath	src/super.h	/^#define _SQLPath /;"	d
+_STRING_	src/Index.cpp	/^#define _STRING_$/;"	d	file:
+_STRING_	src/Index.h	/^#define _STRING_$/;"	d
+_STRING_	src/Lock.h	/^#define _STRING_$/;"	d
+_STRING_	src/Log.cpp	/^#define _STRING_$/;"	d	file:
+_STRING_	src/Log.h	/^#define _STRING_$/;"	d
+_STRING_	src/Table.h	/^#define _STRING_$/;"	d
+_STRING_	src/TablePCB.h	/^#define _STRING_$/;"	d
+_STRING_	src/User.cpp	/^#define _STRING_$/;"	d	file:
+_STRING_	src/User.h	/^#define _STRING_$/;"	d
+_STRING_	src/dir.cpp	/^#define _STRING_$/;"	d	file:
+_STRING_	src/dir.h	/^#define _STRING_$/;"	d
+_STRING_	src/file.h	/^#define _STRING_$/;"	d
+_STRING_	src/main.cpp	/^#define _STRING_$/;"	d	file:
+_STRING_	src/menuOutput.h	/^#define _STRING_$/;"	d
+_STRING_	src/shell.h	/^#define _STRING_$/;"	d
+_STRING_	src/super.h	/^#define _STRING_$/;"	d
+_STRING_	src/view.h	/^#define _STRING_$/;"	d
+_SUPER_	src/super.h	/^#define _SUPER_$/;"	d
+_SUPER_H_	src/DataBase.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/Log.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/TablePCB.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/dir.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/file.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/main.cpp	/^#define _SUPER_H_$/;"	d	file:
+_SUPER_H_	src/menuOutput.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/shell.cpp	/^#define _SUPER_H_$/;"	d	file:
+_SUPER_H_	src/shell.h	/^#define _SUPER_H_$/;"	d
+_SUPER_H_	src/super.cpp	/^#define _SUPER_H_$/;"	d	file:
+_SYS_STAT_H_	src/dir.h	/^#define _SYS_STAT_H_$/;"	d
+_SYS_STAT_H_	src/file.h	/^#define _SYS_STAT_H_$/;"	d
+_SYS_STAT_H_	src/super.h	/^#define _SYS_STAT_H_$/;"	d
+_TABLEPCB_	src/TablePCB.h	/^#define _TABLEPCB_$/;"	d
+_TABLEPCB_H_	src/Table.cpp	/^#define _TABLEPCB_H_$/;"	d	file:
+_TABLEPCB_H_	src/TablePCB.cpp	/^#define _TABLEPCB_H_$/;"	d	file:
+_TABLEPCB_H_	src/main.cpp	/^#define _TABLEPCB_H_$/;"	d	file:
+_TABLEPCB_H_	src/menuOutput.cpp	/^#define _TABLEPCB_H_$/;"	d	file:
+_TABLEPCB_H_	src/shell.cpp	/^#define _TABLEPCB_H_$/;"	d	file:
+_TABLE_	src/Table.h	/^#define _TABLE_$/;"	d
+_TABLE_H_	src/DataBase.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/Index.h	/^#define _TABLE_H_$/;"	d
+_TABLE_H_	src/Lock.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/Lock.h	/^#define _TABLE_H_$/;"	d
+_TABLE_H_	src/Table.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/TablePCB.h	/^#define _TABLE_H_$/;"	d
+_TABLE_H_	src/User.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/main.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/menuOutput.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/menuOutput.h	/^#define _TABLE_H_$/;"	d
+_TABLE_H_	src/shell.cpp	/^#define _TABLE_H_$/;"	d	file:
+_TABLE_H_	src/view.h	/^#define _TABLE_H_$/;"	d
+_TIME_	src/Log.cpp	/^#define _TIME_$/;"	d	file:
+_TYPE_CREATE_INDEX_DATABASE	src/super.h	/^  _TYPE_CREATE_INDEX_DATABASE,  \/\/ 创建index目录下的数据库文件夹$/;"	e	enum:type
+_TYPE_CREATE_LOCK_DATABASE	src/super.h	/^  _TYPE_CREATE_LOCK_DATABASE,   \/\/创建lock下的数据库文件夹$/;"	e	enum:type
+_TYPE_CREATE_PCB_DATABASE	src/super.h	/^  _TYPE_CREATE_PCB_DATABASE,    \/\/ 创建PCB下的数据库文件$/;"	e	enum:type
+_TYPE_DATABASE	src/super.h	/^  _TYPE_DATABASE,               \/\/目录，即数据库$/;"	e	enum:type
+_TYPE_INDEX_TABLE	src/super.h	/^  _TYPE_INDEX_TABLE,            \/\/ 索引下的表$/;"	e	enum:type
+_TYPE_LOG	src/super.h	/^  _TYPE_LOG,                    \/\/ LOG文件$/;"	e	enum:type
+_TYPE_NONE	src/super.h	/^  _TYPE_NONE,                   \/\/ 默认，留给传入真实路径的type$/;"	e	enum:type
+_TYPE_PCB	src/super.h	/^  _TYPE_PCB,                    \/\/ PCB的地址$/;"	e	enum:type
+_TYPE_TABLE	src/super.h	/^  _TYPE_TABLE,                  \/\/普通文件，即表$/;"	e	enum:type
+_TYPE_USERDATA	src/super.h	/^  _TYPE_USERDATA,               \/\/用户数据$/;"	e	enum:type
+_TYPE_VIEW	src/super.h	/^  _TYPE_VIEW                    \/\/视图文件$/;"	e	enum:type
+_UNISTD_H_	src/dir.h	/^#define _UNISTD_H_$/;"	d
+_UNISTD_H_	src/file.h	/^#define _UNISTD_H_$/;"	d
+_UNISTD_H_	src/super.h	/^#define _UNISTD_H_$/;"	d
+_UNORDERED_MAP_	src/Log.h	/^#define _UNORDERED_MAP_$/;"	d
+_UNORDERED_MAP_	src/shell.h	/^#define _UNORDERED_MAP_$/;"	d
+_UNORDERED_MAP_	src/super.h	/^#define _UNORDERED_MAP_$/;"	d
+_UNORDERED_SET_	src/DataBase.h	/^#define _UNORDERED_SET_$/;"	d
+_UNORDERED_SET_	src/super.h	/^#define _UNORDERED_SET_$/;"	d
+_USER_H_	src/User.cpp	/^#define _USER_H_$/;"	d	file:
+_USER_H_	src/main.cpp	/^#define _USER_H_$/;"	d	file:
+_USER_H_	src/shell.h	/^#define _USER_H_$/;"	d
+_VECTOR_	src/User.h	/^#define _VECTOR_$/;"	d
+_VECTOR_	src/super.h	/^#define _VECTOR_$/;"	d
+_VECTOR_	src/view.h	/^#define _VECTOR_$/;"	d
+_VIEW	src/view.h	/^#define _VIEW$/;"	d
+_VIEW_H_	src/menuOutput.cpp	/^#define _VIEW_H_$/;"	d	file:
+_VIEW_H_	src/shell.cpp	/^#define _VIEW_H_$/;"	d	file:
+_VIEW_H_	src/view.cpp	/^#define _VIEW_H_$/;"	d	file:
+_ViewPath	src/super.h	/^#define _ViewPath /;"	d
+_databaseAndTablePath	src/super.h	/^#define _databaseAndTablePath /;"	d
+_dir	src/dir.cpp	/^_dir::_dir(_dir& copy) : _super(copy.returnName()) {$/;"	f	class:_dir
+_dir	src/dir.cpp	/^_dir::_dir(std::string dirName, type style) : _super(dirName) {$/;"	f	class:_dir
+_dir	src/dir.h	/^class _dir : public _super {$/;"	c
+_file	src/file.cpp	/^_file::_file(_file& _copy) : _super(_copy.returnName()) {$/;"	f	class:_file
+_file	src/file.cpp	/^_file::_file(std::string Name, type style) : _super(Name) {$/;"	f	class:_file
+_file	src/file.cpp	/^_file::_file(std::string TruePath)$/;"	f	class:_file
+_file	src/file.h	/^class _file : public _super {$/;"	c
+_indexPath	src/super.h	/^#define _indexPath /;"	d
+_super	src/super.cpp	/^_super::_super(_super& copy) {$/;"	f	class:_super
+_super	src/super.cpp	/^_super::_super(std::string name) {$/;"	f	class:_super
+_super	src/super.h	/^class _super {$/;"	c
+`<atomic>`	C++扩展.md	/^## `<atomic>`$/;"	s	chapter:多线程
+`<condition_variable>`	C++扩展.md	/^## `<condition_variable>`$/;"	s	chapter:多线程
+`<mutex>`	C++扩展.md	/^## `<mutex>`$/;"	s	chapter:多线程
+`<thread>`	C++扩展.md	/^## `<thread>`$/;"	s	chapter:多线程
+addLength	src/TablePCB.cpp	/^void TablePCB::addLength() {$/;"	f	class:TablePCB	typeref:typename:void
+addLock	src/Lock.cpp	/^void Lock::addLock(Table& table){$/;"	f	class:Lock	typeref:typename:void
+addLock	src/Lock.cpp	/^void Lock::addLock(std::string DBID,std::string TBID){$/;"	f	class:Lock	typeref:typename:void
+addLock	src/Lock.cpp	/^void Lock::addLock(std::string truePath){$/;"	f	class:Lock	typeref:typename:void
+addManagerUser	src/User.cpp	/^bool User::addManagerUser(std::string UserName, std::string Userpassword) {$/;"	f	class:User	typeref:typename:bool
+addNormalUser	src/User.cpp	/^bool User::addNormalUser(std::string UserName, std::string Userpassword) {$/;"	f	class:User	typeref:typename:bool
+addUser	src/User.cpp	/^void User::addUser(std::string UserName,$/;"	f	class:User	typeref:typename:void
+aidCheckData	src/shell.cpp	/^bool shell::aidCheckData(std::string _str) {$/;"	f	class:shell	typeref:typename:bool
+appInsertIndex	src/Table.cpp	/^bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {$/;"	f	class:Table	typeref:typename:bool
+appInsertIndex	src/Table.cpp	/^bool Table::appInsertIndex(std::string index, POINTER fileIndex) {$/;"	f	class:Table	typeref:typename:bool
+appInsertIndex	src/Table.cpp	/^bool Table::appInsertIndex(std::string tableName,$/;"	f	class:Table	typeref:typename:bool
+append	src/Table.cpp	/^bool Table::append(Table table, vstring value) {$/;"	f	class:Table	typeref:typename:bool
+append	src/Table.cpp	/^bool Table::append(std::string tableName, vstring value) {$/;"	f	class:Table	typeref:typename:bool
+append	src/Table.cpp	/^bool Table::append(vstring value) {$/;"	f	class:Table	typeref:typename:bool
+check	src/shell.cpp	/^bool shell::check(revstring vectorbuff) {$/;"	f	class:shell	typeref:typename:bool
+check	src/shell.cpp	/^bool shell::check(std::string _str) {$/;"	f	class:shell	typeref:typename:bool
+checkErrorName	src/super.h	/^static std::unordered_set<char> checkErrorName{$/;"	v	typeref:typename:std::unordered_set<char>
+clean	src/makefile	/^clean:$/;"	t
+close	src/Log.cpp	/^void Log::close() {$/;"	f	class:Log	typeref:typename:void
+command	src/shell.h	/^  vCID command;$/;"	m	class:shell	typeref:typename:vCID
+commandCount	src/shell.h	/^  int commandCount;$/;"	m	class:shell	typeref:typename:int
+count	src/DataBase.cpp	/^int DataBase::count = 0;$/;"	m	class:DataBase	typeref:typename:int
+count	src/DataBase.h	/^  int static count;$/;"	m	class:DataBase	typeref:typename:int
+count	src/Table.cpp	/^int Table::count = 0;$/;"	m	class:Table	typeref:typename:int
+count	src/Table.h	/^ int static count;$/;"	m	class:Table	typeref:typename:int
+count	src/User.cpp	/^int User::count = 0;$/;"	m	class:User	typeref:typename:int
+count	src/User.h	/^  static int count;$/;"	m	class:User	typeref:typename:int
+count	src/dir.cpp	/^int _dir::count = 0;$/;"	m	class:_dir	typeref:typename:int
+count	src/dir.h	/^  int static count;$/;"	m	class:_dir	typeref:typename:int
+count	src/file.cpp	/^int _file::count = 0;$/;"	m	class:_file	typeref:typename:int
+count	src/file.h	/^  static int count;$/;"	m	class:_file	typeref:typename:int
+create	src/DataBase.cpp	/^bool DataBase::create() {$/;"	f	class:DataBase	typeref:typename:bool
+create	src/DataBase.cpp	/^bool DataBase::create(std::string name) {$/;"	f	class:DataBase	typeref:typename:bool
+create	src/Index.cpp	/^void Index::create(Table table) {$/;"	f	class:Index	typeref:typename:void
+create	src/Index.cpp	/^void Index::create(_file file) {$/;"	f	class:Index	typeref:typename:void
+create	src/Index.cpp	/^void Index::create(std::string tableName) {$/;"	f	class:Index	typeref:typename:void
+create	src/Table.cpp	/^bool Table::create() {$/;"	f	class:Table	typeref:typename:bool
+create	src/dir.cpp	/^bool _dir::create() {$/;"	f	class:_dir	typeref:typename:bool
+create	src/dir.cpp	/^bool _dir::create(std::string truePath) {$/;"	f	class:_dir	typeref:typename:bool
+create	src/file.cpp	/^bool _file::create() {$/;"	f	class:_file	typeref:typename:bool
+create	src/file.cpp	/^bool _file::create(std::string TruePath) {$/;"	f	class:_file	typeref:typename:bool
+create	src/file.cpp	/^bool _file::create(std::string name, type style) {$/;"	f	class:_file	typeref:typename:bool
+create	src/super.cpp	/^bool _super::create() {$/;"	f	class:_super	typeref:typename:bool
+createDir	src/super.cpp	/^bool _super::createDir(std::string path) {$/;"	f	class:_super	typeref:typename:bool
+data	src/shell.h	/^  vstring data;$/;"	m	class:shell	typeref:typename:vstring
+database	README.md	/^### database$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+data目录的结构	README.md	/^## data目录的结构$/;"	s	chapter:TMDSQL_1.3(ing)
+deleteLine	src/file.cpp	/^bool _file::deleteLine(std::string index) {$/;"	f	class:_file	typeref:typename:bool
+deleteUser	src/User.cpp	/^bool User::deleteUser(std::string index) {$/;"	f	class:User	typeref:typename:bool
+dirl.o	src/makefile	/^dirl.o: dir.cpp$/;"	t
+dirw.o	src/makefile	/^dirw.o: dir.cpp$/;"	t
+dispartDatabaseNameAndTableName	src/super.cpp	/^vstring _super::dispartDatabaseNameAndTableName(std::string TableName) {$/;"	f	class:_super	typeref:typename:vstring
+endLineIndex	src/TablePCB.h	/^  POINTER endLineIndex;$/;"	m	class:TablePCB	typeref:typename:POINTER
+errorCause	src/User.h	/^  TYPE_LOGIN_ERROR errorCause;$/;"	m	class:User	typeref:typename:TYPE_LOGIN_ERROR
+exitLogin	src/User.cpp	/^void User::exitLogin() {$/;"	f	class:User	typeref:typename:void
+file	src/Log.h	/^  static _file file;$/;"	m	class:Log	typeref:typename:_file
+file	src/TablePCB.h	/^  _file file;$/;"	m	class:TablePCB	typeref:typename:_file
+filel.o	src/makefile	/^filel.o: file.cpp$/;"	t
+filew.o	src/makefile	/^filew.o: file.cpp$/;"	t
+find	src/Table.cpp	/^vstring Table::find(std::string index) {$/;"	f	class:Table	typeref:typename:vstring
+forceremove	src/DataBase.cpp	/^void DataBase::forceremove() {$/;"	f	class:DataBase	typeref:typename:void
+ifstream 的seekg失效	README.md	/^### ifstream 的seekg失效$/;"	S	section:shell语言解释器""BUG记录
+index	README.md	/^### index$/;"	S	section:TMDSQL_1.3(ing)""data目录的结构
+index	src/TablePCB.h	/^  int index;$/;"	m	class:TablePCB	typeref:typename:int
+indexReadline	src/Table.cpp	/^vstring Table::indexReadline(POINTER fileIndex) {$/;"	f	class:Table	typeref:typename:vstring
+indexReadline	src/Table.cpp	/^vstring Table::indexReadline(Table table, POINTER fileIndex) {$/;"	f	class:Table	typeref:typename:vstring
+indexReadline	src/Table.cpp	/^vstring Table::indexReadline(std::string tableName, POINTER fileIndex) {$/;"	f	class:Table	typeref:typename:vstring
+init	src/TablePCB.cpp	/^void TablePCB::init() {$/;"	f	class:TablePCB	typeref:typename:void
+init	src/main.cpp	/^void init() {$/;"	f	typeref:typename:void
+inputACK	src/shell.cpp	/^bool shell::inputACK() {$/;"	f	class:shell	typeref:typename:bool
+inputNowTime	src/Log.cpp	/^void Log::inputNowTime(TYPE_ERROR_CASE& errorCase) {$/;"	f	class:Log	typeref:typename:void
+inputPCBInformation	src/file.cpp	/^void _file::inputPCBInformation() {$/;"	f	class:_file	typeref:typename:void
+insertTable	src/DataBase.cpp	/^bool DataBase::insertTable(std::string tableName) {$/;"	f	class:DataBase	typeref:typename:bool
+insertTable	src/DataBase.cpp	/^bool DataBase::insertTable(std::string tableName, const revstring tableItem) {$/;"	f	class:DataBase	typeref:typename:bool
+isExist	src/DataBase.cpp	/^bool DataBase::isExist() {$/;"	f	class:DataBase	typeref:typename:bool
+isExist	src/DataBase.cpp	/^bool DataBase::isExist(std::string DataBaseName) {$/;"	f	class:DataBase	typeref:typename:bool
+isExist	src/Table.cpp	/^bool Table::isExist() {$/;"	f	class:Table	typeref:typename:bool
+isExist	src/dir.cpp	/^bool _dir::isExist() {$/;"	f	class:_dir	typeref:typename:bool
+isExist	src/file.cpp	/^bool _file::isExist() {$/;"	f	class:_file	typeref:typename:bool
+isExist	src/super.cpp	/^bool _super::isExist() {$/;"	f	class:_super	typeref:typename:bool
+isExist	src/super.cpp	/^bool _super::isExist(std::string name, type style) {$/;"	f	class:_super	typeref:typename:bool
+isExist	src/super.cpp	/^bool _super::isExist(std::string truePath) {$/;"	f	class:_super	typeref:typename:bool
+isExistsTable	src/DataBase.cpp	/^bool DataBase::isExistsTable(std::string DataBaseName, std::string tableName) {$/;"	f	class:DataBase	typeref:typename:bool
+length	src/TablePCB.h	/^  int length;$/;"	m	class:TablePCB	typeref:typename:int
+linux下交叉编译windows程序	README.md	/^### linux下交叉编译windows程序$/;"	S	section:shell语言解释器""BUG记录
+linux系统下权限问题	README.md	/^### linux系统下权限问题$/;"	S	section:shell语言解释器""BUG记录
+login	src/User.cpp	/^bool User::login() {$/;"	f	class:User	typeref:typename:bool
+login	src/User.cpp	/^bool User::login(std::string UserName, std::string UserPassword) {$/;"	f	class:User	typeref:typename:bool
+loginStatus	src/User.h	/^  bool loginStatus;$/;"	m	class:User	typeref:typename:bool
+main	src/main.cpp	/^int main(int argc, char const* argv[]) {$/;"	f	typeref:typename:int
+main1	src/main.cpp	/^int main1(int argc, char const* argv[]) {$/;"	f	typeref:typename:int
+mainl.o	src/makefile	/^mainl.o: main.cpp$/;"	t
+mainw.o	src/makefile	/^mainw.o: main.cpp$/;"	t
+menuOutput	src/menuOutput.cpp	/^menuOutput::menuOutput() {}$/;"	f	class:menuOutput
+menuOutput	src/menuOutput.h	/^class menuOutput {$/;"	c
+menuOutputl.o	src/makefile	/^menuOutputl.o: menuOutput.cpp$/;"	t
+menuOutputw.o	src/makefile	/^menuOutputw.o: menuOutput.cpp$/;"	t
+name	src/super.h	/^  std::string name;$/;"	m	class:_super	typeref:typename:std::string
+nameBuff	src/User.cpp	/^std::set<std::string> User::nameBuff;$/;"	m	class:User	typeref:typename:std::set<std::string>
+nameBuff	src/User.h	/^  static std::set<std::string> nameBuff;$/;"	m	class:User	typeref:typename:std::set<std::string>
+need	src/shell.h	/^  bool need;$/;"	m	class:shell	typeref:typename:bool
+nowData	src/Log.cpp	/^std::string Log::nowData() {$/;"	f	class:Log	typeref:typename:std::string
+nowDataTime	src/Log.cpp	/^std::string Log::nowDataTime() {$/;"	f	class:Log	typeref:typename:std::string
+nowLoginId	src/User.cpp	/^std::set<std::string> User::nowLoginId;$/;"	m	class:User	typeref:typename:std::set<std::string>
+nowLoginId	src/User.h	/^  static std::set<std::string> nowLoginId;$/;"	m	class:User	typeref:typename:std::set<std::string>
+nowMode	src/file.h	/^  type_mode nowMode;$/;"	m	class:_file	typeref:typename:type_mode
+nsbfec2d3d0101	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/2000/svg
+nsbfec2d3d0201	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0301	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0401	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0501	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0601	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0701	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0801	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0901	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0a01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0b01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0c01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0d01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0e01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d0f01	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1001	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1101	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1201	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1301	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1401	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1501	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1601	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1701	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+nsbfec2d3d1801	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xhtml
+open	src/Log.cpp	/^void Log::open() {$/;"	f	class:Log	typeref:typename:void
+openDirReturnFileName	src/dir.cpp	/^void _dir::openDirReturnFileName(std::string truePath,vstring& ret) {$/;"	f	class:_dir	typeref:typename:void
+openDirReturnFileName	src/dir.cpp	/^void _dir::openDirReturnFileName(vstring& ret) {$/;"	f	class:_dir	typeref:typename:void
+pd	src/User.cpp	/^_file User::pd(_PathForUserData + std::string("pd"));$/;"	m	class:User	typeref:typename:_file
+pd	src/User.h	/^  static _file pd;$/;"	m	class:User	typeref:typename:_file
+power	src/User.h	/^  TYPE_POWER power;$/;"	m	class:User	typeref:typename:TYPE_POWER
+printChooseACK	src/menuOutput.cpp	/^void menuOutput::printChooseACK(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printCommandBackout	src/menuOutput.cpp	/^void menuOutput::printCommandBackout(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printCommandError	src/menuOutput.cpp	/^void menuOutput::printCommandError(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printCreateACK	src/menuOutput.cpp	/^void menuOutput::printCreateACK(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printDatabaseIsExists	src/menuOutput.cpp	/^void menuOutput::printDatabaseIsExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printDatabaseNotEmptyAndDeleteTip	src/menuOutput.cpp	/^void menuOutput::printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power,$/;"	f	class:menuOutput	typeref:typename:void
+printDatabaseNotHaveTable	src/menuOutput.cpp	/^void menuOutput::printDatabaseNotHaveTable(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printDeleteACK	src/menuOutput.cpp	/^void menuOutput::printDeleteACK(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printExit	src/menuOutput.cpp	/^void menuOutput::printExit(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printInsertACK	src/menuOutput.cpp	/^void menuOutput::printInsertACK(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printInsertNoValue	src/menuOutput.cpp	/^void menuOutput::printInsertNoValue(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printLoginOrNot	src/menuOutput.cpp	/^void menuOutput::printLoginOrNot(bool Login,$/;"	f	class:menuOutput	typeref:typename:void
+printManagerExists	src/menuOutput.cpp	/^void menuOutput::printManagerExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printManagerNotExists	src/menuOutput.cpp	/^void menuOutput::printManagerNotExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotChooseDatabase	src/menuOutput.cpp	/^void menuOutput::printNotChooseDatabase(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotChooseTable	src/menuOutput.cpp	/^void menuOutput::printNotChooseTable(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotExistsDatabase	src/menuOutput.cpp	/^void menuOutput::printNotExistsDatabase(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotExistsTable	src/menuOutput.cpp	/^void menuOutput::printNotExistsTable(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotFindSQL	src/menuOutput.cpp	/^void menuOutput::printNotFindSQL(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printNotLogin	src/menuOutput.cpp	/^void menuOutput::printNotLogin(bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printPWD	src/menuOutput.cpp	/^void menuOutput::printPWD(vstring& pwd, TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printPower	src/menuOutput.cpp	/^void menuOutput::printPower(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printPowerNoEnough	src/menuOutput.cpp	/^void menuOutput::printPowerNoEnough(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printSetACK	src/menuOutput.cpp	/^void menuOutput::printSetACK(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printShowDatabase	src/menuOutput.cpp	/^void menuOutput::printShowDatabase(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printShowDatabase	src/menuOutput.cpp	/^void menuOutput::printShowDatabase(TYPE_POWER power,$/;"	f	class:menuOutput	typeref:typename:void
+printShowFindTable	src/menuOutput.cpp	/^void menuOutput::printShowFindTable(TYPE_POWER power,$/;"	f	class:menuOutput	typeref:typename:void
+printShowTable	src/menuOutput.cpp	/^void menuOutput::printShowTable(TYPE_POWER power,$/;"	f	class:menuOutput	typeref:typename:void
+printTableIsExists	src/menuOutput.cpp	/^void menuOutput::printTableIsExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printTableNotEmptyAndDeleteTip	src/menuOutput.cpp	/^void menuOutput::printTableNotEmptyAndDeleteTip(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printUserExists	src/menuOutput.cpp	/^void menuOutput::printUserExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+printUserNotExists	src/menuOutput.cpp	/^void menuOutput::printUserNotExists(TYPE_POWER power, bool need) {$/;"	f	class:menuOutput	typeref:typename:void
+pwd	src/shell.h	/^  vstring pwd;$/;"	m	class:shell	typeref:typename:vstring
+read	src/shell.cpp	/^bool shell::read() {$/;"	f	class:shell	typeref:typename:bool
+read	src/shell.cpp	/^bool shell::read(revstring value) {$/;"	f	class:shell	typeref:typename:bool
+read	src/shell.cpp	/^bool shell::read(std::string str) {$/;"	f	class:shell	typeref:typename:bool
+readAllNameDate	src/User.cpp	/^void User::readAllNameDate() {$/;"	f	class:User	typeref:typename:void
+readData	src/TablePCB.cpp	/^void TablePCB::readData() {$/;"	f	class:TablePCB	typeref:typename:void
+readFileBuff	src/file.h	/^  std::ifstream readFileBuff;$/;"	m	class:_file	typeref:typename:std::ifstream
+readline	src/file.cpp	/^bool _file::readline(revstring ret) {$/;"	f	class:_file	typeref:typename:bool
+remove	src/DataBase.cpp	/^bool DataBase::remove() {$/;"	f	class:DataBase	typeref:typename:bool
+remove	src/DataBase.cpp	/^bool DataBase::remove(std::string name) {$/;"	f	class:DataBase	typeref:typename:bool
+remove	src/Table.cpp	/^bool Table::remove() {$/;"	f	class:Table	typeref:typename:bool
+remove	src/dir.cpp	/^bool _dir::remove() {$/;"	f	class:_dir	typeref:typename:bool
+remove	src/dir.cpp	/^bool _dir::remove(std::string truePath) {$/;"	f	class:_dir	typeref:typename:bool
+remove	src/file.cpp	/^bool _file::remove() {$/;"	f	class:_file	typeref:typename:bool
+remove	src/file.cpp	/^bool _file::remove(std::string Name, type style) {$/;"	f	class:_file	typeref:typename:bool
+remove	src/file.cpp	/^bool _file::remove(std::string truePath) {$/;"	f	class:_file	typeref:typename:bool
+remove	src/super.cpp	/^bool _super::remove() {$/;"	f	class:_super	typeref:typename:bool
+removeLock	src/Lock.cpp	/^void Lock::removeLock(Table& table){$/;"	f	class:Lock	typeref:typename:void
+removeLock	src/Lock.cpp	/^void Lock::removeLock(std::string DBID,std::string TBID){$/;"	f	class:Lock	typeref:typename:void
+removeLock	src/Lock.cpp	/^void Lock::removeLock(std::string truePath){$/;"	f	class:Lock	typeref:typename:void
+removeTable	src/DataBase.cpp	/^bool DataBase::removeTable(std::string tableName) {$/;"	f	class:DataBase	typeref:typename:bool
+reset	src/User.h	/^  bool reset;$/;"	m	class:User	typeref:typename:bool
+resetPassword	src/User.cpp	/^void User::resetPassword(std::string Userpassword) {$/;"	f	class:User	typeref:typename:void
+resetPath	src/file.cpp	/^void _file::resetPath(std::string Name, type style) {$/;"	f	class:_file	typeref:typename:void
+returnAllowColumn	src/view.cpp	/^std::set<int> View::returnAllowColumn(std::string UserName,$/;"	f	class:View	typeref:typename:std::set<int>
+returnAllowColumn	src/view.cpp	/^std::set<int> View::returnAllowColumn(std::string& UserName, _file& table) {$/;"	f	class:View	typeref:typename:std::set<int>
+returnCount	src/DataBase.cpp	/^int DataBase::returnCount() {$/;"	f	class:DataBase	typeref:typename:int
+returnCount	src/Table.cpp	/^int Table::returnCount() {$/;"	f	class:Table	typeref:typename:int
+returnCount	src/dir.cpp	/^int _dir::returnCount() {$/;"	f	class:_dir	typeref:typename:int
+returnCount	src/file.cpp	/^int _file::returnCount() {$/;"	f	class:_file	typeref:typename:int
+returnCount	src/super.cpp	/^int _super::returnCount() {$/;"	f	class:_super	typeref:typename:int
+returnEndLineIndex	src/TablePCB.cpp	/^int TablePCB::returnEndLineIndex() {$/;"	f	class:TablePCB	typeref:typename:int
+returnErrorCase	src/User.cpp	/^TYPE_LOGIN_ERROR User::returnErrorCase() const {$/;"	f	class:User	typeref:typename:TYPE_LOGIN_ERROR
+returnIndex	src/TablePCB.cpp	/^INDEX TablePCB::returnIndex(){$/;"	f	class:TablePCB	typeref:typename:INDEX
+returnInputUserPower	src/User.cpp	/^TYPE_POWER User::returnInputUserPower(std::string UserName) {$/;"	f	class:User	typeref:typename:TYPE_POWER
+returnName	src/TablePCB.cpp	/^std::string TablePCB::returnName() {$/;"	f	class:TablePCB	typeref:typename:std::string
+returnName	src/super.cpp	/^std::string _super::returnName() {$/;"	f	class:_super	typeref:typename:std::string
+returnReadFileBuff	src/file.cpp	/^std::ifstream& _file::returnReadFileBuff() {$/;"	f	class:_file	typeref:typename:std::ifstream &
+returnReadTell	src/file.cpp	/^POINTER _file::returnReadTell() {$/;"	f	class:_file	typeref:typename:POINTER
+returnTruePath	src/dir.cpp	/^std::string _dir::returnTruePath() {$/;"	f	class:_dir	typeref:typename:std::string
+returnTruePath	src/file.cpp	/^std::string _file::returnTruePath() {$/;"	f	class:_file	typeref:typename:std::string
+returnTruePath	src/super.cpp	/^std::string _super::returnTruePath(std::string Name, type style) {$/;"	f	class:_super	typeref:typename:std::string
+returnType	src/DataBase.cpp	/^type DataBase::returnType() {$/;"	f	class:DataBase	typeref:typename:type
+returnType	src/dir.cpp	/^type _dir::returnType() {$/;"	f	class:_dir	typeref:typename:type
+returnType	src/file.cpp	/^type _file::returnType() {$/;"	f	class:_file	typeref:typename:type
+returnType	src/super.cpp	/^type _super::returnType() {$/;"	f	class:_super	typeref:typename:type
+returnWriteFileBuff	src/file.cpp	/^std::ofstream& _file::returnWriteFileBuff() {$/;"	f	class:_file	typeref:typename:std::ofstream &
+returnWriteTell	src/file.cpp	/^POINTER _file::returnWriteTell() {$/;"	f	class:_file	typeref:typename:POINTER
+revint	src/super.h	/^typedef std::vector<int>& revint;$/;"	t	typeref:typename:std::vector<int> &
+revstring	src/super.h	/^typedef std::vector<std::string>& revstring;$/;"	t	typeref:typename:std::vector<std::string> &
+setAllowShowColumn	src/view.cpp	/^void View::setAllowShowColumn(std::string UserName,$/;"	f	class:View	typeref:typename:void
+setEndLineIndex	src/TablePCB.cpp	/^void TablePCB::setEndLineIndex(Table table, POINTER fileIndex) {$/;"	f	class:TablePCB	typeref:typename:void
+setEndLineIndex	src/TablePCB.cpp	/^void TablePCB::setEndLineIndex(int value) {$/;"	f	class:TablePCB	typeref:typename:void
+setIndex	src/TablePCB.cpp	/^void TablePCB::setIndex(INDEX index) {$/;"	f	class:TablePCB	typeref:typename:void
+setIndex	src/TablePCB.cpp	/^void TablePCB::setIndex(std::string tableName, INDEX fileIndex) {$/;"	f	class:TablePCB	typeref:typename:void
+setOpenBuff	src/file.cpp	/^void _file::setOpenBuff(MODE mode) {$/;"	f	class:_file	typeref:typename:void
+setReadSeek	src/file.cpp	/^void _file::setReadSeek(POINTER fileIndex) {$/;"	f	class:_file	typeref:typename:void
+setWriteSeek	src/file.cpp	/^void _file::setWriteSeek(POINTER fileIndex) {$/;"	f	class:_file	typeref:typename:void
+shell	src/shell.cpp	/^shell::shell() : User(), commandCount(0), need(true) {$/;"	f	class:shell
+shell	src/shell.h	/^class shell : public User {$/;"	c
+shelll.o	src/makefile	/^shelll.o: shell.cpp$/;"	t
+shellw.o	src/makefile	/^shellw.o: shell.cpp$/;"	t
+shell语言解释器	README.md	/^# shell语言解释器$/;"	c
+stringToInt	src/super.cpp	/^int _super::stringToInt(std::string& str) {$/;"	f	class:_super	typeref:typename:int
+stringToVector	src/super.cpp	/^void _super::stringToVector(const std::string& _str, revstring vec) {$/;"	f	class:_super	typeref:typename:void
+style	src/Table.h	/^type style;$/;"	m	class:Table	typeref:typename:type
+style	src/dir.h	/^  type style;$/;"	m	class:_dir	typeref:typename:type
+style	src/file.h	/^  type style;$/;"	m	class:_file	typeref:typename:type
+superl.o	src/makefile	/^superl.o: super.cpp$/;"	t
+superw.o	src/makefile	/^superw.o: super.cpp$/;"	t
+tablePCB的内容	README.md	/^## tablePCB的内容$/;"	s	chapter:TMDSQL_1.3(ing)
+toChoose	src/shell.cpp	/^void shell::toChoose() {$/;"	f	class:shell	typeref:typename:void
+toChooseDatabase	src/shell.cpp	/^void shell::toChooseDatabase() {$/;"	f	class:shell	typeref:typename:void
+toChooseDatabaseTable	src/shell.cpp	/^void shell::toChooseDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toChooseTable	src/shell.cpp	/^void shell::toChooseTable() {$/;"	f	class:shell	typeref:typename:void
+toCreate	src/shell.cpp	/^void shell::toCreate() {$/;"	f	class:shell	typeref:typename:void
+toCreateDatabase	src/shell.cpp	/^void shell::toCreateDatabase() {$/;"	f	class:shell	typeref:typename:void
+toCreateDatabaseTable	src/shell.cpp	/^void shell::toCreateDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toCreateTable	src/shell.cpp	/^void shell::toCreateTable() {$/;"	f	class:shell	typeref:typename:void
+toDelete	src/shell.cpp	/^void shell::toDelete() {$/;"	f	class:shell	typeref:typename:void
+toDeleteDatabase	src/shell.cpp	/^void shell::toDeleteDatabase() {$/;"	f	class:shell	typeref:typename:void
+toDeleteDatabaseTable	src/shell.cpp	/^void shell::toDeleteDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toDeleteManager	src/shell.cpp	/^void shell::toDeleteManager() {$/;"	f	class:shell	typeref:typename:void
+toDeleteTable	src/shell.cpp	/^void shell::toDeleteTable() {$/;"	f	class:shell	typeref:typename:void
+toDeleteUser	src/shell.cpp	/^void shell::toDeleteUser() {$/;"	f	class:shell	typeref:typename:void
+toExecute	src/shell.cpp	/^void shell::toExecute() {$/;"	f	class:shell	typeref:typename:void
+toFind	src/shell.cpp	/^void shell::toFind() {$/;"	f	class:shell	typeref:typename:void
+toFindDatabaseTable	src/shell.cpp	/^void shell::toFindDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toFindDefalutTable	src/shell.cpp	/^void shell::toFindDefalutTable() {$/;"	f	class:shell	typeref:typename:void
+toFindTable	src/shell.cpp	/^void shell::toFindTable() {$/;"	f	class:shell	typeref:typename:void
+toInsert	src/shell.cpp	/^void shell::toInsert() {$/;"	f	class:shell	typeref:typename:void
+toInsertDatabaseTable	src/shell.cpp	/^void shell::toInsertDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toInsertDefaultTable	src/shell.cpp	/^void shell::toInsertDefaultTable() {  \/\/ 当选择到表的时候，说明数据库+表都存在$/;"	f	class:shell	typeref:typename:void
+toInsertTable	src/shell.cpp	/^void shell::toInsertTable() {$/;"	f	class:shell	typeref:typename:void
+toSet	src/shell.cpp	/^void shell::toSet() {$/;"	f	class:shell	typeref:typename:void
+toSetIndex	src/shell.cpp	/^void shell::toSetIndex() {$/;"	f	class:shell	typeref:typename:void
+toSetIndexDatabaseTable	src/shell.cpp	/^void shell::toSetIndexDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toSetIndexDefault	src/shell.cpp	/^void shell::toSetIndexDefault() {$/;"	f	class:shell	typeref:typename:void
+toSetIndexTable	src/shell.cpp	/^void shell::toSetIndexTable() {$/;"	f	class:shell	typeref:typename:void
+toSetView	src/shell.cpp	/^void shell::toSetView() {$/;"	f	class:shell	typeref:typename:void
+toSetViewDatabaseTable	src/shell.cpp	/^void shell::toSetViewDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toSetViewDefault	src/shell.cpp	/^void shell::toSetViewDefault() {$/;"	f	class:shell	typeref:typename:void
+toSetViewTable	src/shell.cpp	/^void shell::toSetViewTable() {$/;"	f	class:shell	typeref:typename:void
+toShow	src/shell.cpp	/^void shell::toShow() {$/;"	f	class:shell	typeref:typename:void
+toShowDatabase	src/shell.cpp	/^void shell::toShowDatabase() {$/;"	f	class:shell	typeref:typename:void
+toShowDatabaseTable	src/shell.cpp	/^void shell::toShowDatabaseTable() {$/;"	f	class:shell	typeref:typename:void
+toShowTable	src/shell.cpp	/^void shell::toShowTable() {$/;"	f	class:shell	typeref:typename:void
+truePath	src/dir.h	/^  std::string truePath;$/;"	m	class:_dir	typeref:typename:std::string
+truePath	src/file.h	/^  std::string truePath;$/;"	m	class:_file	typeref:typename:std::string
+type	src/super.h	/^enum type {$/;"	g
+type_mode	src/super.h	/^enum type_mode {$/;"	g
+update	src/Index.cpp	/^void Index::update(std::string name) {$/;"	f	class:Index	typeref:typename:void
+updateIndex	src/Table.cpp	/^void Table::updateIndex() {}$/;"	f	class:Table	typeref:typename:void
+vCID	src/super.h	/^typedef std::vector<TYPE_CID> vCID;$/;"	t	typeref:typename:std::vector<TYPE_CID>
+viewl.o	src/makefile	/^viewl.o: view.cpp$/;"	t
+vieww.o	src/makefile	/^vieww.o: view.cpp$/;"	t
+vint	src/super.h	/^typedef std::vector<int> vint;$/;"	t	typeref:typename:std::vector<int>
+vstring	src/super.h	/^typedef std::vector<std::string> vstring;$/;"	t	typeref:typename:std::vector<std::string>
+windows下执行缺少动态库libxxx.dll	README.md	/^### windows下执行缺少动态库libxxx.dll$/;"	S	section:shell语言解释器""BUG记录
+write	src/file.cpp	/^bool _file::write(const vstring array, type_mode mode) {$/;"	f	class:_file	typeref:typename:bool
+write	src/file.cpp	/^bool _file::write(std::string Name,$/;"	f	class:_file	typeref:typename:bool
+write	src/file.cpp	/^bool _file::write(std::string str, type_mode mode) {$/;"	f	class:_file	typeref:typename:bool
+writeData	src/TablePCB.cpp	/^void TablePCB::writeData() {$/;"	f	class:TablePCB	typeref:typename:void
+writeFileBuff	src/file.h	/^  std::ofstream writeFileBuff;$/;"	m	class:_file	typeref:typename:std::ofstream
+xlink	ohter/svg/dataTree.svg	/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" versi/;"	n	uri:http://www.w3.org/1999/xlink
+~DataBase	src/DataBase.cpp	/^DataBase::~DataBase() {$/;"	f	class:DataBase
+~Index	src/Index.cpp	/^Index::~Index() {}$/;"	f	class:Index
+~Lock	src/Lock.cpp	/^Lock::~Lock(){}$/;"	f	class:Lock
+~Log	src/Log.cpp	/^Log::~Log() {}$/;"	f	class:Log
+~Table	src/Table.cpp	/^Table::~Table() {$/;"	f	class:Table
+~TablePCB	src/TablePCB.cpp	/^TablePCB::~TablePCB() {$/;"	f	class:TablePCB
+~User	src/User.cpp	/^User::~User() {$/;"	f	class:User
+~_file	src/file.cpp	/^_file::~_file() {$/;"	f	class:_file
+~_super	src/super.cpp	/^_super::~_super() {}$/;"	f	class:_super
+~menuOutput	src/menuOutput.cpp	/^menuOutput::~menuOutput() {}$/;"	f	class:menuOutput
+~shell	src/shell.cpp	/^shell::~shell() {}$/;"	f	class:shell
+不同操作系统下使用不同的命令	README.md	/^### 不同操作系统下使用不同的命令$/;"	S	section:shell语言解释器""BUG记录
+单例模式	C++扩展.md	/^# 单例模式$/;"	c
+多线程	C++扩展.md	/^# 多线程$/;"	c
+实现功能简要概述	README.md	/^## 实现功能简要概述$/;"	s	chapter:TMDSQL_1.3(ing)
+支持语句	README.md	/^## 支持语句$/;"	s	chapter:shell语言解释器
+日志系统	README.md	/^## 日志系统$/;"	s	chapter:shell语言解释器
+普通用户	README.md	/^### 普通用户$/;"	S	section:shell语言解释器""用户提示符
+未登录	README.md	/^### 未登录$/;"	S	section:shell语言解释器""用户提示符
+死锁	C++扩展.md	/^## 死锁$/;"	s	chapter:多线程
+版本更替	README.md	/^## 版本更替$/;"	s	chapter:TMDSQL_1.3(ing)
+用户提示符	README.md	/^## 用户提示符$/;"	s	chapter:shell语言解释器
+用户权限管理	README.md	/^## 用户权限管理$/;"	s	chapter:shell语言解释器
+管理员	README.md	/^### 管理员$/;"	S	section:shell语言解释器""用户提示符
+线程池	C++扩展.md	/^# 线程池$/;"	c
+编码	README.md	/^### 编码$/;"	S	section:TMDSQL_1.3(ing)""运行须知
+编译方式	C++扩展.md	/^## 编译方式$/;"	s	chapter:多线程
+视图层(正在实现)	README.md	/^## 视图层(正在实现)$/;"	s	chapter:shell语言解释器
+设计方式之懒汉模式--需要时构建	C++扩展.md	/^## 设计方式之懒汉模式--需要时构建$/;"	s	chapter:单例模式
+设计方式之饥汉模式--直接构建	C++扩展.md	/^## 设计方式之饥汉模式--直接构建$/;"	s	chapter:单例模式
+超级管理员	README.md	/^### 超级管理员$/;"	S	section:shell语言解释器""用户提示符
+运行须知	README.md	/^## 运行须知$/;"	s	chapter:TMDSQL_1.3(ing)
+避免死锁	C++扩展.md	/^### 避免死锁$/;"	S	section:多线程""死锁

@@ -8,6 +8,8 @@
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
+#include <sys/stat.h>
+#include <sys/types.h>
 #endif
 #include <iostream>
 bool _super::createDir(std::string path) {
@@ -15,8 +17,11 @@ bool _super::createDir(std::string path) {
   return mkdir(path.c_str());
 #endif
 #ifdef __linux__
-  return mkdir(path.c_str(), 777);
+		mode_t mode = umask(0);
+    mkdir(path.c_str(), 0777);
+		umask(mode);
 #endif
+		return (_super::isExist(path))?true:false;
 }
 bool _super::create() {
   return true;
