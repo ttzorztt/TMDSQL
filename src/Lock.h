@@ -22,7 +22,7 @@ class Lock {
 				/**
 				 * @brief 加pd锁
 				 */
-				void static addPd();
+				bool static addPd();
 				/**
 				 * @brief 解pd锁
 				 */

@@ -48,6 +48,7 @@ typedef int INDEX;
 #define _PathForLog "./data/Log/"
 #define _SQLPath "./data/SQL/"
 #define _ViewPath "./data/view/"
+#define _TruePathForUserData "/data/User/pd"
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员

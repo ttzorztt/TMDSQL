@@ -117,7 +117,9 @@ int main1(int argc, char const* argv[]) {
 }
 
 int main(int argc, char const* argv[]) {
-  init();
+  Lock::addLog();
+	return 0;
+	init();
   shell x;
   string tmp = "登录 @root root";
   x.read(tmp);
