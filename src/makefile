@@ -1,10 +1,3 @@
-/**
-* @file makefile
-* @brief makefile文件
-* @author TMD
-* @version 1.3
-* @date 2023-02-09
-*/
 TMDSQL: superl.o mainl.o filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o Logl.o viewl.o Lockl.o
 	g++ -static mainl.o Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o viewl.o Lockl.o -o TMDSQL
 	./TMDSQL
