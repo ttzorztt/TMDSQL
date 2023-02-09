@@ -1,8 +1,9 @@
-/*
- * @Description  : 日志管理类的实现
- * @Autor        : TMD
- * @Date         : 2023-01-12 11:00:15
- * @LastEditTime : 2023-01-22 16:01:33
+/**
+ * @file Log.cpp
+ * @brief 日志管理的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2023-01-12
  */
 #ifndef _LOG_H_
 #define _LOG_H_

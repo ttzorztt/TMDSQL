@@ -1,8 +1,9 @@
-/*
- * @Description  : 菜单输出类
- * @Autor        : TMD
- * @Date         : 2022-12-22 08:16:13
- * @LastEditTime : 2023-01-25 21:49:00
+/**
+ * @file menuOutput.cpp
+ * @brief 菜单输出类
+ * @author TMD
+ * @version 1.3
+ * @date 2022-12-22
  */
 #ifndef _MENUOUTPUT_H_
 #define _MENUOUTPUT_H_

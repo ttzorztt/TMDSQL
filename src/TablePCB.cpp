@@ -1,8 +1,9 @@
-/*
- * @Description  : 表的PCB实现
- * @Autor        : TMD
- * @Date         : 2022-11-20 23:12:57
- * @LastEditTime : 2023-01-22 16:43:18
+/**
+ * @file TablePCB.cpp
+ * @brief 表PCB的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-20
  */
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_

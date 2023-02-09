@@ -1,8 +1,9 @@
-/*
- * @Description  : 用户数据操作类封装
- * @Auto         : TMD
- * @Date         : 2022-12-17 11:01:28
- * @LastEditTime : 2023-01-18 17:23:05
+/**
+ * @file User.cpp
+ * @brief 用户数据操作类封装
+ * @author TMD
+ * @version 1.3
+ * @date 2022-12-17
  */
 #ifndef _USER_H_
 #define _USER_H_
@@ -42,10 +43,13 @@ bool User::addLock(){
 		return true;
 	}
 }
-void User::removeLock(){
-if(!pdlock.isExist()){
-	return 
-}
+bool User::removeLock(){
+	if(!pdlock.isExist()){
+		return false;
+	}else{
+		pdlock.remove();
+		return true;
+	}
 }
 User::User()
 	: loginStatus(false),

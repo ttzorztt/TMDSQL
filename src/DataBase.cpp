@@ -1,8 +1,9 @@
-/*
- * @Description  : 实现DataBase类中的一些操作
- * @Autor        : TMD
- * @Date         : 2022-11-01 17:27:53
- * @LastEditTime : 2023-01-18 17:42:48
+/**
+ * @file DataBase.cpp
+ * @brief 实现DataBase类中的一些操作
+ * @author TMD
+ * @version 1.3
+ * @date 2023-11-01
  */
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
@@ -69,7 +70,7 @@ bool DataBase::insertTable(std::string tableName) {
   }
   return false;
 }
-bool DataBase::insertTable(std::string tableName, const revstring tableItem) {
+bool DataBase::insertTable(std::string tableName,revstring tableItem) {
   Table::append(returnName() + "/" + tableName, tableItem);
   SetOfTable.insert(tableName);
   return true;

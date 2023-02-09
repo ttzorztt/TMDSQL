@@ -1,8 +1,9 @@
-/*
- * @Description  : 表的PCB申明
- * @Autor        : TMD
- * @Date         : 2022-11-20 23:12:46
- * @LastEditTime : 2023-01-21 20:53:12
+/**
+ * @file TablePCB.h
+ * @brief 表PCB的声明
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-20
  */
 #ifndef _TABLEPCB_
 #define _TABLEPCB_
@@ -35,81 +36,85 @@ class TablePCB {
   int index;
   /**
    * @brief 从文件中读取
-   * @return
    */
   void readData();
   /**
    * @brief 写入文件
-   * @return
    */
   void writeData();
   /**
    * @brief 初始化
-   * @return
    */
   void init();
 
  public:
   /**
    * @brief 文件名
+	 *
    * @return  返回文件名
    */
   std::string returnName();
   /**
    * @brief 设置文件结束指针
+	 *
    * @param  POINTER fileIndex 文件指针值
    */
   void setEndLineIndex(POINTER fileIndex);
 
   /**
    * @brief 设置文件结束指针
+	 *
    * @param  Table table 表对象
    * @param  POINTER fileIndex 待设置的文件指针
-   * @return
    */
   void static setEndLineIndex(Table table, POINTER fileIndex);
   /**
    * @brief 设置索引
+	 *
    * @param  string tableName 表名
    * @param  INDEX fileIndex 索引
-   * @return
    */
   void static setIndex(std::string tableName, INDEX fileIndex);
   /**
    * @brief 设置索引
+	 *
    * @param  INDEX fileIndex 索引
-   * @return  
    */
   void setIndex(INDEX fileIndex);
   /**
    * @brief 文件结束指针
+	 *
    * @return 文件结束指针的值
    */
   INDEX returnEndLineIndex();
   /**
    * @brief 文件大小
+	 *
    * @return  文件大小的值
    */
   std::string returnFileSize();
   /**
    * @brief 返回索引
+	 *
    * @return  索引
    */
   INDEX returnIndex();
   /**
    * @brief 构造函数
+	 *
    * @param  string DBID 数据库名
    * @param  string TBID 表名
    */
   TablePCB(std::string DBID, std::string TBID);
   /**
    * @brief 构造函数
+	 *
    * @param  string DBIDAndTBID 数据库+表名
-   * @return
    */
   TablePCB(std::string DBIDAndTBID);
   /**
    * @brief 构造函数
+	 *
    * @param  Table& table 表对象
    */
   TablePCB(Table& table);
@@ -119,7 +124,6 @@ class TablePCB {
   ~TablePCB();
   /**
    * @brief 添加行数
-   * @return
    */
   void addLength();
 };

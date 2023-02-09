@@ -1,10 +1,10 @@
-/*
- * @Description  : 封装索引操作
- * @Autor        : TMD
- * @Date         : 2022-11-07 22:13:51
- * @LastEditTime : 2023-01-23 16:52:18
+/**
+ * @file Index.cpp
+ * @brief 封装索引操作
+ * @author TMD
+ * @version 1.3
+ * @date 2023-11-07
  */
-
 #ifndef _INDEX_H_
 #define _INDEX_H_
 #include "Index.h"

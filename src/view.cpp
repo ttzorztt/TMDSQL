@@ -1,8 +1,9 @@
-/*
- * @Description  : 视图层的实现
- * @Autor        : TMD
- * @Date         : 2023-01-18 17:00:47
- * @LastEditTime : 2023-01-23 17:22:59
+/**
+ * @file view.cpp
+ * @brief 视图层的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2023-01-18
  */
 #ifndef _VIEW_H_
 #define _VIEW_H_

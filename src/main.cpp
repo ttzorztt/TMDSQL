@@ -1,8 +1,9 @@
-/*
- * @Description  : 主函数的实现
- * @Autor        : TMD
- * @Date         : 2022-11-01 22:24:29
- * @LastEditTime : 2023-02-02 22:51:42
+/**
+ * @file main.cpp
+ * @brief 主函数的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-01
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -98,8 +99,10 @@ void init() {
 int main1(int argc, char const* argv[]) {
   // Table table("DB1/TTT", type::_TYPE_TABLE);
   // table.create();
+  
   init();
   shell x;
+  
   string tmp = "执行 @SQL";
   Log::open();
   while (1) {

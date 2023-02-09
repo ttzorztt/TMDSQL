@@ -1,12 +1,12 @@
-/*
- * @Description  : DataBase类中的一些声明
- * @Autor        : TMD
- * @Date         : 2022-11-01 17:33:23
- * @LastEditTime : 2023-01-18 17:43:00
+/**
+ * @file DataBase.h
+ * @brief DataBase类的一些声明
+ * @author TMD
+ * @version 1.3
+ * @date 2023-11-01
  */
 #ifndef _DATABSE_
 #define _DATABSE_
-
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
@@ -33,94 +33,112 @@ class DataBase : public _dir {
  public:
  /**
   * @brief 析构函数
-  * @return  
   */
  ~DataBase();
   /**
    * @brief  构造创建数据库对象
+	 *
    * @param string name 数据库路径
-   * @return
    */
   DataBase(std::string name);
   /**
    * @brief 拷贝构造函数
+	 *
    * @param  DataBase& copy
-   * @return
    */
   DataBase(DataBase& copy);
   /**
    * @brief 判断数据库是否存在
+	 *
    * @return True为存在，False为不存在
    */
   virtual bool isExist();
   /**
    * @brief 类型
+	 *
    * @return type 类型
    * 
   */
   virtual type returnType();
   /**
    * @brief 创建数据库(底层就是创建文件夹)
+	 *
    * @return 创建成功返回True，否则返回False
    */
   virtual bool create();
-  /**
-   * @return 返回表数量
-   */
+	/**
+	 * @brief 返回数量
+	 *
+	 * @Return 数量 
+	 */
   virtual int returnCount();
   /**
    * @brief 删除默认数据库
+	 *
    * @return  正常返回
    */
   virtual bool remove();
   /**
    * @brief 强制删除(非空集合)
-   * @return  
    */
   void forceremove();
   /**
    * @brief 删除数据库
+	 *
    * @param  string name 待删除的数据库名
+	 *
    * @return  正常删除则返回True,否则返回False
    */
   bool static remove(std::string name);
   /**
    * @brief 创建数据库
+	 *
    * @param  string name 数据库名
+	 *
    * @return 创建正常则返回True,否则返回False
    */
   bool static create(std::string name);
     /**
    * @brief 判断指定数据库是否存在
+	 *
    * @param  string DataBaseName 数据库名字
+	 *
    * @return True为存在，False为不存在
    */
   bool static isExist(std::string DataBaseName);
   /**
    * @brief 向数据库内插入表
+	 *
    * @param string tableName 表名字
    * @param revstring tableItem 表项
+	 *
    * @return 插入正常则返回True,否则返回False
    */
   bool insertTable(std::string tableName,
-                   const revstring tableItem);
+                  revstring tableItem);
   /**
    * @brief 向数据库内插入表
+	 *
    * @param string tableName 表名字
+	 *
    * @return 插入正常则返回True,否则返回False
    */
   bool insertTable(std::string tableName);
   /**
    * @brief 删除数据库中tableName表项
+	 *
    * @param string tableName 表名
+	 *
    * @return 删除正常则返回True，否则返回False
    */
   bool removeTable(std::string tableName);
   
   /**
    * @brief 判断数据库中有没有表
+	 *
    * @param  string DataBaseName 数据库名
    * @param  string tableName 表名
+	 *
    * @return  存在返回true，不存在返回false
    */
   bool static isExistsTable(std::string DataBaseName,std::string tableName);

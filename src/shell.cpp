@@ -1,8 +1,9 @@
-/*
- * @Description  : TMDSQL语句的设计与实现
- * @Autor        : TMD
- * @Date         : 2022-11-01 20:51:20
- * @LastEditTime : 2023-01-25 21:46:22
+/**
+ * @file shell.cpp
+ * @brief TMDSQL语句的设计与实现
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-01
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_

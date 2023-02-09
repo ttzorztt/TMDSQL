@@ -1,8 +1,9 @@
-/*
- * @Description  : 文件操作类_file的实现
- * @Autor        : TMD
- * @Date         : 2022-11-01 17:07:21
- * @LastEditTime : 2023-01-22 16:20:34
+/**
+ * @file file.cpp
+ * @brief 文件操作类的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2023-11-01
  */
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -11,6 +12,10 @@
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
+#endif
+#ifndef _LOCK_H_
+#define _LOCK_H_
+#include "Lock.h"
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
@@ -43,7 +48,8 @@ _file::~_file() {
   --_file::count;
 }
 bool _file::deleteLine(std::string index) {
-  std::string oldTruePath = this->truePath;
+	
+	std::string oldTruePath = this->truePath;
   bool command = false;
   vstring vectorbuff;
   _file tmp(oldTruePath + "tmp");

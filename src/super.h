@@ -1,8 +1,9 @@
-/*
- * @Description  : 维护一些公共静态函数和变量
- * @Autor        : TMD
- * @Date         : 2022-11-07 10:28:08
- * @LastEditTime : 2023-01-22 16:04:20
+/**
+ * @file super.h
+ * @brief 维护一些公共静态函数和变量
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-07
  */
 #ifndef _SUPER_
 #define _SUPER_
@@ -156,11 +157,8 @@ static std::unordered_set<char> checkErrorName{
  */
 class _super {
  protected:
-  /**
-   * 名字
-   * 如果是表则需要加数据库名
-   * 根据名字中是否有 '/'判断是数据库名或表名
-   */
+  
+  //名字如果是表则需要加数据库名根据名字中是否有 '/'判断是数据库名或表名
   std::string name;
 
  public:
@@ -170,31 +168,35 @@ class _super {
   virtual bool isExist();
   /**
    * @brief 不同操作系统下创建文件夹
+	 *
    * @param  string path 路径
-   * @return
+	 *
+   * @return 创建成功返回True，否则返回false
    */
   bool static createDir(std::string path);
   /**
    * @brief 返回类型
+	 *
    * @return 返回类型
    */
   type returnType();
   /**
    * @brief 返回名字
+	 *
    * @return 返回名字
    */
   std::string returnName();
   /**
    * @brief 拷贝构造函数
+	 *
    * @param  super& copy 拷贝值
    * @param type style 类型 {file:表,dir:数据库,index:索引,lock:锁}
-   * @return
    */
   _super(_super& copy);
   /**
    * @brief 构造函数
+	 *
    * @param  string name 名字
-   * @return
    */
   _super(std::string name);
   /**
@@ -204,14 +206,15 @@ class _super {
 
   /**
    * @brief 用空格或逗号分割开的 string 转换为 vector，
+	 *
    * @param  string str 字符串
    * @param  revstring vec 数组
-   * @return
    */
   void static stringToVector(const std::string& str, revstring vec);
 
   /**
    * @brief <static> 以App的方式写入字符串
+	 *
    * @param string name 路径+名字
    * @param string& str 写入的字符串
    * @return True写入正确,False 写入失败
@@ -219,33 +222,42 @@ class _super {
   bool static writeFile(std::string Name, const std::string& str);
   /**
    * @brief 分离数据库名和表名
+	 *
    * @param  string TableName 待分离的表名
    * @return vstring[0] 是数据库名，vstring[1]是表名
    */
   vstring static dispartDatabaseNameAndTableName(std::string TableName);
   /**
    * @brief <static> 判断指定文件或目录是否存在
+	 *
    * @param string Name 路径
    * @param type style 类型
+	 *
    * @return 若存在则返回True，否则返回False;
    */
   bool static isExist(std::string Name, type style);
   /**
    * @brief <static> 判断是否存在
+	 *
    * @param string truePath 真实路径
+	 *
    * @return 若存在则返回True，否则返回False
    */
   bool static isExist(std::string truePath);
   /**
    * @brief <static> 返回真实路径
+	 *
    * @param string name 名称
    * @param  type style 类型
+	 *
    * @return  底层路径
    */
   std::string static returnTruePath(std::string name, type style);
   /**
    * @brief 判断是否为数字
+	 *
    * @param  string& str 待检测字符串
+	 *
    * @return  返回真伪
    */
   int static stringToInt(std::string& str);

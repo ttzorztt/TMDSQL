@@ -1,8 +1,9 @@
-/*
- * @Description  : 视图层的实现
- * @Autor        : TMD
- * @Date         : 2023-01-18 17:00:33
- * @LastEditTime : 2023-01-23 17:22:12
+/**
+ * @file view.h
+ * @brief 视图层的实现
+ * @author TMD
+ * @version 1.3
+ * @date 2023-02-09
  */
 #ifndef _VIEW_
 #define _VIEW
@@ -30,8 +31,10 @@ class View {
  private:
   /**
    * @brief 辅助辅助返回视图
+	 *
    * @param  string& UserName 用户名
    * @param  _file& file 视图文件
+	 *
    * @return  用户视图
    */
   std::set<int> static returnAllowColumn(std::string& UserName, _file& file);
@@ -42,6 +45,7 @@ class View {
   ~View();
   /**
    * @brief 设置视图
+	 *
    * @param  string UserName 操作对象
    * @param  vector<std::string> allowColumn 允许的列
    * @param  string DBID 数据库名
@@ -53,9 +57,11 @@ class View {
                                  std::string TBID);
   /**
    * @brief  返回用户的视图
+	 *
    * @param  string UserName 用户名
    * @param  string DBID 数据库名
    * @param  string TBID 表名
+	 *
    * @return 用户的视图(Set)
    */
   std::set<int> static returnAllowColumn(std::string UserName,
@@ -63,8 +69,10 @@ class View {
                                          std::string TBID);
   /**
    * @brief 返回用户的视图
+	 *
    * @param  string UserName 用户名
    * @param  string DatabaseAndTableName 数据库名 + "/" + 表名
+	 *
    * @return 用户的视图(Set)
    */
   std::set<int> static returnAllowColumn(std::string UserName,

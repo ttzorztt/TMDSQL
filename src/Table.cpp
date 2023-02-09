@@ -1,8 +1,9 @@
-/*
- * @Description  : 封装表操作
- * @Autor        : TMD
- * @Date         : 2022-11-06 16:11:53
- * @LastEditTime : 2023-01-22 21:11:35
+/**
+ * @file Table.cpp
+ * @brief 封装表操作
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-06
  */
 #ifndef _TABLE_H_
 #define _TABLE_H_

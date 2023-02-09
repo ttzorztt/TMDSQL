@@ -1,20 +1,35 @@
-/*
- * @Description  : 维护一些公共静态函数和变量
- * @Autor        : TMD
- * @Date         : 2022-11-07 10:28:19
- * @LastEditTime : 2023-01-18 17:39:54
+/**
+ * @file super.cpp
+ * @brief 维护一些静态函数和变量
+ * @author TMD
+ * @version 1.3
+ * @date 2022-11-07
  */
-
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
+#endif
+#ifndef _SYS_STAT_
+#define  _SYS_STAT_
 #include <sys/stat.h>
+#endif
+#ifndef _SYS_TYPES_
+#define _SYS_TYPES_
 #include <sys/types.h>
 #endif
+#ifndef _LOCK_H_
+#define _LOCK_H_
+#include "Lock.h"
+#endif
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
 #include <iostream>
+#endif
 bool _super::createDir(std::string path) {
+	Lock::addLock(path + "_tmp");
 #ifdef __WIN32__
-  return mkdir(path.c_str());
+  bool ret = mkdir(path.c_str());
+	
 #endif
 #ifdef __linux__
 		mode_t mode = umask(0);
