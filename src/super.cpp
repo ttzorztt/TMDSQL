@@ -26,16 +26,16 @@
 #include <iostream>
 #endif
 bool _super::createDir(std::string path) {
-	Lock::addLock(path + "_tmp");
+	Lock::addLock(path);
 #ifdef __WIN32__
-	bool ret = mkdir(path.c_str());
-
+ mkdir(path.c_str());
 #endif
 #ifdef __linux__
 	mode_t mode = umask(0);
 	mkdir(path.c_str(), 0777);
 	umask(mode);
 #endif
+	Lock::removeLock(path);
 	return (_super::isExist(path))?true:false;
 }
 bool _super::create() {

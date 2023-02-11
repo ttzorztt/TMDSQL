@@ -19,71 +19,179 @@ class Lock {
 	private:
 	public:
 		/**
-		 * @brief 加日志锁
-		 */
-		bool static addLog();
-		/**
-		 * @brief 解日志锁
-		 */
-		void static removeLog();
-		/**
-		 * @brief 加pd锁
-		 */
-		bool static addPd();
-		/**
-		 * @brief 解pd锁
-		 */
-		void static removePd();
-		/**
-		 * @brief 添加用户锁
+		 * @brief add Log lock
 		 *
-		 * @Param UserName 用户名
+		 * @return is or not access
 		 */
-		void static addUser(std::string UserName);
+		bool static addLogLock();
 		/**
-		 * @brief 移除用户锁
-		 *
-		 * @Param UserName
+		 * @brief remove log lock
 		 */
-		void static removeUser(std::string UserName);
+		void static removeLogLock();
 		/**
-		 * @brief 表锁
+		 * @brief add pd Read lock
 		 *
-		 * @Param truePath 绝对路径
+		 * @return is or not access
 		 */
-		void static addLock(std::string truePath);
+		bool static addReadPdLock();
 		/**
-		 * @brief 表锁
+		 * @brief add pd write lock
 		 *
-		 * @Param table 表对象
+		 * @Return is or not access
 		 */
-		void static addLock(Table& table);
+		bool static addWritePdLock();
 		/**
-		 * @brief 表锁
-		 *
-		 * @Param DBID 数据库名
-		 * @Param TBID 表名
+		 * @brief remove pd read lock
 		 */
-		void static addLock(std::string DBID, std::string TBID);
+		void static removeReadPdLock();
 		/**
-		 * @brief 解除表锁
-		 *
-		 * @Param table 表对象
+		 * @brief remove pd write lock
 		 */
-		void static removeLock(Table& table);
+		void static removeWritePdLock();
 		/**
-		 * @brief 解除表锁
+		 * @brief add User Read lock
 		 *
-		 * @Param DBID 数据库名
-		 * @Param TBID 表名
+		 * @Param UserName User name 
+		 *
+		 * @return is or not access
 		 */
-		void static removeLock(std::string DBID, std::string TBID);
+		bool static addReadUser(std::string UserName);
 		/**
-		 * @brief 解除表锁
+		 * @brief add User Write lock
 		 *
-		 * @Param truePath 真实路径
+		 * @Param UserName User name
+		 *
+		 * @Return is or not access
 		 */
-		void static removeLock(std::string truePath);
+		bool static addWriteUserLock(std::string UserName);
+		/**
+		 * @brief remove User Read lock
+		 *
+		 * @Param UserName User name
+		 */
+		void static removeReadUser(std::string UserName);
+		/**
+		 * @brief remove User write Lock
+		 *
+		 * @Param UserName User name
+		 */
+		void static removeWriteLock(std::string UserName);
+		/**
+		 * @brief add read lock
+		 *
+		 * @param truePath the full path
+		 *
+		 * @return is or not access
+		 */
+		bool static addReadLock(std::string truePath);
+		/**
+		 * @brief add write lock
+		 *
+		 * @Param truePath the full path
+		 *
+		 * @Return is or not accesss
+		 */
+		bool static addWriteLock(std::string truePath);
+		/**
+		 * @brief add Read lock
+		 *
+		 * @Param table the table who need add lock
+		 *
+		 * @return is or not access
+		 */
+		bool static addReadLock(Table& table);
+		/**
+		 * @brief add Write lock
+		 *
+		 * @Param table the table who need add lock
+		 *
+		 * @Return is or not access
+		 */
+		bool static addWriteLock(Table& table);
+		/**
+		 * @brief add Read lock
+		 *
+		 * @Param file the file who need add lock
+		 *
+		 * @return is or not access
+		 */
+		bool static addReadLock(_file& file);
+		/**
+		 * @brief add Wirte lock
+		 *
+		 * @Param file the table who need add lock
+		 *
+		 * @Return is or not access
+		 */
+		bool static addWriteLock(_file& file);
+		/**
+		 * @brief remove Read lock
+		 *
+		 * @Param file the file who need remove read lock
+		 */
+		void static removeReadLock(_file& file);
+		/**
+		 * @brief remove Wriete lock
+		 *
+		 * @Param file the file who need remove write lock
+		 */
+		void static removeWriteLock(_file& file);
+		/**
+		 * @brief add Read Lock
+		 *
+		 * @Param DBID Database name
+		 * @Param TBID Table name
+		 *
+		 * @return is or not access
+		 */
+		bool static addReadLock(std::string DBID, std::string TBID);
+		/**
+		 * @brief add Write Lock
+		 *
+		 * @Param DBID Database name
+		 * @Param TBID Table name
+		 *
+		 * @Return is or not access
+		 */
+		bool static addWriteLock(std::string DBID,std::string TBID);
+		/**
+		 * @brief remove Read Lock
+		 *
+		 * @Param table The Table object who need rmove read lock
+		 */
+		void static removeReadLock(Table& table);
+		/**
+		 * @brief remove write lock
+		 *
+		 * @Param table The Table object who need remove write lock
+		 */
+		void static removeWriteLock(Table& table);
+		/**
+		 * @brief remove Read Lock
+		 *
+		 * @Param DBID Database Name
+		 * @Param TBID Table name
+		 */
+		void static removeReadLock(std::string DBID, std::string TBID);
+		/**
+		 * @brief remove Write Lock
+		 *
+		 * @Param DBID Database name
+		 * @Param TBID Table name
+		 */
+		void static removeWriteLock(std::string DBID,std::string TBID);
+		/**
+		 * @brief remove Read Lock
+		 *
+		 * @Param truePath the full path
+		 */
+		void static removeReadLock(std::string truePath);
+		/**
+		 * @brief remove write lock
+		 *
+		 * @Param truePath the full path
+		 */
+		void static removerWriteLock(std::string truePath);
 		Lock();
 		~Lock();
 		Lock(const Lock& copy) = delete;
