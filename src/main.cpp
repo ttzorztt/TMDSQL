@@ -68,97 +68,97 @@ using namespace std;
  * @return
  */
 void init() {
-  if (access("./data", F_OK)) {
-    _super::createDir("./data");
-  }
-  if (access("./data/database", F_OK)) {
-    _super::createDir("./data/database");
-  }
-  if (access("./data/index", F_OK)) {
-    _super::createDir("./data/index");
-  }
-  if (access("./data/PCB", F_OK)) {
-    _super::createDir("./data/PCB");
-  }
-  if (access("./data/view", F_OK)) {
-    _super::createDir("./data/view");
-  }
-  if (access("./data/SQL", F_OK)) {
-    _super::createDir("./data/SQL");
-  }
-  if (access("./data/User", F_OK)) {
-    _super::createDir("./data/User");
-    _file table("./data/User/pd");
-    table.create();
-    table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
-  }
-  if (access("./data/Log", F_OK)) {
-    _super::createDir("./data/Log");
-  }
+	if (access("./data", F_OK)) {
+		_super::createDir("./data");
+	}
+	if (access("./data/database", F_OK)) {
+		_super::createDir("./data/database");
+	}
+	if (access("./data/index", F_OK)) {
+		_super::createDir("./data/index");
+	}
+	if (access("./data/PCB", F_OK)) {
+		_super::createDir("./data/PCB");
+	}
+	if (access("./data/view", F_OK)) {
+		_super::createDir("./data/view");
+	}
+	if (access("./data/SQL", F_OK)) {
+		_super::createDir("./data/SQL");
+	}
+	if (access("./data/User", F_OK)) {
+		_super::createDir("./data/User");
+		_file table("./data/User/pd");
+		table.create();
+		table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
+	}
+	if (access("./data/Log", F_OK)) {
+		_super::createDir("./data/Log");
+	}
 }
 int main1(int argc, char const* argv[]) {
-  // Table table("DB1/TTT", type::_TYPE_TABLE);
-  // table.create();
-  
-  init();
-  shell x;
-  
-  string tmp = "执行 @SQL";
-  Log::open();
-  while (1) {
-    getline(cin, tmp);
-    if (tmp == "") {
-      menuOutput::printPower(x.ReturnPower());
-      continue;
-    }
-    if (!x.read(tmp)) {
-      break;
-    }
-  }
-  Log::close();
-  return 0;
+	// Table table("DB1/TTT", type::_TYPE_TABLE);
+	// table.create();
+
+	init();
+	shell x;
+
+	string tmp = "执行 @SQL";
+	Log::open();
+	while (1) {
+		getline(cin, tmp);
+		if (tmp == "") {
+			menuOutput::printPower(x.ReturnPower());
+			continue;
+		}
+		if (!x.read(tmp)) {
+			break;
+		}
+	}
+	Log::close();
+	return 0;
 }
 
 int main(int argc, char const* argv[]) {
-  Lock::addLog();
+	Lock::addLog();
 	return 0;
 	init();
-  shell x;
-  string tmp = "登录 @root root";
-  x.read(tmp);
+	shell x;
+	string tmp = "登录 @root root";
+	x.read(tmp);
 
-  tmp = "创建 数据库 @DB1";
-  x.read(tmp);
+	tmp = "创建 数据库 @DB1";
+	x.read(tmp);
 
-  tmp = "创建 数据库 表 @DB1 TB1";
-  x.read(tmp);
+	tmp = "创建 数据库 表 @DB1 TB1";
+	x.read(tmp);
 	Lock::addLock("DB1","TB1");
 	return 0;
 	tmp = "选择 数据库 @DB1";
-  x.read(tmp);
+	x.read(tmp);
 
-  tmp = "插入 表 @TB1 姓名 性别 年龄";
-  x.read(tmp);
+	tmp = "插入 表 @TB1 姓名 性别 年龄";
+	x.read(tmp);
 
-  tmp = "插入 表 @TB1 张三 男 11";
-  x.read(tmp);
+	tmp = "插入 表 @TB1 张三 男 11";
+	x.read(tmp);
 
-  tmp = "插入 表 @TB1 王五 男 10";
-  x.read(tmp);
-  tmp = "插入 表 @TB1 李四 女 100";
+	tmp = "插入 表 @TB1 王五 男 10";
+	x.read(tmp);
+	tmp = "插入 表 @TB1 李四 女 100";
 
-  x.read(tmp);
+	x.read(tmp);
 
-  tmp = "显示 表 @TB1 3";
+	tmp = "显示 表 @TB1 3";
 
-  x.read(tmp);
-  tmp = "设置 视图 表 @TB1 root 0 2";
+	x.read(tmp);
+	tmp = "设置 视图 表 @TB1 root 0 2";
 
-  x.read(tmp);
-  tmp = "显示 表 @TB1 3";
+	x.read(tmp);
+	tmp = "显示 表 @TB1 3";
 
-  x.read(tmp);
+	x.read(tmp);
 
-   
-  return 0;
+
+	return 0;
 }

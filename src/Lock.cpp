@@ -28,46 +28,46 @@
 Lock::Lock() {}
 Lock::~Lock() {}
 void Lock::addLock(Table& table) {
-  _file lock(table.returnTruePath() + "_tmp_");
-  if (!lock.isExist()) {
-    lock.create();
-  }
+	_file lock(table.returnTruePath() + "_tmp_");
+	if (!lock.isExist()) {
+		lock.create();
+	}
 }
 void Lock::addLock(std::string truePath) {
-  _file lock(truePath + "_tmp");
-  if (!lock.isExist()) {
-    lock.create();
-  }
+	_file lock(truePath + "_tmp");
+	if (!lock.isExist()) {
+		lock.create();
+	}
 }
 void Lock::addLock(std::string DBID, std::string TBID) {
-  _file lock(DBID + "/" + TBID + "_tmp", type::_TYPE_TABLE);
-  if (!lock.isExist()) {
-    lock.create();
-  }
+	_file lock(DBID + "/" + TBID + "_tmp", type::_TYPE_TABLE);
+	if (!lock.isExist()) {
+		lock.create();
+	}
 }
 
 void Lock::removeLock(std::string DBID, std::string TBID) {
-  _file lock(DBID + "/" + TBID + "_tmp", type::_TYPE_TABLE);
-  if (lock.isExist()) {
-    lock.remove();
-  }
+	_file lock(DBID + "/" + TBID + "_tmp", type::_TYPE_TABLE);
+	if (lock.isExist()) {
+		lock.remove();
+	}
 }
 
 void Lock::removeLock(std::string truePath) {
-  _file lock(truePath + "_tmp");
-  if (lock.isExist()) {
-    lock.remove();
-  }
+	_file lock(truePath + "_tmp");
+	if (lock.isExist()) {
+		lock.remove();
+	}
 }
 void Lock::removeLock(Table& table) {
-  _file lock(table.returnTruePath() + "_tmp");
-  if (lock.isExist()) {
-    lock.remove();
-  }
+	_file lock(table.returnTruePath() + "_tmp");
+	if (lock.isExist()) {
+		lock.remove();
+	}
 }
 bool Lock::addLog() {
-  return false;
+	return false;
 }
 bool Lock::addPd() {
-  return false;
+	return false;
 }
