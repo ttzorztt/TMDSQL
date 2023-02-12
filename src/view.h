@@ -6,7 +6,7 @@
  * @date 2023-02-09
  */
 #ifndef _VIEW_
-#define _VIEW
+#define _VIEW_
 #ifndef _SET_
 #define _SET_
 #include <set>
@@ -78,4 +78,4 @@ class View {
 		std::set<int> static returnAllowColumn(std::string UserName,
 				std::string DatabaseAndTableName);
 };
-
+#endif

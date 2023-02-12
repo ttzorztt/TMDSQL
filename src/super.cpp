@@ -17,16 +17,11 @@
 #define _SYS_TYPES_
 #include <sys/types.h>
 #endif
-#ifndef _LOCK_H_
-#define _LOCK_H_
-#include "Lock.h"
-#endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <iostream>
 #endif
 bool _super::createDir(std::string path) {
-	Lock::addLock(path);
 #ifdef __WIN32__
  mkdir(path.c_str());
 #endif
@@ -35,7 +30,6 @@ bool _super::createDir(std::string path) {
 	mkdir(path.c_str(), 0777);
 	umask(mode);
 #endif
-	Lock::removeLock(path);
 	return (_super::isExist(path))?true:false;
 }
 bool _super::create() {

@@ -18,11 +18,6 @@
 #define _FILE_H_
 #include "file.h"
 #endif
-#ifndef _LOCK_H_
-#define _LOCK_H_
-#include "Lock.h"
-#endif
-#include <iostream>
 // 记录由dir打开的文件
 int _dir::count = 0;
 _dir::_dir(_dir& copy) : _super(copy.returnName()) {
@@ -68,13 +63,12 @@ void _dir::openDirReturnFileName(vstring& ret) {
 	intptr_t handle;
 	_finddata_t findData;
 	handle = _findfirst(this->name.c_str(), &findData);  // 查找目录中的第一个文件
-	if (handle == -1) {
-		return;
-	}
-	do {
-		ret.push_back(findData.name);
-	} while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件
-	_findclose(handle);                           // 关闭搜索句柄
+	if (handle != -1) {
+		do {
+			ret.push_back(findData.name);
+		} while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件
+		_findclose(handle);
+	}// 关闭搜索句柄
 #endif
 }
 bool _dir::create() {

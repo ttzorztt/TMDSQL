@@ -57,10 +57,6 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
-#ifndef _LOCK_H_
-#define _LOCK_H_
-#include "Lock.h"
-#endif
 using namespace std;
 
 /**
@@ -120,7 +116,6 @@ int main1(int argc, char const* argv[]) {
 }
 
 int main(int argc, char const* argv[]) {
-	Lock::addLog();
 	return 0;
 	init();
 	shell x;
@@ -132,7 +127,6 @@ int main(int argc, char const* argv[]) {
 
 	tmp = "创建 数据库 表 @DB1 TB1";
 	x.read(tmp);
-	Lock::addLock("DB1","TB1");
 	return 0;
 	tmp = "选择 数据库 @DB1";
 	x.read(tmp);

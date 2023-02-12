@@ -13,10 +13,6 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
-#ifndef _LOCK_H_
-#define _LOCK_H_
-#include "Lock.h"
-#endif
 //当前打开的文件数总数
 int _file::count = 0;
 _file::_file(std::string Name, type style) : _super(Name) {

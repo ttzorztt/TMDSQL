@@ -130,33 +130,5 @@ class _dir : public _super {
 		int static count;
 		type style;
 		std::string truePath;
-		/**
-		 * @brief 加锁
-		 *
-		 * @Returns 返回true，否则返回false
-		 */
-		bool addLock();
-		/**
-		 * @brief 删锁
-		 *
-		 * @Returns 返回true，否则返回false
-		 */
-		bool removeLock();
-		/**
-		 * @brief 加锁
-		 *
-		 * @Param truePath 真实路径
-		 *
-		 * @Return 成功返回true，失败返回false
-		 */
-		bool static addLock(std::string truePath);
-		/**
-		 * @brief 删锁
-		 *
-		 * @Param truePath 真实路径
-		 *
-		 * @Return 成功返回true，失败返回false
-		 */
-		bool static removeLock(std::string truePath);
 };
 #endif
