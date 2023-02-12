@@ -7,11 +7,16 @@
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
+#include <cstdio>
 #include <iostream>
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
+#endif
+#ifndef _VECTOR_
+#define _VECTOR_
+#include <vector>
 #endif
 #ifndef _DIR_H_
 #define _DIR_H_
@@ -57,10 +62,25 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
+
+#ifdef __WIN32__
+#ifndef _CONIO_
+#define _CONIO_
+#include <conio.h>
+#endif
+#endif
+#ifdef __linux__
+#ifndef _TERMIO_
+#define _TERMIO_
+#include <termio.h>
+#endif
+#endif
+
+
 using namespace std;
 
 /**
- * @brief 准备工作，创建所需目录
+ * @brief init database,
  * @return
  */
 void init() {
@@ -92,67 +112,111 @@ void init() {
 		_super::createDir("./data/Log");
 	}
 }
-int main1(int argc, char const* argv[]) {
-	// Table table("DB1/TTT", type::_TYPE_TABLE);
-	// table.create();
-
-	init();
-	shell x;
-
-	string tmp = "执行 @SQL";
-	Log::open();
-	while (1) {
-		getline(cin, tmp);
-		if (tmp == "") {
-			menuOutput::printPower(x.ReturnPower());
-			continue;
-		}
-		if (!x.read(tmp)) {
-			break;
-		}
-	}
-	Log::close();
-	return 0;
-}
-
 int main(int argc, char const* argv[]) {
-	return 0;
 	init();
 	shell x;
-	string tmp = "登录 @root root";
-	x.read(tmp);
+	std::vector<char> vchar;
+	string tmp = "执行 @SQL";
+	int count = 0;
+	Log::open();
+	char ch;
+#ifdef __linux__
+	termios tms_old, tms_new;
+	tcgetattr(0, &tms_old);
+	tms_new = tms_old;
+	tms_new.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(0, TCSANOW, &tms_new);
+#endif
+	while (1) {
+#ifdef __WIN32__
+		while(1){
+			if(ch == '\n'){
+				menuOutput::printPower(x.ReturnPower());
+				break;
+			}
+			if(ch == '\b'){
 
-	tmp = "创建 数据库 @DB1";
-	x.read(tmp);
+			}
+		}
+#endif
+#ifdef __linux__
+		while(1){
+			unsigned char ch = getchar();
+			if(ch == '\n'){
+				menuOutput::printPower(x.ReturnPower());
+				break;
+			}
+			if(ch == '\b'){
+				int stap = 3;
+				while(vchar.size() && stap){
+				--stap;
+					vchar.pop_back();
+				}
+				continue;
+			}
+				vchar.push_back(ch);
+		}
+#endif
+			/* getline(cin, tmp); */
+			/* if (tmp == "") { */
+			/*	menuOutput::printPower(x.ReturnPower()); */
+			/*	continue; */
+			/* } */
+			/* if(tmp == "\b"){ */
+			/*	std::cout << "2" << std::endl; */
+			/* } */
 
-	tmp = "创建 数据库 表 @DB1 TB1";
-	x.read(tmp);
-	return 0;
-	tmp = "选择 数据库 @DB1";
-	x.read(tmp);
+			if (!x.read(tmp)) {
+				break;
+			}
+		}
+#ifdef __WIN32__
+#endif
+#ifdef __linux__
+		tcsetattr(0, TCSANOW, &tms_old);
+#endif
+		Log::close();
+		return 0;
+	}
 
-	tmp = "插入 表 @TB1 姓名 性别 年龄";
-	x.read(tmp);
+	int main1(int argc, char const* argv[]) {
+		return 0;
+		init();
+		shell x;
+		string tmp = "登录 @root root";
+		x.read(tmp);
 
-	tmp = "插入 表 @TB1 张三 男 11";
-	x.read(tmp);
+		tmp = "创建 数据库 @DB1";
+		x.read(tmp);
 
-	tmp = "插入 表 @TB1 王五 男 10";
-	x.read(tmp);
-	tmp = "插入 表 @TB1 李四 女 100";
+		tmp = "创建 数据库 表 @DB1 TB1";
+		x.read(tmp);
+		return 0;
+		tmp = "选择 数据库 @DB1";
+		x.read(tmp);
 
-	x.read(tmp);
+		tmp = "插入 表 @TB1 姓名 性别 年龄";
+		x.read(tmp);
 
-	tmp = "显示 表 @TB1 3";
+		tmp = "插入 表 @TB1 张三 男 11";
+		x.read(tmp);
 
-	x.read(tmp);
-	tmp = "设置 视图 表 @TB1 root 0 2";
+		tmp = "插入 表 @TB1 王五 男 10";
+		x.read(tmp);
+		tmp = "插入 表 @TB1 李四 女 100";
 
-	x.read(tmp);
-	tmp = "显示 表 @TB1 3";
+		x.read(tmp);
 
-	x.read(tmp);
+		tmp = "显示 表 @TB1 3";
+
+		x.read(tmp);
+		tmp = "设置 视图 表 @TB1 root 0 2";
+
+		x.read(tmp);
+		tmp = "显示 表 @TB1 3";
+
+		x.read(tmp);
 
 
-	return 0;
-}
+		return 0;
+	}
