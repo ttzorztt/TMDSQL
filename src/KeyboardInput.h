@@ -9,6 +9,18 @@
 #define _STRING_
 #include <string>
 #endif
+#ifdef __WIN32__
+#ifndef _CONIO_
+#define _CONIO_
+#include <conio.h>
+#endif
+#endif
+#ifdef __linux__
+#ifndef _TERMIO_
+#define _TERMIO_
+#include <termio.h>
+#endif
+#endif
 /**
  * @brief 键盘输入
  */
