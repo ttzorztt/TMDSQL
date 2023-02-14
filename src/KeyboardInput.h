@@ -26,6 +26,7 @@
  */
 class KeyboardInput{
 private:
+ 	termio tms_old,tms_new;
 public:
 KeyboardInput();
 ~KeyboardInput();
