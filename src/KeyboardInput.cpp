@@ -29,24 +29,13 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
-KeyboardInput::KeyboardInput(){
-#ifdef __linux__
-	tcgetattr(0, &tms_old);
-	tms_new = tms_old;
-	tms_new.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(0, TCSANOW, &tms_new);
-#endif
-
-}
-KeyboardInput::~KeyboardInput(){
-#ifdef __linux__
-	tcsetattr(0, TCSANOW, &tms_old);
-#endif
-}
+KeyboardInput::KeyboardInput(){}
+KeyboardInput::~KeyboardInput(){}
 std::string KeyboardInput::read(shell& sh){
 	std::string ret;
 	std::string tmp = "执行 @SQL";
 	int count = 2;
+	int strsize = 0;
 	unsigned char ch;
 	termios tms_old,tms_new;
 	tcgetattr(0, &tms_old);
@@ -54,30 +43,37 @@ std::string KeyboardInput::read(shell& sh){
 	tms_new.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, TCSANOW, &tms_new);
 #ifdef __linux__
+	std::cout << "\033[?25l" ; // 隐藏光标
 	while(1){
 		ch = getchar();
 		if(ch == '\n'){
+			std::cout << std::endl;
 			menuOutput::printPower(sh.ReturnPower());
 			break;
-		}else if(ch == 0x7F){
-			/* std::cout << "\b\b\b"; */
+		}else if(ch == 0x7F){ //输入backspace
+			if(ret[ret.size() - 1] >= 0x80){ // 说明是中文
+				ret.pop_back();
+				ret.pop_back();
+			}
+				ret.pop_back();
+				continue;
 		}else if(ch >= 0x80 && count){ //输入中文中的一部分，输出会乱码，跳过输出
 			ret += ch;
 			--count;
 			continue;
 		}
-		for(int a = 0; a < ret.size(); ++a){
-			std::cout << '\b' << ' ' <<'\b';
-		}
+	std::cout << "\r"; // 使得光标回到行首
+	std::cout << std::string(ret.size() + 16,' ');
+	std::cout << "\r"; // 使得光标回到行首
+	menuOutput::printPower(sh.ReturnPower());
 		ret += ch;
-		
 		if(count == 0){
 			count = 2;
 		}
 		std::cout << ret;
 	}
-	std::cout << "TMD" << std::endl;
 	tcsetattr(0, TCSANOW, &tms_old);
+	std::cout << "\033[?25h" << std::endl; //显示光标
 #endif
 	return ret;
 }
