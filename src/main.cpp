@@ -7,7 +7,6 @@
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
-#include <cstdio>
 #include <iostream>
 #endif
 #ifndef _FILE_H_
@@ -62,21 +61,10 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
-
-#ifdef __WIN32__
-#ifndef _CONIO_
-#define _CONIO_
-#include <conio.h>
+#ifndef _KEYBOARDINPUT_H_
+#define _KEYBOARDINPUT_H_
+#include "KeyboardInput.h"
 #endif
-#endif
-#ifdef __linux__
-#ifndef _TERMIO_
-#define _TERMIO_
-#include <termio.h>
-#endif
-#endif
-
-
 using namespace std;
 
 /**
@@ -115,18 +103,9 @@ void init() {
 int main(int argc, char const* argv[]) {
 	init();
 	shell x;
-	std::vector<char> vchar;
-	string tmp = "执行 @SQL";
-	int count = 0;
 	Log::open();
-	char ch;
-#ifdef __linux__
-	termios tms_old, tms_new;
-	tcgetattr(0, &tms_old);
-	tms_new = tms_old;
-	tms_new.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(0, TCSANOW, &tms_new);
-#endif
+	KeyboardInput::read(x);
+	return 0;
 	while (1) {
 #ifdef __WIN32__
 		while(1){
@@ -141,20 +120,6 @@ int main(int argc, char const* argv[]) {
 #endif
 #ifdef __linux__
 		while(1){
-			unsigned char ch = getchar();
-			if(ch == '\n'){
-				menuOutput::printPower(x.ReturnPower());
-				break;
-			}
-			if(ch == '\b'){
-				int stap = 3;
-				while(vchar.size() && stap){
-				--stap;
-					vchar.pop_back();
-				}
-				continue;
-			}
-				vchar.push_back(ch);
 		}
 #endif
 			/* getline(cin, tmp); */
@@ -166,15 +131,7 @@ int main(int argc, char const* argv[]) {
 			/*	std::cout << "2" << std::endl; */
 			/* } */
 
-			if (!x.read(tmp)) {
-				break;
-			}
 		}
-#ifdef __WIN32__
-#endif
-#ifdef __linux__
-		tcsetattr(0, TCSANOW, &tms_old);
-#endif
 		Log::close();
 		return 0;
 	}

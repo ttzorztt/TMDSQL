@@ -21,21 +21,27 @@
 #include <termio.h>
 #endif
 #endif
+#ifndef _SHELL_H_
+#define _SHELL_H_
+#include "shell.h"
+#endif
 /**
  * @brief 键盘输入
  */
 class KeyboardInput{
-private:
- 	termio tms_old,tms_new;
-public:
-KeyboardInput();
-~KeyboardInput();
-/**
- * @brief 读入入口
- *
- * @Return 按下'\n'后的全部字符
- */
-std::string static read();
+	private:
+		termios tms_old,tms_new;
+	public:
+		KeyboardInput();
+		~KeyboardInput();
+		/**
+		 * @brief 读入入口
+		 *
+		 * @param sh shell对象
+		 *
+		 * @Return 按下'\n'后的全部字符
+		 */
+		std::string static read(shell& sh);
 
-KeyboardInput(const KeyboardInput& copy) = delete;
+		KeyboardInput(const KeyboardInput& copy) = delete;
 };
