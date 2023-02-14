@@ -31,12 +31,16 @@
 #endif
 KeyboardInput::KeyboardInput(){}
 KeyboardInput::~KeyboardInput(){}
+/**
+ * @name 待处理,代码混乱
+ * @{ */
+/**  @} */
+
 std::string KeyboardInput::read(shell& sh){
 	std::string ret;
-	std::string tmp = "执行 @SQL";
 	int count = 2;
-	int strsize = 0;
-	unsigned char ch;
+	bool add = false;
+	char ch;
 	termios tms_old,tms_new;
 	tcgetattr(0, &tms_old);
 	tms_new = tms_old;
@@ -45,28 +49,38 @@ std::string KeyboardInput::read(shell& sh){
 #ifdef __linux__
 	std::cout << "\033[?25l" ; // 隐藏光标
 	while(1){
+		add = true;
 		ch = getchar();
-		if(ch == '\n'){
-			std::cout << std::endl;
-			menuOutput::printPower(sh.ReturnPower());
+		/* if(ch == 0x38){ // UP */
+		/* 	ret = sh.prevHistory(); */
+		/* 	add = false; */
+		/* }else if(ch == 0x40){ // DOWM */
+		/* 	ret = sh.nextHistory(); */
+		/* 	add = false; */
+		/* }else */ 
+			if(ch == '\n'){
 			break;
-		}else if(ch == 0x7F){ //输入backspace
-			if(ret[ret.size() - 1] >= 0x80){ // 说明是中文
+		}else if(ch == 0x7F && ret.size()){ //输入backspace
+			add = false;
+			if((unsigned int)ret[ret.size() - 1] >= 0x8000){ // 说明是中文
 				ret.pop_back();
+				ret.pop_back();
+				ret.pop_back();
+			}else{
 				ret.pop_back();
 			}
-				ret.pop_back();
-				continue;
-		}else if(ch >= 0x80 && count){ //输入中文中的一部分，输出会乱码，跳过输出
+		}else if((unsigned int)ch >= 0x8000 && count){ //输入中文中的一部分，输出会乱码，跳过输出
 			ret += ch;
 			--count;
 			continue;
 		}
-	std::cout << "\r"; // 使得光标回到行首
-	std::cout << std::string(ret.size() + 16,' ');
-	std::cout << "\r"; // 使得光标回到行首
-	menuOutput::printPower(sh.ReturnPower());
-		ret += ch;
+		std::cout << "\r"; // 使得光标回到行首
+		std::cout << std::string(ret.size() + 20,' ');
+		std::cout << "\r"; // 使得光标回到行首
+		menuOutput::printPower(sh.ReturnPower());
+		if(add){
+			ret += ch;
+		}
 		if(count == 0){
 			count = 2;
 		}
@@ -75,5 +89,6 @@ std::string KeyboardInput::read(shell& sh){
 	tcsetattr(0, TCSANOW, &tms_old);
 	std::cout << "\033[?25h" << std::endl; //显示光标
 #endif
+	sh.addHistory(ret);
 	return ret;
 }

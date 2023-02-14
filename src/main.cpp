@@ -104,76 +104,60 @@ int main(int argc, char const* argv[]) {
 	init();
 	shell x;
 	Log::open();
-	KeyboardInput::read(x);
-	return 0;
-	while (1) {
 #ifdef __WIN32__
-		while(1){
-			if(ch == '\n'){
-				menuOutput::printPower(x.ReturnPower());
-				break;
-			}
-			if(ch == '\b'){
+	while(1){
 
-			}
-		}
+	}
 #endif
 #ifdef __linux__
-		while(1){
+	while(1){
+		if(!x.read(KeyboardInput::read(x))){
+			break;
 		}
+	}
 #endif
-			/* getline(cin, tmp); */
-			/* if (tmp == "") { */
-			/*	menuOutput::printPower(x.ReturnPower()); */
-			/*	continue; */
-			/* } */
-			/* if(tmp == "\b"){ */
-			/*	std::cout << "2" << std::endl; */
-			/* } */
+	Log::close();
+	return 0;
+}
 
-		}
-		Log::close();
-		return 0;
-	}
+int main1(int argc, char const* argv[]) {
+	return 0;
+	init();
+	shell x;
+	string tmp = "登录 @root root";
+	x.read(tmp);
 
-	int main1(int argc, char const* argv[]) {
-		return 0;
-		init();
-		shell x;
-		string tmp = "登录 @root root";
-		x.read(tmp);
+	tmp = "创建 数据库 @DB1";
+	x.read(tmp);
 
-		tmp = "创建 数据库 @DB1";
-		x.read(tmp);
+	tmp = "创建 数据库 表 @DB1 TB1";
+	x.read(tmp);
+	return 0;
+	tmp = "选择 数据库 @DB1";
+	x.read(tmp);
 
-		tmp = "创建 数据库 表 @DB1 TB1";
-		x.read(tmp);
-		return 0;
-		tmp = "选择 数据库 @DB1";
-		x.read(tmp);
+	tmp = "插入 表 @TB1 姓名 性别 年龄";
+	x.read(tmp);
 
-		tmp = "插入 表 @TB1 姓名 性别 年龄";
-		x.read(tmp);
+	tmp = "插入 表 @TB1 张三 男 11";
+	x.read(tmp);
 
-		tmp = "插入 表 @TB1 张三 男 11";
-		x.read(tmp);
+	tmp = "插入 表 @TB1 王五 男 10";
+	x.read(tmp);
+	tmp = "插入 表 @TB1 李四 女 100";
 
-		tmp = "插入 表 @TB1 王五 男 10";
-		x.read(tmp);
-		tmp = "插入 表 @TB1 李四 女 100";
+	x.read(tmp);
 
-		x.read(tmp);
+	tmp = "显示 表 @TB1 3";
 
-		tmp = "显示 表 @TB1 3";
+	x.read(tmp);
+	tmp = "设置 视图 表 @TB1 root 0 2";
 
-		x.read(tmp);
-		tmp = "设置 视图 表 @TB1 root 0 2";
+	x.read(tmp);
+	tmp = "显示 表 @TB1 3";
 
-		x.read(tmp);
-		tmp = "显示 表 @TB1 3";
-
-		x.read(tmp);
+	x.read(tmp);
 
 
-		return 0;
-	}
+	return 0;
+}

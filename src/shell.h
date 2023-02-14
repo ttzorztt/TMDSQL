@@ -27,7 +27,10 @@
 #define _USER_H_
 #include "User.h"
 #endif
-
+#ifndef _VECTOR_
+#define _VECTOR_
+#include <vector>
+#endif
 class shell : public User {
 	public:
 		shell();
@@ -48,6 +51,24 @@ class shell : public User {
 		 * @return  输入退出则返回False，否则返回True
 		 */
 		bool read(revstring data);
+		/**
+		 * @brief 记录所有执行过的指令
+		 *
+		 * @param str 指令字符串
+		 */
+		void addHistory(std::string& str);
+		/**
+		 * @brief 返回历史记录的上一条
+		 *
+		 * @Return 执行字符串
+		 */
+		std::string prevHistory();
+		/**
+		 * @brief 返回历史记录的下一条
+		 *
+		 * @Return 执行字符串
+		 */
+		std::string nextHistory();
 
 	private:
 		// 当前工作路径
@@ -60,6 +81,10 @@ class shell : public User {
 		int commandCount;
 		// 是否需要显示提示符
 		bool need;
+		// 执行历史
+		std::vector<std::string> history;
+		// 历史的指针
+		long unsigned historyIndex;
 		/**
 		 * @brief 判断是否输入"确认"
 		 *
@@ -72,7 +97,6 @@ class shell : public User {
 		 * @return 输入退出则返回False，否则返回True
 		 */
 		bool read();
-
 		/**
 		 * @brief 语法检查以及指令与数据分类存储
 		 *
@@ -99,8 +123,6 @@ class shell : public User {
 		bool aidCheckData(std::string _str);
 		/**
 		 * @brief 执行脚本
-		 *
-		 * @return
 		 */
 		void toExecute();
 		/**

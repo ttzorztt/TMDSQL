@@ -51,7 +51,7 @@ shell::shell() : User(), commandCount(0), need(true) {
 shell::~shell() {}
 void shell::toChoose() {
 	if (command.size() > 1 && data.size() > 0) {
-		switch (command[1]) {
+		switch ((int)command[1]) {
 			case 数据库: {
 										 if (command.size() == 2 && data.size() == 1) {
 											 toChooseDatabase();
@@ -268,7 +268,7 @@ bool shell::read() {
 										 }
 										 Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
 									 } else {
-										 switch (returnErrorCase()) {
+										 switch ((int)returnErrorCase()) {
 											 case 密码错误:
 												 Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
 														 登录密码错误);
@@ -1142,4 +1142,20 @@ void shell::toSetViewDefault() {
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data[0], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
+}
+void shell::addHistory(std::string& str){
+	this->history.push_back(str);
+	++this->historyIndex;
+}
+std::string shell::prevHistory(){
+	if(this->historyIndex > 0){
+		--this->historyIndex;
+	}
+	return this->history[historyIndex];
+}
+std::string shell::nextHistory(){
+	if(this->historyIndex < this->history.size()){
+		++this->historyIndex;
+	}
+	return this->history[this->historyIndex];
 }
