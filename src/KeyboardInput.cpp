@@ -38,6 +38,7 @@ KeyboardInput::~KeyboardInput(){}
 
 std::string KeyboardInput::read(shell& sh){
 	std::string ret;
+	ret.resize(100);
 	int count = 2;
 	bool add = false;
 	char ch;
@@ -51,13 +52,13 @@ std::string KeyboardInput::read(shell& sh){
 	while(1){
 		add = true;
 		ch = getchar();
-		/* if(ch == 0x38){ // UP */
-		/* 	ret = sh.prevHistory(); */
-		/* 	add = false; */
-		/* }else if(ch == 0x40){ // DOWM */
-		/* 	ret = sh.nextHistory(); */
-		/* 	add = false; */
-		/* }else */ 
+		if(ch == 0x38){ // UP
+			ret = sh.prevHistory();
+			add = false;
+		}else if(ch == 0x40){ // DOWM
+			ret = sh.nextHistory();
+			add = false;
+		}else 
 			if(ch == '\n'){
 			break;
 		}else if(ch == 0x7F && ret.size()){ //输入backspace
@@ -74,9 +75,10 @@ std::string KeyboardInput::read(shell& sh){
 			--count;
 			continue;
 		}
-		std::cout << "\r"; // 使得光标回到行首
-		std::cout << std::string(ret.size() + 20,' ');
-		std::cout << "\r"; // 使得光标回到行首
+		/* std::cout << "\r"; // 使得光标回到行首 */
+		/* std::cout << std::string(ret.size() + 20,' '); */
+		/* std::cout << "\r"; // 使得光标回到行首 */
+		std::cout << "\033c";
 		menuOutput::printPower(sh.ReturnPower());
 		if(add){
 			ret += ch;
@@ -87,7 +89,7 @@ std::string KeyboardInput::read(shell& sh){
 		std::cout << ret;
 	}
 	tcsetattr(0, TCSANOW, &tms_old);
-	std::cout << "\033[?25h" << std::endl; //显示光标
+	std::cout << "\033[?25h"; //显示光标
 #endif
 	sh.addHistory(ret);
 	return ret;
