@@ -1092,9 +1092,9 @@ int main(int argc, char *argv[])
 }
 ```
 
-	- 输出:
+- 输出:
 ```txt
-	12
+12
 1
 
 ���^U����0�Ig����^U
