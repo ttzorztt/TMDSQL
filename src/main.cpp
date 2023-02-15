@@ -103,22 +103,25 @@ void init() {
 int main(int argc, char const* argv[]) {
 	init();
 	shell x;
-	Log::open();
-#ifdef __WIN32__
-	while(1){
 
-	}
-#endif
-#ifdef __linux__
+	string tmp = "执行 @SQL";
+	int count = 0;
+	Log::open();
+	char ch;
 	while(1){
-		if(!x.read(KeyboardInput::read(x))){
+		getline(cin, tmp);
+		if(ch == '\n'){
+			menuOutput::printPower(x.ReturnPower());
+			break;
+		}
+		if (!x.read(tmp)) {
 			break;
 		}
 	}
-#endif
 	Log::close();
 	return 0;
 }
+
 
 int main1(int argc, char const* argv[]) {
 	return 0;

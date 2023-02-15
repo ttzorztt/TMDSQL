@@ -52,11 +52,8 @@ void KeyboardInput::complexChar(std::string& str,std::string& ret,shell& sh){
 
 std::string KeyboardInput::read(shell& sh){
 	std::string ret;
-<<<<<<< HEAD
 	std::string complexch;
-=======
 	ret.resize(100);
->>>>>>> bda89eab628a63a865c02419b4d09cfa0a93fd4d
 	int count = 2;
 	bool add = false;
 	char ch;
@@ -69,18 +66,7 @@ std::string KeyboardInput::read(shell& sh){
 	while(1){
 		add = true;
 		ch = getchar();
-<<<<<<< HEAD
 		if(ch == '\n'){
-=======
-		if(ch == 0x38){ // UP
-			ret = sh.prevHistory();
-			add = false;
-		}else if(ch == 0x40){ // DOWM
-			ret = sh.nextHistory();
-			add = false;
-		}else 
-			if(ch == '\n'){
->>>>>>> bda89eab628a63a865c02419b4d09cfa0a93fd4d
 			break;
 		}else if(ch == 0x7F && ret.size()){ //输入backspace
 			add = false;
@@ -103,16 +89,9 @@ std::string KeyboardInput::read(shell& sh){
 				continue;
 			}
 		}
-<<<<<<< HEAD
 		std::cout << "\r";
 		std::cout << std::string(ret.size() + 20,' ');
 		std::cout << "\r";
-=======
-		/* std::cout << "\r"; // 使得光标回到行首 */
-		/* std::cout << std::string(ret.size() + 20,' '); */
-		/* std::cout << "\r"; // 使得光标回到行首 */
-		std::cout << "\033c";
->>>>>>> bda89eab628a63a865c02419b4d09cfa0a93fd4d
 		menuOutput::printPower(sh.ReturnPower());
 		if(add){
 			ret += ch;
@@ -120,10 +99,6 @@ std::string KeyboardInput::read(shell& sh){
 		std::cout << ret;
 	}
 	tcsetattr(0, TCSANOW, &tms_old);
-<<<<<<< HEAD
-=======
-	std::cout << "\033[?25h"; //显示光标
->>>>>>> bda89eab628a63a865c02419b4d09cfa0a93fd4d
 #endif
 	sh.addHistory(ret);
 	return ret;

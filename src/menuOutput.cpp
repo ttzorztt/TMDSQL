@@ -176,6 +176,10 @@ void menuOutput::printPower(TYPE_POWER power, bool need) {
 													 }
 	}
 }
+void menuOutput::printTableNotEmptyAndDeleteTip(TYPE_POWER power, bool need) {
+	std::cout << "表不为空，以下是该表的一部分内容:" << std::endl;
+	printPower(power, need);
+}
 void menuOutput::printTableIsExists(TYPE_POWER power, bool need) {
 	std::cout << "无法执行该指令，目标表已存在!" << std::endl;
 	printPower(power, need);
@@ -260,28 +264,32 @@ void menuOutput::printShowFindTable(TYPE_POWER power,
 		std::string index,
 		bool need) {
 	vstring data = table.find(index);
-	std::set<int> allowCol =
-		View::returnAllowColumn(UserName, table.returnName());
-	if (data.size() != 0) {
-		int size = data.size();
-		for (int a = 0; a < size; ++a) {
-			if (!allowCol.count(a)) {
-				continue;
+	if(power == 2){
+		std::set<int> allowCol =
+			View::returnAllowColumn(UserName, table.returnName());
+		if (data.size() != 0) {
+			int size = data.size();
+			for (int a = 0; a < size; ++a) {
+				if (!allowCol.count(a)) {
+					continue;
+				}
+				std::cout << data[a] << " ";
 			}
-			std::cout << data[a] << " ";
+			std::cout << std::endl;
+		} else {
+			std::cout << "搜索结束，没有搜到目标值!" << std::endl;
 		}
-		std::cout << std::endl;
-	} else {
-		std::cout << "搜索结束，没有搜到目标值!" << std::endl;
+	}else {
+		if (data.size() != 0) {
+			int size = data.size();
+			for (int a = 0; a < size; ++a) {
+				std::cout << data[a] << " ";
+			}
+			std::cout << std::endl;
+		} else {
+			std::cout << "搜索结束，没有搜到目标值!" << std::endl;
+		}
 	}
-	printPower(power, need);
-}
-void menuOutput::printInsertNoValue(TYPE_POWER power, bool need) {
-	std::cout << "拒绝执行，指令中缺乏待插入数据!" << std::endl;
-	printPower(power, need);
-}
-void menuOutput::printTableNotEmptyAndDeleteTip(TYPE_POWER power, bool need) {
-	std::cout << "表不为空，以下是该表的一部分内容:" << std::endl;
 	printPower(power, need);
 }
 void menuOutput::printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power,

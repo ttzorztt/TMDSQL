@@ -112,7 +112,7 @@ void _dir::openDirReturnFileName(std::string truePath, vstring& ret) {
 #endif
 }
 bool _dir::create(std::string truePath) {
-	return createDir(truePath.c_str()) == 0;
+	return _super::createDir(truePath);
 }
 bool _dir::remove(std::string truePath) {
 	return rmdir(truePath.c_str()) == 0;

@@ -132,8 +132,8 @@ void shell::toChooseDatabaseTable() {
 		return;
 	} else if (!Table(data[0] + "/" + data[1], type::_TYPE_TABLE).isExist()) {
 		menuOutput::printDatabaseNotHaveTable(ReturnPower(), need);
-		Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-				data[0], 已选择的数据库中不存在目标表);
+		Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+				data[1], 已选择的数据库中不存在目标表);
 		return;
 	}
 	pwd.clear();
@@ -417,6 +417,7 @@ void shell::toCreate() {
 				menuOutput::printPowerNoEnough(ReturnPower(), need);
 				Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
 						管理员违规操作);
+				return;
 			}
 			if (command.size() == 2 && data.size() == 2) {
 				if (!addManagerUser(data[0], data[1])) {
@@ -428,8 +429,7 @@ void shell::toCreate() {
 					Log::LogForCreateManager(ReturnUserName(), ReturnPower(), data[0],
 							data[1]);
 				}
-			}
-			{
+			}else {
 				Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
 						编译错误);
 				menuOutput::printCommandError(ReturnPower(), need);
@@ -678,7 +678,7 @@ void shell::toDeleteUser() {
 void shell::toInsert() {
 	switch (command.size()) {
 		case 1: {
-							if (data.size() == 1) {
+							if (this->pwd.size() == 3) {
 								toInsertDefaultTable();
 							} else {
 								menuOutput::printCommandError(ReturnPower(), need);
@@ -851,8 +851,8 @@ void shell::toFindDatabaseTable() {
 	}
 	menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
 			data[2], need);
-	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
-			data[1]);
+	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0], data[1],
+			data[2]);
 }
 void shell::toShow() {
 	switch (command.size()) {
@@ -878,7 +878,7 @@ void shell::toShow() {
 									}
 									break;
 								case 表:
-									if (data.size() == 2 || data.size() == 3) {
+									if (data.size() == 1 || data.size() == 2 || data.size() == 3) {
 										toShowTable();
 									} else {
 										menuOutput::printCommandError(ReturnPower(), need);
