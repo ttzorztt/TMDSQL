@@ -1073,7 +1073,7 @@ x86_64-w64-mingw32-g++ -static -c xxx.cpp -o xxx.o
 中文处理暂时搁浅吧。
 ![bug](./img/1.gif)
 
-### std::string 的BUG?
+## std::string 的BUG?
 
 > 我在处理中文途中,发现一个关于string的bug:
 - 例子1:
@@ -1086,10 +1086,25 @@ int main(int argc, char *argv[])
 	std::string str = "123";
 	for(int a = 0; a< 4; ++a){
 		str.pop_back();
-Q�g�U��������������������$���5���O���a����������������������������1���H���W���r���������������d���w�����������������������������*���=���R���������������� ���@���t�����������k�������!�������d@@�g�U8����������������������������
-                                                  ���   �P�g�U
-                                                              �
-	```
+		std::cout << str << std::endl;
+	}
+	return 0;
+}
+```
+
+	- 输出:
+```txt
+	12
+1
+
+���^U����0�Ig����^U
+�Q�g8�Ig��Ł��^U����g��_T>�������^U���|�����٫Lǻ�g8�Ig�H�Ig�����g����^U0�Ig�
+���^U(�Ig���Ig���Ig�űIg��Ig�$�Ig�5�Ig�O�Ig�a�Ig��Ig���Ig���Ig�ʲIg���Ig��Ig��Ig�1�Ig�H�Ig�W�Ig�r�Ig���Ig���Ig�۳Ig�d�Ig�w�Ig���Ig���Ig���Ig��Ig��Ig���Ig��Ig� �Ig�@�Ig�t�Ig���Ig�þIg�k�Ig��Ig�!`Lg����d@p��^U8g���Ig���Ig��Ig���Ig�@�Ig�i�Ig�}�Ig���Ig���Ig���Ig�ȷIg�۷Ig��Ig��Ig���Ig�
+                                                         ���g   ����^U
+                                                                      �
+
+```
 
 但是将`a < 4`换成 'a < 5',linux中报错`segmentation fault`。
 很奇怪,如果你认为多出来的是`\0`,但是实际上难道不应该是先pop'\0'吗？很奇怪......
+
