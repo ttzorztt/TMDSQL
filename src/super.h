@@ -57,6 +57,11 @@ enum TYPE_POWER {
 	NORMAL,   // 普通用户
 	NONE      //未登录
 };
+enum keyboard {
+	UP,
+	DOWN,
+	Chinese
+};
 enum TYPE_CID {
 	退出,
 	创建,

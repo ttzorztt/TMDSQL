@@ -42,6 +42,13 @@ class KeyboardInput{
 		 * @Return 按下'\n'后的全部字符
 		 */
 		std::string static read(shell& sh);
-
+		/**
+		 * @brief 复杂字符判断,并直接修改ret
+		 *
+		 * @param str Wchar
+		 * @param ret 真实显示buff
+		 * @param sh shell对象
+		 */
+		void static complexChar(std::string& str,std::string& ret,shell& sh);
 		KeyboardInput(const KeyboardInput& copy) = delete;
 };

@@ -69,7 +69,12 @@ class shell : public User {
 		 * @Return 执行字符串
 		 */
 		std::string nextHistory();
-
+		/**
+		 * @brief 是否有历史
+		 *
+		 * @Return 返回是否存在历史值
+		 */
+		bool hasHistory();
 	private:
 		// 当前工作路径
 		vstring pwd;

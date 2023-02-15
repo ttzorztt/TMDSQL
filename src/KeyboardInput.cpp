@@ -8,6 +8,7 @@
 #ifndef _KEYBOARDINPUT_H_
 #define _KEYBOARDINPUT_H_
 #include "KeyboardInput.h"
+#include "super.h"
 #endif
 #ifndef _STRING_
 #define _STRING_
@@ -31,6 +32,19 @@
 #endif
 KeyboardInput::KeyboardInput(){}
 KeyboardInput::~KeyboardInput(){}
+void KeyboardInput::complexChar(std::string& str,std::string& ret,shell& sh){
+	if(str[0] == 0x1B && str[1] == 0x5B){
+		if(str[2] == 0x41 && sh.hasHistory()){ //UP
+			/* ret = sh.prevHistory(); */
+		}else if(str[2] == 0x42 && sh.hasHistory()){ //DOWN
+			/* ret = sh.nextHistory(); */
+		}else if(str[2] == 0x44){ //Left
+		}else if(str[2] == 0x43){ //Right
+}
+		return;
+	}
+	ret += str;
+}
 /**
  * @name 待处理,代码混乱
  * @{ */
@@ -38,6 +52,7 @@ KeyboardInput::~KeyboardInput(){}
 
 std::string KeyboardInput::read(shell& sh){
 	std::string ret;
+	std::string complexch;
 	int count = 2;
 	bool add = false;
 	char ch;
@@ -47,18 +62,10 @@ std::string KeyboardInput::read(shell& sh){
 	tms_new.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, TCSANOW, &tms_new);
 #ifdef __linux__
-	std::cout << "\033[?25l" ; // 隐藏光标
 	while(1){
 		add = true;
 		ch = getchar();
-		/* if(ch == 0x38){ // UP */
-		/* 	ret = sh.prevHistory(); */
-		/* 	add = false; */
-		/* }else if(ch == 0x40){ // DOWM */
-		/* 	ret = sh.nextHistory(); */
-		/* 	add = false; */
-		/* }else */ 
-			if(ch == '\n'){
+		if(ch == '\n'){
 			break;
 		}else if(ch == 0x7F && ret.size()){ //输入backspace
 			add = false;
@@ -69,25 +76,28 @@ std::string KeyboardInput::read(shell& sh){
 			}else{
 				ret.pop_back();
 			}
-		}else if((unsigned int)ch >= 0x8000 && count){ //输入中文中的一部分，输出会乱码，跳过输出
-			ret += ch;
+		}else if((unsigned int)ch >= 0x8000){ //输入中文中的一部分，输出会乱码，跳过输出
+			complexch += ch;
 			--count;
-			continue;
+			if(count == 0){
+				KeyboardInput::complexChar(complexch, ret, sh);
+				count = 3;
+				complexch = "";
+				add = false;
+			}else{
+				continue;
+			}
 		}
-		std::cout << "\r"; // 使得光标回到行首
+		std::cout << "\r";
 		std::cout << std::string(ret.size() + 20,' ');
-		std::cout << "\r"; // 使得光标回到行首
+		std::cout << "\r";
 		menuOutput::printPower(sh.ReturnPower());
 		if(add){
 			ret += ch;
 		}
-		if(count == 0){
-			count = 2;
-		}
 		std::cout << ret;
 	}
 	tcsetattr(0, TCSANOW, &tms_old);
-	std::cout << "\033[?25h" << std::endl; //显示光标
 #endif
 	sh.addHistory(ret);
 	return ret;

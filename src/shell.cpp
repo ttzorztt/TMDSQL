@@ -47,6 +47,7 @@
 #endif
 shell::shell() : User(), commandCount(0), need(true) {
 	menuOutput::printPower();
+	this->historyIndex = 0;
 }
 shell::~shell() {}
 void shell::toChoose() {
@@ -1158,4 +1159,7 @@ std::string shell::nextHistory(){
 		++this->historyIndex;
 	}
 	return this->history[this->historyIndex];
+}
+bool shell::hasHistory(){
+	return this->historyIndex;
 }
