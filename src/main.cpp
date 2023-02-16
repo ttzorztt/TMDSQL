@@ -61,10 +61,6 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
-#ifndef _KEYBOARDINPUT_H_
-#define _KEYBOARDINPUT_H_
-#include "KeyboardInput.h"
-#endif
 using namespace std;
 
 /**
@@ -103,9 +99,7 @@ void init() {
 int main(int argc, char const* argv[]) {
 	init();
 	shell x;
-
 	string tmp = "执行 @SQL";
-	int count = 0;
 	Log::open();
 	char ch;
 	while(1){
@@ -124,16 +118,19 @@ int main(int argc, char const* argv[]) {
 
 
 int main1(int argc, char const* argv[]) {
-	return 0;
 	init();
 	shell x;
 	string tmp = "登录 @root root";
 	x.read(tmp);
 
-	tmp = "创建 数据库 @DB1";
+	tmp = "查询 数据库 表 @DB TB 1";
 	x.read(tmp);
 
-	tmp = "创建 数据库 表 @DB1 TB1";
+	tmp = "查询 数据库 表 @DB TB 2";
+	x.read(tmp);
+	tmp = "查询 数据库 表 @DB TB 3";
+	x.read(tmp);
+	tmp = "查询 数据库 表 @DB TB 4";
 	x.read(tmp);
 	return 0;
 	tmp = "选择 数据库 @DB1";

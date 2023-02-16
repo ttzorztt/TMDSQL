@@ -90,8 +90,8 @@ vstring Table::find(std::string index) {
 	INDEX indexcol = TablePCB(this->returnName()).returnIndex();
 	Table indexFile(this->returnName(), type::_TYPE_INDEX_TABLE);
 	while (indexFile.readline(value)) {
-		std::cout << std::endl << value[indexcol] << " " << index << std::endl;
-		if (value[indexcol] == index) {
+		/* std::cout << std::endl << value[indexcol] << " " << index << std::endl; */
+		if (value[0] == index) {
 			int x = atoi(value[1].c_str());
 			return this->indexReadline(x);
 		}
