@@ -60,6 +60,14 @@ class Cache{
 		 * @Return 查询结果
 		 */
 		vstring static find(Table& file,std::string index);
+		/**
+		 * @brief 判断Cache中有无文件
+		 *
+		 * @Param file 表对象
+		 *
+		 * @Return 是返回True，否返回False
+		 */
+		bool static Count(Table& file);
 };
 
 #endif

@@ -9,6 +9,10 @@
 #define _MENUOUTPUT_H_
 #include "menuOutput.h"
 #endif
+#ifndef _CACHE_H_
+#define _CACHE_H_
+#include "cache.h"
+#endif
 #ifndef _IOMANIP_
 #define _IOMANIP_
 #include <iomanip>
@@ -263,7 +267,12 @@ void menuOutput::printShowFindTable(TYPE_POWER power,
 		Table& table,
 		std::string index,
 		bool need) {
-	vstring data = table.find(index);
+	vstring data;
+	if(Cache::Count(table)){
+		data = Cache::find(table, index);
+	}else{
+		data = table.find(index);
+	}
 	if(power == 2){
 		std::set<int> allowCol =
 			View::returnAllowColumn(UserName, table.returnName());
@@ -291,6 +300,9 @@ void menuOutput::printShowFindTable(TYPE_POWER power,
 		}
 	}
 	printPower(power, need);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}
 }
 void menuOutput::printDatabaseNotEmptyAndDeleteTip(TYPE_POWER power,
 		bool need) {

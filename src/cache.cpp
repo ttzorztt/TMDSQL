@@ -5,7 +5,6 @@
  * @version 1.4
  * @date 2023-02-24
  */
-
 #ifndef _CACHE_H_
 #define _CACHE_H_
 #include "cache.h"
@@ -35,9 +34,18 @@ void Cache::add(Table& file){
 	vstring tmp;
 	while(file.readline(tmp)){
 		cache[stap][tmp[0]] = atoi(tmp[1].c_str());
-	}	
+	}
 	stap = (stap + 1) % 5;
 }
 vstring Cache::find(Table &file, std::string index){
-
+	std::string fileName = file.returnName();
+	if(!fileInclue.count(fileName)){
+		return {};
+	}
+	/* 获取文件指针 */
+	int ptr = cache[fileToIndex[fileName]][index];
+	return file.indexReadline(ptr);
+}
+bool Cache::Count(Table &file){
+	return fileInclue.count(file.returnName());
 }

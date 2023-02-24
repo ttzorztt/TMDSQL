@@ -45,7 +45,12 @@
 #define _IOSTREAM_
 #include <iostream>
 #endif
+#ifndef _CACHE_H_
+#define _CACHE_H_
+#include "cache.h"
+#endif
 shell::shell() : User(), commandCount(0), need(true) {
+	Cache();
 	menuOutput::printPower();
 	this->historyIndex = 0;
 }
