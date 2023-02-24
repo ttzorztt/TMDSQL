@@ -99,10 +99,10 @@ void _file::setOpenBuff(MODE mode) {
 }
 
 void _file::setReadSeek(POINTER fileIndex) {
-	if (this->readFileBuff.eof()) {
+	/* if (this->readFileBuff.eof()) { */
 		this->readFileBuff.close();
 		this->readFileBuff.open(this->truePath);
-	}
+	/* } */
 	this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
 void _file::setWriteSeek(POINTER fileIndex) {

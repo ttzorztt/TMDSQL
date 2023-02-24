@@ -96,7 +96,7 @@ void init() {
 		_super::createDir("./data/Log");
 	}
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
 	init();
 	shell x;
 	string tmp = "执行 @SQL";
@@ -117,12 +117,12 @@ int main(int argc, char const* argv[]) {
 }
 
 
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
 	init();
 	shell x;
-	string tmp = "登录 @root root";
+	string tmp = "执行 @s";
 	x.read(tmp);
-
+return 0;
 	tmp = "查询 数据库 表 @DB TB 1";
 	x.read(tmp);
 

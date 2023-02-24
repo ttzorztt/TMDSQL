@@ -9,6 +9,14 @@
 #define _CACHE_H_
 #include "cache.h"
 #endif
+#ifndef _FILE_H_
+#define _FILE_H_
+#include "file.h"
+#endif
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
+#include <iostream>
+#endif
 #ifndef _CSTDLIB_
 #define _CSTDLIB_
 #include <cstdlib>
@@ -32,12 +40,17 @@ void Cache::add(Table& file){
 	cache[stap].clear();
 	fileToIndex[filename] = stap;
 	vstring tmp;
-	while(file.readline(tmp)){
+	int seek = file.returnReadTell();
+	file.setReadSeek(0);
+	_file index(file.returnName(),type::_TYPE_INDEX_TABLE);
+	while(index.readline(tmp)){
+		/* cache[stap].insert(std::make_pair(tmp[0],std::atoi(tmp[1].c_str()))); */
 		cache[stap][tmp[0]] = atoi(tmp[1].c_str());
 	}
 	stap = (stap + 1) % 5;
+	file.setReadSeek(seek);
 }
-vstring Cache::find(Table &file, std::string index){
+vstring Cache::find(Table file, std::string index){
 	std::string fileName = file.returnName();
 	if(!fileInclue.count(fileName)){
 		return {};

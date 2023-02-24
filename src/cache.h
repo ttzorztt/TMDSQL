@@ -59,7 +59,7 @@ class Cache{
 		 *
 		 * @Return 查询结果
 		 */
-		vstring static find(Table& file,std::string index);
+		vstring static find(Table file,std::string index);
 		/**
 		 * @brief 判断Cache中有无文件
 		 *
