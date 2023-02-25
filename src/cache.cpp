@@ -8,6 +8,9 @@
 #ifndef _CACHE_H_
 #define _CACHE_H_
 #include "cache.h"
+#include <queue>
+#include <utility>
+#include <vector>
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -21,13 +24,17 @@
 #define _CSTDLIB_
 #include <cstdlib>
 #endif
+#ifndef _ALGORITHM_
+#define _ALGORITHM_
+#include <algorithm>
+#endif
 std::set<std::string> Cache::fileInclue;
 std::vector<std::map<std::string,int>> Cache::cache;
 std::map<std::string,int> Cache::fileToIndex;
 int Cache::stap = 0;
+std::vector<std::pair<int,std::string>> Cache::cacheCount;
 Cache::Cache(){
-	/* 存储5个文件的cache */
-	cache.resize(5);
+	cache.resize(CACHEPOLL);
 }
 Cache::~Cache(){
 }
@@ -62,3 +69,25 @@ vstring Cache::find(Table file, std::string index){
 bool Cache::Count(Table &file){
 	return fileInclue.count(file.returnName());
 }
+std::string Cache::cacheCountAdd(std::string& fileName){
+	for (auto& init: cacheCount){
+		if(init.second == fileName){
+			init.first = 0;
+			continue;
+		}
+		++(init.first);
+	}
+	std::sort(cacheCount.begin(),cacheCount.end()); 
+	if(cacheCount.size() < CACHEPOLL){
+		return "";
+	}else{
+		return cacheCount[0].second;
+	}
+}
+void Cache::addLine(std::string fileName, std::pair<std::string, int>){
+	if(!fileInclue.count(fileName)){
+		return;  
+	}
+	
+}
+

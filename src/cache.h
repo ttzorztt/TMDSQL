@@ -7,6 +7,7 @@
  */
 #ifndef _CACHE_
 #define _CACHE_
+#include <utility>
 #ifndef _SUPER_H_
 #define _SUPER_H_
 #include "super.h"
@@ -31,6 +32,7 @@
 #define _MAP_
 #include <map>
 #endif
+#define CACHEPOLL 5
 class Cache{
 	private:
 		/* 文件包含 */
@@ -41,9 +43,26 @@ class Cache{
 		static std::map<std::string,int> fileToIndex;
 		/* 下一个存储的位置 */
 		static int stap;
+		/* 使用最近最久未被使用的替换算法 */
+		static std::vector<std::pair<int,std::string>> cacheCount;
+		/**
+		 * @brief cacheCount的自增,主要是进行替换算法。
+		 *
+		 * @Param fileName 文件名
+		 *
+		 * @Return 被替换的文件名(PS:如果不需要则返回"")
+		 */
+		std::string static cacheCountAdd(std::string& fileName);
 	public:
 		Cache();
 		~Cache();
+		/**
+		 * @brief 添加一行内容。如果说这个文件没有在Cache中，则会添加，如果在的话，自然就是把新添加的部分添加到Cache中，emmm，同时也对硬盘写入。所以骚年，安心使用无脑Ctrl+C吧
+		 *
+		 * @Param fileName
+		 * @Param std::pair
+		 */
+		void addLine(std::string fileName,std::pair<std::string, int>);
 		Cache(const Cache& copy) = delete;
 		/**
 		 * @brief 入缓存
