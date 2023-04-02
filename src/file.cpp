@@ -8,6 +8,7 @@
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
+#include "super.h"
 #endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -100,8 +101,8 @@ void _file::setOpenBuff(MODE mode) {
 
 void _file::setReadSeek(POINTER fileIndex) {
 	/* if (this->readFileBuff.eof()) { */
-		this->readFileBuff.close();
-		this->readFileBuff.open(this->truePath);
+	this->readFileBuff.close();
+	this->readFileBuff.open(this->truePath);
 	/* } */
 	this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
@@ -126,6 +127,9 @@ bool _file::write(std::string str, type_mode mode) {
 																						writeFileBuff << str << std::endl;
 																						break;
 																					}
+		case type_mode::DEFAULT:
+		case type_mode::READBUFF_MODE:
+																					break;
 	}
 	this->writeFileBuff.flush();
 	return true;
@@ -137,7 +141,7 @@ void _file::resetPath(std::string Name, type style) {
 	this->style  =style;
 	this->truePath = _super::returnTruePath(Name,style);
 }
-bool _file::write(const vstring array, type_mode mode) {
+bool _file::writeAnyLine(vvstring array, type_mode mode) {
 	switch (mode) {
 		case type_mode::WRITEBUFF_MODE_APP: {
 																					this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
@@ -147,6 +151,38 @@ bool _file::write(const vstring array, type_mode mode) {
 																						this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
 																						break;
 																					}
+		case type_mode::DEFAULT:
+		case type_mode::READBUFF_MODE:
+																					break;
+	}
+	int size = array.size();
+	if (size == 0) {
+		return false;
+	}
+	for( int tmp = 0; tmp < size; ++tmp){
+		writeFileBuff << array[tmp][0];
+		int lineSize = array[tmp].size();
+		for (int index = 1; index < lineSize; ++index) {
+			writeFileBuff << "," << array[tmp][index];
+		}
+		writeFileBuff << std::endl;
+	}
+	this->writeFileBuff.flush();
+	return true;
+}
+bool _file::write(const vstring array, type_mode mode){
+	switch (mode) {
+		case type_mode::WRITEBUFF_MODE_APP: {
+																					this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
+																					break;
+																				}
+		case type_mode::WRITEBUFF_MODE_TRUNC: {
+																						this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
+																						break;
+																					}
+		case type_mode::DEFAULT:
+		case type_mode::READBUFF_MODE:
+																					break;
 	}
 	int size = array.size();
 	if (size == 0) {
@@ -154,7 +190,7 @@ bool _file::write(const vstring array, type_mode mode) {
 	}
 	writeFileBuff << array[0];
 	for (int index = 1; index < size; ++index) {
-		writeFileBuff << "," << array[index];
+			writeFileBuff << "," << array[index];
 	}
 	writeFileBuff << std::endl;
 	this->writeFileBuff.flush();

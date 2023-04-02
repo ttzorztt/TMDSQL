@@ -79,6 +79,15 @@ class _file : public _super {
 		 */
 		bool write(vstring array, type_mode mode);
 		/**
+		 * @brief 多行写入
+		 *
+		 * @Param vvstring array 数组
+		 * @Param mode type_mode 模式
+		 *
+		 * @Return True写入正确，False写入失败
+		 */
+		bool writeAnyLine(vvstring array,type_mode mode);
+		/**
 		 * @brief 真实路径
 		 *
 		 * @return {std::string} 返回真实路径

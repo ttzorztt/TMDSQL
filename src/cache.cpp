@@ -8,9 +8,6 @@
 #ifndef _CACHE_H_
 #define _CACHE_H_
 #include "cache.h"
-#include <queue>
-#include <utility>
-#include <vector>
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -51,13 +48,13 @@ void Cache::add(Table& file){
 	file.setReadSeek(0);
 	_file index(file.returnName(),type::_TYPE_INDEX_TABLE);
 	while(index.readline(tmp)){
-		/* cache[stap].insert(std::make_pair(tmp[0],std::atoi(tmp[1].c_str()))); */
 		cache[stap][tmp[0]] = atoi(tmp[1].c_str());
 	}
-	stap = (stap + 1) % 5;
+	stap = (stap + 1) % CACHEPOLL;
 	file.setReadSeek(seek);
 }
 vstring Cache::find(Table& file, std::string index){
+	std::cout << "Cache " << std::endl;
 	std::string fileName = file.returnName();
 	if(!fileInclue.count(fileName)){
 		return {};
@@ -86,8 +83,6 @@ std::string Cache::cacheCountAdd(std::string& fileName){
 }
 void Cache::addLine(std::string fileName, std::pair<std::string, int>){
 	if(!fileInclue.count(fileName)){
-		return;  
+		return;
 	}
-	
 }
-

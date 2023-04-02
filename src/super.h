@@ -37,6 +37,8 @@
 #endif
 typedef std::vector<std::string> vstring;
 typedef std::vector<std::string>& revstring;
+typedef std::vector<std::vector<std::string>> vvstring;
+typedef std::vector<std::vector<std::string>>& revvstring;
 typedef std::vector<int> vint;
 typedef std::vector<int>& revint;
 typedef int POINTER;
