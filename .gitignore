@@ -3,3 +3,4 @@ src/*.o
 src/TMSQL
 src/TMSQL.exe
 src/data/
+doc/
