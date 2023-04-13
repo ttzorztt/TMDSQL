@@ -125,7 +125,7 @@ void init() {
 		_super::createDir("./data/Log");
 	}
 }
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
 	init();
 	shell x;
 	string tmp = "执行 @s";
@@ -146,7 +146,7 @@ int main1(int argc, char const* argv[]) {
 }
 
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
 	init();
 	shell x;
 	string tmp = "执行 @init";
