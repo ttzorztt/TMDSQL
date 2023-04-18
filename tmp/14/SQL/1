@@ -1,0 +1,5 @@
+登录 @root root
+创建 数据库 @DB1
+创建 数据库 表 @DB1 TB
+插入 数据库 表 @DB1 TB 1 2 3
+插入 数据库 表 @DB1 TB a b c d

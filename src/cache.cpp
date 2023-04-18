@@ -54,7 +54,6 @@ void Cache::add(Table& file){
 	file.setReadSeek(seek);
 }
 vstring Cache::find(Table& file, std::string index){
-	std::cout << "Cache " << std::endl;
 	std::string fileName = file.returnName();
 	if(!fileInclue.count(fileName)){
 		return {};
