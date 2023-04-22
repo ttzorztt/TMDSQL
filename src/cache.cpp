@@ -37,7 +37,6 @@ Cache::Cache(){
 Cache::~Cache(){
 }
 void Cache::add(Table& file){
-	std::cout << "Cache in" << std::endl << fileInclue.size() << std::endl;
 	std::string filename = file.returnName();
 	if(fileInclue.count(filename)){
 		return;

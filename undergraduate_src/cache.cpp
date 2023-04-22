@@ -8,6 +8,7 @@
 #ifndef _CACHE_H_
 #define _CACHE_H_
 #include "cache.h"
+#include <iterator>
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
