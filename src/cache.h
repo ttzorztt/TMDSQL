@@ -32,7 +32,7 @@
 #define _MAP_
 #include <map>
 #endif
-#define CACHEPOLL 5
+#define CACHEPOLL 10
 class Cache{
 	private:
 		/* 文件包含 */
@@ -87,6 +87,10 @@ class Cache{
 		 * @Return 是返回True，否返回False
 		 */
 		bool static Count(Table& file);
+		/**
+		 * @brief 测试输出(DEBUG)
+		 */
+		void static test_show();
 };
 
 #endif

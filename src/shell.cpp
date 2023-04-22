@@ -149,10 +149,10 @@ void shell::toChooseDatabaseTable() {
 	pwd.push_back(data[0]);
 	pwd.push_back(data[1]);
 	Table table(data[0] + "/" + data[1],type::_TYPE_TABLE);
-	Cache::add(table);
 	Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1]);
 	menuOutput::printChooseACK(ReturnPower(), need);
+	Cache::add(table);
 	return;
 }
 bool shell::aidCheckData(std::string _str) {
@@ -742,18 +742,18 @@ void shell::toInsertDatabaseTable() {
 		return;
 	}
 	table.append(tmp);
-	Cache::add(table);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1], tmp);
+	Cache::add(table);
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
 	Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
 	table.append(data);
-	Cache::add(table);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data);
+	Cache::add(table);
 }
 void shell::toInsertTable() {
 	if (pwd.size() == 1) {
@@ -771,10 +771,10 @@ void shell::toInsertTable() {
 		return;
 	}
 	table.append(tmp);
-	Cache::add(table);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			data[0], tmp);
+	Cache::add(table);
 }
 void shell::toFind() {
 	switch (command.size()) {
@@ -821,11 +821,11 @@ void shell::toFindTable() {
 				data[0], data[1], 表不存在无法查找数据);
 		return;
 	}
-	Cache::add(table);
 	menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
 			data[1], need);
 	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
 			data[1]);
+	Cache::add(table);
 }
 void shell::toFindDefalutTable() {
 	if (pwd.size() == 1) {
@@ -845,11 +845,11 @@ void shell::toFindDefalutTable() {
 				pwd[2], data[0], 表不存在无法查找数据);
 		return;
 	}
-	Cache::add(table);
 	menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
 			data[0], need);
 	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
 			data[0]);
+	Cache::add(table);
 }
 void shell::toFindDatabaseTable() {
 	if (!DataBase(data[0]).isExist()) {
@@ -865,11 +865,11 @@ void shell::toFindDatabaseTable() {
 				data[0], data[1], 表不存在无法查找数据);
 		return;
 	}
-	Cache::add(table);
 	menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
 			data[2], need);
 	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0], data[1],
 			data[2]);
+	Cache::add(table);
 }
 void shell::toShow() {
 	switch (command.size()) {
@@ -963,11 +963,11 @@ void shell::toShowTable() {
 										pwd[2], 表不存在无法显示数据);
 								return;
 							}
-							Cache::add(table);
 							menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
 									_super::stringToInt(data[0]), need);
 							Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 									pwd[2]);
+							Cache::add(table);
 							return;
 						}
 		case 2: {
@@ -978,11 +978,11 @@ void shell::toShowTable() {
 										data[0], 表不存在无法显示数据);
 								return;
 							}
-							Cache::add(table);
 							menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
 									_super::stringToInt(data[1]), need);
 							Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 									data[0]);
+							Cache::add(table);
 							return;
 						}
 	}
@@ -1001,11 +1001,11 @@ void shell::toShowDatabaseTable() {
 				data[1], 表不存在无法显示数据);
 		return;
 	}
-	Cache::add(table);
 	menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
 			_super::stringToInt(data[2]), need);
 	Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1]);
+	Cache::add(table);
 }
 void shell::toSet() {
 	if (command.size() < 2 || data.size() == 0) {
@@ -1068,12 +1068,12 @@ void shell::toSetIndexDatabaseTable() {
 				已选择的数据库中不存在目标表);
 		return;
 	}
-	Cache::add(table);
 	TablePCB::setIndex(data[0] + "/" + data[1], INDEX(atoi(data[2].c_str())));
 	Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1], data[2]);
 	menuOutput::printSetACK(ReturnPower(), need);
 	Index::update(data[0] + "/" + data[1]);
+	Cache::add(table);
 }
 void shell::toSetIndexTable() {
 	Table table(pwd[1] + "/" + data[0],type::_TYPE_TABLE);
@@ -1084,19 +1084,21 @@ void shell::toSetIndexTable() {
 				已选择的数据库中不存在目标表);
 		return;
 	}
-	Cache::add(table);
 	TablePCB::setIndex(pwd[1] + "/" + data[0], INDEX(atoi(data[1].c_str())));
 	Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			data[0], data[1]);
 	menuOutput::printSetACK(ReturnPower(), need);
 	Index::update(pwd[1] + "/" + data[0]);
+	Cache::add(table);
 }
 void shell::toSetIndexDefault() {
-	TablePCB::setIndex(pwd[1] + "/" + pwd[2], INDEX(atoi(data[0].c_str())));
+	Table table(pwd[1] + "/" + pwd[2],type::_TYPE_TABLE);
+	TablePCB::setIndex(table.returnName(), INDEX(atoi(data[0].c_str())));
 	Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data[0]);
 	menuOutput::printSetACK(ReturnPower(), need);
-	Index::update(pwd[1] + "/" + pwd[2]);
+	Index::update(table.returnName());
+	Cache::add(table);
 }
 void shell::toSetView() {
 	if (command.size() == 2 && data.size() >= 1) {
@@ -1140,11 +1142,11 @@ void shell::toSetViewDatabaseTable() {
 				已选择的数据库中不存在目标表);
 		return;
 	}
-	Cache::add(table);
 	View::setAllowShowColumn(data[2], allowCol, data[0], data[1]);
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1], data[2], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
+	Cache::add(table);
 }
 void shell::toSetViewTable() {
 	vstring allowCol(data.begin() + 2, data.end());
@@ -1156,20 +1158,20 @@ void shell::toSetViewTable() {
 				已选择的数据库中不存在目标表);
 		return;
 	}
-	Cache::add(table);
 	View::setAllowShowColumn(data[1], allowCol, pwd[1], data[0]);
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			data[0], data[1], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
+	Cache::add(table);
 }
 void shell::toSetViewDefault() {
 	vstring allowCol(data.begin() + 1, data.end());
 	Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-	Cache::add(table);
 	View::setAllowShowColumn(data[0], allowCol, pwd[1], pwd[2]);
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data[0], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
+	Cache::add(table);
 }
 void shell::addHistory(std::string& str){
 	this->history.push_back(str);

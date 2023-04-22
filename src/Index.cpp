@@ -26,6 +26,9 @@ Index::Index() {}
 Index::~Index() {}
 void Index::update(std::string name) {
 	_file oldIndex(name, type::_TYPE_INDEX_TABLE);
+	if(TablePCB(name).returnEndLineIndex() == 0){ // 表不存在则无法执行
+		return;
+	}
 	Table table(name, type::_TYPE_TABLE);
 	if (!oldIndex.isExist() || !table.isExist()) {
 		return;

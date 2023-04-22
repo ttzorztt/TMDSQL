@@ -8,7 +8,9 @@
 #ifndef _CACHE_H_
 #define _CACHE_H_
 #include "cache.h"
+#include "super.h"
 #include <iterator>
+#include <unistd.h>
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -56,8 +58,8 @@ void Cache::add(Table& file){
 }
 vstring Cache::find(Table& file, std::string index){
 	std::string fileName = file.returnName();
-	if(!fileInclue.count(fileName)){
-		return {};
+	if(!fileInclue.count(fileName) || !cache[fileToIndex[fileName]].count(index)){
+		return {};	
 	}
 	/* 获取文件指针 */
 	int ptr = cache[fileToIndex[fileName]][index];
@@ -74,7 +76,7 @@ std::string Cache::cacheCountAdd(std::string& fileName){
 		}
 		++(init.first);
 	}
-	std::sort(cacheCount.begin(),cacheCount.end()); 
+	std::sort(cacheCount.begin(),cacheCount.end());
 	if(cacheCount.size() < CACHEPOLL){
 		return "";
 	}else{
@@ -85,4 +87,11 @@ void Cache::addLine(std::string fileName, std::pair<std::string, int>){
 	if(!fileInclue.count(fileName)){
 		return;
 	}
+}
+void Cache::test_show(){
+	std::cout << "Cache 文件有:";
+	for(auto begin=fileInclue.begin(),end = fileInclue.end();begin != end;++begin){
+		std::cout << begin->data() << " ";
+	}
+	std::cout << std::endl;
 }

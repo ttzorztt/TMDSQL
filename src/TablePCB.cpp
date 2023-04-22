@@ -66,7 +66,6 @@ void TablePCB::writeData() {
 int TablePCB::returnEndLineIndex() {
 	return this->endLineIndex;
 }
-
 std::string TablePCB::returnName() {
 	return this->file.returnName();
 }

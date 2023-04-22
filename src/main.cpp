@@ -7,6 +7,7 @@
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
+#include "cache.h"
 #include <iostream>
 #endif
 #ifndef _FILE_H_
@@ -87,7 +88,7 @@ void init() {
 		_super::createDir("./data/SQL");
 		_file table("./data/SQL/init");
 		table.create();
-		vvstring tmpdata = {		
+		vvstring tmpdata = {
 			{"登录","@root","root"},
 			{"创建","数据库","@DB1"},
 			{"创建","数据库","表,@DB1","TB1"},
@@ -111,7 +112,7 @@ void init() {
 		_super::createDir("./data/Log");
 	}
 }
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
 	init();
 	shell x;
 	string tmp = "执行 @s";
@@ -126,22 +127,25 @@ int main(int argc, char const* argv[]) {
 		if (!x.read(tmp)) {
 			break;
 		}
+		std::cout << "TT" << std::endl;
+		Cache::test_show();
 	}
 	Log::close();
 	return 0;
 }
 
-
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
 	init();
 	shell x;
 	/* string tmp = "执行 @init"; */
-	string tmp = "执行 @1";
+	string tmp = "登录 @root root";
 	x.read(tmp);
-return 0;
-	tmp = "查询 数据库 表 @DB TB 1";
+	tmp = "选择 数据库 表 @DB1 TB1";
+	x.read(tmp);
+	tmp = "查询 数据库 表 @DB1 TB1 s";
 	x.read(tmp);
 
+	return 0;
 	tmp = "查询 数据库 表 @DB TB 2";
 	x.read(tmp);
 	tmp = "查询 数据库 表 @DB TB 3";
