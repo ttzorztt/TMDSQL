@@ -3,4 +3,5 @@ src/*.o
 src/TMSQL
 src/TMSQL.exe
 src/data/
+undergraduate_src/data/
 doc/
