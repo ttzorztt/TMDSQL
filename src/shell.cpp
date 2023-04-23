@@ -152,7 +152,9 @@ void shell::toChooseDatabaseTable() {
 	Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1]);
 	menuOutput::printChooseACK(ReturnPower(), need);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}
 	return;
 }
 bool shell::aidCheckData(std::string _str) {
@@ -460,7 +462,9 @@ void shell::toCreateTable() {
 				data[0], 表已存在无法创建);
 	} else {
 		table.create();
-		Cache::add(table);
+		if (!Cache::Count(table)) {
+			Cache::add(table);
+		}
 		menuOutput::printCreateACK(ReturnPower(), need);
 		Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 				data[0]);
@@ -493,7 +497,9 @@ void shell::toCreateDatabaseTable() {
 				data[1], 表已存在无法创建);
 	} else {
 		table.create();
-		Cache::add(table);
+		if (!Cache::Count(table)) {
+			Cache::add(table);
+		}
 		menuOutput::printCreateACK(ReturnPower(), need);
 		Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 				data[1]);
@@ -582,7 +588,7 @@ void shell::toDeleteTable() {
 		return;
 	}
 	menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-	menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
+	menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, deleteShowTableNumber, false);
 	if (inputACK()) {
 		table.remove();
 		Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -618,7 +624,7 @@ void shell::toDeleteDatabaseTable() {
 		return;
 	}
 	menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-	menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
+	menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, deleteShowTableNumber, false);
 	if (inputACK()) {
 		table.remove();
 		menuOutput::printDeleteACK(ReturnPower(), need);
@@ -741,19 +747,33 @@ void shell::toInsertDatabaseTable() {
 				data[1], tmp, 表不存在无法插入数据);
 		return;
 	}
+	TablePCB tmpPCB(table);
+	INDEX index = tmpPCB.returnEndLineIndex();
+	int indexcol = tmpPCB.returnIndex();
 	table.append(tmp);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1], tmp);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}else{
+		Cache::addTableItem(table,tmp[indexcol],index);
+	}
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
 	Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+	TablePCB tmpPCB(table);
+	INDEX index = tmpPCB.returnEndLineIndex();
+	int indexcol = tmpPCB.returnIndex();
 	table.append(data);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}else{
+		Cache::addTableItem(table,data[indexcol],index);
+	}
 }
 void shell::toInsertTable() {
 	if (pwd.size() == 1) {
@@ -770,11 +790,18 @@ void shell::toInsertTable() {
 		menuOutput::printNotExistsTable(ReturnPower(), need);
 		return;
 	}
+	TablePCB tmpPCB(table);
+	INDEX index = tmpPCB.returnEndLineIndex();
+	int indexcol = tmpPCB.returnIndex();
 	table.append(tmp);
 	menuOutput::printInsertACK(ReturnPower(), need);
 	Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			data[0], tmp);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}else{
+		Cache::addTableItem(table,tmp[indexcol],index);
+	}
 }
 void shell::toFind() {
 	switch (command.size()) {
@@ -849,7 +876,9 @@ void shell::toFindDefalutTable() {
 			data[0], need);
 	Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
 			data[0]);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}
 }
 void shell::toFindDatabaseTable() {
 	if (!DataBase(data[0]).isExist()) {
@@ -967,7 +996,9 @@ void shell::toShowTable() {
 									_super::stringToInt(data[0]), need);
 							Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 									pwd[2]);
-							Cache::add(table);
+							if (!Cache::Count(table)) {
+								Cache::add(table);
+							}
 							return;
 						}
 		case 2: {
@@ -982,7 +1013,9 @@ void shell::toShowTable() {
 									_super::stringToInt(data[1]), need);
 							Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 									data[0]);
-							Cache::add(table);
+							if (!Cache::Count(table)) {
+								Cache::add(table);
+							}
 							return;
 						}
 	}
@@ -1005,7 +1038,9 @@ void shell::toShowDatabaseTable() {
 			_super::stringToInt(data[2]), need);
 	Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1]);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}
 }
 void shell::toSet() {
 	if (command.size() < 2 || data.size() == 0) {
@@ -1089,7 +1124,9 @@ void shell::toSetIndexTable() {
 			data[0], data[1]);
 	menuOutput::printSetACK(ReturnPower(), need);
 	Index::update(pwd[1] + "/" + data[0]);
-	Cache::add(table);
+	if(!Cache::Count(table)){
+		Cache::add(table);
+	}
 }
 void shell::toSetIndexDefault() {
 	Table table(pwd[1] + "/" + pwd[2],type::_TYPE_TABLE);
@@ -1098,13 +1135,15 @@ void shell::toSetIndexDefault() {
 			pwd[2], data[0]);
 	menuOutput::printSetACK(ReturnPower(), need);
 	Index::update(table.returnName());
-	Cache::add(table);
+	if (!Cache::Count(table)) {
+		Cache::add(table);
+	}
 }
 void shell::toSetView() {
 	if (command.size() == 2 && data.size() >= 1) {
 		toSetViewDefault();
 		return;
-	} else if (command.size() > 2 && data.size() >= 3) {
+	} else if (command.size() > 3 && data.size() >= 3) {
 		switch (command[2]) {
 			case 数据库:
 				if (data.size() >= 4 && command.size() == 4 && command[3] == 表) {
@@ -1146,7 +1185,9 @@ void shell::toSetViewDatabaseTable() {
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
 			data[1], data[2], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
-	Cache::add(table);
+	if (!Cache::Count(table)) {
+		Cache::add(table);
+	}
 }
 void shell::toSetViewTable() {
 	vstring allowCol(data.begin() + 2, data.end());
@@ -1162,7 +1203,9 @@ void shell::toSetViewTable() {
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			data[0], data[1], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
-	Cache::add(table);
+	if (!Cache::Count(table)) {
+		Cache::add(table);
+	}
 }
 void shell::toSetViewDefault() {
 	vstring allowCol(data.begin() + 1, data.end());
@@ -1171,7 +1214,9 @@ void shell::toSetViewDefault() {
 	Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
 			pwd[2], data[0], allowCol);
 	menuOutput::printSetACK(ReturnPower(), need);
-	Cache::add(table);
+	if (!Cache::Count(table)) {
+		Cache::add(table);
+	}
 }
 void shell::addHistory(std::string& str){
 	this->history.push_back(str);

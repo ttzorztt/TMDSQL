@@ -52,6 +52,8 @@ typedef int INDEX;
 #define _SQLPath "./data/SQL/"
 #define _ViewPath "./data/view/"
 #define _TruePathForUserData "/data/User/pd"
+#define deleteShowTableNumber 5
+#define CACHEPOLL 10
 // 权限
 enum TYPE_POWER {
 	ROOT,     // 超级管理员
@@ -81,18 +83,22 @@ enum TYPE_CID {
 	设置,
 	索引,
 	视图,
+	列,
+	行
 };
 typedef std::vector<TYPE_CID> vCID;
 std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {
 	{"退出", 退出}, {"创建", 创建}, {"数据库", 数据库}, {"删除", 删除},
 	{"选择", 选择}, {"登录", 登录}, {"显示", 显示},     {"插入", 插入},
 	{"查询", 查询}, {"表", 表},     {"用户", 用户},     {"管理员", 管理员},
-	{"执行", 执行}, {"设置", 设置}, {"索引", 索引},     {"视图", 视图}};
+	{"执行", 执行}, {"设置", 设置}, {"索引", 索引},     {"视图", 视图},{"列",列},{"行",行}
+};
 std::unordered_map<TYPE_CID, std::string> static HashMapCIDToString = {
 	{退出, "退出"}, {创建, "创建"}, {数据库, "数据库"}, {删除, "删除"},
 	{选择, "选择"}, {登录, "登录"}, {显示, "显示"},     {插入, "插入"},
 	{查询, "查询"}, {表, "表"},     {用户, "用户"},     {管理员, "管理员"},
-	{执行, "执行"}, {设置, "设置"}, {索引, "索引"},     {视图, "视图"}};
+	{执行, "执行"}, {设置, "设置"}, {索引, "索引"},     {视图, "视图"},{列,"列"},{行,"行"}
+};
 //无法登录原因
 enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
 enum type {

@@ -60,19 +60,19 @@ class shell : public User {
 		/**
 		 * @brief 返回历史记录的上一条
 		 *
-		 * @Return 执行字符串
+		 * @return 执行字符串
 		 */
 		std::string prevHistory();
 		/**
 		 * @brief 返回历史记录的下一条
 		 *
-		 * @Return 执行字符串
+		 * @return 执行字符串
 		 */
 		std::string nextHistory();
 		/**
 		 * @brief 是否有历史
 		 *
-		 * @Return 返回是否存在历史值
+		 * @return 返回是否存在历史值
 		 */
 		bool hasHistory();
 	private:

@@ -112,7 +112,7 @@ void init() {
 		_super::createDir("./data/Log");
 	}
 }
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
 	init();
 	shell x;
 	string tmp = "执行 @s";
@@ -127,14 +127,12 @@ int main1(int argc, char const* argv[]) {
 		if (!x.read(tmp)) {
 			break;
 		}
-		std::cout << "TT" << std::endl;
-		Cache::test_show();
 	}
 	Log::close();
 	return 0;
 }
 
-int main(int argc, char const* argv[]) {
+int main1(int argc, char const* argv[]) {
 	init();
 	shell x;
 	/* string tmp = "执行 @init"; */

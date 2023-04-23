@@ -59,7 +59,7 @@ void Cache::add(Table& file){
 vstring Cache::find(Table& file, std::string index){
 	std::string fileName = file.returnName();
 	if(!fileInclue.count(fileName) || !cache[fileToIndex[fileName]].count(index)){
-		return {};	
+		return {};
 	}
 	/* 获取文件指针 */
 	int ptr = cache[fileToIndex[fileName]][index];
@@ -94,4 +94,16 @@ void Cache::test_show(){
 		std::cout << begin->data() << " ";
 	}
 	std::cout << std::endl;
+}
+void Cache::addTableItem(std::string TableName,std::string addIndex,int fileIndex){
+	cache[fileToIndex[TableName]][addIndex] = fileIndex;
+}
+void Cache::addTableItem(Table& table,std::string addIndex,int fileIndex){
+	Cache::addTableItem(table.returnName(),addIndex,fileIndex);
+}
+void Cache::deleteTableItem(std::string TableName,std::string deleteIndex){
+ cache[fileToIndex[TableName]].erase(deleteIndex);
+}
+void Cache::deleteTableItem(Table& table,std::string deleteIndex){
+	Cache::deleteTableItem(table.returnName(),deleteIndex);
 }
