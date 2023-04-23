@@ -272,34 +272,7 @@ bool shell::read() {
 											 编译错误);
 									 break;
 								 }
-								 if (data.size() == 2) {
-									 std::string oldUserName = ReturnUserName();
-									 TYPE_POWER oldUserPower = ReturnPower();
-									 if (this->login(data[0], data[1])) {
-										 if (pwd.size() == 0) {
-											 pwd.push_back("/");
-										 }
-										 Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
-									 } else {
-										 switch ((int)returnErrorCase()) {
-											 case 密码错误:
-												 Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-														 登录密码错误);
-												 break;
-											 case 帐号不存在:
-												 Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-														 登录帐号错误);
-												 break;
-										 }
-									 }
-									 menuOutput::printLoginOrNot(this->ReturnLoginStatus(),
-											 returnErrorCase(), ReturnPower(),
-											 ReturnUserName(), need);
-								 } else {
-									 Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-											 编译错误);
-									 menuOutput::printCommandError(ReturnPower(), need);
-								 }
+								 toLogin();
 								 break;
 							 }
 		case 插入: {
@@ -336,6 +309,37 @@ bool shell::read() {
 							 break;
 	};
 	return true;
+}
+void shell::toLogin(){
+	if (data.size() == 2) {
+		std::string oldUserName = ReturnUserName();
+		TYPE_POWER oldUserPower = ReturnPower();
+		if (this->login(data[0], data[1])) {
+			if (pwd.size() == 0) {
+				pwd.push_back("/");
+			}
+			Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
+		} else {
+			switch ((int)returnErrorCase()) {
+				case 密码错误:
+					Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+							登录密码错误);
+					break;
+				case 帐号不存在:
+					Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+							登录帐号错误);
+					break;
+			}
+		}
+		menuOutput::printLoginOrNot(this->ReturnLoginStatus(),
+				returnErrorCase(), ReturnPower(),
+				ReturnUserName(), need);
+	} else {
+		Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+				编译错误);
+		menuOutput::printCommandError(ReturnPower(), need);
+	}
+
 }
 bool shell::read(std::string str) {
 	if (!check(str)) {
@@ -507,6 +511,34 @@ void shell::toCreateDatabaseTable() {
 }
 void shell::toDelete() {
 	switch (command[1]) {
+		case 列:{
+							if(command.size() == 2 && data.size() == 1){ // 删除_列(pwd默认选择到表)
+								toDeleteCol();
+							}else if(command.size() == 3 && data.size() == 2){ //删除_列_表(pwd选择到数据库)
+								toDeleteColTable();
+							}else if(command.size() == 4 && data.size() == 3){ // 删除_列_数据库_表 (pwd只需登录)
+								toDeleteColDatabaseTable();
+							}else{
+								menuOutput::printCommandError(ReturnPower(), need);
+								Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+										编译错误);
+							}
+							return;
+						}
+		case 行:{
+							if(command.size() == 2 && data.size() == 1){
+								toDeleteRow();
+							} else if(command.size() == 3 && data.size() == 2){
+								toDeleteRowTable();
+							}else if(command.size() == 4 && data.size() == 3){
+								toDeleteRowDatabaseTable();
+							}else{
+								menuOutput::printCommandError(ReturnPower(), need);
+								Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+										编译错误);
+							}
+							return;
+						}
 		case 数据库: {
 									 if (command.size() == 3 && command[2] == 表 && data.size() == 2) {
 										 toDeleteDatabaseTable();
@@ -638,6 +670,28 @@ void shell::toDeleteDatabaseTable() {
 		return;
 	}
 }
+void shell::toDeleteRow(){
+	if(pwd.size() == 1){
+	menuOutput::printCommandError(ReturnPower(),need);	
+	Log::LogForError(ReturnUserName(), ReturnPower(),command,data,未选择数据库越级选择表);
+	}else if(pwd.size() == 2){
+	menuOutput::printCommandError(ReturnPower(),need);
+	Log::LogForError(ReturnUserName(), ReturnPower(), command,data,已选择的数据库中不存在目标表);
+	}else{
+	}
+}
+void shell::toDeleteRowTable(){
+}
+void shell::toDeleteRowDatabaseTable(){
+}
+void shell::toDeleteCol(){
+}
+void shell::toDeleteColTable(){
+}
+void shell::toDeleteColDatabaseTable(){
+}
+
+
 void shell::toDeleteDatabase() {
 	DataBase database(data[0]);
 	if (!database.isExist()) {

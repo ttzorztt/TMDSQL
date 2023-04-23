@@ -32,7 +32,6 @@
 #define _MAP_
 #include <map>
 #endif
-#define CACHEPOLL 10
 class Cache{
 	private:
 		/* 文件包含 */

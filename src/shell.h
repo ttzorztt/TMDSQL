@@ -162,7 +162,10 @@ class shell : public User {
 		 * @brief 输入插入数据库表后的操作
 		 */
 		void toInsertDatabaseTable();
-
+		/**
+		 * @brief 登录操作
+		 */
+		void toLogin();
 		/**
 		 * @brief 输入查询后的操作
 		 */
@@ -263,6 +266,30 @@ class shell : public User {
 		 * @brief 输入删除数据库表后的操作
 		 */
 		void toDeleteDatabaseTable();
+		/**
+		 * @brief 输入删除行数据库表后的操作
+		 */
+		void toDeleteRowDatabaseTable();
+		/**
+		 * @brief 输入删除行表后的操作
+		 */
+		void toDeleteRowTable();
+		/**
+		 * @brief 输入删除行后的操作
+		 */
+		void toDeleteRow();
+		/**
+		 * @brief 输入删除列数据库表后的操作
+		 */
+		void toDeleteColDatabaseTable();
+		/**
+		 * @brief 输出删除列表后的操作
+		 */
+		void toDeleteColTable();
+		/**
+		 * @brief 输出删除列后的操作
+		 */
+		void toDeleteCol();
 		/**
 		 * @brief 输入删除用户后的操作
 		 */
