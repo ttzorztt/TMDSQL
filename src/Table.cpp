@@ -2,7 +2,6 @@
  * @file Table.cpp
  * @brief 封装表操作
  * @author TMD
- * @version 1.3
  * @date 2022-11-06
  */
 #ifndef _TABLE_H_
@@ -99,7 +98,6 @@ vstring Table::find(std::string index) {
 	}
 	return {};
 }
-
 bool Table::append(vstring value) {
 	TablePCB pcb(this->returnName());
 	int fileIndex = pcb.returnEndLineIndex();
@@ -121,7 +119,6 @@ bool Table::append(vstring value) {
 	pcb.setEndLineIndex(fileIndex);
 	return true;
 }
-
 Table::Table(Table& table) : _file(table.name, table.style) {
 	this->style = table.style;
 	++this->count;

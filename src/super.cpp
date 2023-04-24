@@ -2,7 +2,6 @@
  * @file super.cpp
  * @brief 维护一些静态函数和变量
  * @author TMD
- * @version 1.3
  * @date 2022-11-07
  */
 #ifndef _SUPER_H_

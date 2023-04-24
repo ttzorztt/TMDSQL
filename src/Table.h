@@ -2,7 +2,6 @@
  * @file Table.h
  * @brief 封装表操作
  * @author TMD
- * @version 1.3
  * @date 2022-11-06
  */
 #ifndef _TABLE_

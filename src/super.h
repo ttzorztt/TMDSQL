@@ -2,7 +2,6 @@
  * @file super.h
  * @brief 维护一些公共静态函数和变量
  * @author TMD
- * @version 1.3
  * @date 2022-11-07
  */
 #ifndef _SUPER_
@@ -154,6 +153,8 @@ enum TYPE_ERROR_CASE {
 	表不存在无法显示数据,
 	数据库不存在无法显示数据,
 	未选择表,
+	不存在该行,
+	不存在该列
 };
 // 优化输出
 // static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},

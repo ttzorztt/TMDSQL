@@ -2,7 +2,6 @@
  * @file cache.h
  * @brief 索引添加进缓存
  * @author TMD
- * @version 1.4
  * @date 2023-02-24
  */
 #ifndef _CACHE_
@@ -45,17 +44,16 @@ class Cache{
 		/* 使用最近最久未被使用的替换算法 */
 		static std::vector<std::pair<int,std::string>> cacheCount;
 		/**
-		 * @brief cacheCount的自增,主要是进行替换算法。
+		 * @brief 新进入的文件，首先查看cache中是否有该文件，如果当前内存不够poll的话，就返回""。 (时刻运行)
 		 *
-		 * @param fileName 文件名
+		 * @param fileName 新文件名
 		 *
 		 * @return 被替换的文件名(PS:如果不需要则返回"")
 		 */
-		std::string static cacheCountAdd(std::string& fileName);
+		std::string static update(std::string fileName);
 	public:
 		Cache();
 		~Cache();
-
 		/**
 		 * @brief 往内存中添加数据
 		 *
@@ -86,13 +84,27 @@ class Cache{
 		 * @param deleteIndex 删除数据行索引
 		 */
 		void static deleteTableItem(Table& table,std::string deleteIndex);
+		/*/1** */
+		/* * @brief 删除列 */
+		/* * */
+		/* * @param table 表名 */
+		/* * @param deleteCol 列 */
+		/* *1/ */
+		/*void static deleteCol(Table& table,std::string deleteCol); */
+		/*/1** */
+		/* * @brief 删除列 */
+		/* * */
+		/* * @param tableName 表名 */
+		/* * @param deleteCol 列 */
+		/* *1/ */
+		/*void static deleteCol(std::string tableName,std::string deleteCol); */
 		/**
 		 * @brief 添加一行内容。如果说这个文件没有在Cache中，则会添加，如果在的话，自然就是把新添加的部分添加到Cache中，emmm，同时也对硬盘写入。所以骚年，安心使用无脑Ctrl+C吧
 		 *
 		 * @param fileName
 		 * @param std::pair
 		 */
-		void static addLine(std::string fileName,std::pair<std::string, int>);
+		/* void static addLine(std::string fileName,std::pair<std::string, int>); */
 		Cache(const Cache& copy) = delete;
 		/**
 		 * @brief 入缓存
