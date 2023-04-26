@@ -44,10 +44,6 @@ TablePCB::TablePCB(std::string DBID, std::string TBID)
 void TablePCB::readData() {
 	vstring vec;
 	file.readline(vec);
-	if (vec.empty()) {
-		std::cout << "empty" << std::endl;
-		return;
-	}
 	this->endLineIndex = atoi(vec[1].c_str());
 	this->length = atoi(vec[2].c_str());
 	this->index = atoi(vec[3].c_str());

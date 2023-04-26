@@ -7,6 +7,7 @@
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
+#include <cstdio>
 #include <iostream>
 
 #include "cache.h"
@@ -139,15 +140,6 @@ int main1(int argc, char const* argv[]) {
 }
 
 int main(int argc, char const* argv[]) {
-  /* { */
-  /*   vstring tmp = */
-  /*       _super::dispartDatabaseNameAndTableName("./data/database/DB1/TB1tmp"); */
-  /*   std::cout << tmp[0] << std::endl */
-  /*             << tmp[1] << std::endl */
-  /*             << tmp[2] << std::endl; */
-  /*   return 0; */
-  /* } */
-
   init();
   shell x;
   string tmp = "执行 @init";

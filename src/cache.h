@@ -84,34 +84,13 @@ class Cache{
 		 * @param deleteIndex 删除数据行索引
 		 */
 		void static deleteTableItem(Table& table,std::string deleteIndex);
-		/*/1** */
-		/* * @brief 删除列 */
-		/* * */
-		/* * @param table 表名 */
-		/* * @param deleteCol 列 */
-		/* *1/ */
-		/*void static deleteCol(Table& table,std::string deleteCol); */
-		/*/1** */
-		/* * @brief 删除列 */
-		/* * */
-		/* * @param tableName 表名 */
-		/* * @param deleteCol 列 */
-		/* *1/ */
-		/*void static deleteCol(std::string tableName,std::string deleteCol); */
-		/**
-		 * @brief 添加一行内容。如果说这个文件没有在Cache中，则会添加，如果在的话，自然就是把新添加的部分添加到Cache中，emmm，同时也对硬盘写入。所以骚年，安心使用无脑Ctrl+C吧
-		 *
-		 * @param fileName
-		 * @param std::pair
-		 */
-		/* void static addLine(std::string fileName,std::pair<std::string, int>); */
 		Cache(const Cache& copy) = delete;
 		/**
 		 * @brief 入缓存
 		 *
 		 * @param file 文件对象
 		 */
-		void static add(Table& file);
+		void static add(Table file);
 		/**
 		 * @brief 查找，如果找不到则返回{}
 		 *
@@ -120,7 +99,7 @@ class Cache{
 		 *
 		 * @return 查询结果
 		 */
-		vstring static find(Table& file,std::string index);
+		vstring static find(Table file,std::string index);
 		/**
 		 * @brief 判断Cache中有无文件
 		 *

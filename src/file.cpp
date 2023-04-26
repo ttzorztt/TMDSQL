@@ -57,10 +57,6 @@ bool _file::deleteLine(std::string index) {
   bool command = false;
   vstring vectorbuff;
   _file tmp(oldTruePath + "tmp");
-  /* _file tmp1(this->returnName() + "tmp", type::_TYPE_TABLE); */
-  /* std::cout << tmp1.returnTruePath() << " " << tmp1.returnName() <<
-   * std::endl; */
-  /* tmp.create(); */
   if (tmp.isExist()) {
     tmp.remove();
   }
@@ -69,11 +65,8 @@ bool _file::deleteLine(std::string index) {
   int indexcol = tmpPCB->returnIndex();
   delete tmpPCB;
   this->setReadSeek(0);
-	this->readline(vectorbuff);
-	/* std::cout << this->style << std::endl; */
-	/* std::cout << this->returnReadTell() << " " << vectorbuff.size() << std::endl; */
-  while (this->readline(vectorbuff)) {
-    /* std::cout << "1" << std::endl; */
+	_file* tmpOldFile = new _file(this->returnName(),type::_TYPE_TABLE);
+  while (tmpOldFile->readline(vectorbuff)) {
     if (vectorbuff[indexcol] == index) {
       command = true;
       continue;
@@ -81,9 +74,8 @@ bool _file::deleteLine(std::string index) {
       tmp.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
     }
   }
+  rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str());
   /* this->remove(); */
-  /* tmp.remove(); */
-  /* rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str()); */
   Index::update(oldTruePath);
   return command;
 }
@@ -277,7 +269,6 @@ bool _file::readline(revstring ret) {
     return false;
   }
   getline(readFileBuff, _str);
-	/* std::cout << _str << std::endl; */
   if (_str == "") {
     return false;
   }

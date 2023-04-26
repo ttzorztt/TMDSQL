@@ -37,7 +37,7 @@ int Cache::stap = 0;
 std::vector<std::pair<int, std::string>> Cache::cacheCount;
 Cache::Cache() { cache.resize(CACHEPOLL); }
 Cache::~Cache() {}
-void Cache::add(Table& file) {
+void Cache::add(Table file) {
   std::string filename = file.returnName();
   std::string replace =  Cache::update(filename);
   if (fileInclue.count(filename)) {
@@ -59,7 +59,7 @@ void Cache::add(Table& file) {
   stap = (stap + 1) % CACHEPOLL;
   file.setReadSeek(seek);
 }
-vstring Cache::find(Table& file, std::string index) {
+vstring Cache::find(Table file, std::string index) {
   std::string fileName = file.returnName();
   if (!fileInclue.count(fileName) ||
       !cache[fileToIndex[fileName]].count(index)) {
@@ -111,7 +111,3 @@ void Cache::deleteTableItem(std::string TableName, std::string deleteIndex) {
 void Cache::deleteTableItem(Table& table, std::string deleteIndex) {
   Cache::deleteTableItem(table.returnName(), deleteIndex);
 }
-/* void Cache::deleteCol(Table& table, std::string deleteCol) { */
-/*   Cache::deleteCol(table.returnName(), deleteCol); */
-/* } */
-/* void Cache::deleteCol(std::string tableName, std::string deleteCol) {} */
