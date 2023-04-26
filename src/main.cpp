@@ -7,8 +7,9 @@
  */
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
-#include "cache.h"
 #include <iostream>
+
+#include "cache.h"
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -69,112 +70,126 @@ using namespace std;
  * @return
  */
 void init() {
-	if (access("./data", F_OK)) {
-		_super::createDir("./data");
-	}
-	if (access("./data/database", F_OK)) {
-		_super::createDir("./data/database");
-	}
-	if (access("./data/index", F_OK)) {
-		_super::createDir("./data/index");
-	}
-	if (access("./data/PCB", F_OK)) {
-		_super::createDir("./data/PCB");
-	}
-	if (access("./data/view", F_OK)) {
-		_super::createDir("./data/view");
-	}
-	if (access("./data/SQL", F_OK)) {
-		_super::createDir("./data/SQL");
-		_file table("./data/SQL/init");
-		table.create();
-		vvstring tmpdata = {
-			{"登录","@root","root"},
-			{"创建","数据库","@DB1"},
-			{"创建","数据库","表,@DB1","TB1"},
-			{"插入","数据库","表","@DB1","TB1","序号","姓名","性别","学历","爱好","住址","联系方式"},
-			{"插入","数据库","表","@DB1","TB1","0","张三","男","本科","钓鱼","北京","110"},
-			{"插入","数据库","表","@DB1","TB1","1","李四","男","研究生","吃饭","西安","120"},
-			{"插入","数据库","表","@DB1","TB1","2","王五","女","博士","吃鱼","天津","119"},
-			{"插入","数据库","表","@DB1","TB1","3","赵六","女","博士后","跳绳","四川","122"},
-			{"插入","数据库","表","@DB1","TB1","4","刘七","男","初中","跳大绳","深圳","114"},
-			{"插入","数据库","表","@DB1","TB1","5","雷八","女","高中","跳小绳","安徽","911"}
-		};
-		table.writeAnyLine(tmpdata,type_mode::WRITEBUFF_MODE_TRUNC);
-	}
-	if (access("./data/User", F_OK)) {
-		_super::createDir("./data/User");
-		_file table("./data/User/pd");
-		table.create();
-		table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
-	}
-	if (access("./data/Log", F_OK)) {
-		_super::createDir("./data/Log");
-	}
+  if (access("./data", F_OK)) {
+    _super::createDir("./data");
+  }
+  if (access("./data/database", F_OK)) {
+    _super::createDir("./data/database");
+  }
+  if (access("./data/index", F_OK)) {
+    _super::createDir("./data/index");
+  }
+  if (access("./data/PCB", F_OK)) {
+    _super::createDir("./data/PCB");
+  }
+  if (access("./data/view", F_OK)) {
+    _super::createDir("./data/view");
+  }
+  if (access("./data/SQL", F_OK)) {
+    _super::createDir("./data/SQL");
+    _file table("./data/SQL/init");
+    table.create();
+    vvstring tmpdata = {{"登录", "@root", "root"},
+                        {"创建", "数据库", "@DB1"},
+                        {"创建", "数据库", "表,@DB1", "TB1"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "序号", "姓名",
+                         "性别", "学历", "爱好", "住址", "联系方式"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "0", "张三",
+                         "男", "本科", "钓鱼", "北京", "110"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "1", "李四",
+                         "男", "研究生", "吃饭", "西安", "120"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "2", "王五",
+                         "女", "博士", "吃鱼", "天津", "119"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "3", "赵六",
+                         "女", "博士后", "跳绳", "四川", "122"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "4", "刘七",
+                         "男", "初中", "跳大绳", "深圳", "114"},
+                        {"插入", "数据库", "表", "@DB1", "TB1", "5", "雷八",
+                         "女", "高中", "跳小绳", "安徽", "911"}};
+    table.writeAnyLine(tmpdata, type_mode::WRITEBUFF_MODE_TRUNC);
+  }
+  if (access("./data/User", F_OK)) {
+    _super::createDir("./data/User");
+    _file table("./data/User/pd");
+    table.create();
+    table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
+  }
+  if (access("./data/Log", F_OK)) {
+    _super::createDir("./data/Log");
+  }
 }
-int main(int argc, char const* argv[]) {
-	init();
-	shell x;
-	string tmp = "执行 @s";
-	Log::open();
-	char ch;
-	while(1){
-		getline(cin, tmp);
-		if(ch == '\n'){
-			menuOutput::printPower(x.ReturnPower());
-			break;
-		}
-		if (!x.read(tmp)) {
-			break;
-		}
-	}
-	Log::close();
-	return 0;
-}
-
 int main1(int argc, char const* argv[]) {
-	init();
-	shell x;
-	/* string tmp = "执行 @init"; */
-	string tmp = "登录 @root root";
-	x.read(tmp);
-	tmp = "选择 数据库 表 @DB1 TB1";
-	x.read(tmp);
-	tmp = "查询 数据库 表 @DB1 TB1 s";
-	x.read(tmp);
+  init();
+  shell x;
+  string tmp = "执行 @s";
+  Log::open();
+  char ch;
+  while (1) {
+    getline(cin, tmp);
+    if (ch == '\n') {
+      menuOutput::printPower(x.ReturnPower());
+      break;
+    }
+    if (!x.read(tmp)) {
+      break;
+    }
+  }
+  Log::close();
+  return 0;
+}
 
-	return 0;
-	tmp = "查询 数据库 表 @DB TB 2";
-	x.read(tmp);
-	tmp = "查询 数据库 表 @DB TB 3";
-	x.read(tmp);
-	tmp = "查询 数据库 表 @DB TB 4";
-	x.read(tmp);
-	return 0;
-	tmp = "选择 数据库 @DB1";
-	x.read(tmp);
+int main(int argc, char const* argv[]) {
+  /* { */
+  /*   vstring tmp = */
+  /*       _super::dispartDatabaseNameAndTableName("./data/database/DB1/TB1tmp"); */
+  /*   std::cout << tmp[0] << std::endl */
+  /*             << tmp[1] << std::endl */
+  /*             << tmp[2] << std::endl; */
+  /*   return 0; */
+  /* } */
 
-	tmp = "插入 表 @TB1 姓名 性别 年龄";
-	x.read(tmp);
+  init();
+  shell x;
+  string tmp = "执行 @init";
+  /* x.read(tmp); */
+  /* string tmp = "执行 @init"; */
+  tmp = "登录 @root root";
+  x.read(tmp);
+  tmp = "删除 行 数据库 表 @DB1 TB1 2";
+  x.read(tmp);
 
-	tmp = "插入 表 @TB1 张三 男 11";
-	x.read(tmp);
+  return 0;
+  tmp = "查询 数据库 表 @DB TB 2";
+  x.read(tmp);
+  tmp = "查询 数据库 表 @DB TB 3";
+  x.read(tmp);
+  tmp = "查询 数据库 表 @DB TB 4";
+  x.read(tmp);
+  return 0;
+  tmp = "选择 数据库 @DB1";
+  x.read(tmp);
 
-	tmp = "插入 表 @TB1 王五 男 10";
-	x.read(tmp);
-	tmp = "插入 表 @TB1 李四 女 100";
+  tmp = "插入 表 @TB1 姓名 性别 年龄";
+  x.read(tmp);
 
-	x.read(tmp);
+  tmp = "插入 表 @TB1 张三 男 11";
+  x.read(tmp);
 
-	tmp = "显示 表 @TB1 3";
+  tmp = "插入 表 @TB1 王五 男 10";
+  x.read(tmp);
+  tmp = "插入 表 @TB1 李四 女 100";
 
-	x.read(tmp);
-	tmp = "设置 视图 表 @TB1 root 0 2";
+  x.read(tmp);
 
-	x.read(tmp);
-	tmp = "显示 表 @TB1 3";
+  tmp = "显示 表 @TB1 3";
 
-	x.read(tmp);
+  x.read(tmp);
+  tmp = "设置 视图 表 @TB1 root 0 2";
 
-	return 0;
+  x.read(tmp);
+  tmp = "显示 表 @TB1 3";
+
+  x.read(tmp);
+
+  return 0;
 }

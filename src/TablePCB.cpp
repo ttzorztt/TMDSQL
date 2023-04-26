@@ -1,3 +1,9 @@
+/*
+ * @Description  : 
+ * @Autor        : TMD
+ * @Date         : 2023-04-25 14:37:14
+ * @LastEditTime : 2023-04-25 14:37:15
+ */
 /**
  * @file TablePCB.cpp
  * @brief 表PCB的实现
@@ -78,7 +84,7 @@ void TablePCB::setIndex(INDEX index) {
 void TablePCB::setEndLineIndex(Table table, POINTER fileIndex) {
 	TablePCB pcb(table);
 	pcb.setEndLineIndex(fileIndex);
-}
+}	
 void TablePCB::setIndex(std::string tableName, INDEX fileIndex) {
 	TablePCB pcb(tableName);
 	pcb.setIndex(fileIndex);

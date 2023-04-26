@@ -235,10 +235,11 @@ class _super {
 		 */
 		bool static writeFile(std::string Name, const std::string& str);
 		/**
-		 * @brief 分离数据库名和表名
+		 * @brief 分离数据库名和表名,(首先你的路径需要符合要求类似:./data/database/DB1/TB1)
 		 *
 		 * @param  string TableName 待分离的表名
 		 * @return vstring[0] 是数据库名，vstring[1]是表名
+		 * @return vstring[0] 是数据库名，vstring[1]是表名,vstring[2]是数据库+表名
 		 */
 		vstring static dispartDatabaseNameAndTableName(std::string TableName);
 		/**

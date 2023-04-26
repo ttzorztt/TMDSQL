@@ -931,10 +931,10 @@ void shell::toInsertDatabaseTable() {
                                    data[1], tmp, 表不存在无法插入数据);
     return;
   }
-	TablePCB* tmpPCB =  new TablePCB(table);	
+  TablePCB* tmpPCB = new TablePCB(table);
   INDEX index = tmpPCB->returnEndLineIndex();
   int indexcol = tmpPCB->returnIndex();
-	delete tmpPCB;
+  delete tmpPCB;
   table.append(tmp);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
@@ -946,10 +946,10 @@ void shell::toInsertDatabaseTable() {
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
   Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-	TablePCB* tmpPCB =  new TablePCB(table);	
+  TablePCB* tmpPCB = new TablePCB(table);
   INDEX index = tmpPCB->returnEndLineIndex();
   int indexcol = tmpPCB->returnIndex();
-	delete tmpPCB;
+  delete tmpPCB;
   table.append(data);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -974,10 +974,10 @@ void shell::toInsertTable() {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
   }
-	TablePCB* tmpPCB =  new TablePCB(table);	
+  TablePCB* tmpPCB = new TablePCB(table);
   INDEX index = tmpPCB->returnEndLineIndex();
   int indexcol = tmpPCB->returnIndex();
-	delete tmpPCB;
+  delete tmpPCB;
   table.append(tmp);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -1065,15 +1065,15 @@ void shell::toFindDefalutTable() {
 void shell::toFindDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
     menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                 data[0], data[1], 数据库不存在无法查找数据);
+    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                 data[1], data[2], 数据库不存在无法查找数据);
     return;
   }
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
   if (!table.isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
-    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                 data[0], data[1], 表不存在无法查找数据);
+    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                 data[1], data[2], 表不存在无法查找数据);
     return;
   }
   menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,

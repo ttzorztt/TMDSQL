@@ -11,6 +11,7 @@
 
 #include <cstdlib>
 
+#include "TablePCB.h"
 #include "super.h"
 #endif
 #ifndef _IOSTREAM_
@@ -30,7 +31,7 @@ _file::_file(std::string Name, type style) : _super(Name) {
   this->nowMode = type_mode::DEFAULT;
 }
 _file::_file(std::string TruePath)
-    : _super(_super::dispartDatabaseNameAndTableName(TruePath)[1]) {
+    : _super(_super::dispartDatabaseNameAndTableName(TruePath)[2]) {
   this->truePath = TruePath;
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
@@ -56,18 +57,34 @@ bool _file::deleteLine(std::string index) {
   bool command = false;
   vstring vectorbuff;
   _file tmp(oldTruePath + "tmp");
+  /* _file tmp1(this->returnName() + "tmp", type::_TYPE_TABLE); */
+  /* std::cout << tmp1.returnTruePath() << " " << tmp1.returnName() <<
+   * std::endl; */
+  /* tmp.create(); */
+  if (tmp.isExist()) {
+    tmp.remove();
+  }
+  tmp.create();
+  TablePCB* tmpPCB = new TablePCB(oldTruePath);
+  int indexcol = tmpPCB->returnIndex();
+  delete tmpPCB;
   this->setReadSeek(0);
+	this->readline(vectorbuff);
+	/* std::cout << this->style << std::endl; */
+	/* std::cout << this->returnReadTell() << " " << vectorbuff.size() << std::endl; */
   while (this->readline(vectorbuff)) {
-    if (vectorbuff[0] == index) {
+    /* std::cout << "1" << std::endl; */
+    if (vectorbuff[indexcol] == index) {
       command = true;
       continue;
     } else {
       tmp.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
     }
   }
-  this->remove();
-  rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str());
-	Index::update(oldTruePath);
+  /* this->remove(); */
+  /* tmp.remove(); */
+  /* rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str()); */
+  Index::update(oldTruePath);
   return command;
 }
 bool _file::deleteCol(std::string col) {
@@ -260,6 +277,7 @@ bool _file::readline(revstring ret) {
     return false;
   }
   getline(readFileBuff, _str);
+	/* std::cout << _str << std::endl; */
   if (_str == "") {
     return false;
   }
@@ -286,19 +304,7 @@ bool _file::create(std::string TruePath) {
 }
 bool _file::create(std::string name, type style) {
   std::string truePath = _super::returnTruePath(name, style);
-  if (_super::isExist(truePath) || style == type::_TYPE_DATABASE) {
-    return false;
-  }
-  std::ofstream filewritebuff;
-  filewritebuff.open(truePath, std::ios::out);
-  if (filewritebuff.good()) {
-    ++_file::count;
-  }
-  filewritebuff.close();
-  if (style == type::_TYPE_PCB) {
-    _file(name, type::_TYPE_PCB).inputPCBInformation();
-  }
-  return true;
+  return _file::create(truePath);
 }
 void _file::inputPCBInformation() {
   std::string input = this->name + ",0,0,0";
@@ -306,7 +312,7 @@ void _file::inputPCBInformation() {
   this->setReadSeek(0);
   this->setWriteSeek(0);
 }
-bool _file::create() { return _file::create(this->name, this->style); }
+bool _file::create() { return _file::create(this->truePath); }
 std::string _file::returnTruePath() { return truePath; }
 
 bool _file::remove() { return _file::remove(this->name, style); }
