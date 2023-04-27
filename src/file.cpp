@@ -59,55 +59,64 @@ bool _file::deleteLine(std::string index) {
   std::string oldTruePath = this->truePath;
   bool command = false;
   vstring vectorbuff;
-  _file tmp(oldTruePath + "tmp");
-  if (tmp.isExist()) {
-    tmp.remove();
+  Table* tmptable = new Table(this->name + "tmp", type::_TYPE_TABLE);
+  if (tmptable->isExist()) {
+    tmptable->remove();
   }
-  tmp.create();
+  tmptable->create();
   TablePCB* tmpPCB = new TablePCB(this->name);
   int indexcol = tmpPCB->returnIndex();
   delete tmpPCB;
-  this->setReadSeek(0);
   _file* tmpOldFile = new _file(this->returnName(), type::_TYPE_TABLE);
   while (tmpOldFile->readline(vectorbuff)) {
     if (vectorbuff[indexcol] == index) {
       command = true;
       continue;
     } else {
-      tmp.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
+      tmptable->append(vectorbuff);
     }
   }
-  rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str());
-  Index::update(this->name);
   delete tmpOldFile;
+  rename(this->name + "tmp", this->name, type::_TYPE_TABLE);  //表改名
+  rename(this->name + "tmp", this->name,
+         type::_TYPE_INDEX_TABLE); /* index改名 */
+  _file(this->name + "tmp", type::_TYPE_PCB).remove();
+  _file(this->name + "tmp", type::_TYPE_VIEW).remove();
+  delete tmptable;
   return command;
 }
-bool _file::deleteCol(std::string col) {
+bool _file::deleteCol(const int& col) {
   std::string oldTruePath = this->truePath;
   vstring vectorbuff;
   vstring tmpvectorbuff;
-  _file tmp(oldTruePath + "tmp");
-  this->setReadSeek(0);
-  int tmpCol = std::atoi(col.c_str());
-  this->readline(vectorbuff);
+  Table* tmptable = new Table(this->name + "tmp", type::_TYPE_TABLE);
+  if (tmptable->isExist()) {
+    tmptable->remove();
+  }
+  tmptable->create();
+  _file* oldtable = new _file(this->name, type::_TYPE_TABLE);
+  oldtable->readline(vectorbuff);
   int size = vectorbuff.size();
-  if (tmpCol < 0 || tmpCol > size) {
+  if (col < 0 || col > size) {
     return false;
   }
   do {
     tmpvectorbuff.clear();
     for (int a = 0; a < size; ++a) {
-      if (a == tmpCol) {
+      if (a == col) {
         continue;
       } else {
         tmpvectorbuff.push_back(vectorbuff[a]);
       }
     }
-    tmp.write(tmpvectorbuff, type_mode::WRITEBUFF_MODE_APP);
-  } while (this->readline(vectorbuff));
-  this->remove();
-  rename((oldTruePath + "tmp").c_str(), oldTruePath.c_str());
-  Index::update(oldTruePath);
+    tmptable->append(tmpvectorbuff);
+  } while (oldtable->readline(vectorbuff));
+  delete oldtable;
+  delete tmptable;
+  rename(this->name + "tmp", this->name, type::_TYPE_TABLE);  //表改名
+  rename(this->name + "tmp", this->name, type::_TYPE_INDEX_TABLE);
+  _file(this->name + "tmp", type::_TYPE_PCB).remove();
+  _file(this->name + "tmp", type::_TYPE_VIEW).remove();
   return true;
 }
 void _file::setOpenBuff(MODE mode) {

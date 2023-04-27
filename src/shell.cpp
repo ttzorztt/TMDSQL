@@ -735,7 +735,7 @@ void shell::toDeleteCol() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteCol(data[0])) {
+    if (tmpTable.deleteCol(std::atoi(data[0].c_str()))) {
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         pwd[2], data[0]);
@@ -760,7 +760,7 @@ void shell::toDeleteColTable() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteCol(data[1])) {
+    if (tmpTable.deleteCol(std::atoi(data[1].c_str()))) {
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         data[0], data[1]);
@@ -780,13 +780,13 @@ void shell::toDeleteColDatabaseTable() {
                      已选择的数据库中不存在目标表);
     return;
   }
-  if (tmpTable.deleteCol(data[2])) {
+  if (tmpTable.deleteCol(std::atoi(data[2].c_str()))) {
     menuOutput::printDeleteACK(ReturnPower(), need);
     Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                       data[1], data[2]);
   } else {
-    menuOutput::printNotExistsTableRow(ReturnPower(), need);
-    Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+    menuOutput::printNotExistsTableCol(ReturnPower(), need);
+    Log::LogForDeleteColDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                       data[1], data[2], 不存在该列);
   }
 }

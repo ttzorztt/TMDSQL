@@ -186,7 +186,7 @@ class _file : public _super {
   /**
    * @brief 析构函数，释放并关闭文件
    */
-  ~_file();
+  virtual ~_file();
   /**
    * @brief 删除一行
    *
@@ -202,7 +202,7 @@ class _file : public _super {
    *
    * @peturn 是否删除成功
    */
-  bool deleteCol(std::string col);
+  bool deleteCol(const int& col);
   /**
    * @brief <static> 以App的方式写入字符串
    *

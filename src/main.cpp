@@ -2,7 +2,6 @@
  * @file main.cpp
  * @brief 主函数的实现
  * @author TMD
- * @version 1.3
  * @date 2022-11-01
  */
 #ifndef _IOSTREAM_
@@ -142,42 +141,21 @@ int main(int argc, char const* argv[]) {
   /* string tmp = "执行 @init"; */
   string tmp = "执行 @init";
   x.read(tmp);
-	tmp = "登录 @root root";
-	x.read(tmp);
-	tmp = "删除 行 数据库 表 @DB1 TB1 本科";
-	x.read(tmp);
-  return 0;
-  tmp = "查询 数据库 表 @DB TB 1";
+  tmp = "登录 @root root";
   x.read(tmp);
-  tmp = "查询 数据库 表 @DB TB 2";
+  tmp = "显示 数据库 表 @DB1 TB1 12";
   x.read(tmp);
-  tmp = "查询 数据库 表 @DB TB 3";
+  tmp = "删除 行 数据库 表 @DB1 TB1 2";
   x.read(tmp);
-  tmp = "查询 数据库 表 @DB TB 4";
-  x.read(tmp);
-  return 0;
   tmp = "选择 数据库 @DB1";
   x.read(tmp);
-  tmp = "插入 表 @TB1 姓名 性别 年龄";
+  tmp = "删除 行 表 @TB1 4";
   x.read(tmp);
-  tmp = "插入 表 @TB1 张三 男 11";
+  tmp = "选择 表 @TB1";
   x.read(tmp);
-
-  tmp = "插入 表 @TB1 王五 男 10";
+  tmp = "删除 行 @5";
   x.read(tmp);
-  tmp = "插入 表 @TB1 李四 女 100";
-
+  tmp = "显示 数据库 表 @DB1 TB1 12";
   x.read(tmp);
-
-  tmp = "显示 表 @TB1 3";
-
-  x.read(tmp);
-  tmp = "设置 视图 表 @TB1 root 0 2";
-
-  x.read(tmp);
-  tmp = "显示 表 @TB1 3";
-
-  x.read(tmp);
-
   return 0;
 }
