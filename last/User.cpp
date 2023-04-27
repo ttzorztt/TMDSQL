@@ -85,6 +85,7 @@ void User::addUser(std::string UserName, std::string Userpassword,
   tmppd->write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
   delete tmppd;
   ++count;
+  nameBuff.insert(UserName);
 }
 bool User::addNormalUser(std::string UserName, std::string Userpassword) {
   if (nameBuff.count(UserName)) {
@@ -145,6 +146,7 @@ bool User::login(std::string UserName, std::string UserPassword) {
     if (vectorbuff[0] == UserName) {
       if (vectorbuff[1] == UserPassword) {
         this->power = (TYPE_POWER)atoi(vectorbuff[2].c_str());
+				std::cout << this->power << std::endl;
         this->UserName = UserName;
         this->UserPassword = UserPassword;
         this->loginStatus = true;

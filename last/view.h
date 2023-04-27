@@ -77,6 +77,5 @@ class View {
 		 */
 		std::set<int> static returnAllowColumn(std::string UserName,
 				std::string DatabaseAndTableName);
-		void static deleteColUpdate(std::string DatabaseAndTableName,std::string colnumber);
 };
 #endif

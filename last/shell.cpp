@@ -300,14 +300,6 @@ bool shell::read() {
       }
       toSet();
       break;
-    case 回溯:
-      if (ReturnPower() >= 2) {
-        menuOutput::printPowerNoEnough(ReturnPower(), need);
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         普通用户违规操作);
-      }
-      toBack();
-      break;
     default:
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
                        第一个关键字错误);
@@ -332,7 +324,6 @@ bool shell::read(revstring value) {
   }
   return read();
 }
-void shell::toBack() {}
 void shell::toLogin() {
   if (data.size() == 2) {
     std::string oldUserName = ReturnUserName();
@@ -749,7 +740,6 @@ void shell::toDeleteCol() {
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         pwd[2], data[0]);
-      View::deleteColUpdate(tmpTable.returnName(), data[0]);
     } else {
       menuOutput::printNotExistsTableRow(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -775,7 +765,6 @@ void shell::toDeleteColTable() {
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         data[0], data[1]);
-      View::deleteColUpdate(tmpTable.returnName(), data[1]);
     } else {
       menuOutput::printNotExistsTableRow(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -796,7 +785,6 @@ void shell::toDeleteColDatabaseTable() {
     menuOutput::printDeleteACK(ReturnPower(), need);
     Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                       data[1], data[2]);
-    View::deleteColUpdate(tmpTable.returnName(), data[2]);
   } else {
     menuOutput::printNotExistsTableCol(ReturnPower(), need);
     Log::LogForDeleteColDatabaseTable(ReturnUserName(), ReturnPower(), data[0],

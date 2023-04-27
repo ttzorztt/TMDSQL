@@ -8,9 +8,6 @@
 #ifndef _VIEW_H_
 #define _VIEW_H_
 #include "view.h"
-
-#include "file.h"
-#include "super.h"
 #endif
 
 #ifndef _IOSTREAM_
@@ -19,7 +16,8 @@
 #endif
 void View::setAllowShowColumn(std::string UserName,
                               std::vector<std::string> allowColumn,
-                              std::string viewDBID, std::string viewTBID) {
+                              std::string viewDBID,
+                              std::string viewTBID) {
   vstring tmp;
   allowColumn.insert(allowColumn.begin(), UserName);
   _file table(viewDBID + "/" + viewTBID, type::_TYPE_VIEW);
@@ -58,35 +56,9 @@ std::set<int> View::returnAllowColumn(std::string& UserName, _file& table) {
     return ret;
   }
 }
-std::set<int> View::returnAllowColumn(std::string UserName, std::string DBID,
+std::set<int> View::returnAllowColumn(std::string UserName,
+                                      std::string DBID,
                                       std::string TBID) {
   _file table(DBID + "/" + TBID, type::_TYPE_VIEW);
   return returnAllowColumn(UserName, table);
-}
-void View::deleteColUpdate(std::string DatabaseAndTableName,
-                           std::string colnumber) {
-  _file* tmpViewFIle =
-      new _file(DatabaseAndTableName + "tmp", type::_TYPE_VIEW);
-  if (tmpViewFIle->isExist()) {
-    tmpViewFIle->remove();
-  }
-  tmpViewFIle->create();
-  _file* viewFile = new _file(DatabaseAndTableName, type::_TYPE_VIEW);
-  vstring tmp;
-  vstring newView;
-  while (viewFile->readline(tmp)) {
-    for (auto& t : tmp) {
-      if (t == colnumber) {
-        continue;
-      } else {
-        newView.push_back(t);
-      }
-    }
-    if (newView.size() > 0) {
-      viewFile->write(newView, type_mode::WRITEBUFF_MODE_APP);
-    }
-    newView.clear();
-  }
-  delete viewFile;
-  delete tmpViewFIle;
 }

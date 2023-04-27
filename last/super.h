@@ -2,6 +2,7 @@
  * @file super.h
  * @brief 维护一些公共静态函数和变量
  * @author TMD
+ * @version 1.3
  * @date 2022-11-07
  */
 #ifndef _SUPER_
@@ -51,7 +52,6 @@ typedef int INDEX;
 #define _SQLPath "./data/SQL/"
 #define _ViewPath "./data/view/"
 #define _TruePathForUserData "/data/User/pd"
-#define _BackPath "./data/Back/"
 #define CACHEPOLL 10
 // 权限
 enum TYPE_POWER {
@@ -79,8 +79,7 @@ enum TYPE_CID {
   索引,
   视图,
   行,
-  列,
-  回溯
+  列
 };
 typedef std::vector<TYPE_CID> vCID;
 std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {
@@ -88,13 +87,13 @@ std::unordered_map<std::string, TYPE_CID> static HashMapStringToCID = {
     {"选择", 选择}, {"登录", 登录}, {"显示", 显示},     {"插入", 插入},
     {"查询", 查询}, {"表", 表},     {"用户", 用户},     {"管理员", 管理员},
     {"执行", 执行}, {"设置", 设置}, {"索引", 索引},     {"视图", 视图},
-    {"列", 列},     {"行", 行},     {"回溯", 回溯}};
+    {"列", 列},     {"行", 行}};
 std::unordered_map<TYPE_CID, std::string> static HashMapCIDToString = {
     {退出, "退出"}, {创建, "创建"}, {数据库, "数据库"}, {删除, "删除"},
     {选择, "选择"}, {登录, "登录"}, {显示, "显示"},     {插入, "插入"},
     {查询, "查询"}, {表, "表"},     {用户, "用户"},     {管理员, "管理员"},
     {执行, "执行"}, {设置, "设置"}, {索引, "索引"},     {视图, "视图"},
-    {列, "列"},     {行, "行"},     {回溯, "回溯"}};
+    {列, "列"},     {行, "行"}};
 //无法登录原因
 enum TYPE_LOGIN_ERROR { 密码错误, 帐号不存在, 未登录 };
 enum type {
@@ -108,8 +107,7 @@ enum type {
   _TYPE_CREATE_PCB_DATABASE,    // 创建PCB下的数据库文件
   _TYPE_USERDATA,               //用户数据
   _TYPE_LOG,                    // LOG文件
-  _TYPE_VIEW,                   //视图文件
-  _TYPE_BACK                    //回溯文件
+  _TYPE_VIEW                    //视图文件
 };
 // 模式
 enum type_mode {
@@ -151,10 +149,14 @@ enum TYPE_ERROR_CASE {
   表不存在无法显示数据,
   数据库不存在无法显示数据,
   未选择表,
-  不存在该列,
-  不存在该行,
-  回溯文件不存在
+	不存在该列,
+	不存在该行
 };
+// 优化输出
+// static std::unordered_map<TYPE_POWER, int> powerPR{{TYPE_POWER::NORMAL, 14},
+//                                                    {TYPE_POWER::Manager, 16},
+//                                                    {TYPE_POWER::ROOT, 20},
+//                                                    {TYPE_POWER::NONE, 16}};
 static std::unordered_set<char> checkErrorName{
     '`', '~', '!',  '@',  '#', '$', '%', '^', '&', '*', '(',
     ')', '_', '-',  '=',  '+', '[', ']', '{', '}', '|', '\\',

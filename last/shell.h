@@ -151,10 +151,6 @@ class shell : public User {
 		 */
 		void toLogin();
 		/**
-		 * @brief 输入回溯后的操作
-		 */
-		void toBack();
-		/**
 		 * @brief 输入插入后的操作
 		 */
 		void toInsert();
