@@ -34,10 +34,6 @@ class User {
 		TYPE_POWER power;
 		// 当前用户个数
 		static int count;
-		// UserData文件
-		static _file pd;
-		// pd的锁
-		static _file pdlock;
 		// 登录名buff，创建或添加用户的时候对比
 		static std::set<std::string> nameBuff;
 		// 当前登录的用户
@@ -67,16 +63,6 @@ class User {
 				std::string UserPassword,
 				TYPE_POWER power);
 	public:
-		/**
-		 * @brief 加锁
-		 *
-		 * @Returns 加锁成功返回True，负责返回False
-		 */
-		bool static addLock();
-		/**
-		 * @brief 删锁
-		 */
-		bool static removeLock();
 		/**
 		 * @brief 返回给定用户的权限
 		 *

@@ -55,7 +55,7 @@ _file::~_file() {
   }
   --_file::count;
 }
-bool _file::deleteLine(std::string index) {
+bool _file::deleteTableLine(std::string index) {
   std::string oldTruePath = this->truePath;
   bool command = false;
   vstring vectorbuff;
@@ -83,6 +83,31 @@ bool _file::deleteLine(std::string index) {
   _file(this->name + "tmp", type::_TYPE_PCB).remove();
   _file(this->name + "tmp", type::_TYPE_VIEW).remove();
   delete tmptable;
+  return command;
+}
+bool _file::deleteFileLine(std::string index) {
+  std::string oldTruePath = this->truePath;
+  bool command = false;
+  vstring vectorbuff;
+  _file* tmpfile = new Table(this->truePath + "tmp");
+  if (tmpfile->isExist()) {
+    tmpfile->remove();
+  }
+  tmpfile->create();
+  _file* tmpOldFile = new _file(this->truePath);
+  while (tmpOldFile->readline(vectorbuff)) {
+    if (vectorbuff[0] == index) {
+      command = true;
+      continue;
+    } else {
+      tmpfile->write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
+    }
+  }
+  delete tmpOldFile;
+  rename(this->name + "tmp", this->name,
+         type::_TYPE_INDEX_TABLE); /* index改名 */
+  _file::rename(this->truePath + "tmp", this->truePath);
+  delete tmpfile;
   return command;
 }
 bool _file::deleteCol(const int& col) {

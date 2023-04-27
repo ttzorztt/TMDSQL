@@ -25,7 +25,7 @@ void View::setAllowShowColumn(std::string UserName,
     table.setOpenBuff(0);
     while (table.readline(tmp)) {
       if (tmp[0] == UserName) {
-        table.deleteLine(UserName);
+        table.deleteFileLine(UserName);
         break;
       }
     }

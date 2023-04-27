@@ -147,6 +147,10 @@ class shell : public User {
 		 */
 		void toChooseDatabaseTable();
 		/**
+		 * @brief 输入登录后的操作
+		 */
+		void toLogin();
+		/**
 		 * @brief 输入插入后的操作
 		 */
 		void toInsert();

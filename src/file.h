@@ -188,13 +188,22 @@ class _file : public _super {
    */
   virtual ~_file();
   /**
-   * @brief 删除一行
+   * @brief 删除表的一行(ps:这个函数会同步建立索引等文件)，所以是建立在表的基础上
    *
    * @param  string index 索引
    *
    * @return bool 是否删除
    */
-  bool deleteLine(std::string index);
+  bool deleteTableLine(std::string index);
+	/**
+	 * @brief 删除文件的一行(单纯文件，用在pd等单纯没有联系的文件)
+	 *
+	 * @param index 索引(实际上就是第一列的值，因为这个函数没有表的概念)
+	 *
+	 * @peturn 是否删除
+	 */
+	bool deleteFileLine(std::string index);
+
   /**
    * @brief 删除一列
    *

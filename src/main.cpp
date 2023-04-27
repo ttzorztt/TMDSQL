@@ -138,13 +138,12 @@ int main1(int argc, char const* argv[]) {
 int main(int argc, char const* argv[]) {
   init();
   shell x;
-  /* string tmp = "执行 @init"; */
   string tmp = "执行 @init";
-  x.read(tmp);
   tmp = "登录 @root root";
   x.read(tmp);
-  tmp = "显示 数据库 表 @DB1 TB1 12";
+  tmp = "删除 用户 @t";
   x.read(tmp);
+	return 0;
   tmp = "删除 行 数据库 表 @DB1 TB1 2";
   x.read(tmp);
   tmp = "选择 数据库 @DB1";

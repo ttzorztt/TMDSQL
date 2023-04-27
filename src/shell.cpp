@@ -270,34 +270,7 @@ bool shell::read() {
                          编译错误);
         break;
       }
-      if (data.size() == 2) {
-        std::string oldUserName = ReturnUserName();
-        TYPE_POWER oldUserPower = ReturnPower();
-        if (this->login(data[0], data[1])) {
-          if (pwd.size() == 0) {
-            pwd.push_back("/");
-          }
-          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
-        } else {
-          switch ((int)returnErrorCase()) {
-            case 密码错误:
-              Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-                               登录密码错误);
-              break;
-            case 帐号不存在:
-              Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-                               登录帐号错误);
-              break;
-          }
-        }
-        menuOutput::printLoginOrNot(this->ReturnLoginStatus(),
-                                    returnErrorCase(), ReturnPower(),
-                                    ReturnUserName(), need);
-      } else {
-        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                         编译错误);
-        menuOutput::printCommandError(ReturnPower(), need);
-      }
+      toLogin();
       break;
     }
     case 插入: {
@@ -350,6 +323,34 @@ bool shell::read(revstring value) {
     return true;
   }
   return read();
+}
+void shell::toLogin() {
+  if (data.size() == 2) {
+    std::string oldUserName = ReturnUserName();
+    TYPE_POWER oldUserPower = ReturnPower();
+    if (this->login(data[0], data[1])) {
+      if (pwd.size() == 0) {
+        pwd.push_back("/");
+      }
+      Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
+    } else {
+      switch ((int)returnErrorCase()) {
+        case 密码错误:
+          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+                           登录密码错误);
+          break;
+        case 帐号不存在:
+          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+                           登录帐号错误);
+          break;
+      }
+    }
+    menuOutput::printLoginOrNot(this->ReturnLoginStatus(), returnErrorCase(),
+                                ReturnPower(), ReturnUserName(), need);
+  } else {
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+    menuOutput::printCommandError(ReturnPower(), need);
+  }
 }
 void shell::toExecute() {
   _file file(_SQLPath + data[0]);
@@ -845,7 +846,7 @@ void shell::toDeleteRow() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteLine(data[0])) {
+    if (tmpTable.deleteTableLine(data[0])) {
       if (!Cache::Count(tmpTable)) {
         Cache::add(tmpTable);
       } else {
@@ -878,7 +879,7 @@ void shell::toDeleteRowTable() {
       return;
     }
     Cache::add(tmpTable);
-    if (tmpTable.deleteLine(data[1])) {
+    if (tmpTable.deleteTableLine(data[1])) {
       if (Cache::Count(tmpTable)) {
         Cache::deleteTableItem(tmpTable, data[1]);
       }
@@ -893,7 +894,6 @@ void shell::toDeleteRowTable() {
   }
 }
 void shell::toDeleteRowDatabaseTable() {
-
   Table tmpTable(data[0] + "/" + data[1], type::_TYPE_TABLE);
   if (!tmpTable.isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
@@ -902,7 +902,7 @@ void shell::toDeleteRowDatabaseTable() {
     return;
   }
   Cache::add(tmpTable);
-  if (tmpTable.deleteLine(data[2])) {
+  if (tmpTable.deleteTableLine(data[2])) {
     if (Cache::Count(tmpTable)) {
       Cache::deleteTableItem(tmpTable, data[2]);
     }
