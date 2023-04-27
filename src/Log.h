@@ -239,29 +239,6 @@ class Log {
                                         std::string DBID, std::string TBID,
                                         TYPE_ERROR_CASE errorCase = 顺利执行);
   /**
-   * @brief 删除_数据库
-   *
-   * @param  string UserName 用户名
-   * @param  TYPE_POWER op 权限
-   * @param  string DBID 数据库名
-   * @param  TYPE_ERROR_CASE errorCase 失败原因
-   */
-  void static LogForDeleteDatabase(std::string UserName, TYPE_POWER op,
-                                   std::string DBID,
-                                   TYPE_ERROR_CASE errorCase = 顺利执行);
-  /**
-   * @brief 删除_数据库_表
-   *
-   * @param  string UserName 用户名
-   * @param  TYPE_POWER op 权限
-   * @param  string DBID 数据库名
-   * @param  string TBID 表名
-   * @param  TYPE_ERROR_CASE errorCase 失败原因
-   */
-  void static LogForDeleteDatabaseTable(std::string UserName, TYPE_POWER op,
-                                        std::string DBID, std::string TBID,
-                                        TYPE_ERROR_CASE errorCase = 顺利执行);
-  /**
    * @brief 删除_列_数据库_表
    *
    * @param UserName 用户名
@@ -287,6 +264,29 @@ class Log {
   void static LogForDeleteRowDatabaseTable(
       std::string UserName, TYPE_POWER op, std::string DBID, std::string TBID,
       std::string Row, TYPE_ERROR_CASE errorCase = 顺利执行);
+  /**
+   * @brief 删除_数据库
+   *
+   * @param  string UserName 用户名
+   * @param  TYPE_POWER op 权限
+   * @param  string DBID 数据库名
+   * @param  TYPE_ERROR_CASE errorCase 失败原因
+   */
+  void static LogForDeleteDatabase(std::string UserName, TYPE_POWER op,
+                                   std::string DBID,
+                                   TYPE_ERROR_CASE errorCase = 顺利执行);
+  /**
+   * @brief 删除_数据库_表
+   *
+   * @param  string UserName 用户名
+   * @param  TYPE_POWER op 权限
+   * @param  string DBID 数据库名
+   * @param  string TBID 表名
+   * @param  TYPE_ERROR_CASE errorCase 失败原因
+   */
+  void static LogForDeleteDatabaseTable(std::string UserName, TYPE_POWER op,
+                                        std::string DBID, std::string TBID,
+                                        TYPE_ERROR_CASE errorCase = 顺利执行);
   /**
    * @brief 删除_用户
    *

@@ -60,19 +60,19 @@ class shell : public User {
 		/**
 		 * @brief 返回历史记录的上一条
 		 *
-		 * @return 执行字符串
+		 * @Return 执行字符串
 		 */
 		std::string prevHistory();
 		/**
 		 * @brief 返回历史记录的下一条
 		 *
-		 * @return 执行字符串
+		 * @Return 执行字符串
 		 */
 		std::string nextHistory();
 		/**
 		 * @brief 是否有历史
 		 *
-		 * @return 返回是否存在历史值
+		 * @Return 返回是否存在历史值
 		 */
 		bool hasHistory();
 	private:
@@ -162,10 +162,7 @@ class shell : public User {
 		 * @brief 输入插入数据库表后的操作
 		 */
 		void toInsertDatabaseTable();
-		/**
-		 * @brief 登录操作
-		 */
-		void toLogin();
+
 		/**
 		 * @brief 输入查询后的操作
 		 */
@@ -267,7 +264,15 @@ class shell : public User {
 		 */
 		void toDeleteDatabaseTable();
 		/**
-		 * @brief 输入删除行数据库表后的操作
+		 * @brief 输入删除用户后的操作
+		 */
+		void toDeleteUser();
+		/**
+		 * @brief 输入删除用户后的操作
+		 */
+		void toDeleteManager();
+		/**
+		 * @brief 输入删除行数据库表的操作
 		 */
 		void toDeleteRowDatabaseTable();
 		/**
@@ -290,13 +295,5 @@ class shell : public User {
 		 * @brief 输出删除列后的操作
 		 */
 		void toDeleteCol();
-		/**
-		 * @brief 输入删除用户后的操作
-		 */
-		void toDeleteUser();
-		/**
-		 * @brief 输入删除用户后的操作
-		 */
-		void toDeleteManager();
 };
 #endif

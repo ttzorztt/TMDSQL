@@ -70,7 +70,7 @@ class User {
 		/**
 		 * @brief 加锁
 		 *
-		 * @returns 加锁成功返回True，负责返回False
+		 * @Returns 加锁成功返回True，负责返回False
 		 */
 		bool static addLock();
 		/**

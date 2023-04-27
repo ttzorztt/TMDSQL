@@ -149,10 +149,10 @@ void shell::toChooseDatabaseTable() {
   pwd.push_back(data[0]);
   pwd.push_back(data[1]);
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  Cache::add(table);
   Log::LogForSelectDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                  data[1]);
   menuOutput::printChooseACK(ReturnPower(), need);
-  Cache::add(table);
   return;
 }
 bool shell::aidCheckData(std::string _str) {
@@ -270,7 +270,34 @@ bool shell::read() {
                          编译错误);
         break;
       }
-      toLogin();
+      if (data.size() == 2) {
+        std::string oldUserName = ReturnUserName();
+        TYPE_POWER oldUserPower = ReturnPower();
+        if (this->login(data[0], data[1])) {
+          if (pwd.size() == 0) {
+            pwd.push_back("/");
+          }
+          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
+        } else {
+          switch ((int)returnErrorCase()) {
+            case 密码错误:
+              Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+                               登录密码错误);
+              break;
+            case 帐号不存在:
+              Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
+                               登录帐号错误);
+              break;
+          }
+        }
+        menuOutput::printLoginOrNot(this->ReturnLoginStatus(),
+                                    returnErrorCase(), ReturnPower(),
+                                    ReturnUserName(), need);
+      } else {
+        Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                         编译错误);
+        menuOutput::printCommandError(ReturnPower(), need);
+      }
       break;
     }
     case 插入: {
@@ -307,34 +334,6 @@ bool shell::read() {
       break;
   };
   return true;
-}
-void shell::toLogin() {
-  if (data.size() == 2) {
-    std::string oldUserName = ReturnUserName();
-    TYPE_POWER oldUserPower = ReturnPower();
-    if (this->login(data[0], data[1])) {
-      if (pwd.size() == 0) {
-        pwd.push_back("/");
-      }
-      Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
-    } else {
-      switch ((int)returnErrorCase()) {
-        case 密码错误:
-          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-                           登录密码错误);
-          break;
-        case 帐号不存在:
-          Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1],
-                           登录帐号错误);
-          break;
-      }
-    }
-    menuOutput::printLoginOrNot(this->ReturnLoginStatus(), returnErrorCase(),
-                                ReturnPower(), ReturnUserName(), need);
-  } else {
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
-    menuOutput::printCommandError(ReturnPower(), need);
-  }
 }
 bool shell::read(std::string str) {
   if (!check(str)) {
@@ -614,8 +613,7 @@ void shell::toDeleteTable() {
     return;
   }
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
-                             deleteShowTableNumber, false);
+  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
@@ -651,8 +649,7 @@ void shell::toDeleteDatabaseTable() {
     return;
   }
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
-  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
-                             deleteShowTableNumber, false);
+  menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
     table.remove();
     menuOutput::printDeleteACK(ReturnPower(), need);
@@ -666,90 +663,60 @@ void shell::toDeleteDatabaseTable() {
     return;
   }
 }
-void shell::toDeleteRow() {
-  if (pwd.size() == 1) {
-    menuOutput::printNotChooseDatabase(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     未选择数据库越级选择表);
-  } else if (pwd.size() == 2) {
-    menuOutput::printNotChooseTable(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 未选择表);
-  } else {
-    Table tmpTable(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-    if (!tmpTable.isExist()) {
-      menuOutput::printNotExistsTable(ReturnPower(), need);
-      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                       已选择的数据库中不存在目标表);
-      return;
-    }
-    if (tmpTable.deleteLine(data[0])) {
-      if (!Cache::Count(tmpTable)) {
-        Cache::add(tmpTable);
-      } else {
-        Cache::deleteTableItem(tmpTable, data[0]);
-      }
-      menuOutput::printDeleteACK(ReturnPower(), need);
-      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                        pwd[2], data[0]);
-    } else {
-      if (!Cache::Count(tmpTable)) {
-        Cache::add(tmpTable);
-      }
-      menuOutput::printNotExistsTableRow(ReturnPower(), need);
-      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                        pwd[2], data[0], 不存在该列);
-    }
-  }
-}
-void shell::toDeleteRowTable() {
-  if (pwd.size() == 1) {
-    menuOutput::printNotChooseDatabase(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     未选择数据库越级选择表);
-  } else {
-    Table tmpTable(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
-    if (!tmpTable.isExist()) {
-      menuOutput::printNotExistsTable(ReturnPower(), need);
-      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                       已选择的数据库中不存在目标表);
-      return;
-    }
-    Cache::add(tmpTable);
-    if (tmpTable.deleteLine(data[1])) {
-      if (Cache::Count(tmpTable)) {
-        Cache::deleteTableItem(tmpTable, data[1]);
-      }
-      menuOutput::printDeleteACK(ReturnPower(), need);
-      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                        data[0], data[1]);
-    } else {
-      menuOutput::printNotExistsTableRow(ReturnPower(), need);
-      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
-                                        data[0], data[1], 不存在该列);
-    }
-  }
-}
-void shell::toDeleteRowDatabaseTable() {
-  Table tmpTable(data[0] + "/" + data[1], type::_TYPE_TABLE);
-  if (!tmpTable.isExist()) {
-    menuOutput::printNotExistsTable(ReturnPower(), need);
-    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
-                     已选择的数据库中不存在目标表);
+void shell::toDeleteDatabase() {
+  DataBase database(data[0]);
+  if (!database.isExist()) {
+    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0],
+                              数据库不存在无法删除);
+    menuOutput::printNotExistsDatabase(ReturnPower(), need);
     return;
   }
-  Cache::add(tmpTable);
-  if (tmpTable.deleteLine(data[2])) {
-    if (Cache::Count(tmpTable)) {
-      Cache::deleteTableItem(tmpTable, data[2]);
-    }
+  if (database.remove()) {
     menuOutput::printDeleteACK(ReturnPower(), need);
-    Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
-                                      data[1], data[2]);
+
+    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
+    return;
+  } else {
+    menuOutput::printDatabaseNotEmptyAndDeleteTip(ReturnPower(), false);
+  }
+  menuOutput::printShowDatabase(ReturnPower(), database, false);
+  if (inputACK()) {
+    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
+    database.forceremove();
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    return;
+  } else {
+    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0],
+                              输入非确定指令取消);
+    menuOutput::printCommandBackout(ReturnPower(), need);
     return;
   }
-  menuOutput::printNotExistsTableRow(ReturnPower(), need);
-  Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
-                                    data[1], data[2], 不存在该列);
+}
+void shell::toDeleteManager() {
+  if (ReturnPower() != ROOT) {
+    menuOutput::printPowerNoEnough(ReturnPower(), need);
+    Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
+                             管理员违规操作);
+    return;
+  }
+  if (!deleteUser(data[0])) {
+    Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
+                             目标管理员不存在无法删除);
+    menuOutput::printManagerNotExists(ReturnPower(), need);
+    return;
+  }
+  menuOutput::printDeleteACK(ReturnPower(), need);
+  Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0]);
+}
+void shell::toDeleteUser() {
+  if (!deleteUser(data[0])) {
+    Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0],
+                          目标用户不存在无法删除);
+    menuOutput::printUserNotExists(ReturnPower(), need);
+    return;
+  }
+  Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0]);
+  menuOutput::printDeleteACK(ReturnPower(), need);
 }
 void shell::toDeleteCol() {
   /* 这个一个特殊情况，删除列对于Cache存储索引来说需要大修，与其修倒不如删除倒不如退出索引等下次使用再导入*/
@@ -823,60 +790,6 @@ void shell::toDeleteColDatabaseTable() {
                                       data[1], data[2], 不存在该列);
   }
 }
-void shell::toDeleteDatabase() {
-  DataBase database(data[0]);
-  if (!database.isExist()) {
-    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0],
-                              数据库不存在无法删除);
-    menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    return;
-  }
-  if (database.remove()) {
-    menuOutput::printDeleteACK(ReturnPower(), need);
-    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
-    return;
-  } else {
-    menuOutput::printDatabaseNotEmptyAndDeleteTip(ReturnPower(), false);
-  }
-  menuOutput::printShowDatabase(ReturnPower(), database, false);
-  if (inputACK()) {
-    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
-    database.forceremove();
-    menuOutput::printDeleteACK(ReturnPower(), need);
-    return;
-  } else {
-    Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0],
-                              输入非确定指令取消);
-    menuOutput::printCommandBackout(ReturnPower(), need);
-    return;
-  }
-}
-void shell::toDeleteManager() {
-  if (ReturnPower() != ROOT) {
-    menuOutput::printPowerNoEnough(ReturnPower(), need);
-    Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
-                             管理员违规操作);
-    return;
-  }
-  if (!deleteUser(data[0])) {
-    Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
-                             目标管理员不存在无法删除);
-    menuOutput::printManagerNotExists(ReturnPower(), need);
-    return;
-  }
-  menuOutput::printDeleteACK(ReturnPower(), need);
-  Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0]);
-}
-void shell::toDeleteUser() {
-  if (!deleteUser(data[0])) {
-    Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0],
-                          目标用户不存在无法删除);
-    menuOutput::printUserNotExists(ReturnPower(), need);
-    return;
-  }
-  Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0]);
-  menuOutput::printDeleteACK(ReturnPower(), need);
-}
 void shell::toInsert() {
   switch (command.size()) {
     case 1: {
@@ -916,6 +829,92 @@ void shell::toInsert() {
       break;
   }
 }
+void shell::toDeleteRow() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     未选择数据库越级选择表);
+  } else if (pwd.size() == 2) {
+    menuOutput::printNotChooseTable(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 未选择表);
+  } else {
+    Table tmpTable(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+    if (!tmpTable.isExist()) {
+      menuOutput::printNotExistsTable(ReturnPower(), need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       已选择的数据库中不存在目标表);
+      return;
+    }
+    if (tmpTable.deleteLine(data[0])) {
+      if (!Cache::Count(tmpTable)) {
+        Cache::add(tmpTable);
+      } else {
+        Cache::deleteTableItem(tmpTable, data[0]);
+      }
+      menuOutput::printDeleteACK(ReturnPower(), need);
+      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                        pwd[2], data[0]);
+    } else {
+      if (!Cache::Count(tmpTable)) {
+        Cache::add(tmpTable);
+      }
+      menuOutput::printNotExistsTableRow(ReturnPower(), need);
+      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                        pwd[2], data[0], 不存在该列);
+    }
+  }
+}
+void shell::toDeleteRowTable() {
+  if (pwd.size() == 1) {
+    menuOutput::printNotChooseDatabase(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     未选择数据库越级选择表);
+  } else {
+    Table tmpTable(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
+    if (!tmpTable.isExist()) {
+      menuOutput::printNotExistsTable(ReturnPower(), need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       已选择的数据库中不存在目标表);
+      return;
+    }
+    Cache::add(tmpTable);
+    if (tmpTable.deleteLine(data[1])) {
+      if (Cache::Count(tmpTable)) {
+        Cache::deleteTableItem(tmpTable, data[1]);
+      }
+      menuOutput::printDeleteACK(ReturnPower(), need);
+      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                        data[0], data[1]);
+    } else {
+      menuOutput::printNotExistsTableRow(ReturnPower(), need);
+      Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                        data[0], data[1], 不存在该列);
+    }
+  }
+}
+void shell::toDeleteRowDatabaseTable() {
+
+  Table tmpTable(data[0] + "/" + data[1], type::_TYPE_TABLE);
+  if (!tmpTable.isExist()) {
+    menuOutput::printNotExistsTable(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                     已选择的数据库中不存在目标表);
+    return;
+  }
+  Cache::add(tmpTable);
+  if (tmpTable.deleteLine(data[2])) {
+    if (Cache::Count(tmpTable)) {
+      Cache::deleteTableItem(tmpTable, data[2]);
+    }
+    menuOutput::printDeleteACK(ReturnPower(), need);
+    Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                      data[1], data[2]);
+    return;
+  }
+  menuOutput::printNotExistsTableRow(ReturnPower(), need);
+  Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
+                                    data[1], data[2], 不存在该列);
+}
 void shell::toInsertDatabaseTable() {
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
   vstring tmp(data.begin() + 2, data.end());
@@ -931,33 +930,19 @@ void shell::toInsertDatabaseTable() {
                                    data[1], tmp, 表不存在无法插入数据);
     return;
   }
-  TablePCB* tmpPCB = new TablePCB(table);
-  INDEX index = tmpPCB->returnEndLineIndex();
-  int indexcol = tmpPCB->returnIndex();
-  delete tmpPCB;
   table.append(tmp);
+  Cache::add(table);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                  data[1], tmp);
-  Cache::add(table);
-  if (Cache::Count(table)) {
-    Cache::addTableItem(table, tmp[indexcol], index);
-  }
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
   Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-  TablePCB* tmpPCB = new TablePCB(table);
-  INDEX index = tmpPCB->returnEndLineIndex();
-  int indexcol = tmpPCB->returnIndex();
-  delete tmpPCB;
   table.append(data);
+  Cache::add(table);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                  pwd[2], data);
-  Cache::add(table);
-  if (Cache::Count(table)) {
-    Cache::addTableItem(table, data[indexcol], index);
-  }
 }
 void shell::toInsertTable() {
   if (pwd.size() == 1) {
@@ -974,18 +959,11 @@ void shell::toInsertTable() {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
   }
-  TablePCB* tmpPCB = new TablePCB(table);
-  INDEX index = tmpPCB->returnEndLineIndex();
-  int indexcol = tmpPCB->returnIndex();
-  delete tmpPCB;
   table.append(tmp);
+  Cache::add(table);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                  data[0], tmp);
-  Cache::add(table);
-  if (Cache::Count(table)) {
-    Cache::addTableItem(table, tmp[indexcol], index);
-  }
 }
 void shell::toFind() {
   switch (command.size()) {
@@ -1032,11 +1010,11 @@ void shell::toFindTable() {
                                  data[0], data[1], 表不存在无法查找数据);
     return;
   }
+  Cache::add(table);
   menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
                                  data[1], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], data[0],
                                data[1]);
-  Cache::add(table);
 }
 void shell::toFindDefalutTable() {
   if (pwd.size() == 1) {
@@ -1056,31 +1034,31 @@ void shell::toFindDefalutTable() {
                                  pwd[2], data[0], 表不存在无法查找数据);
     return;
   }
+  Cache::add(table);
   menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
                                  data[0], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1], pwd[2],
                                data[0]);
-  Cache::add(table);
 }
 void shell::toFindDatabaseTable() {
   if (!DataBase(data[0]).isExist()) {
     menuOutput::printNotExistsDatabase(ReturnPower(), need);
-    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
-                                 data[1], data[2], 数据库不存在无法查找数据);
+    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                 data[0], data[1], 数据库不存在无法查找数据);
     return;
   }
   Table table(data[0] + "/" + data[1], type::_TYPE_TABLE);
   if (!table.isExist()) {
     menuOutput::printNotExistsTable(ReturnPower(), need);
-    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
-                                 data[1], data[2], 表不存在无法查找数据);
+    Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
+                                 data[0], data[1], 表不存在无法查找数据);
     return;
   }
+  Cache::add(table);
   menuOutput::printShowFindTable(ReturnPower(), ReturnUserName(), table,
                                  data[2], need);
   Log::LogForFindDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                data[1], data[2]);
-  Cache::add(table);
 }
 void shell::toShow() {
   switch (command.size()) {
@@ -1174,11 +1152,11 @@ void shell::toShowTable() {
                                      pwd[2], 表不存在无法显示数据);
         return;
       }
+      Cache::add(table);
       menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
                                  _super::stringToInt(data[0]), need);
       Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    pwd[2]);
-      Cache::add(table);
       return;
     }
     case 2: {
@@ -1189,11 +1167,11 @@ void shell::toShowTable() {
                                      data[0], 表不存在无法显示数据);
         return;
       }
+      Cache::add(table);
       menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
                                  _super::stringToInt(data[1]), need);
       Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0]);
-      Cache::add(table);
       return;
     }
   }
@@ -1212,11 +1190,11 @@ void shell::toShowDatabaseTable() {
                                  data[1], 表不存在无法显示数据);
     return;
   }
+  Cache::add(table);
   menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table,
                              _super::stringToInt(data[2]), need);
   Log::LogForShowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                data[1]);
-  Cache::add(table);
 }
 void shell::toSet() {
   if (command.size() < 2 || data.size() == 0) {
@@ -1279,12 +1257,12 @@ void shell::toSetIndexDatabaseTable() {
                                      已选择的数据库中不存在目标表);
     return;
   }
+  Cache::add(table);
   TablePCB::setIndex(data[0] + "/" + data[1], INDEX(atoi(data[2].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                    data[1], data[2]);
   menuOutput::printSetACK(ReturnPower(), need);
   Index::update(data[0] + "/" + data[1]);
-  Cache::add(table);
 }
 void shell::toSetIndexTable() {
   Table table(pwd[1] + "/" + data[0], type::_TYPE_TABLE);
@@ -1295,27 +1273,25 @@ void shell::toSetIndexTable() {
                                      已选择的数据库中不存在目标表);
     return;
   }
+  Cache::add(table);
   TablePCB::setIndex(pwd[1] + "/" + data[0], INDEX(atoi(data[1].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0], data[1]);
   menuOutput::printSetACK(ReturnPower(), need);
   Index::update(pwd[1] + "/" + data[0]);
-  Cache::add(table);
 }
 void shell::toSetIndexDefault() {
-  Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-  TablePCB::setIndex(table.returnName(), INDEX(atoi(data[0].c_str())));
+  TablePCB::setIndex(pwd[1] + "/" + pwd[2], INDEX(atoi(data[0].c_str())));
   Log::LogForSetIndexDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    pwd[2], data[0]);
   menuOutput::printSetACK(ReturnPower(), need);
-  Index::update(table.returnName());
-  Cache::add(table);
+  Index::update(pwd[1] + "/" + pwd[2]);
 }
 void shell::toSetView() {
   if (command.size() == 2 && data.size() >= 1) {
     toSetViewDefault();
     return;
-  } else if (command.size() > 3 && data.size() >= 3) {
+  } else if (command.size() > 2 && data.size() >= 3) {
     switch (command[2]) {
       case 数据库:
         if (data.size() >= 4 && command.size() == 4 && command[3] == 表) {
@@ -1353,11 +1329,11 @@ void shell::toSetViewDatabaseTable() {
                                     已选择的数据库中不存在目标表);
     return;
   }
+  Cache::add(table);
   View::setAllowShowColumn(data[2], allowCol, data[0], data[1]);
   Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                   data[1], data[2], allowCol);
   menuOutput::printSetACK(ReturnPower(), need);
-  Cache::add(table);
 }
 void shell::toSetViewTable() {
   vstring allowCol(data.begin() + 2, data.end());
@@ -1369,21 +1345,20 @@ void shell::toSetViewTable() {
                                     已选择的数据库中不存在目标表);
     return;
   }
+  Cache::add(table);
   View::setAllowShowColumn(data[1], allowCol, pwd[1], data[0]);
   Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                   data[0], data[1], allowCol);
   menuOutput::printSetACK(ReturnPower(), need);
-  Cache::add(table);
 }
-
 void shell::toSetViewDefault() {
   vstring allowCol(data.begin() + 1, data.end());
   Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
+  Cache::add(table);
   View::setAllowShowColumn(data[0], allowCol, pwd[1], pwd[2]);
   Log::LogForSetViewDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                   pwd[2], data[0], allowCol);
   menuOutput::printSetACK(ReturnPower(), need);
-  Cache::add(table);
 }
 void shell::addHistory(std::string& str) {
   this->history.push_back(str);

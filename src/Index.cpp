@@ -8,6 +8,10 @@
 #ifndef _INDEX_H_
 #define _INDEX_H_
 #include "Index.h"
+
+#include <typeinfo>
+
+#include "super.h"
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -25,70 +29,55 @@
 Index::Index() {}
 Index::~Index() {}
 void Index::update(std::string name) {
-	_file oldIndex(name, type::_TYPE_INDEX_TABLE);
-	if(TablePCB(name).returnEndLineIndex() == 0){ // 表不存在则无法执行
-		return;
-	}
-	Table table(name, type::_TYPE_TABLE);
-	if (!oldIndex.isExist() || !table.isExist()) {
-		return;
-	}
-	INDEX indexcol = TablePCB(name).returnIndex();
-	vstring tablebuff;
-	vstring vectorbuff;
-	oldIndex.readline(vectorbuff);
-	table.readline(tablebuff);
-	int size = tablebuff.size();
-	for (int a = 0; a < size; ++a) {
-		if (tablebuff[a] == vectorbuff[0]) {
-			if (a == indexcol) {  // 不需要更新
-				return;
-			} else {
-				break;
-			}
-		}
-	}
-	_file newIndex( name + "_tmp" , type::_TYPE_INDEX_TABLE);
-	if (newIndex.isExist()) {
-		newIndex.remove();
-	}else{
-		newIndex.create();
-	}
-	vectorbuff[0] = tablebuff[indexcol];
-	newIndex.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
-	while (oldIndex.readline(vectorbuff) && table.readline(tablebuff)) {
-		vectorbuff[0] = tablebuff[indexcol];
-		newIndex.write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
-	}
-	rename(_super::returnTruePath(newIndex.returnName(), type::_TYPE_INDEX_TABLE)
-			.c_str(),
-			_super::returnTruePath(oldIndex.returnName(), type::_TYPE_INDEX_TABLE)
-			.c_str());
+  if (TablePCB(name).returnEndLineIndex() == 0) {  // 表不存在则无法执行
+    return;
+  }
+  Table table(name, type::_TYPE_TABLE);
+  _file oldIndex(name, type::_TYPE_INDEX_TABLE);
+  if (!oldIndex.isExist() || !table.isExist()) {
+    return;
+  }
+  vstring tablebuff;
+  vstring vectorbuff;
+  Table* tmp = new Table(name + "tmp", type::_TYPE_TABLE);
+  if (tmp->isExist()) {
+    tmp->remove();
+  }
+  tmp->create();
+  vstring tmpbuff;
+  INDEX indexcol = TablePCB(name).returnIndex();
+	TablePCB * tmpPCB = new TablePCB(*tmp);
+	tmpPCB->setIndex(indexcol);
+	delete tmpPCB;
+  while (table.readline(tmpbuff)) {
+    tmp->append(tmpbuff);
+  }
+  _file(name + "tmp", type::_TYPE_PCB).remove();
+  _file(name + "tmp", type::_TYPE_TABLE).remove();
+  _file(name + "tmp", type::_TYPE_VIEW).remove();
+  _file::rename(name + "tmp", name, type::_TYPE_INDEX_TABLE);
+  delete tmp;
 }
-void Index::create(Table table) {
-	Index::create(table.returnName());
-}
+void Index::create(Table table) { Index::create(table.returnName()); }
 
-void Index::create(_file file) {
-	Index::create(file.returnName());
-}
+void Index::create(_file file) { Index::create(file.returnName()); }
 void Index::create(std::string tableName) {
-	_file indexFile(tableName, type::_TYPE_INDEX_TABLE);
-	_file dataFile(tableName, type::_TYPE_TABLE);
-	if (indexFile.isExist()) {
-		indexFile.remove();
-	}
-	indexFile.create();
-	if (!indexFile.isExist() || !dataFile.isExist()) {
-		return;
-	}
-	vstring value;
-	int size = 0;
-	while (dataFile.readline(value)) {
-		for (std::string& str : value) {
-			size += str.size();
-		}
-		indexFile.write({value[0], std::to_string(size)},
-				type_mode::WRITEBUFF_MODE_APP);
-	}
+  _file indexFile(tableName, type::_TYPE_INDEX_TABLE);
+  _file dataFile(tableName, type::_TYPE_TABLE);
+  if (indexFile.isExist()) {
+    indexFile.remove();
+  }
+  indexFile.create();
+  if (!indexFile.isExist() || !dataFile.isExist()) {
+    return;
+  }
+  vstring value;
+  int size = 0;
+  while (dataFile.readline(value)) {
+    for (std::string& str : value) {
+      size += str.size();
+    }
+    indexFile.write({value[0], std::to_string(size)},
+                    type_mode::WRITEBUFF_MODE_APP);
+  }
 }

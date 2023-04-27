@@ -254,7 +254,7 @@ bool _file::create(std::string TruePath) {
 	}
 	filewritebuff.close();
 
-	if (TruePath.substr(8, 3) == "./data/PCB") {
+	if (TruePath.substr(7, 3) == "PCB") {
 		_file(TruePath).inputPCBInformation();
 	}
 	return true;

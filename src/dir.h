@@ -86,7 +86,7 @@ class _dir : public _super {
 		/**
 		 * @brief 构造函数
 		 *
-		 * @param truePath 真实路径
+		 * @Param truePath 真实路径
 		 */
 		_dir(std::string truePath);
 		/**
@@ -122,7 +122,7 @@ class _dir : public _super {
 		/**
 		 * @brief 返回真实路径
 		 *
-		 * @return 真实路径
+		 * @Return 真实路径
 		 */
 		std::string returnTruePath();
 	private:

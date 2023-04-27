@@ -214,6 +214,27 @@ class _file : public _super {
    */
   bool static write(std::string Name, type style, const vstring array,
                     type_mode mode);
+	/**
+	 * @brief 重命名
+	 *
+	 * @param oldname 旧名字
+	 * @param newname 新名字
+	 * @param fileType 文件类型
+	 */
+	void static rename(std::string oldname,std::string newname,type fileType);
+	/**
+	 * @brief 重命名
+	 *
+	 * @param oldTrueName 旧名字(真实路径)
+	 * @param newTrueName 新名字(真实路径)
+	 */
+	void static rename(std::string oldTrueName,std::string newTrueName);
+	/**
+	 * @brief 重命名
+	 *
+	 * @param newTrueName 新名字
+	 */
+	void rename(std::string newTrueName);
   /**
    * @brief 设置读buff的seek
    *
@@ -266,7 +287,7 @@ class _file : public _super {
    */
   bool static create(std::string Name, type style);
   /**
-   * @brief 创建文件
+   * @brief 创建文件(仅创建文件，创建pcb或者表别使用该接口)
    *
    * @param  string TruePath 真实路径
    *

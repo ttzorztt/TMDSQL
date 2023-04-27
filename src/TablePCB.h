@@ -2,7 +2,6 @@
  * @file TablePCB.h
  * @brief 表PCB的声明
  * @author TMD
- * @version 1.3
  * @date 2022-11-20
  */
 #ifndef _TABLEPCB_

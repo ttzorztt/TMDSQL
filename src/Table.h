@@ -2,6 +2,7 @@
  * @file Table.h
  * @brief 封装表操作
  * @author TMD
+ * @version 1.3
  * @date 2022-11-06
  */
 #ifndef _TABLE_
@@ -162,7 +163,7 @@ class Table : public _file{
 		/**
 		 * @brief 析构函数
 		 */
-		~Table();
+		virtual ~Table();
 		/**
 		 * @brief 寻找索引为index的数据，(默认第一个每列第一个数据是索引)
 		 *

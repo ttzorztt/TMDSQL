@@ -39,13 +39,13 @@ Cache::Cache() { cache.resize(CACHEPOLL); }
 Cache::~Cache() {}
 void Cache::add(Table file) {
   std::string filename = file.returnName();
-  std::string replace =  Cache::update(filename);
+  std::string replace = Cache::update(filename);
   if (fileInclue.count(filename)) {
     return;
   }
-	if(replace != ""){ //巨细节好吧
-		stap = fileToIndex[replace];
-	}
+  if (replace != "") {  //巨细节好吧
+    stap = fileToIndex[replace];
+  }
   fileInclue.insert(filename);
   cache[stap].clear();
   fileToIndex[filename] = stap;
@@ -85,11 +85,6 @@ std::string Cache::update(std::string fileName) {
     return cacheCount[0].second;
   }
 }
-/* void Cache::addLine(std::string fileName, std::pair<std::string, int>) { */
-/*   if (!fileInclue.count(fileName)) { */
-/*     return; */
-/*   } */
-/* } */
 void Cache::test_show() {
   std::cout << "Cache 文件有:";
   for (auto begin = fileInclue.begin(), end = fileInclue.end(); begin != end;

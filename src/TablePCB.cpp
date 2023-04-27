@@ -1,14 +1,7 @@
-/*
- * @Description  : 
- * @Autor        : TMD
- * @Date         : 2023-04-25 14:37:14
- * @LastEditTime : 2023-04-25 14:37:15
- */
 /**
  * @file TablePCB.cpp
  * @brief 表PCB的实现
  * @author TMD
- * @version 1.3
  * @date 2022-11-20
  */
 #ifndef _TABLEPCB_H_
@@ -44,6 +37,10 @@ TablePCB::TablePCB(std::string DBID, std::string TBID)
 void TablePCB::readData() {
 	vstring vec;
 	file.readline(vec);
+	if (vec.empty()) {
+		std::cout << "TablePCB is empty?" << std::endl;
+		return;
+	}
 	this->endLineIndex = atoi(vec[1].c_str());
 	this->length = atoi(vec[2].c_str());
 	this->index = atoi(vec[3].c_str());
@@ -68,6 +65,7 @@ void TablePCB::writeData() {
 int TablePCB::returnEndLineIndex() {
 	return this->endLineIndex;
 }
+
 std::string TablePCB::returnName() {
 	return this->file.returnName();
 }
@@ -80,7 +78,7 @@ void TablePCB::setIndex(INDEX index) {
 void TablePCB::setEndLineIndex(Table table, POINTER fileIndex) {
 	TablePCB pcb(table);
 	pcb.setEndLineIndex(fileIndex);
-}	
+}
 void TablePCB::setIndex(std::string tableName, INDEX fileIndex) {
 	TablePCB pcb(tableName);
 	pcb.setIndex(fileIndex);

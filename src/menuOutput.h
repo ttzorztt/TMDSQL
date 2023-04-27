@@ -63,20 +63,6 @@ class menuOutput {
 		void static printTableNotEmptyAndDeleteTip(TYPE_POWER power,
 				bool need = true);
 		/**
-		 * @brief 输出不存在该行
-		 *
-		 * @param power 权限
-		 * @param need 是否需要提示符
-		 */
-		void static printNotExistsTableRow(TYPE_POWER power,bool need = true);
-		/**
-		 * @brief 输出不存在该列
-		 *
-		 * @param power 权限
-		 * @param need 是否输出提示符
-		 */
-		void static printNotExistsTableCol(TYPE_POWER power,bool need = true);
-		/**
 		 * @brief 输出数据库不为空
 		 *
 		 * @param  TYPE_POWER power 权限
@@ -232,6 +218,20 @@ class menuOutput {
 		 * @param  bool need 是否需要提示符
 		 */
 		void static printNotExistsTable(TYPE_POWER power, bool need = true);
+		/**
+		 * @brief 输出不存在该行
+		 *
+		 * @param power 权限
+		 * @param need 是否需要提示符
+		 */
+		void static printNotExistsTableRow(TYPE_POWER power,bool need = true);
+		/**
+		 * @brief 输出不存在该列
+		 *
+		 * @param power 权限
+		 * @param need 是否输出提示符
+		 */
+		void static printNotExistsTableCol(TYPE_POWER power,bool need = true);
 		/**
 		 * @brief 输出表已存在
 		 *
