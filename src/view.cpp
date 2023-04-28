@@ -83,10 +83,12 @@ void View::deleteColUpdate(std::string DatabaseAndTableName,
       }
     }
     if (newView.size() > 0) {
-      viewFile->write(newView, type_mode::WRITEBUFF_MODE_APP);
+      tmpViewFIle->write(newView, type_mode::WRITEBUFF_MODE_APP);
     }
     newView.clear();
   }
   delete viewFile;
+  tmpViewFIle->rename(
+      _super::returnTruePath(DatabaseAndTableName, type::_TYPE_VIEW));
   delete tmpViewFIle;
 }

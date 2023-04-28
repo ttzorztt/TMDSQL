@@ -155,6 +155,18 @@ class shell : public User {
 		 */
 		void toBack();
 		/**
+		 * @brief 输入回溯_显示后的操作
+		 */
+		void toBackShow();
+		/**
+		 * @brief 输入回溯_显示_文件后的操作
+		 */
+		void toBackShowFile();
+		/**
+		 * @brief 输入回溯_文件_回溯点后的操作
+		 */
+		void toBackFileExecute();
+		/**
 		 * @brief 输入插入后的操作
 		 */
 		void toInsert();

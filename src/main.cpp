@@ -142,6 +142,7 @@ int main1(int argc, char const* argv[]) {
 int main(int argc, char const* argv[]) {
   init();
   shell x;
+	return 0;
   string tmp = "执行 @init";
 	x.read(tmp);
   tmp = "登录 @root root";

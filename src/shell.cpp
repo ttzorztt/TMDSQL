@@ -332,7 +332,33 @@ bool shell::read(revstring value) {
   }
   return read();
 }
-void shell::toBack() {}
+void shell::toBack() {
+  if (command.size() == 2 && data.size() == 0) {
+    if (command[1] == 显示) {
+      toBackShow();
+    } else {
+      menuOutput::printCommandError(ReturnPower(), need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       第二个关键字错误);
+    }
+  } else if (command.size() == 2 && data.size() == 1) {
+    if (command[1] == 显示) {
+      toBackShowFile();
+    } else {
+      menuOutput::printCommandError(ReturnPower(), need);
+      Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
+                       第二个关键字错误);
+    }
+  } else if (command.size() == 1 && data.size() == 2) {
+    toBackFileExecute();
+  } else {
+    menuOutput::printCommandError(ReturnPower(), need);
+    Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+  }
+}
+void shell::toBackShow() {}
+void shell::toBackShowFile() {}
+void shell::toBackFileExecute() {}
 void shell::toLogin() {
   if (data.size() == 2) {
     std::string oldUserName = ReturnUserName();
