@@ -8,9 +8,9 @@
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
-
-#include <cstdio>
-
+#endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
 #include "super.h"
 #endif
 #ifndef _IOSTREAM_
@@ -27,18 +27,26 @@
 #endif
 //当前打开的文件数总数
 int _file::count = 0;
-_file::_file(std::string Name, type style) : _super(Name) {
+_file::_file(std::string Name, type style, bool create, std::string initData)
+    : _super(Name) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
+  if (create && !this->isExist()) {
+    this->write(initData, type_mode::WRITEBUFF_MODE_TRUNC);
+  }
 }
-_file::_file(std::string TruePath)
+_file::_file(std::string TruePath, bool create, std::string initData)
     : _super(_super::dispartDatabaseNameAndTableName(TruePath)[1]) {
   this->truePath = TruePath;
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
   this->style = type::_TYPE_NONE;
+  if (create && !this->isExist()) {
+		this->create();
+    this->write(initData, type_mode::WRITEBUFF_MODE_TRUNC);
+  }
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
   this->style = _copy.returnType();

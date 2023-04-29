@@ -53,6 +53,9 @@ typedef int INDEX;
 #define _TruePathForUserData "/data/User/pd"
 #define _BackPath "./data/Back/"
 #define CACHEPOLL 10
+#define 回溯创建数据库 10
+#define 回溯删除数据库 10
+
 // 权限
 enum TYPE_POWER {
   ROOT,     // 超级管理员

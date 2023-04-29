@@ -169,14 +169,17 @@ class _file : public _super {
    *
    * @param string Name 名
    * @param type style 类型
+   * @param bool create 不存在是否创建
    */
-  _file(std::string Name, type style);
+  _file(std::string Name, type style, bool create = false,
+        std::string initData = "");
   /**
    * @brief 构造函数
    *
    * @param  string TruePath 真实路径
+   * @param bool create 不存在是否创建
    */
-  _file(std::string TruePath);
+  _file(std::string TruePath, bool create = false, std::string initData = "");
   /**
    * @brief 拷贝构造函数
    *
@@ -188,21 +191,22 @@ class _file : public _super {
    */
   virtual ~_file();
   /**
-   * @brief 删除表的一行(ps:这个函数会同步建立索引等文件)，所以是建立在表的基础上
+   * @brief
+   * 删除表的一行(ps:这个函数会同步建立索引等文件)，所以是建立在表的基础上
    *
    * @param  string index 索引
    *
    * @return bool 是否删除
    */
   bool deleteTableLine(std::string index);
-	/**
-	 * @brief 删除文件的一行(单纯文件，用在pd等单纯没有联系的文件)
-	 *
-	 * @param index 索引(实际上就是第一列的值，因为这个函数没有表的概念)
-	 *
-	 * @peturn 是否删除
-	 */
-	bool deleteFileLine(std::string index);
+  /**
+   * @brief 删除文件的一行(单纯文件，用在pd等单纯没有联系的文件)
+   *
+   * @param index 索引(实际上就是第一列的值，因为这个函数没有表的概念)
+   *
+   * @peturn 是否删除
+   */
+  bool deleteFileLine(std::string index);
 
   /**
    * @brief 删除一列
@@ -223,27 +227,27 @@ class _file : public _super {
    */
   bool static write(std::string Name, type style, const vstring array,
                     type_mode mode);
-	/**
-	 * @brief 重命名
-	 *
-	 * @param oldname 旧名字
-	 * @param newname 新名字
-	 * @param fileType 文件类型
-	 */
-	void static rename(std::string oldname,std::string newname,type fileType);
-	/**
-	 * @brief 重命名
-	 *
-	 * @param oldTrueName 旧名字(真实路径)
-	 * @param newTrueName 新名字(真实路径)
-	 */
-	void static rename(std::string oldTrueName,std::string newTrueName);
-	/**
-	 * @brief 重命名
-	 *
-	 * @param newTrueName 新名字
-	 */
-	void rename(std::string newTrueName);
+  /**
+   * @brief 重命名
+   *
+   * @param oldname 旧名字
+   * @param newname 新名字
+   * @param fileType 文件类型
+   */
+  void static rename(std::string oldname, std::string newname, type fileType);
+  /**
+   * @brief 重命名
+   *
+   * @param oldTrueName 旧名字(真实路径)
+   * @param newTrueName 新名字(真实路径)
+   */
+  void static rename(std::string oldTrueName, std::string newTrueName);
+  /**
+   * @brief 重命名
+   *
+   * @param newTrueName 新名字
+   */
+  void rename(std::string newTrueName);
   /**
    * @brief 设置读buff的seek
    *

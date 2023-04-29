@@ -1,9 +1,13 @@
-TMDSQL: superl.o mainl.o filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o Logl.o viewl.o cachel.o
-	g++ -static mainl.o Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o viewl.o cachel.o -o TMDSQL
+TMDSQL: superl.o  filel.o DataBasel.o dirl.o Tablel.o  Indexl.o TablePCBl.o shelll.o Userl.o menuOutputl.o Logl.o viewl.o cachel.o BackTrackingl.o mainl.o
+	g++ -static  Logl.o filel.o DataBasel.o dirl.o Tablel.o superl.o Indexl.o TablePCBl.o  shelll.o Userl.o menuOutputl.o viewl.o cachel.o BackTrackingl.o mainl.o -o TMDSQL
 	./TMDSQL
-TMDSQL.exe: mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o cachew.o
-	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o cachew.o  -o TMDSQL.exe
+TMDSQL.exe: mainw.o Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o  Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o cachew.o BackTrackingw.o
+	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK  Logw.o filew.o DataBasew.o dirw.o Tablew.o superw.o Indexw.o TablePCBw.o shellw.o Userw.o menuOutputw.o vieww.o cachew.o BackTrackingw.o mainw.o -o TMDSQL.exe
 	# wine TMDSQL.exe
+BackTrackingl.o: BackTracking.cpp
+	g++ -static -c BackTracking.cpp -o BackTrackingl.o
+BackTrackingw.o: BackTracking.cpp
+	x86_64-w64-mingw32-g++ -static -finput-charset=UTF-8 -fexec-charset=GBK -c BackTracking.cpp -o BackTrackingw.o
 cachel.o: cache.cpp
 	g++ -static -c cache.cpp -o cachel.o
 cachew.o: cache.cpp

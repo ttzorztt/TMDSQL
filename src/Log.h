@@ -26,7 +26,6 @@
 class Log {
  private:
   static _file file;
-	static _file backFile;
   /**
    * @brief 获取当前的日期和时间，并进行日志时间输入
    *

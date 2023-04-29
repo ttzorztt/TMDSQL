@@ -8,6 +8,7 @@
 #define _IOSTREAM_
 #include <unistd.h>
 
+#include <cstddef>
 #include <iostream>
 #endif
 #ifndef _FILE_H_
@@ -62,6 +63,10 @@
 #define _LOG_H_
 #include "Log.h"
 #endif
+#ifndef _BACKTRACKING_H_
+#define _BACKTRACKING_H_
+#include "BackTracking.h"
+#endif
 using namespace std;
 
 /**
@@ -109,15 +114,15 @@ void init() {
   }
   if (access("./data/User", F_OK)) {
     _super::createDir("./data/User");
-    _file table("./data/User/pd");
-    table.create();
-    table.write({"root", "root", "0"}, type_mode::WRITEBUFF_MODE_APP);
+    _file table("./data/User/pd", true, "root,root,0");
   }
   if (access("./data/Log", F_OK)) {
     _super::createDir("./data/Log");
+    _file(Log::nowData(), type::_TYPE_BACK, true);
   }
   if (access("./data/Back", F_OK)) {
     _super::createDir("./data/Back");
+    /* _file(Log::nowData(), type::_TYPE_BACK, true, {"0         "}); */
   }
 }
 int main1(int argc, char const* argv[]) {
@@ -139,20 +144,40 @@ int main1(int argc, char const* argv[]) {
   Log::close();
   return 0;
 }
+
+class A {
+ private:
+
+ public:
+  static _file* fptr;
+  A() {}
+  ~A() {}
+  A(const A& copy);
+	void static t();
+};
+_file* A::fptr = new _file(Log::nowData(), type::_TYPE_BACK, true, "0");
+void A::t(){}
 int main(int argc, char const* argv[]) {
   init();
+  /* _file* tmpa; */
+  /* tmpa = new _file(Log::nowData(), type::_TYPE_BACK, true, "0"); */
+	/* std::cout << ( A::fptr == NULL) <<  std::endl; */
+  _file(Log::nowData(), type::_TYPE_BACK, true, "0");
+	/* A::t(); */
+  return 0;
   shell x;
-	return 0;
+  BackTracking::BackTrackingForCreateDatabase("DB1");
+  return 0;
   string tmp = "执行 @init";
-	x.read(tmp);
+  x.read(tmp);
   tmp = "登录 @root root";
   x.read(tmp);
   tmp = "创建 用户 @t t";
   x.read(tmp);
-	tmp = "设置 视图 数据库 表 @DB1 TB1 t 1 2 3 4";
-	x.read(tmp);
-	tmp = "删除 列 数据库 表 @DB1 TB1 2";
-	x.read(tmp);
+  tmp = "设置 视图 数据库 表 @DB1 TB1 t 1 2 3 4";
+  x.read(tmp);
+  tmp = "删除 列 数据库 表 @DB1 TB1 2";
+  x.read(tmp);
   return 0;
   tmp = "删除 行 数据库 表 @DB1 TB1 2";
   x.read(tmp);

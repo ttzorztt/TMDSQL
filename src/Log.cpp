@@ -62,7 +62,6 @@ std::unordered_map<TYPE_POWER, std::string> Log::TP = {{NONE, "未登录"},
                                                        {ROOT, "超级管理员"},
                                                        {Manager, "管理员"}};
 _file Log::file(nowData(), type::_TYPE_LOG);
-_file Log::backFile(nowData(), type::_TYPE_BACK);
 void Log::LogForCompileError(std::string UserName, TYPE_POWER op,
                              std::string _data, TYPE_ERROR_CASE errorCase) {
   inputNowTime(errorCase);
