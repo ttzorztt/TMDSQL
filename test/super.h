@@ -52,9 +52,11 @@ typedef int INDEX;
 #define _ViewPath "./data/view/"
 #define _TruePathForUserData "/data/User/pd"
 #define _BackPath "./data/Back/"
-
-#define 回溯文件初始化字符串 "24 0                    "
 #define CACHEPOLL 10
+
+#define 回溯文件初始化首行字符串 "41 44 1                                  " //留有空格的目的是为了给此处修改留有字节
+#define 回溯文件首行字符数 40
+#define 回溯文件初始化次行字符串 "-1 0" //结束位
 #define 回溯创建数据库 10
 #define 回溯删除数据库 10
 

@@ -122,7 +122,8 @@ void init() {
   }
   if (access("./data/Back", F_OK)) {
     _super::createDir("./data/Back");
-    _file(Log::nowData(), type::_TYPE_BACK, true,回溯文件初始化字符串);
+    _file(Log::nowData(), type::_TYPE_BACK, true);
+    BackTracking::init();
   }
 }
 int main1(int argc, char const* argv[]) {
@@ -147,13 +148,22 @@ int main1(int argc, char const* argv[]) {
 int main(int argc, char const* argv[]) {
   init();
   shell x;
-  /* BackTracking::BackTrackingForCreateDatabase("DB1"); */
-  /* return 0; */
   string tmp = "执行 @init";
   x.read(tmp);
+  _file t("DB1/TB1", type::_TYPE_TABLE);
+  t.setWriteSeek(0);
+  /* vstring tm; */
+  /* t.readline(tm); */
+  std::cout << t.returnWriteTell() << " " << t.returnReadTell() << std::endl;
+  t.write("fsfas", type_mode::WRITEBUFF_MODE_APP);
+  return 0;
+  /* Log::open(); */
+  BackTracking::BackTrackingForCreateDatabase("DB1");
+  return 0;
   tmp = "登录 @root root";
   x.read(tmp);
-	return 0;
+  Log::close();
+  return 0;
   tmp = "创建 用户 @t t";
   x.read(tmp);
   tmp = "设置 视图 数据库 表 @DB1 TB1 t 1 2 3 4";

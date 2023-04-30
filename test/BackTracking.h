@@ -22,7 +22,11 @@ class BackTracking {
  public:
   BackTracking();
   ~BackTracking();
-  BackTracking(const BackTracking& copy) = delete;
+	/**
+	 * @brief 在创建的前提下初始化内容。
+	 */
+  void static init();
+	BackTracking(const BackTracking& copy) = delete;
   void static BackTrackingForCreateUser(std::string UserName, std::string Password);
   void static BackTrackingForCreateManager(std::string UserName, std::string Password);
   void static BackTrackingForCreateDatabase(std::string DBID);
@@ -41,5 +45,6 @@ class BackTracking {
                                    revstring viewData);
   void static BackTrackingForSetIndexDatabaseTable(std::string DBID, std::string TBID,
                                     int index);
+	void static test_Read();
 };
 #endif
