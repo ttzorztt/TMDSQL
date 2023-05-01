@@ -33,8 +33,11 @@ _file::_file(std::string Name, type style, bool create, std::string initData)
   this->truePath = _super::returnTruePath(Name, style);
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
-  if (create && !this->isExist()) {
-    this->write(initData, type_mode::WRITEBUFF_MODE_TRUNC);
+  if (create) {
+    this->create();
+    if (initData != "") {
+      this->write(initData, type_mode::WRITEBUFF_MODE_APP);
+    }
   }
 }
 _file::_file(std::string TruePath, bool create, std::string initData)
@@ -43,9 +46,11 @@ _file::_file(std::string TruePath, bool create, std::string initData)
   ++_file::count;
   this->nowMode = type_mode::DEFAULT;
   this->style = type::_TYPE_NONE;
-  if (create && !this->isExist()) {
-		this->create();
-    this->write(initData, type_mode::WRITEBUFF_MODE_TRUNC);
+  if (create) {
+    this->create();
+    if (initData != "") {
+      this->write(initData, type_mode::WRITEBUFF_MODE_APP);
+    }
   }
 }
 _file::_file(_file& _copy) : _super(_copy.returnName()) {
@@ -175,6 +180,14 @@ void _file::setOpenBuff(MODE mode) {
       this->nowMode = type_mode::WRITEBUFF_MODE_APP;
       break;
     }
+    case type_mode::WRITEBUFF_MODE_IN_OUT: {
+      if (readFileBuff.is_open()) {
+        writeFileBuff.clear();
+      }
+      writeFileBuff.open(this->truePath, std::ios::out | std::ios::in);
+      this->nowMode = type_mode::WRITEBUFF_MODE_IN_OUT;
+      break;
+    }
     case type_mode::WRITEBUFF_MODE_TRUNC: {
       if (readFileBuff.is_open()) {
         writeFileBuff.clear();
@@ -196,7 +209,9 @@ void _file::setReadSeek(POINTER fileIndex) {
   this->readFileBuff.seekg(fileIndex, std::ios::beg);
 }
 void _file::setWriteSeek(POINTER fileIndex) {
-  writeFileBuff.seekp(fileIndex, std::ios::beg);
+  /* writeFileBuff.clear(); */
+  /* this->writeFileBuff.open(this->truePath); */
+  writeFileBuff.seekp(1);
 }
 POINTER _file::returnReadTell() { return readFileBuff.tellg(); }
 POINTER _file::returnWriteTell() { return writeFileBuff.tellp(); }
@@ -204,17 +219,23 @@ bool _file::write(std::string str, type_mode mode) {
   switch (mode) {
     case type_mode::WRITEBUFF_MODE_APP: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
-      writeFileBuff << std::endl << str;
       break;
     }
     case type_mode::WRITEBUFF_MODE_TRUNC: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
-      writeFileBuff << str << std::endl;
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_IN_OUT: {
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_IN_OUT);
       break;
     }
     case type_mode::DEFAULT:
     case type_mode::READBUFF_MODE:
       break;
+  }
+  writeFileBuff << str;
+  if (mode != type_mode::WRITEBUFF_MODE_IN_OUT) {
+    writeFileBuff << std::endl;
   }
   this->writeFileBuff.flush();
   return true;
@@ -226,35 +247,6 @@ void _file::resetPath(std::string Name, type style) {
   this->style = style;
   this->truePath = _super::returnTruePath(Name, style);
 }
-bool _file::writeAnyLine(vvstring array, type_mode mode) {
-  switch (mode) {
-    case type_mode::WRITEBUFF_MODE_APP: {
-      this->setOpenBuff(type_mode::WRITEBUFF_MODE_APP);
-      break;
-    }
-    case type_mode::WRITEBUFF_MODE_TRUNC: {
-      this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
-      break;
-    }
-    case type_mode::DEFAULT:
-    case type_mode::READBUFF_MODE:
-      break;
-  }
-  int size = array.size();
-  if (size == 0) {
-    return false;
-  }
-  for (int tmp = 0; tmp < size; ++tmp) {
-    writeFileBuff << array[tmp][0];
-    int lineSize = array[tmp].size();
-    for (int index = 1; index < lineSize; ++index) {
-      writeFileBuff << "," << array[tmp][index];
-    }
-    writeFileBuff << std::endl;
-  }
-  this->writeFileBuff.flush();
-  return true;
-}
 bool _file::write(const vstring array, type_mode mode) {
   switch (mode) {
     case type_mode::WRITEBUFF_MODE_APP: {
@@ -263,6 +255,10 @@ bool _file::write(const vstring array, type_mode mode) {
     }
     case type_mode::WRITEBUFF_MODE_TRUNC: {
       this->setOpenBuff(type_mode::WRITEBUFF_MODE_TRUNC);
+      break;
+    }
+    case type_mode::WRITEBUFF_MODE_IN_OUT: {
+      this->setOpenBuff(type_mode::WRITEBUFF_MODE_IN_OUT);
       break;
     }
     case type_mode::DEFAULT:
@@ -277,7 +273,9 @@ bool _file::write(const vstring array, type_mode mode) {
   for (int index = 1; index < size; ++index) {
     writeFileBuff << "," << array[index];
   }
-  writeFileBuff << std::endl;
+  if (mode != type_mode::WRITEBUFF_MODE_IN_OUT) {
+    writeFileBuff << std::endl;
+  }
   this->writeFileBuff.flush();
   return true;
 }
@@ -306,7 +304,7 @@ bool _file::write(std::string Name, type style, const std::string& str,
   return tmd.write(str, mode);
 }
 bool _file::readline(revstring ret) {
-  ret.clear();
+	std::vector<std::string>().swap(ret);
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
 

@@ -52,11 +52,38 @@ typedef int INDEX;
 #define _ViewPath "./data/view/"
 #define _TruePathForUserData "/data/User/pd"
 #define _BackPath "./data/Back/"
-
-#define 回溯文件初始化字符串 "24 0                    "
 #define CACHEPOLL 10
-#define 回溯创建数据库 10
-#define 回溯删除数据库 10
+
+#define 回溯文件初始化首行字符串 \
+  "41 46 1                                 "  //留有空格的目的是为了给此处修改留有字节
+#define 回溯文件首行字符数 40
+#define 回溯文件初始化次行字符串 "-1 0"  //结束位
+// 注意把空格算进去，包含@前的一个空格
+// linux
+
+// windows
+
+enum TYPE_BACKTRACKING_COMMAND {
+  创建用户,          // 0
+  创建管理员,        // 1
+  创建数据库,        // 2
+  创建数据库表,      // 3
+  删除数据库,        // 4
+  删除数据库表,      // 5
+  删除用户,          // 6
+  删除管理员,        // 7
+  删除行数据库表,    // 8
+  删除列数据库表,    // 9
+  插入数据库表,      // 10
+  设置视图数据库表,  // 11
+  设置索引数据库表   // 12
+};
+std::unordered_map<TYPE_BACKTRACKING_COMMAND,
+                   int> static BackTrackingCommandToInt = {
+    {创建用户, 1},     {创建管理员, 1},       {创建数据库, 1},
+    {创建数据库表, 1}, {删除数据库, 1},       {删除用户, 1},
+    {删除管理员, 1},   {删除行数据库表, 1},   {删除列数据库表, 1},
+    {插入数据库表, 2}, {设置视图数据库表, 2}, {设置索引数据库表, 2}};
 
 // 权限
 enum TYPE_POWER {
@@ -121,6 +148,7 @@ enum type_mode {
   READBUFF_MODE,  //每次写入前寻位到流结尾
   WRITEBUFF_MODE_TRUNC,
   WRITEBUFF_MODE_APP,
+  WRITEBUFF_MODE_IN_OUT,
   DEFAULT
 };
 // 执行错误的原因

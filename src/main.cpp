@@ -93,24 +93,31 @@ void init() {
     _super::createDir("./data/SQL");
     _file table("./data/SQL/init");
     table.create();
-    vvstring tmpdata = {{"登录", "@root", "root"},
-                        {"创建", "数据库", "@DB1"},
-                        {"创建", "数据库", "表,@DB1", "TB1"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "序号", "姓名",
-                         "性别", "学历", "爱好", "住址", "联系方式"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "0", "张三",
-                         "男", "本科", "钓鱼", "北京", "110"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "1", "李四",
-                         "男", "研究生", "吃饭", "西安", "120"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "2", "王五",
-                         "女", "博士", "吃鱼", "天津", "119"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "3", "赵六",
-                         "女", "博士后", "跳绳", "四川", "122"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "4", "刘七",
-                         "男", "初中", "跳大绳", "深圳", "114"},
-                        {"插入", "数据库", "表", "@DB1", "TB1", "5", "雷八",
-                         "女", "高中", "跳小绳", "安徽", "911"}};
-    table.writeAnyLine(tmpdata, type_mode::WRITEBUFF_MODE_TRUNC);
+    table.write({"登录", "@root", "root"}, type_mode::WRITEBUFF_MODE_APP);
+    table.write({"创建", "数据库", "@DB1"}, type_mode::WRITEBUFF_MODE_APP);
+    table.write({"创建", "数据库", "表,@DB1", "TB1"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "序号", "姓名", "性别",
+                 "学历", "爱好", "住址", "联系方式"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "0", "张三", "男",
+                 "本科", "钓鱼", "北京", "110"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "1", "李四", "男",
+                 "研究生", "吃饭", "西安", "120"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "2", "王五", "女",
+                 "博士", "吃鱼", "天津", "119"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "3", "赵六", "女",
+                 "博士后", "跳绳", "四川", "122"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "4", "刘七", "男",
+                 "初中", "跳大绳", "深圳", "114"},
+                type_mode::WRITEBUFF_MODE_APP);
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "5", "雷八", "女",
+                 "高中", "跳小绳", "安徽", "911"},
+                type_mode::WRITEBUFF_MODE_APP);
   }
   if (access("./data/User", F_OK)) {
     _super::createDir("./data/User");
@@ -122,7 +129,8 @@ void init() {
   }
   if (access("./data/Back", F_OK)) {
     _super::createDir("./data/Back");
-    _file(Log::nowData(), type::_TYPE_BACK, true,回溯文件初始化字符串);
+    _file(Log::nowData(), type::_TYPE_BACK, true);
+    BackTracking::init();
   }
 }
 int main1(int argc, char const* argv[]) {
@@ -147,13 +155,17 @@ int main1(int argc, char const* argv[]) {
 int main(int argc, char const* argv[]) {
   init();
   shell x;
-  /* BackTracking::BackTrackingForCreateDatabase("DB1"); */
-  /* return 0; */
   string tmp = "执行 @init";
   x.read(tmp);
+  Log::open();
+  /* BackTracking::BackTrackingForCreateDatabase("DB1"); */
+	/* BackTracking::BackTrackingForCreateUser("TMD","TT"); */
+  BackTracking::test_Read();
+  return 0;
   tmp = "登录 @root root";
   x.read(tmp);
-	return 0;
+  Log::close();
+  return 0;
   tmp = "创建 用户 @t t";
   x.read(tmp);
   tmp = "设置 视图 数据库 表 @DB1 TB1 t 1 2 3 4";

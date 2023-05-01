@@ -89,7 +89,7 @@ void shell::toChooseDatabase() {
     case 2:
     case 3: {
       if (DataBase(data[0]).isExist()) {
-        pwd.clear();
+				std::vector<std::string>().swap(pwd);
         pwd.push_back("/");
         pwd.push_back(data[0]);
         menuOutput::printChooseACK(ReturnPower(), need);
@@ -144,7 +144,7 @@ void shell::toChooseDatabaseTable() {
                                    data[1], 已选择的数据库中不存在目标表);
     return;
   }
-  pwd.clear();
+  std::vector<std::string>().swap(pwd);
   pwd.push_back("/");
   pwd.push_back(data[0]);
   pwd.push_back(data[1]);
@@ -166,8 +166,8 @@ bool shell::aidCheckData(std::string _str) {
   return true;
 }
 bool shell::check(revstring vectorbuff) {
-  command.clear();
-  data.clear();
+  std::vector<TYPE_CID>().swap(command);
+  std::vector<std::string>().swap(data);
   int size = vectorbuff.size();
   if (size == 0 || !(HashMapStringToCID.count(vectorbuff[0]))) {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -396,10 +396,10 @@ void shell::toExecute() {
     return;
   }
   vstring tmp;
-  command.clear();
-  data.clear();
   this->need = false;
   Log::LogForExecuteSQL(ReturnUserName(), ReturnPower(), data[0]);
+  std::vector<std::string>().swap(data);
+  std::vector<TYPE_CID>().swap(command);
   while (file.readline(tmp)) {
     if (!tmp.size()) {
       return;

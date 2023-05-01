@@ -125,7 +125,6 @@ void Log::open() {
 void Log::close() {
   file.write("", type_mode::WRITEBUFF_MODE_APP);
   file.write(nowDataTime() + " 登出系统", type_mode::WRITEBUFF_MODE_APP);
-  file.write("", type_mode::WRITEBUFF_MODE_APP);
 }
 void Log::inputNowTime(TYPE_ERROR_CASE& errorCase) {
   std::string DataTime = nowDataTime();

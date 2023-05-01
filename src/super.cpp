@@ -34,7 +34,7 @@ bool _super::createDir(std::string path) {
 }
 bool _super::create() { return true; }
 void _super::stringToVector(const std::string& _str, revstring vec) {
-  vec.clear();
+	std::vector<std::string>().swap(vec);
   int size = _str.size();
   int left = 0;
   while (left < size) {  //去除前导空格

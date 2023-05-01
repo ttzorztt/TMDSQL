@@ -85,7 +85,7 @@ void View::deleteColUpdate(std::string DatabaseAndTableName,
     if (newView.size() > 0) {
       tmpViewFIle->write(newView, type_mode::WRITEBUFF_MODE_APP);
     }
-    newView.clear();
+	std::vector<std::string>().swap(newView);
   }
   delete viewFile;
   tmpViewFIle->rename(
