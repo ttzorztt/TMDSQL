@@ -60,11 +60,16 @@ typedef int INDEX;
 #define 回溯文件首行字符数 40
 #define 回溯文件初始化次行字符串 "-1 0"  //结束位
 
+
+int BACKTRACKINGTABLENAME = 0; // ./data/Back/tmpFile/下表的名称
+int BACKTRACKINGDATABASENAME = 0; //./data/Back/tmpFile/下数据库名
+
+
 enum TYPE_BACKTRACKING_COMMAND {
   创建用户,          // 0
   创建管理员,        // 1
-  恢复数据库,        // 2
-  恢复数据库表,      // 3
+  创建数据库,        // 2
+  创建数据库表,      // 3
   删除数据库,        // 4
   删除数据库表,      // 5
   删除用户,          // 6
@@ -77,8 +82,8 @@ enum TYPE_BACKTRACKING_COMMAND {
 };
 std::unordered_map<TYPE_BACKTRACKING_COMMAND,
                    int> static BackTrackingCommandToInt = {
-    {创建用户, 1},        {创建管理员, 1},   {恢复数据库, 1},
-    {恢复数据库表, 1},    {删除数据库, 1},   {删除用户, 1},
+    {创建用户, 1},        {创建管理员, 1},   {创建数据库, 1},
+    {创建数据库表, 1},    {删除数据库, 1},   {删除用户, 1},
     {删除数据库表, 1},    {删除管理员, 1},   {删除行数据库表, 1},
     {插入列数据库表, 1},  {插入数据库表, 2}, {设置视图数据库表, 2},
     {设置索引数据库表, 2}};

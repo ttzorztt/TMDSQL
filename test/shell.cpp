@@ -660,7 +660,7 @@ void shell::toDeleteTable() {
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
   menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
-		BackTracking::BackTrackingForRecoverDatabaseTable(pwd[1],data[0]); 
+		/* BackTracking::BackTrackingForCreateDatabaseTable(pwd[1],data[0]); // 内部走的rename函数，so表实际上就不需要删除了。 */
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0]);

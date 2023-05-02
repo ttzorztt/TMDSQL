@@ -59,10 +59,10 @@ void BackTracking::add(std::string value, int ptr) {
       type_mode::WRITEBUFF_MODE_IN_OUT);
   delete tmpBT;
 }
-void BackTracking::BackTrackingForRecoverDatabase(std::string DBID) {
+void BackTracking::BackTrackingForCreateDatabase(std::string DBID) {
   backTrackingFileState();
-  add(std::to_string(TYPE_BACKTRACKING_COMMAND::恢复数据库) + " " + DBID,
-      4 + DBID.size() + BackTrackingCommandToInt[恢复数据库]);  // 3个空格1个\n
+  add(std::to_string(TYPE_BACKTRACKING_COMMAND::创建数据库) + " " + DBID,
+      4 + DBID.size() + BackTrackingCommandToInt[创建数据库]);  // 3个空格1个\n
 }
 void BackTracking::BackTrackingForCreateUser(std::string UserName,
                                              std::string Password) {
@@ -80,12 +80,12 @@ void BackTracking::BackTrackingForCreateManager(std::string UserName,
       BackTrackingCommandToInt[TYPE_BACKTRACKING_COMMAND::创建管理员] +
           UserName.size() + Password.size() + 5);  // 4个空格一个\n
 }
-void BackTracking::BackTrackingForRecoverDatabaseTable(std::string DBID,
+void BackTracking::BackTrackingForCreateDatabaseTable(std::string DBID,
                                                       std::string TBID) {
   backTrackingFileState();
-  add(std::to_string(TYPE_BACKTRACKING_COMMAND::恢复数据库表) + " " + DBID +
+  add(std::to_string(TYPE_BACKTRACKING_COMMAND::创建数据库表) + " " + DBID +
           " " + TBID,
-      BackTrackingCommandToInt[TYPE_BACKTRACKING_COMMAND::恢复数据库表] +
+      BackTrackingCommandToInt[TYPE_BACKTRACKING_COMMAND::创建数据库表] +
           DBID.size() + TBID.size() + 5);  //四个空格一个\n
 }
 void BackTracking::BackTrackingForDeleteDatabase(std::string DBID) {
@@ -237,7 +237,7 @@ void BackTracking::init() {
   BackFile.write(回溯文件初始化首行字符串, type_mode::WRITEBUFF_MODE_APP);
   BackFile.write(回溯文件初始化次行字符串, type_mode::WRITEBUFF_MODE_APP);
 }
-void BackTracking::Clear() {
-  backTrackingFile->remove();
-  backTrackingFile = new _file("TMD", type::_TYPE_BACK);
+void BackTracking::Clear(){
+	backTrackingFile->remove();
+	backTrackingFile = new _file("TMD",type::_TYPE_BACK);
 }

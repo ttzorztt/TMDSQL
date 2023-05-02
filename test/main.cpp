@@ -158,15 +158,11 @@ int main(int argc, char const* argv[]) {
   shell x;
   string tmp = "执行 @init";
   x.read(tmp);
-	tmp = "创建 数据库 表 @DB1 TT";
-  x.read(tmp);
-	tmp = "创建 数据库 表 @DB1 T";
-  x.read(tmp);
   Log::open();
-  BackTracking::BackTrackingForRecoverDatabase("DB1");
+  BackTracking::BackTrackingForCreateDatabase("DB1");
   BackTracking::BackTrackingForCreateUser("TMD", "TT");
   BackTracking::BackTrackingForCreateManager("ddd", "rr");
-  BackTracking::BackTrackingForRecoverDatabaseTable("DBID", "TBID");
+  BackTracking::BackTrackingForCreateDatabaseTable("DBID", "TBID");
   BackTracking::BackTrackingForDeleteDatabase("DBID");
   BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID");
   BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID");
@@ -182,8 +178,8 @@ int main(int argc, char const* argv[]) {
 	BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2");
 	BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2");
   BackTracking::test_Read();
-	/* BackTracking::Clear(); */
-	/* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2"); */
+	BackTracking::Clear();
+	BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2");
   return 0;
   tmp = "登录 @root root";
   x.read(tmp);

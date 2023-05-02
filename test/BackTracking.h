@@ -70,14 +70,14 @@ class BackTracking {
    *
    * @param DBID 数据库
    */
-  void static BackTrackingForRecoverDatabase(std::string DBID);
+  void static BackTrackingForCreateDatabase(std::string DBID);
   /**
    * @brief 重生之我要创建数据库表
    *
    * @param DBID 数据库
    * @param TBID 表
    */
-  void static BackTrackingForRecoverDatabaseTable(std::string DBID,
+  void static BackTrackingForCreateDatabaseTable(std::string DBID,
                                                  std::string TBID);
   /**
    * @brief 重生之我要删除数据库
@@ -158,7 +158,7 @@ class BackTracking {
                                                    std::string TBID,
                                                    std::string index);
 	/**
-	 * @brief 重生之王妃清理回溯文件
+	 * @brief 重生之找个王妃清理回溯文件
 	 */
 	void static Clear();
   /**
