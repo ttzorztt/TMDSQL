@@ -2,7 +2,6 @@
  * @file User.h
  * @brief 用户数据类
  * @author TMD
- * @version 1.3
  * @date 2022-12-17
  */
 #ifndef _STRING_
@@ -63,6 +62,7 @@ class User {
 				std::string UserPassword,
 				TYPE_POWER power);
 	public:
+		std::string returnPassword() const;
 		/**
 		 * @brief 返回给定用户的权限
 		 *

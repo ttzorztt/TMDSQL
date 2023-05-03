@@ -28,7 +28,7 @@ class BackTracking {
    */
   void static backTrackingFileState();
   /**
-   * @brief 数据清理(将数据按照回溯结构分为三部分)
+   * @brief 数据清理(将数据按照回溯结构分为四部分)
    *
    * @param data 待清理的数据
    * @param returnData 返回的vvstring
@@ -36,6 +36,7 @@ class BackTracking {
    * @return 简单判断数据是否有问题
    */
   bool static dataClear(revstring data, vvstring& returnData);
+	void static aidForExecute(int command,vstring executeData);
   /**
    * @brief 回溯文件指针(仅用来尾插)
    */
@@ -66,18 +67,32 @@ class BackTracking {
   void static BackTrackingForCreateManager(std::string UserName,
                                            std::string Password);
   /**
-   * @brief 重生之我要创建数据库
+   * @brief 重生之我要创建数据库(非空)
    *
    * @param DBID 数据库
    */
   void static BackTrackingForRecoverDatabase(std::string DBID);
   /**
-   * @brief 重生之我要创建数据库表
+   * @brief 重生之我要创建数据库表(非空)
    *
    * @param DBID 数据库
    * @param TBID 表
    */
   void static BackTrackingForRecoverDatabaseTable(std::string DBID,
+                                                  std::string TBID);
+	/**
+	 * @brief 重生之我要创建数据库(空)
+	 *
+	 * @param DBID 数据库
+	 */
+  void static BackTrackingForCreateDatabase(std::string DBID);
+	/**
+	 * @brief 重生之我要创建数据库表(空)
+	 *
+	 * @param DBID 数据库
+	 * @param TBID 表
+	 */
+  void static BackTrackingForCreateDatabaseTable(std::string DBID,
                                                  std::string TBID);
   /**
    * @brief 重生之我要删除数据库
@@ -157,13 +172,22 @@ class BackTracking {
   void static BackTrackingForSetIndexDatabaseTable(std::string DBID,
                                                    std::string TBID,
                                                    std::string index);
-	/**
-	 * @brief 重生之王妃清理回溯文件
-	 */
-	void static Clear();
   /**
-   * @brief 测试逻辑
+   * @brief 重生之王妃清理回溯文件
    */
-  void static test_Read();
+  void static Clear();
+	/**
+	 * @brief 重生之我要显示回溯文件
+	 * 
+	 * @param data 日期
+	 */
+	void static BackTrackingForShow(std::string data);
+	/**
+	 * @brief 重生之执行技能
+	 *
+	 * @param data 日期
+	 * @param backTrackingPoint 回溯点
+	 */
+	void static BackTrackingForExecute(std::string data,int backTrackingPoint);
 };
 #endif

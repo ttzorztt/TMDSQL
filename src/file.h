@@ -187,15 +187,15 @@ class _file : public _super {
    *
    * @param  string index 索引
    *
-   * @return bool 是否删除
+   * @return 删除的数据
    */
-  bool deleteTableLine(std::string index);
+  vstring deleteTableLine(std::string index);
   /**
    * @brief 删除文件的一行(单纯文件，用在pd等单纯没有联系的文件)
    *
    * @param index 索引(实际上就是第一列的值，因为这个函数没有表的概念)
    *
-   * @peturn 是否删除
+   * @return 是否删除
    */
   bool deleteFileLine(std::string index);
 
@@ -204,9 +204,9 @@ class _file : public _super {
    *
    * @param col 列
    *
-   * @peturn 是否删除成功
+   * @return 删除的列数据
    */
-  bool deleteCol(const int& col);
+  vstring deleteCol(const int& col);
   /**
    * @brief <static> 以App的方式写入字符串
    *

@@ -541,7 +541,7 @@ void shell::toCreateDatabaseTable() {
     menuOutput::printCreateACK(ReturnPower(), need);
     Log::LogForCreateDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                    data[1]);
-		BackTracking::BackTrackingForDeleteDatabaseTable(data[0],data[1]);
+    BackTracking::BackTrackingForDeleteDatabaseTable(data[0], data[1]);
   }
 }
 void shell::toDelete() {
@@ -651,6 +651,7 @@ void shell::toDeleteTable() {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
   } else if (!TablePCB(table).returnEndLineIndex()) {
+    BackTracking::BackTrackingForCreateDatabaseTable(pwd[1], data[0]);
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0]);
@@ -660,7 +661,7 @@ void shell::toDeleteTable() {
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
   menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
-		BackTracking::BackTrackingForRecoverDatabaseTable(pwd[1],data[0]); 
+    BackTracking::BackTrackingForRecoverDatabaseTable(pwd[1], data[0]);
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                    data[0]);
@@ -688,6 +689,7 @@ void shell::toDeleteDatabaseTable() {
 
     return;
   } else if (!TablePCB(table).returnEndLineIndex()) {
+    BackTracking::BackTrackingForCreateDatabaseTable(data[0], data[1]);
     table.remove();
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                    data[1]);
@@ -697,6 +699,7 @@ void shell::toDeleteDatabaseTable() {
   menuOutput::printTableNotEmptyAndDeleteTip(ReturnPower(), false);
   menuOutput::printShowTable(ReturnPower(), ReturnUserName(), table, 5, false);
   if (inputACK()) {
+    BackTracking::BackTrackingForRecoverDatabaseTable(data[0], data[1]);
     table.remove();
     menuOutput::printDeleteACK(ReturnPower(), need);
     Log::LogForDeleteDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
@@ -718,6 +721,7 @@ void shell::toDeleteDatabase() {
     return;
   }
   if (database.remove()) {
+    BackTracking::BackTrackingForCreateDatabase(data[0]);
     menuOutput::printDeleteACK(ReturnPower(), need);
 
     Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
@@ -728,6 +732,7 @@ void shell::toDeleteDatabase() {
   menuOutput::printShowDatabase(ReturnPower(), database, false);
   if (inputACK()) {
     Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
+    BackTracking::BackTrackingForRecoverDatabase(data[0]);
     database.forceremove();
     menuOutput::printDeleteACK(ReturnPower(), need);
     return;
@@ -746,6 +751,8 @@ void shell::toDeleteManager() {
     return;
   }
   if (!deleteUser(data[0])) {
+    BackTracking::BackTrackingForCreateManager(ReturnUserName(),
+                                               returnPassword());
     Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
                              目标管理员不存在无法删除);
     menuOutput::printManagerNotExists(ReturnPower(), need);
@@ -761,6 +768,7 @@ void shell::toDeleteUser() {
     menuOutput::printUserNotExists(ReturnPower(), need);
     return;
   }
+  BackTracking::BackTrackingForCreateUser(ReturnUserName(), returnPassword());
   Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0]);
   menuOutput::printDeleteACK(ReturnPower(), need);
 }
@@ -781,7 +789,10 @@ void shell::toDeleteCol() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteCol(std::atoi(data[0].c_str()))) {
+    vstring deleteData = tmpTable.deleteCol(std::atoi(data[0].c_str()));
+    if (deleteData.size() != 0) {
+      BackTracking::BackTrackingForInsertColDatabaseTable(pwd[1], pwd[2],
+                                                          deleteData);
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         pwd[2], data[0]);
@@ -807,7 +818,10 @@ void shell::toDeleteColTable() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteCol(std::atoi(data[1].c_str()))) {
+    vstring deleteData = tmpTable.deleteCol(std::atoi(data[1].c_str()));
+    if (deleteData.size() != 0) {
+      BackTracking::BackTrackingForInsertColDatabaseTable(pwd[1], data[0],
+                                                          deleteData);
       menuOutput::printDeleteACK(ReturnPower(), need);
       Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                         data[0], data[1]);
@@ -828,7 +842,11 @@ void shell::toDeleteColDatabaseTable() {
                      已选择的数据库中不存在目标表);
     return;
   }
-  if (tmpTable.deleteCol(std::atoi(data[2].c_str()))) {
+  vstring deleteData = tmpTable.deleteCol(std::atoi(data[2].c_str()));
+
+  if (deleteData.size() != 0) {
+    BackTracking::BackTrackingForInsertDatabaseTable(data[0], data[1],
+                                                     deleteData);
     menuOutput::printDeleteACK(ReturnPower(), need);
     Log::LogForDeleteRowDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                       data[1], data[2]);
@@ -894,7 +912,10 @@ void shell::toDeleteRow() {
                        已选择的数据库中不存在目标表);
       return;
     }
-    if (tmpTable.deleteTableLine(data[0])) {
+    vstring deleteData = tmpTable.deleteTableLine(data[0]);
+    if (deleteData.size() != 0) {
+      BackTracking::BackTrackingForInsertDatabaseTable(pwd[1], pwd[2],
+                                                       deleteData);
       if (!Cache::Count(tmpTable)) {
         Cache::add(tmpTable);
       } else {
@@ -927,7 +948,10 @@ void shell::toDeleteRowTable() {
       return;
     }
     Cache::add(tmpTable);
-    if (tmpTable.deleteTableLine(data[1])) {
+    vstring deleteData = tmpTable.deleteTableLine(data[1]);
+    if (deleteData.size() != 0) {
+      BackTracking::BackTrackingForInsertDatabaseTable(pwd[1], data[0],
+                                                       deleteData);
       if (Cache::Count(tmpTable)) {
         Cache::deleteTableItem(tmpTable, data[1]);
       }
@@ -950,7 +974,10 @@ void shell::toDeleteRowDatabaseTable() {
     return;
   }
   Cache::add(tmpTable);
-  if (tmpTable.deleteTableLine(data[2])) {
+  vstring deleteData = tmpTable.deleteTableLine(data[2]);
+  if (deleteData.size() != 0) {
+    BackTracking::BackTrackingForInsertDatabaseTable(data[0], data[1],
+                                                     deleteData);
     if (Cache::Count(tmpTable)) {
       Cache::deleteTableItem(tmpTable, data[2]);
     }
@@ -985,7 +1012,7 @@ void shell::toInsertDatabaseTable() {
                                  data[1], tmp);
   TablePCB* tmpPCB = new TablePCB(data[0], data[1]);
   BackTracking::BackTrackingForDeleteRowDatabaseTable(
-      data[0], data[1], std::to_string(tmpPCB->returnIndex()));
+      data[0], data[1], tmp[tmpPCB->returnIndex()]);
   delete tmpPCB;
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
@@ -997,7 +1024,7 @@ void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据
                                  pwd[2], data);
   TablePCB* tmpPCB = new TablePCB(pwd[1], pwd[2]);
   BackTracking::BackTrackingForDeleteRowDatabaseTable(
-      pwd[1], pwd[2], std::to_string(tmpPCB->returnIndex()));
+      pwd[1], pwd[2], data[tmpPCB->returnIndex()]);
   delete tmpPCB;
 }
 void shell::toInsertTable() {
@@ -1022,7 +1049,7 @@ void shell::toInsertTable() {
                                  data[0], tmp);
   TablePCB* tmpPCB = new TablePCB(pwd[1], data[0]);
   BackTracking::BackTrackingForDeleteRowDatabaseTable(
-      pwd[1], data[0], std::to_string(tmpPCB->returnIndex()));
+      pwd[1], data[0], tmp[tmpPCB->returnIndex()]);
   delete tmpPCB;
 }
 void shell::toFind() {

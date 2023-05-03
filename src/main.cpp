@@ -91,6 +91,8 @@ void init() {
   }
   if (access("./data/SQL", F_OK)) {
     _super::createDir("./data/SQL");
+  }
+  if (access("./data/SQL/init", F_OK)) {
     _file table("./data/SQL/init");
     table.create();
     table.write({"登录", "@root", "root"}, type_mode::WRITEBUFF_MODE_APP);
@@ -121,16 +123,23 @@ void init() {
   }
   if (access("./data/User", F_OK)) {
     _super::createDir("./data/User");
+  }
+  if (access("./data/User/pd", F_OK)) {
     _file table("./data/User/pd", true, "root,root,0");
   }
   if (access("./data/Log", F_OK)) {
     _super::createDir("./data/Log");
-    _file(Log::nowData(), type::_TYPE_BACK, true);
+  }
+  if (access(_super::returnTruePath(Log::nowData(), type::_TYPE_LOG).c_str(),
+             F_OK)) {
+    _file(Log::nowData(), type::_TYPE_LOG, true);
   }
   if (access("./data/Back", F_OK)) {
     _super::createDir("./data/Back");
+  }
+  if (access(_super::returnTruePath(Log::nowData(), type::_TYPE_BACK).c_str(),
+             F_OK)) {
     _file(Log::nowData(), type::_TYPE_BACK, true);
-    _super::createDir("./data/Back/tmpFile");
     BackTracking::init();
   }
 }
@@ -139,13 +148,8 @@ int main1(int argc, char const* argv[]) {
   shell x;
   string tmp = "执行 @s";
   Log::open();
-  char ch;
   while (1) {
     getline(cin, tmp);
-    if (ch == '\n') {
-      menuOutput::printPower(x.ReturnPower());
-      break;
-    }
     if (!x.read(tmp)) {
       break;
     }
@@ -158,32 +162,38 @@ int main(int argc, char const* argv[]) {
   shell x;
   string tmp = "执行 @init";
   x.read(tmp);
-	tmp = "创建 数据库 表 @DB1 TT";
-  x.read(tmp);
-	tmp = "创建 数据库 表 @DB1 T";
-  x.read(tmp);
   Log::open();
+	tmp = "创建 数据库 表 @DB1 TB";
+	x.read(tmp);
+	tmp = "创建 数据库 表 @DB1 TT";
+	x.read(tmp);
+	tmp = "插入 数据库 表 @DB1 TB 1 2 3 4 5 6 7";
+	x.read(tmp);
+	tmp = "插入 数据库 表 @DB1 TT 2 3 4 5 6 7";
+	x.read(tmp);
+  BackTracking::BackTrackingForShow(Log::nowData());
+	return 0;
   BackTracking::BackTrackingForRecoverDatabase("DB1");
-  BackTracking::BackTrackingForCreateUser("TMD", "TT");
-  BackTracking::BackTrackingForCreateManager("ddd", "rr");
-  BackTracking::BackTrackingForRecoverDatabaseTable("DBID", "TBID");
-  BackTracking::BackTrackingForDeleteDatabase("DBID");
-  BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID");
-  BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID");
-  BackTracking::BackTrackingForDeleteUser("UserName");
-  BackTracking::BackTrackingForDeleteManager("UserName");
-  BackTracking::BackTrackingForInsertColDatabaseTable("DBID", "TBID",
-                                                      {"1", "2", "4"});
-  BackTracking::BackTrackingForDeleteRowDatabaseTable("DBID", "TBID", "2");
-  BackTracking::BackTrackingForInsertDatabaseTable("DBID", "TBID",
-                                                   {"1", "3", "4"});
-  BackTracking::BackTrackingForSetViewDatabaseTable("DBID", "TBID","TMD",
-                                                    {"1", "2", "4", "5"});
-	BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2");
-	BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2");
-  BackTracking::test_Read();
-	/* BackTracking::Clear(); */
-	/* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID","2"); */
+	BackTracking::BackTrackingForCreateDatabase("DDD1");
+	BackTracking::BackTrackingForCreateDatabaseTable("DDD1","TTT");
+  /* BackTracking::BackTrackingForCreateUser("TMD", "TT"); */
+  /* BackTracking::BackTrackingForCreateManager("ddd", "rr"); */
+  BackTracking::BackTrackingForRecoverDatabaseTable("DB1", "TB1");
+  /* BackTracking::BackTrackingForDeleteDatabase("DBID"); */
+  /* BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID"); */
+  /* BackTracking::BackTrackingForDeleteDatabaseTable("DBID", "TBID"); */
+  /* BackTracking::BackTrackingForDeleteUser("UserName"); */
+  /* BackTracking::BackTrackingForDeleteManager("UserName"); */
+  /* BackTracking::BackTrackingForInsertColDatabaseTable("DBID", "TBID", */
+  /*                                                     {"1", "2", "4"}); */
+  /* BackTracking::BackTrackingForDeleteRowDatabaseTable("DBID", "TBID", "2"); */
+  /* BackTracking::BackTrackingForInsertDatabaseTable("DBID", "TBID", */
+  /*                                                  {"1", "3", "4"}); */
+  /* BackTracking::BackTrackingForSetViewDatabaseTable("DBID", "TBID", "TMD", */
+  /*                                                   {"1", "2", "4", "5"}); */
+  /* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID", "2"); */
+  /* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID", "2"); */
+  /* BackTracking::BackTrackingForShow(); */
   return 0;
   tmp = "登录 @root root";
   x.read(tmp);

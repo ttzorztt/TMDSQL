@@ -68,9 +68,9 @@ _file::~_file() {
   }
   --_file::count;
 }
-bool _file::deleteTableLine(std::string index) {
+vstring _file::deleteTableLine(std::string index) {
+	vstring ret;
   std::string oldTruePath = this->truePath;
-  bool command = false;
   vstring vectorbuff;
   Table* tmptable = new Table(this->name + "tmp", type::_TYPE_TABLE);
   if (tmptable->isExist()) {
@@ -83,7 +83,7 @@ bool _file::deleteTableLine(std::string index) {
   _file* tmpOldFile = new _file(this->returnName(), type::_TYPE_TABLE);
   while (tmpOldFile->readline(vectorbuff)) {
     if (vectorbuff[indexcol] == index) {
-      command = true;
+			ret = vectorbuff;
       continue;
     } else {
       tmptable->append(vectorbuff);
@@ -96,7 +96,7 @@ bool _file::deleteTableLine(std::string index) {
   _file(this->name + "tmp", type::_TYPE_PCB).remove();
   _file(this->name + "tmp", type::_TYPE_VIEW).remove();
   delete tmptable;
-  return command;
+  return ret;
 }
 bool _file::deleteFileLine(std::string index) {
   std::string oldTruePath = this->truePath;
@@ -123,7 +123,8 @@ bool _file::deleteFileLine(std::string index) {
   delete tmpfile;
   return command;
 }
-bool _file::deleteCol(const int& col) {
+vstring _file::deleteCol(const int& col) {
+	vstring ret;
   std::string oldTruePath = this->truePath;
   vstring vectorbuff;
   vstring tmpvectorbuff;
@@ -136,12 +137,13 @@ bool _file::deleteCol(const int& col) {
   oldtable->readline(vectorbuff);
   int size = vectorbuff.size();
   if (col < 0 || col > size) {
-    return false;
+    return {};
   }
   do {
     tmpvectorbuff.clear();
     for (int a = 0; a < size; ++a) {
       if (a == col) {
+				ret.push_back(vectorbuff[a]);
         continue;
       } else {
         tmpvectorbuff.push_back(vectorbuff[a]);
@@ -155,7 +157,7 @@ bool _file::deleteCol(const int& col) {
   rename(this->name + "tmp", this->name, type::_TYPE_INDEX_TABLE);
   _file(this->name + "tmp", type::_TYPE_PCB).remove();
   _file(this->name + "tmp", type::_TYPE_VIEW).remove();
-  return true;
+  return ret;
 }
 void _file::setOpenBuff(MODE mode) {
   if ((mode == type_mode::WRITEBUFF_MODE_APP &&

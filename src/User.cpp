@@ -2,7 +2,6 @@
  * @file User.cpp
  * @brief 用户数据操作类封装
  * @author TMD
- * @version 1.3
  * @date 2022-12-17
  */
 #ifndef _USER_H_
@@ -93,6 +92,7 @@ bool User::addNormalUser(std::string UserName, std::string Userpassword) {
   this->addUser(UserName, Userpassword, TYPE_POWER::NORMAL);
   return true;
 }
+std::string User::returnPassword() const { return this->UserPassword; }
 bool User::addManagerUser(std::string UserName, std::string Userpassword) {
   if (nameBuff.count(UserName)) return false;
   this->addUser(UserName, Userpassword, TYPE_POWER::Manager);
