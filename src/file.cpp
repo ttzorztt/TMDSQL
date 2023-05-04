@@ -2,7 +2,6 @@
  * @file file.cpp
  * @brief 文件操作类的实现
  * @author TMD
- * @version 1.3
  * @date 2023-11-01
  */
 #ifndef _FILE_H_
@@ -69,7 +68,7 @@ _file::~_file() {
   --_file::count;
 }
 vstring _file::deleteTableLine(std::string index) {
-	vstring ret;
+  vstring ret;
   std::string oldTruePath = this->truePath;
   vstring vectorbuff;
   Table* tmptable = new Table(this->name + "tmp", type::_TYPE_TABLE);
@@ -83,7 +82,7 @@ vstring _file::deleteTableLine(std::string index) {
   _file* tmpOldFile = new _file(this->returnName(), type::_TYPE_TABLE);
   while (tmpOldFile->readline(vectorbuff)) {
     if (vectorbuff[indexcol] == index) {
-			ret = vectorbuff;
+      ret = vectorbuff;
       continue;
     } else {
       tmptable->append(vectorbuff);
@@ -124,7 +123,7 @@ bool _file::deleteFileLine(std::string index) {
   return command;
 }
 vstring _file::deleteCol(const int& col) {
-	vstring ret;
+  vstring ret;
   std::string oldTruePath = this->truePath;
   vstring vectorbuff;
   vstring tmpvectorbuff;
@@ -143,7 +142,7 @@ vstring _file::deleteCol(const int& col) {
     tmpvectorbuff.clear();
     for (int a = 0; a < size; ++a) {
       if (a == col) {
-				ret.push_back(vectorbuff[a]);
+        ret.push_back(vectorbuff[a]);
         continue;
       } else {
         tmpvectorbuff.push_back(vectorbuff[a]);
@@ -158,6 +157,29 @@ vstring _file::deleteCol(const int& col) {
   _file(this->name + "tmp", type::_TYPE_PCB).remove();
   _file(this->name + "tmp", type::_TYPE_VIEW).remove();
   return ret;
+}
+void _file::insertCol(vstring insertData) {
+  vstring ret;
+  int insertDataStep = 0;
+  std::string oldTruePath = this->truePath;
+  vstring vectorbuff;
+  Table* tmptable = new Table(this->name + "tmp", type::_TYPE_TABLE);
+  if (tmptable->isExist()) {
+    tmptable->remove();
+  }
+  tmptable->create();
+  _file* oldtable = new _file(this->name, type::_TYPE_TABLE);
+  oldtable->readline(vectorbuff);
+  do {
+    vectorbuff.push_back(insertData[insertDataStep++]);
+    tmptable->append(vectorbuff);
+  } while (oldtable->readline(vectorbuff));
+  delete oldtable;
+  delete tmptable;
+  rename(this->name + "tmp", this->name, type::_TYPE_TABLE);  //表改名
+  rename(this->name + "tmp", this->name, type::_TYPE_INDEX_TABLE);
+  _file(this->name + "tmp", type::_TYPE_PCB).remove();
+  _file(this->name + "tmp", type::_TYPE_VIEW).remove();
 }
 void _file::setOpenBuff(MODE mode) {
   if ((mode == type_mode::WRITEBUFF_MODE_APP &&
@@ -306,7 +328,7 @@ bool _file::write(std::string Name, type style, const std::string& str,
   return tmd.write(str, mode);
 }
 bool _file::readline(revstring ret) {
-	std::vector<std::string>().swap(ret);
+  std::vector<std::string>().swap(ret);
   this->setOpenBuff(type_mode::READBUFF_MODE);
   std::string _str;
 

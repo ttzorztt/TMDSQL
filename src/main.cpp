@@ -162,6 +162,15 @@ int main(int argc, char const* argv[]) {
   shell x;
   string tmp = "执行 @init";
   x.read(tmp);
+  /* tmp = "回溯 显示"; */
+  /* x.read(tmp); */
+	tmp = "回溯 显示 @" + Log::nowData();
+	x.read(tmp);
+	tmp = "回溯 @" + Log::nowData() + " 10";
+	x.read(tmp);
+	/* tmp = "回溯 清理"; */
+	/* x.read(tmp); */
+	return 0;
   Log::open();
 	tmp = "创建 数据库 表 @DB1 TB";
 	x.read(tmp);

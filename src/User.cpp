@@ -7,7 +7,9 @@
 #ifndef _USER_H_
 #define _USER_H_
 #include "User.h"
-
+#endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
 #include "super.h"
 #endif
 #ifndef _STRING_

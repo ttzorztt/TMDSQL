@@ -2,7 +2,6 @@
  * @file shell.h
  * @brief TMDSQL语言的设计与实现
  * @author TMD
- * @version 1.3
  * @date 2022-11-01
  */
 #ifndef _SHELL_
@@ -166,6 +165,10 @@ class shell : public User {
 		 * @brief 输入回溯_文件_回溯点后的操作
 		 */
 		void toBackFileExecute();
+		/**
+		 * @brief 输入回溯_清理后的操作
+		 */
+		void toBackClear();
 		/**
 		 * @brief 输入插入后的操作
 		 */

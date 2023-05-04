@@ -7,14 +7,34 @@
 #ifndef _BACKTRACKING_H_
 #define _BACKTRACKING_H_
 #include "BackTracking.h"
-
+#endif
+#ifndef _INDEX_H_
+#define _INDEX_H_
+#include "Index.h"
+#endif
+#ifndef _ALGORITHM_
+#define _ALGORITHM_
 #include <algorithm>
-#include <cstdlib>
+#endif
+#ifndef _STRING_
+#define _STRING_
 #include <string>
-
+#endif
+#ifndef _DATEBASE_H_
+#define _DATEBASE_H_
 #include "DataBase.h"
+#endif
+#ifndef _TABLE_H_
+#define _TABLE_H_
 #include "Table.h"
+#endif
+#ifndef _SUPER_H_
+#define _SUPER_H_
 #include "super.h"
+#endif
+#ifndef _USER_H_
+#define _USER_H_
+#include "User.h"
 #endif
 #ifndef _FILE_H_
 #define _FILE_H_
@@ -23,6 +43,14 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 #include "Log.h"
+#endif
+#ifndef _TABLEPCB_H_
+#define _TABLEPCB_H_
+#include "TablePCB.h"
+#endif
+#ifndef _VIEW_H_
+#define _VIEW_H_
+#include "view.h"
 #endif
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
@@ -295,15 +323,83 @@ void BackTracking::BackTrackingForExecute(std::string date,
   int max_number = std::atoi(readlineData[2].c_str());
   backTrackingFile.setReadSeek(std::atoi(readlineData[0].c_str()));
   while (backTrackingFile.readline(readlineData)) {
+		if(readlineData[0] == "-1"){
+			break;
+		}
     dataClear(readlineData, clearData);
-    if (backTrackingPoint > max_number - std::atoi(clearData[1][0].c_str())) {
+    if (backTrackingPoint < max_number - std::atoi(clearData[3][0].c_str())) {
       break;
     }
     aidForExecute(std::atoi(clearData[1][0].c_str()), clearData[2]);
     backTrackingFile.setReadSeek(
-        std::atoi(readlineData[readlineData.size() - 1].c_str()));
+        std::atoi(readlineData[0].c_str()));
   }
 }
-void BackTracking::aidForExecute(int command,vstring executeData){
-
+void BackTracking::aidForExecute(int command, vstring executeData) {
+  switch (command) {
+    case 创建用户: {
+      User user("root", "root");
+      user.addNormalUser(executeData[0], executeData[1]);
+      break;
+    }
+    case 创建管理员: {
+      User user("root", "root");
+      user.addManagerUser(executeData[0], executeData[1]);
+      break;
+    }
+    case 删除数据库: {
+      DataBase tmp(executeData[0]);
+      tmp.remove();
+      break;
+    }
+    case 删除数据库表: {
+      Table tmp(executeData[0] + "/" + executeData[1], type::_TYPE_TABLE);
+      tmp.remove();
+      break;
+    }
+    case 删除管理员:
+    case 删除用户: {
+      User user("root", "root");
+      user.deleteUser(executeData[0]);
+      break;
+    }
+    case 删除行数据库表: {
+      Table tmp(executeData[0] + "/" + executeData[1], type::_TYPE_TABLE);
+      tmp.deleteTableLine(executeData[2]);
+      Index::update(executeData[0] + "/" + executeData[1]);
+      break;
+    }
+    case 插入列数据库表: {
+      _file tmp(executeData[0] + "/" + executeData[1], type::_TYPE_TABLE);
+      vstring tmpInsertData(executeData.begin() + 2, executeData.end());
+      tmp.insertCol(tmpInsertData);
+      Index::update(executeData[0] + "/" + executeData[1]);
+      break;
+    }
+    case 插入数据库表: {
+      Table tmp(executeData[0] + "/" + executeData[1], type::_TYPE_TABLE);
+      vstring input(executeData.begin() + 2, executeData.end());
+      tmp.append(input);
+      break;
+    }
+    case 设置视图数据库表: {
+      vstring input(executeData.begin() + 3, executeData.end());
+      View::setAllowShowColumn(executeData[2], input, executeData[0],
+                               executeData[1]);
+      break;
+    }
+    case 设置索引数据库表: {
+      TablePCB::setIndex(executeData[0] + "/" + executeData[1],
+                         INDEX(atoi(executeData[2].c_str())));
+      break;
+    }
+    case 创建数据库: {
+      DataBase(executeData[0]).create();
+      break;
+    }
+    case 创建数据库表: {
+      Table(executeData[0] + "/" + executeData[1], type::_TYPE_TABLE).create();
+      break;
+    }
+  }
 }

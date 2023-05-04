@@ -2,7 +2,6 @@
  * @file file.h
  * @brief 文件操作类的声明
  * @author TMD
- * @version 1.3
  * @date 2022-11-01
  */
 #ifndef _FILE_
@@ -207,6 +206,12 @@ class _file : public _super {
    * @return 删除的列数据
    */
   vstring deleteCol(const int& col);
+	/**
+	 * @brief 插入一列
+	 *
+	 * @param insertData 插入数据
+	 */
+	void insertCol(vstring insertData);
   /**
    * @brief <static> 以App的方式写入字符串
    *

@@ -2,13 +2,14 @@
  * @file shell.cpp
  * @brief TMDSQL语句的设计与实现
  * @author TMD
- * @version 1.3
  * @date 2022-11-01
  */
 #ifndef _SHELL_H_
 #define _SHELL_H_
 #include "shell.h"
-
+#endif
+#ifndef _string_
+#define _string_
 #include <string>
 #endif
 #ifndef _VIEW_H_
@@ -342,6 +343,8 @@ void shell::toBack() {
   if (command.size() == 2 && data.size() == 0) {
     if (command[1] == 显示) {
       toBackShow();
+    } else if (command[1] == 清理) {
+      toBackClear();
     } else {
       menuOutput::printCommandError(ReturnPower(), need);
       Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
@@ -362,9 +365,38 @@ void shell::toBack() {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
   }
 }
-void shell::toBackShow() {}
-void shell::toBackShowFile() {}
-void shell::toBackFileExecute() {}
+void shell::toBackShow() {
+  _dir backDB("./data/Back/");
+  if (!backDB.isExist()) {
+    return;
+  } else {
+    vstring tmp;
+    backDB.openDirReturnFileName(tmp);
+    for (auto& str : tmp) {
+      std::cout << std::endl << str;
+    }
+  }
+  std::cout << std::endl;
+}
+void shell::toBackShowFile() {
+  _file backTrackingFile(data[0], type::_TYPE_BACK);
+  if (!backTrackingFile.isExist()) {
+    return;
+  }
+  BackTracking::BackTrackingForShow(data[0]);
+}
+void shell::toBackFileExecute() {
+  _file backTrackingFile(data[0], type::_TYPE_BACK);
+  if (!backTrackingFile.isExist()) {
+    return;
+  }
+  BackTracking::BackTrackingForExecute(data[0], std::atoi(data[1].c_str()));
+  menuOutput::printBackTrackingACK(ReturnPower(), true);
+}
+void shell::toBackClear() {
+  BackTracking::Clear();
+  menuOutput::printBackTrackingClearACK(ReturnPower(), true);
+}
 void shell::toLogin() {
   if (data.size() == 2) {
     std::string oldUserName = ReturnUserName();

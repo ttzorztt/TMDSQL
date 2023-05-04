@@ -2,7 +2,6 @@
  * @file DataBase.h
  * @brief DataBase类的一些声明
  * @author TMD
- * @version 1.3
  * @date 2023-11-01
  */
 #ifndef _DATABSE_

@@ -291,4 +291,18 @@ class menuOutput {
 				Table& table,
 				int number = 5,
 				bool need = true);
+		/**
+		 * @brief 删除回溯的ACK
+		 *
+		 * @param power 权限
+		 * @param need 是否需要输出提示符
+		 */
+		void static printBackTrackingACK(TYPE_POWER power,bool need = true);
+		/**
+		 * @brief 输出回溯清理的ACK
+		 *
+		 * @param power 权限
+		 * @param need 是否需要输出提示符
+		 */
+		void static printBackTrackingClearACK(TYPE_POWER power,bool need = true);
 };

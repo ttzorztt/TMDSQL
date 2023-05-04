@@ -2,7 +2,6 @@
  * @file DataBase.cpp
  * @brief 实现DataBase类中的一些操作
  * @author TMD
- * @version 1.3
  * @date 2023-11-01
  */
 #ifndef _DATABASE_H_
