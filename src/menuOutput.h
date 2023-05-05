@@ -2,7 +2,6 @@
  * @file menuOutput.h
  * @brief 菜单输出类
  * @author TMD
- * @version 1.3
  * @date 2022-12-22
  */
 #ifndef _SUPER_H_

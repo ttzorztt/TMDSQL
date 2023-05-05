@@ -2,7 +2,6 @@
  * @file menuOutput.cpp
  * @brief 菜单输出类
  * @author TMD
- * @version 1.3
  * @date 2022-12-22
  */
 #ifndef _MENUOUTPUT_H_

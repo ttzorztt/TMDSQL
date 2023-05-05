@@ -2,7 +2,6 @@
  * @file dir.h
  * @brief 目录操作
  * @author TMD
- * @version 1.3
  * @date 2023-11-06
  */
 #ifndef _DIR_

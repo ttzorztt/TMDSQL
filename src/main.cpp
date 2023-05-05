@@ -143,7 +143,7 @@ void init() {
     BackTracking::init();
   }
 }
-int main1(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "执行 @s";
@@ -157,34 +157,34 @@ int main1(int argc, char const* argv[]) {
   Log::close();
   return 0;
 }
-int main(int argc, char const* argv[]) {
+int main0(int argc, char const* argv[]) {
   init();
   shell x;
   string tmp = "执行 @init";
   x.read(tmp);
   /* tmp = "回溯 显示"; */
   /* x.read(tmp); */
-	tmp = "回溯 显示 @" + Log::nowData();
-	x.read(tmp);
-	tmp = "回溯 @" + Log::nowData() + " 10";
-	x.read(tmp);
-	/* tmp = "回溯 清理"; */
-	/* x.read(tmp); */
-	return 0;
+  tmp = "回溯 显示 @" + Log::nowData();
+  x.read(tmp);
+  tmp = "回溯 @" + Log::nowData() + " 10";
+  x.read(tmp);
+  /* tmp = "回溯 清理"; */
+  /* x.read(tmp); */
+  return 0;
   Log::open();
-	tmp = "创建 数据库 表 @DB1 TB";
-	x.read(tmp);
-	tmp = "创建 数据库 表 @DB1 TT";
-	x.read(tmp);
-	tmp = "插入 数据库 表 @DB1 TB 1 2 3 4 5 6 7";
-	x.read(tmp);
-	tmp = "插入 数据库 表 @DB1 TT 2 3 4 5 6 7";
-	x.read(tmp);
+  tmp = "创建 数据库 表 @DB1 TB";
+  x.read(tmp);
+  tmp = "创建 数据库 表 @DB1 TT";
+  x.read(tmp);
+  tmp = "插入 数据库 表 @DB1 TB 1 2 3 4 5 6 7";
+  x.read(tmp);
+  tmp = "插入 数据库 表 @DB1 TT 2 3 4 5 6 7";
+  x.read(tmp);
   BackTracking::BackTrackingForShow(Log::nowData());
-	return 0;
+  return 0;
   BackTracking::BackTrackingForRecoverDatabase("DB1");
-	BackTracking::BackTrackingForCreateDatabase("DDD1");
-	BackTracking::BackTrackingForCreateDatabaseTable("DDD1","TTT");
+  BackTracking::BackTrackingForCreateDatabase("DDD1");
+  BackTracking::BackTrackingForCreateDatabaseTable("DDD1", "TTT");
   /* BackTracking::BackTrackingForCreateUser("TMD", "TT"); */
   /* BackTracking::BackTrackingForCreateManager("ddd", "rr"); */
   BackTracking::BackTrackingForRecoverDatabaseTable("DB1", "TB1");
@@ -195,7 +195,8 @@ int main(int argc, char const* argv[]) {
   /* BackTracking::BackTrackingForDeleteManager("UserName"); */
   /* BackTracking::BackTrackingForInsertColDatabaseTable("DBID", "TBID", */
   /*                                                     {"1", "2", "4"}); */
-  /* BackTracking::BackTrackingForDeleteRowDatabaseTable("DBID", "TBID", "2"); */
+  /* BackTracking::BackTrackingForDeleteRowDatabaseTable("DBID", "TBID", "2");
+   */
   /* BackTracking::BackTrackingForInsertDatabaseTable("DBID", "TBID", */
   /*                                                  {"1", "3", "4"}); */
   /* BackTracking::BackTrackingForSetViewDatabaseTable("DBID", "TBID", "TMD", */
@@ -203,7 +204,6 @@ int main(int argc, char const* argv[]) {
   /* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID", "2"); */
   /* BackTracking::BackTrackingForSetIndexDatabaseTable("DBID", "TBID", "2"); */
   /* BackTracking::BackTrackingForShow(); */
-  return 0;
   tmp = "登录 @root root";
   x.read(tmp);
   Log::close();

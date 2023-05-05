@@ -2,7 +2,6 @@
  * @file dir.cpp
  * @brief 目录操作
  * @author TMD
- * @version 1.3
  * @date 2023-11-06
  */
 #ifndef _DIR_H_
@@ -62,7 +61,7 @@ void _dir::openDirReturnFileName(vstring& ret) {
 #ifdef __WIN32__
 	intptr_t handle;
 	_finddata_t findData;
-	handle = _findfirst(this->name.c_str(), &findData);  // 查找目录中的第一个文件
+	handle = _findfirst(this->truePath.c_str(), &findData);  // 查找目录中的第一个文件
 	if (handle != -1) {
 		do {
 			ret.push_back(findData.name);
