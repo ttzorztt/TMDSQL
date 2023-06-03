@@ -2,7 +2,6 @@
  * @file view.cpp
  * @brief 视图层的实现
  * @author TMD
- * @version 1.3
  * @date 2023-01-18
  */
 #ifndef _VIEW_H_

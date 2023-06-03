@@ -194,9 +194,9 @@ class _file : public _super {
    *
    * @param index 索引(实际上就是第一列的值，因为这个函数没有表的概念)
    *
-   * @return 是否删除
+   * @return 删除的数据
    */
-  bool deleteFileLine(std::string index);
+  vstring deleteFileLine(std::string index);
 
   /**
    * @brief 删除一列

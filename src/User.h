@@ -123,9 +123,9 @@ class User {
 		 *
 		 * @param  string index 用户行索引
 		 *
-		 * @return bool 是否删除
+		 * @return vstring 被删除的内容
 		 */
-		bool deleteUser(std::string index);
+		vstring deleteUser(std::string index);
 		User();
 		User(const User& copy) = delete;
 		/**

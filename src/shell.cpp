@@ -8,6 +8,10 @@
 #define _SHELL_H_
 #include "shell.h"
 #endif
+#ifndef _DIR_H_
+#define _DIR_H_
+#include "dir.h"
+#endif
 #ifndef _string_
 #define _string_
 #include <string>
@@ -339,10 +343,28 @@ bool shell::read(revstring value) {
   }
   return read();
 }
+void shell::toBackShow(){
+  _dir backDB("./data/Back/");
+  if (!backDB.isExist()) {
+    return;
+  } else {
+    vstring tmp;
+    backDB.openDirReturnFileName(tmp);
+    int size = tmp.size();
+    if (size > 0) {
+      std::cout << tmp[0];
+    }
+    for (int t = 1; t < size;++t) {
+      std::cout << std::endl << tmp[t];
+    }
+  }
+  std::cout << std::endl;
+  menuOutput::printPower(ReturnPower(), need);
+}
 void shell::toBack() {
   if (command.size() == 2 && data.size() == 0) {
     if (command[1] == 显示) {
-      toBackShow();
+			toBackShow();
     } else if (command[1] == 清理) {
       toBackClear();
     } else {
@@ -365,25 +387,13 @@ void shell::toBack() {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
   }
 }
-void shell::toBackShow() {
-  _dir backDB("./data/Back/");
-  if (!backDB.isExist()) {
-    return;
-  } else {
-    vstring tmp;
-    backDB.openDirReturnFileName(tmp);
-    for (auto& str : tmp) {
-      std::cout << std::endl << str;
-    }
-  }
-  std::cout << std::endl;
-}
 void shell::toBackShowFile() {
   _file backTrackingFile(data[0], type::_TYPE_BACK);
   if (!backTrackingFile.isExist()) {
     return;
   }
   BackTracking::BackTrackingForShow(data[0]);
+  menuOutput::printPower(ReturnPower(), need);
 }
 void shell::toBackFileExecute() {
   _file backTrackingFile(data[0], type::_TYPE_BACK);
@@ -486,6 +496,7 @@ void shell::toCreate() {
           Log::LogForCreateUser(ReturnUserName(), ReturnPower(), data[0],
                                 data[1], 创建已存在的用户);
         } else {
+          BackTracking::BackTrackingForDeleteUser(data[0]);
           menuOutput::printCreateACK(ReturnPower(), need);
           Log::LogForCreateUser(ReturnUserName(), ReturnPower(), data[0],
                                 data[1]);
@@ -509,6 +520,7 @@ void shell::toCreate() {
           Log::LogForCreateManager(ReturnUserName(), ReturnPower(), data[0],
                                    data[1], 创建已存在的管理员);
         } else {
+          BackTracking::BackTrackingForDeleteManager(data[0]);
           menuOutput::printCreateACK(ReturnPower(), need);
           Log::LogForCreateManager(ReturnUserName(), ReturnPower(), data[0],
                                    data[1]);
@@ -761,7 +773,7 @@ void shell::toDeleteDatabase() {
   } else {
     menuOutput::printDatabaseNotEmptyAndDeleteTip(ReturnPower(), false);
   }
-  menuOutput::printShowDatabase(ReturnPower(), database, false);
+  menuOutput::openDirPrintFile(ReturnPower(), database.returnTruePath(), false);
   if (inputACK()) {
     Log::LogForDeleteDatabase(ReturnUserName(), ReturnPower(), data[0]);
     BackTracking::BackTrackingForRecoverDatabase(data[0]);
@@ -782,7 +794,8 @@ void shell::toDeleteManager() {
                              管理员违规操作);
     return;
   }
-  if (!deleteUser(data[0])) {
+  vstring tmpdata = deleteUser(data[0]);
+  if (!tmpdata.size()) {
     BackTracking::BackTrackingForCreateManager(ReturnUserName(),
                                                returnPassword());
     Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0],
@@ -790,17 +803,19 @@ void shell::toDeleteManager() {
     menuOutput::printManagerNotExists(ReturnPower(), need);
     return;
   }
+  BackTracking::BackTrackingForCreateManager(tmpdata[0], tmpdata[1]);
   menuOutput::printDeleteACK(ReturnPower(), need);
   Log::LogForDeleteManager(ReturnUserName(), ReturnPower(), data[0]);
 }
 void shell::toDeleteUser() {
-  if (!deleteUser(data[0])) {
+  vstring tmpdata = deleteUser(data[0]);
+  if (!tmpdata.size()) {
     Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0],
                           目标用户不存在无法删除);
     menuOutput::printUserNotExists(ReturnPower(), need);
     return;
   }
-  BackTracking::BackTrackingForCreateUser(ReturnUserName(), returnPassword());
+  BackTracking::BackTrackingForCreateUser(tmpdata[0], tmpdata[1]);
   Log::LogForDeleteUser(ReturnUserName(), ReturnPower(), data[0]);
   menuOutput::printDeleteACK(ReturnPower(), need);
 }
@@ -1037,8 +1052,8 @@ void shell::toInsertDatabaseTable() {
                                    data[1], tmp, 表不存在无法插入数据);
     return;
   }
-  table.append(tmp);
   Cache::add(table);
+  table.append(tmp);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), data[0],
                                  data[1], tmp);
@@ -1049,8 +1064,8 @@ void shell::toInsertDatabaseTable() {
 }
 void shell::toInsertDefaultTable() {  // 当选择到表的时候，说明数据库+表都存在
   Table table(pwd[1] + "/" + pwd[2], type::_TYPE_TABLE);
-  table.append(data);
   Cache::add(table);
+  table.append(data);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                  pwd[2], data);
@@ -1074,8 +1089,8 @@ void shell::toInsertTable() {
     menuOutput::printNotExistsTable(ReturnPower(), need);
     return;
   }
-  table.append(tmp);
   Cache::add(table);
+  table.append(tmp);
   menuOutput::printInsertACK(ReturnPower(), need);
   Log::LogForInsertDatabaseTable(ReturnUserName(), ReturnPower(), pwd[1],
                                  data[0], tmp);
@@ -1244,7 +1259,7 @@ void shell::toShowDatabase() {
     }
     case 1: {
       DataBase database(data[0]);
-      menuOutput::printShowDatabase(ReturnPower(), database, need);
+      menuOutput::openDirPrintFile(ReturnPower(), database.returnTruePath(), need);
       return;
     }
   }

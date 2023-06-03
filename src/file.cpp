@@ -97,10 +97,10 @@ vstring _file::deleteTableLine(std::string index) {
   delete tmptable;
   return ret;
 }
-bool _file::deleteFileLine(std::string index) {
+vstring _file::deleteFileLine(std::string index) {
   std::string oldTruePath = this->truePath;
-  bool command = false;
   vstring vectorbuff;
+	vstring ret;
   _file* tmpfile = new Table(this->truePath + "tmp");
   if (tmpfile->isExist()) {
     tmpfile->remove();
@@ -109,7 +109,7 @@ bool _file::deleteFileLine(std::string index) {
   _file* tmpOldFile = new _file(this->truePath);
   while (tmpOldFile->readline(vectorbuff)) {
     if (vectorbuff[0] == index) {
-      command = true;
+			ret = vectorbuff;
       continue;
     } else {
       tmpfile->write(vectorbuff, type_mode::WRITEBUFF_MODE_APP);
@@ -120,7 +120,7 @@ bool _file::deleteFileLine(std::string index) {
          type::_TYPE_INDEX_TABLE); /* index改名 */
   _file::rename(this->truePath + "tmp", this->truePath);
   delete tmpfile;
-  return command;
+  return ret;
 }
 vstring _file::deleteCol(const int& col) {
   vstring ret;

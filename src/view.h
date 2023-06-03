@@ -2,7 +2,6 @@
  * @file view.h
  * @brief 视图层的实现
  * @author TMD
- * @version 1.3
  * @date 2023-02-09
  */
 #ifndef _VIEW_

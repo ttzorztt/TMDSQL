@@ -7,6 +7,7 @@
 #ifndef _TABLE_H_
 #define _TABLE_H_
 #include "Table.h"
+#include "cache.h"
 #endif
 #ifndef _TABLEPCB_H_
 #define _TABLEPCB_H_
@@ -95,6 +96,9 @@ vstring Table::find(std::string index) {
 bool Table::append(vstring value) {
   TablePCB pcb(this->returnName());
   int fileIndex = pcb.returnEndLineIndex();
+	int fileIndexCol = pcb.returnIndex();
+	std::string tmp;
+	Cache::addTableItem(this->returnName(),value[fileIndexCol],fileIndex);
   int index = pcb.returnIndex();
   if (value.size() <= 0) {
     return false;
@@ -135,7 +139,6 @@ bool Table::appInsertIndex(std::string tableName, std::string index,
 bool Table::appInsertIndex(Table table, std::string index, POINTER fileIndex) {
   return Table::appInsertIndex(table.returnName(), index, fileIndex);
 }
-
 vstring Table::indexReadline(POINTER fileIndex) {
   POINTER oldIndex = this->returnReadTell();
   this->setOpenBuff(type_mode::READBUFF_MODE);

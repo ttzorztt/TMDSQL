@@ -123,7 +123,7 @@ class _dir : public _super {
 		 *
 		 * @Return 真实路径
 		 */
-		std::string returnTruePath();
+		std::string returnTruePath() const;
 	private:
 		// 记录由_dir打开的文件
 		int static count;

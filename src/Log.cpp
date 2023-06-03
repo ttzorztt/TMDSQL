@@ -2,7 +2,6 @@
  * @file Log.cpp
  * @brief 日志管理的实现
  * @author TMD
- * @version 1.3
  * @date 2023-01-12
  */
 #ifndef _LOG_H_

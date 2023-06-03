@@ -263,11 +263,11 @@ class menuOutput {
 		 * @brief 输出系统中存在的DBID数据库中的表
 		 *
 		 * @param  TYPE_POWER power 权限
-		 * @param Database& database 数据库
+		 * @param std::string truePath 真实路径
 		 * @param  bool need 是否需要输出提示符
 		 */
-		void static printShowDatabase(TYPE_POWER power,
-				DataBase& database,
+		void static openDirPrintFile(TYPE_POWER power,
+				std::string truePath,
 				bool need = true);
 		/**
 		 * @brief 输出系统中存在的数据库

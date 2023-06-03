@@ -45,19 +45,17 @@ void Cache::add(Table file) {
   }
   if (replace != "") {  //巨细节好吧
     stap = fileToIndex[replace];
+    fileInclue.erase(replace);
   }
   fileInclue.insert(filename);
   cache[stap].clear();
   fileToIndex[filename] = stap;
   vstring tmp;
-  int seek = file.returnReadTell();
-  file.setReadSeek(0);
   _file index(file.returnName(), type::_TYPE_INDEX_TABLE);
   while (index.readline(tmp)) {
     cache[stap][tmp[0]] = atoi(tmp[1].c_str());
   }
   stap = (stap + 1) % CACHEPOLL;
-  file.setReadSeek(seek);
 }
 vstring Cache::find(Table file, std::string index) {
   std::string fileName = file.returnName();
@@ -82,7 +80,7 @@ std::string Cache::update(std::string fileName) {
   if (cacheCount.size() < CACHEPOLL) {
     return "";
   } else {
-    return cacheCount[0].second;
+    return cacheCount[cacheCount.size() - 1].second;
   }
 }
 void Cache::test_show() {

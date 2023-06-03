@@ -108,15 +108,9 @@ void menuOutput::printShowDatabase(TYPE_POWER power, bool need) {
   std::cout << std::endl;
   printPower(power, need);
 }
-void menuOutput::printShowDatabase(TYPE_POWER power, DataBase& database,
-                                   bool need) {
-  if (!database.isExist()) {
-    std::cout << "数据库不存在!" << std::endl;
-    menuOutput::printPower(power, need);
-    return;
-  }
+void menuOutput::openDirPrintFile(TYPE_POWER power, std::string truePath, bool need) {
   vstring ans;
-  database.openDirReturnFileName(ans);
+	_dir::openDirReturnFileName(truePath,ans);
   int maxtablename = 0;
   if (ans.size() == 0) {
     std::cout << "这个数据库是空的!" << std::endl;
@@ -343,7 +337,7 @@ void menuOutput::printShowTable(TYPE_POWER power, std::string User,
       }
     } else {
       vstring tmp;
-      while (table.readline(tmp)) {
+      while (table.readline(tmp) && number) {
         int size = tmp.size();
         for (int a = 0; a < size; ++a) {
           std::cout << tmp[a] << " ";

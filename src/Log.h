@@ -2,7 +2,6 @@
  * @file Log.h
  * @brief 日志管理
  * @author TMD
- * @version 1.3
  * @date 2023-02-09
  */
 #ifndef _LOG_

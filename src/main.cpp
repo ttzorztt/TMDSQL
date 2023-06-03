@@ -7,7 +7,6 @@
 #ifndef _IOSTREAM_
 #define _IOSTREAM_
 #include <unistd.h>
-
 #include <cstddef>
 #include <iostream>
 #endif
@@ -99,28 +98,32 @@ void init() {
     table.write({"创建", "数据库", "@DB1"}, type_mode::WRITEBUFF_MODE_APP);
     table.write({"创建", "数据库", "表,@DB1", "TB1"},
                 type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "序号", "姓名", "性别",
-                 "学历", "爱好", "住址", "联系方式"},
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "姓名", "性别", "学历",
+                 "爱好", "住址", "联系方式"},
                 type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "0", "张三", "男",
-                 "本科", "钓鱼", "北京", "110"},
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "张三", "男", "本科",
+                 "钓鱼", "北京", "110"},
                 type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "1", "李四", "男",
-                 "研究生", "吃饭", "西安", "120"},
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "李四", "男", "研究生",
+                 "吃饭", "西安", "120"},
                 type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "2", "王五", "女",
-                 "博士", "吃鱼", "天津", "119"},
+    table.write({"插入", "数据库", "表", "@DB1", "TB1", "王五", "女", "博士",
+                 "吃鱼", "天津", "119"},
                 type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "3", "赵六", "女",
-                 "博士后", "跳绳", "四川", "122"},
-                type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "4", "刘七", "男",
-                 "初中", "跳大绳", "深圳", "114"},
-                type_mode::WRITEBUFF_MODE_APP);
-    table.write({"插入", "数据库", "表", "@DB1", "TB1", "5", "雷八", "女",
-                 "高中", "跳小绳", "安徽", "911"},
-                type_mode::WRITEBUFF_MODE_APP);
+    /* table.write({"插入", "数据库", "表", "@DB1", "TB1", "赵六", "女",
+     * "博士后", */
+    /*              "跳绳", "四川", "122"}, */
+    /*             type_mode::WRITEBUFF_MODE_APP); */
+    /* table.write({"插入", "数据库", "表", "@DB1", "TB1", "刘七", "男", "初中",
+     */
+    /*              "跳大绳", "深圳", "114"}, */
+    /*             type_mode::WRITEBUFF_MODE_APP); */
+    /* table.write({"插入", "数据库", "表", "@DB1", "TB1", "雷八", "女", "高中",
+     */
+    /*              "跳小绳", "安徽", "911"}, */
+    /* type_mode::WRITEBUFF_MODE_APP); */
   }
+
   if (access("./data/User", F_OK)) {
     _super::createDir("./data/User");
   }

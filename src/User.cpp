@@ -103,11 +103,9 @@ bool User::addManagerUser(std::string UserName, std::string Userpassword) {
 std::string User::ReturnUserName() const {
   return (this->loginStatus) ? this->UserName : "未登录";
 }
-bool User::deleteUser(std::string index) {
+vstring User::deleteUser(std::string index) {
   _file* tmppd = new _file(_PathForUserData + std::string("pd"));
-  bool ret = tmppd->deleteFileLine(index);
-  delete tmppd;
-  return ret;
+  return tmppd->deleteFileLine(index);
 }
 bool User::login() {
   vstring vectorbuff;
