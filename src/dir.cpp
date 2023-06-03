@@ -12,6 +12,10 @@
 #define _STRING_
 #include <string>
 #endif
+#ifndef _STRING_H_
+#define _STRING_H_
+#include <string.h>
+#endif
 #ifndef _FILE_H_
 #define _FILE_H_
 #include "file.h"
@@ -46,27 +50,25 @@ void _dir::openDirReturnFileName(vstring& ret) {
 #ifdef __linux__
   DIR* dirname = opendir(this->truePath.c_str());
   struct dirent* dirInfo;
-  int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
-    if (count != 0) {
-      --count;
-      continue;
-    }
+		if(0 == strcmp(dirInfo->d_name,".") || 0 == strcmp(dirInfo->d_name,"..")){
+			continue;
+		}
     ret.push_back(dirInfo->d_name);
   }
   closedir(dirname);
 #endif
 #ifdef __WIN32__
-  intptr_t handle;
-  _finddata_t findData;
-  handle =
-      _findfirst(this->truePath.c_str(), &findData);  // 查找目录中的第一个文件
-  if (handle != -1) {
-    do {
-      ret.push_back(findData.name);
-    } while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件
-    _findclose(handle);
-  }  // 关闭搜索句柄
+  /* intptr_t handle; */
+  /* _finddata_t findData; */
+  /* handle = */
+  /*     _findfirst(this->truePath.c_str(), &findData);  // 查找目录中的第一个文件 */
+  /* if (handle != -1) { */
+  /*   do { */
+  /*     ret.push_back(findData.name); */
+  /*   } while (_findnext(handle, &findData) == 0);  // 查找目录中的下一个文件 */
+  /*   _findclose(handle); */
+  /* }  // 关闭搜索句柄 */
 #endif
 }
 bool _dir::create() {
@@ -83,32 +85,30 @@ void _dir::openDirReturnFileName(std::string truePath, vstring& ret) {
 #ifdef __linux__
   DIR* dirname = opendir(truePath.c_str());
   struct dirent* dirInfo;
-  int count = 2;
   while ((dirInfo = readdir(dirname)) != 0) {
-    if (count != 0) {
-      --count;
-      continue;
-    }
+		if(0 == strcmp(dirInfo->d_name,".") || 0 == strcmp(dirInfo->d_name,"..")){
+			continue;
+		}
     ret.push_back(dirInfo->d_name);
   }
   closedir(dirname);
 #endif
 #ifdef __WIN32__	
-  HANDLE hFind;
-  WIN32_FIND_DATA findData;
-  LARGE_INTEGER size;
-  hFind = FindFirstFile((truePath + "*.*").c_str(), &findData);
-  if (hFind == INVALID_HANDLE_VALUE) {
-    return;
-  }
-  do {
-    // 忽略"."和".."两个结果
-    if (strcmp(findData.cFileName, ".") == 0 ||
-        strcmp(findData.cFileName, "..") == 0)
-      continue;
-		ret.push_back(findData.cFileName);
-  } while (FindNextFile(hFind, &findData));
-  return;
+  /* HANDLE hFind; */
+  /* WIN32_FIND_DATA findData; */
+  /* LARGE_INTEGER size; */
+  /* hFind = FindFirstFile((truePath + "*.*").c_str(), &findData); */
+  /* if (hFind == INVALID_HANDLE_VALUE) { */
+  /*   return; */
+  /* } */
+  /* do { */
+  /*   // 忽略"."和".."两个结果 */
+  /*   if (strcmp(findData.cFileName, ".") == 0 || */
+  /*       strcmp(findData.cFileName, "..") == 0) */
+  /*     continue; */
+		/* ret.push_back(findData.cFileName); */
+  /* } while (FindNextFile(hFind, &findData)); */
+  /* return; */
 #endif
 }
 bool _dir::create(std::string truePath) { return _super::createDir(truePath); }

@@ -343,28 +343,10 @@ bool shell::read(revstring value) {
   }
   return read();
 }
-void shell::toBackShow(){
-  _dir backDB("./data/Back/");
-  if (!backDB.isExist()) {
-    return;
-  } else {
-    vstring tmp;
-    backDB.openDirReturnFileName(tmp);
-    int size = tmp.size();
-    if (size > 0) {
-      std::cout << tmp[0];
-    }
-    for (int t = 1; t < size;++t) {
-      std::cout << std::endl << tmp[t];
-    }
-  }
-  std::cout << std::endl;
-  menuOutput::printPower(ReturnPower(), need);
-}
 void shell::toBack() {
   if (command.size() == 2 && data.size() == 0) {
     if (command[1] == 显示) {
-			toBackShow();
+      menuOutput::openDirPrintFile(ReturnPower(), "./data/Back/");
     } else if (command[1] == 清理) {
       toBackClear();
     } else {
@@ -1259,7 +1241,8 @@ void shell::toShowDatabase() {
     }
     case 1: {
       DataBase database(data[0]);
-      menuOutput::openDirPrintFile(ReturnPower(), database.returnTruePath(), need);
+      menuOutput::openDirPrintFile(ReturnPower(), database.returnTruePath(),
+                                   need);
       return;
     }
   }
