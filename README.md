@@ -1,5 +1,5 @@
 
-# TMDSQL_1.6(ing)
+# TMDSQL_1.7[本科毕业了,后续更新看心情]
 
 - gitee
 <https://gitee.com/ttz_ztt/tmdsql>

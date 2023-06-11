@@ -308,8 +308,9 @@ bool shell::read() {
         menuOutput::printPowerNoEnough(ReturnPower(), need);
         Log::LogForError(ReturnUserName(), ReturnPower(), command, data,
                          普通用户违规操作);
+      } else {
+        toSet();
       }
-      toSet();
       break;
     case 回溯:
       if (ReturnPower() >= 2) {
@@ -398,6 +399,9 @@ void shell::toLogin() {
         pwd.push_back("/");
       }
       Log::LogForLogin(oldUserName, oldUserPower, data[0], data[1]);
+    menuOutput::printLoginOrNot(this->ReturnLoginStatus(), returnErrorCase(),
+                                ReturnPower(), ReturnUserName(), need);
+		return;
     } else {
       switch ((int)returnErrorCase()) {
         case 密码错误:
@@ -410,7 +414,7 @@ void shell::toLogin() {
           break;
       }
     }
-    menuOutput::printLoginOrNot(this->ReturnLoginStatus(), returnErrorCase(),
+    menuOutput::printLoginOrNot(false, returnErrorCase(),
                                 ReturnPower(), ReturnUserName(), need);
   } else {
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
@@ -1317,6 +1321,7 @@ void shell::toSet() {
   if (command.size() < 2 || data.size() == 0) {
     menuOutput::printCommandError(ReturnPower(), need);
     Log::LogForError(ReturnUserName(), ReturnPower(), command, data, 编译错误);
+		return;
   }
   switch (command[1]) {
     case 索引:
